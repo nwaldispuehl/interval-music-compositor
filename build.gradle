@@ -1,0 +1,24 @@
+subprojects {
+  
+    apply plugin:'java'
+    
+    sourceCompatibility=1.7
+    targetCompatibility=1.7
+  
+    repositories {
+       mavenCentral()
+
+        flatDir {
+            dirs project(':intervalmusiccompositor.build').file('flat_repository')
+        }
+    }
+
+    dependencies {
+      compile group: 'com.google.guava', name: 'guava', version: '15.0'
+    
+      testCompile 'org.hamcrest:hamcrest-all:1.3' // Note: Hamcrest needs to be placed before JUnit to use hamcrests versions of certain classes in the tests.
+      testCompile 'junit:junit:4.11'
+      testCompile 'org.mockito:mockito-all:1.9.5'
+    }
+
+}

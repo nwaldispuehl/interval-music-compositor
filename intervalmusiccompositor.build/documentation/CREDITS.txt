@@ -1,0 +1,89 @@
+Credits
+=======
+
+
+Contributions
+-------------
+The following entities contributed to the project:
+
+- Martin Lutz (AT): Patterns ('Advanced' tab) and interval preview
+
+
+Libraries
+---------
+This project uses the following libraries:
+
+
+Tritonus
+For OGG Vorbis decoding and signal processing.
+http://www.tritonus.org/
+License: GNU Lesser General Public License
+
+--
+
+JCraft Jorbis
+For OGG Vorbis decoding.
+http://www.jcraft.com/jorbis/
+Lizenz: GNU Lesser General Public License
+
+--
+
+JavaZoom JLayer and MP3SPI
+For MP3 decoding.
+http://www.javazoom.net/javalayer/javalayer.html
+http://www.javazoom.net/mp3spi/mp3spi.html
+License: GNU Lesser General Public License
+
+--
+
+JFLAC
+For FLAC decoding.
+http://jflac.sourceforge.net/
+License:
+
+Copyright (C) 2000,2001,2002,2003,2004  Josh Coalson
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+- Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+- Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+- Neither the name of the Xiph.org Foundation nor the names of its
+contributors may be used to endorse or promote products derived from
+this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+Parts of Dr. Simon Dixons BeatRoot
+For determination of the BPM values.
+http://www.eecs.qmul.ac.uk/~simond/beatroot/
+License: GNU Public License
+
+--
+
+JAudioTagger
+For reading and writing of the TBPM tags in in MP3, FLAC and OGG files.
+http://www.jthink.net/jaudiotagger/
+License: GNU Lesser General Public License
+
+--
+
+JAAD – Java Advanced Audio Decoder
+For AAC decoding.
+http://jaadec.sourceforge.net/
+License: GNU Lesser General Public License V3

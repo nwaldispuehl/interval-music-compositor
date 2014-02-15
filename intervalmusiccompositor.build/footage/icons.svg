@@ -1,0 +1,2077 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="icons.svg">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Send"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Send"
+       style="overflow:visible;">
+      <path
+         id="path4452"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.2) rotate(180) translate(6,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow2Mend"
+       style="overflow:visible;">
+      <path
+         id="path3715"
+         style="font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round;"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(0.6) rotate(180) translate(0,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Mend"
+       style="overflow:visible;">
+      <path
+         id="path3697"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;"
+         transform="scale(0.4) rotate(180) translate(10,0)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       id="perspective2831"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2862"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2899"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2899-6"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2899-67"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2899-5"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2899-8"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2899-1"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2899-9"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2862-6"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3749"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3749-4"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3749-2"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3749-7"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3749-1"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3749-78"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3816"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3841"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2885"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2908"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3647"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3669"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4521"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4566"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4596"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4617"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4638"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4638-1"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4742"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4742-1"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3714"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3738"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3775"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3797"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3827"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3869"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3894"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3919"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3944"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3969"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3994"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2943"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2948"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2973"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2998"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3029"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3057"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3884"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3884-6"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3884-61"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3964"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4001"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4044"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3014"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3042"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3850"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3884-0"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3012"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3049"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3086"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3133"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3161"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3186"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3991"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4016"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4044-4"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4065"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4239"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="12.105668"
+     inkscape:cx="67.404324"
+     inkscape:cy="817.21549"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1790"
+     inkscape:window-height="853"
+     inkscape:window-x="2"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2837"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="color:#000000;fill:#c8ff98;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4289"
+       width="345"
+       height="290"
+       x="5"
+       y="282.36218" />
+    <rect
+       style="color:#000000;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:7.08661413000000007;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3056-9"
+       width="30"
+       height="30"
+       x="295"
+       y="97.362183"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/stop_icon.png"
+       inkscape:export-xdpi="125.99974"
+       inkscape:export-ydpi="125.99974" />
+    <rect
+       style="color:#000000;fill:#ffffff;fill-opacity:0;fill-rule:nonzero;stroke:none;stroke-width:7.08661416999999982;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;stroke-miterlimit:4;stroke-dasharray:none;opacity:1"
+       id="rect3056"
+       width="30"
+       height="30"
+       x="260"
+       y="97.362183"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/play_icon.png"
+       inkscape:export-xdpi="126"
+       inkscape:export-ydpi="126" />
+    <path
+       style="fill:#00a8fd;fill-opacity:0.50196078;stroke:none"
+       d="m 55,217.36218 0,-17 -8,0 -12,17 20,0 z"
+       id="path4535"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_1.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:#fd9b00;fill-opacity:0.50196078;stroke:none"
+       d="m 15,217.36218 0,-17 8,0 12,17 -20,0 z"
+       id="path4535-1"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_1.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"
+       sodipodi:nodetypes="ccccc" />
+    <rect
+       style="color:#000000;fill:none;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3629"
+       width="28"
+       height="46"
+       x="16"
+       y="78.362183"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/music_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3627"
+       width="20"
+       height="20"
+       x="20"
+       y="82.362183"
+       ry="2"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/music_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="9.125"
+       y="12.737185"
+       id="text2839"><tspan
+         sodipodi:role="line"
+         id="tspan2841"
+         x="9.125"
+         y="12.737185"
+         style="-inkscape-font-specification:Standard Symbols L Bold Italic;font-family:Standard Symbols L;font-weight:bold;font-style:italic;font-stretch:normal;font-variant:normal" /></text>
+    <path
+       sodipodi:type="arc"
+       style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.70899999;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path2843"
+       sodipodi:cx="10"
+       sodipodi:cy="24.862183"
+       sodipodi:rx="5"
+       sodipodi:ry="2.5"
+       d="m 15,24.862183 a 5,2.5 0 1 1 -10,0 5,2.5 0 1 1 10,0 z"
+       transform="matrix(1,0,0,1.2,5,34.527564)" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       d="m 18,66.36218 c 0,0 2,0 2,-1.999997 0,-2 0,-15 0,-15 l 6,0 0,-3.000001 -7,1 0.43332,17.546122 L 18,66.36218 z"
+       id="path3617" />
+    <text
+       xml:space="preserve"
+       style="font-size:21.15713501px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="34.525871"
+       y="66.847862"
+       id="text3619"><tspan
+         sodipodi:role="line"
+         id="tspan3621"
+         x="34.525871"
+         y="66.847862">♪♫♩</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18.36697197px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="22.646446"
+       y="96.743469"
+       id="text3623"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/music_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan3625"
+         x="22.646446"
+         y="96.743469">♫</tspan></text>
+    <rect
+       style="color:#000000;fill:none;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3629-7"
+       width="28"
+       height="46"
+       x="51"
+       y="78.362183"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/error_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff5555;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3627-6"
+       width="20"
+       height="20"
+       x="55"
+       y="82.362183"
+       ry="2"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/error_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:none;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3629-7-8"
+       width="28"
+       height="46"
+       x="86"
+       y="78.362183"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/tooshort_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#fecb00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3627-6-1"
+       width="20"
+       height="20"
+       x="90"
+       y="82.362183"
+       ry="2"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/tooshort_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="59.5"
+       y="97.362183"
+       id="text2885"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/error_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan2887"
+         x="59.5"
+         y="97.362183"
+         style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O">x</tspan></text>
+    <rect
+       style="color:#000000;fill:none;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3629-7-8-3"
+       width="28"
+       height="46"
+       x="86"
+       y="128.36218"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/waiting_icon1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#fecb00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3627-6-1-8"
+       width="20"
+       height="20"
+       x="90"
+       y="132.36218"
+       ry="2"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/waiting_icon1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:none;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3629-7-8-4-6"
+       width="28"
+       height="46"
+       x="121"
+       y="128.36218"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/waiting_icon2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#fecb00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3627-6-1-9-1"
+       width="20"
+       height="20"
+       x="125"
+       y="132.36218"
+       ry="2"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/waiting_icon2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:none;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3629-7-8-9-5"
+       width="28"
+       height="46"
+       x="156"
+       y="128.36218"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/waiting_icon3.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#fecb00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3627-6-1-92-9"
+       width="20"
+       height="20"
+       x="160"
+       y="132.36218"
+       ry="2"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/waiting_icon3.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 100,135.06489 c -0.356517,0 -0.696003,0.0266 -1.038849,0.076 -0.227442,0.90211 -0.272946,1.16428 -0.405405,1.72297 -0.495009,0.12959 -0.961023,0.33257 -1.393581,0.58277 -0.491709,-0.30176 -0.716896,-0.45765 -1.52027,-0.9375 -0.557343,0.41681 -1.051506,0.91327 -1.469595,1.4696 0.480566,0.80459 0.63597,1.02893 0.9375,1.52027 -0.254194,0.43447 -0.450727,0.89541 -0.58277,1.39358 -0.563515,0.13894 -0.833206,0.20001 -1.748311,0.43074 -0.04788,0.33768 -0.07601,0.68796 -0.07601,1.03885 0,0.34758 0.02902,0.67889 0.07601,1.01352 0.915105,0.23073 1.184796,0.2918 1.748311,0.43074 0.132043,0.49817 0.328576,0.95911 0.58277,1.39358 -0.30153,0.49132 -0.456934,0.71568 -0.9375,1.52027 0.419275,0.5594 0.909732,1.0509 1.469595,1.46959 0.803376,-0.47984 1.028561,-0.63574 1.52027,-0.9375 0.434068,0.25211 0.896395,0.45231 1.393581,0.58277 0.132459,0.55869 0.177962,0.82086 0.405405,1.72298 0.342845,0.0494 0.682332,0.10135 1.038849,0.10135 0.35653,0 0.69601,-0.052 1.03886,-0.10135 0.22744,-0.90212 0.27294,-1.16429 0.4054,-1.72298 0.49719,-0.13046 0.95951,-0.33066 1.39358,-0.58277 0.49171,0.30176 0.7169,0.45766 1.52027,0.9375 0.55986,-0.41869 1.05032,-0.91019 1.4696,-1.46959 -0.48057,-0.80459 -0.63597,-1.02894 -0.9375,-1.52027 0.25419,-0.43447 0.45072,-0.89541 0.58277,-1.39358 0.56351,-0.13894 0.8332,-0.20001 1.74831,-0.43074 0.047,-0.33463 0.076,-0.66594 0.076,-1.01352 0,-0.35089 -0.0281,-0.70117 -0.076,-1.03885 -0.91511,-0.23073 -1.1848,-0.2918 -1.74831,-0.43074 -0.13205,-0.49817 -0.32858,-0.95911 -0.58277,-1.39358 0.30153,-0.49133 0.45693,-0.71568 0.9375,-1.52027 -0.41809,-0.55633 -0.91226,-1.05279 -1.4696,-1.4696 -0.80337,0.47985 -1.02856,0.63574 -1.52027,0.9375 -0.43256,-0.2502 -0.89857,-0.45318 -1.39358,-0.58277 -0.13246,-0.55869 -0.17796,-0.82086 -0.4054,-1.72297 -0.34285,-0.0494 -0.68233,-0.076 -1.03886,-0.076 z m 0,3.42061 c 2.14104,0 3.87669,1.73565 3.87669,3.87669 0,2.14103 -1.73565,3.87669 -3.87669,3.87669 -2.141032,0 -3.876686,-1.73566 -3.876686,-3.87669 0,-2.14104 1.735654,-3.87669 3.876686,-3.87669 z"
+       id="path3703"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/waiting_icon1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 136.88867,135.31354 c -0.34437,-0.0923 -0.67917,-0.15445 -1.02312,-0.19546 -0.45318,0.81251 -0.56499,1.05397 -0.83753,1.55934 -0.51168,-0.003 -1.01435,0.0725 -1.49692,0.20223 -0.39685,-0.41874 -0.57402,-0.62761 -1.22582,-1.29903 -0.64624,0.25836 -1.25205,0.60999 -1.79989,1.03916 0.25596,0.90155 0.34799,1.15848 0.51208,1.71111 -0.35797,0.35387 -0.66712,0.74824 -0.92359,1.19526 -0.58027,-0.0116 -0.85659,-0.0225 -1.80022,-0.0364 -0.13367,0.31377 -0.25147,0.64484 -0.34229,0.98378 -0.09,0.33573 -0.1477,0.66326 -0.18891,0.99865 0.82421,0.45971 1.06891,0.58851 1.57726,0.86856 -0.001,0.51537 0.0691,1.01147 0.20223,1.49693 -0.41842,0.39653 -0.6266,0.57303 -1.29903,1.22582 0.2602,0.64886 0.60673,1.25055 1.03916,1.79988 0.90019,-0.25557 1.15806,-0.34787 1.71111,-0.51208 0.35402,0.35586 0.74877,0.66889 1.19526,0.92359 -0.0167,0.57394 -0.0405,0.83895 -0.0544,1.7692 0.31838,0.13645 0.63285,0.27449 0.97722,0.36677 0.34437,0.0923 0.68576,0.12991 1.0297,0.17098 0.45317,-0.81252 0.56498,-1.05398 0.83752,-1.55935 0.51402,0.003 1.0124,-0.071 1.49693,-0.20222 0.39685,0.41874 0.57402,0.62761 1.22582,1.29903 0.64915,-0.25953 1.25011,-0.60734 1.79989,-1.03916 -0.25595,-0.90155 -0.34799,-1.15848 -0.51208,-1.71111 0.35797,-0.35388 0.66711,-0.74824 0.92359,-1.19526 0.58027,0.0116 0.85658,0.0224 1.80023,0.0364 0.132,-0.31106 0.24576,-0.62358 0.33572,-0.95931 0.0908,-0.33894 0.15434,-0.68456 0.19547,-1.02313 -0.82421,-0.45971 -1.06891,-0.5885 -1.57726,-0.86856 0.001,-0.51537 -0.0691,-1.01146 -0.20222,-1.49692 0.41842,-0.39655 0.62659,-0.57303 1.29903,-1.22582 -0.25986,-0.64558 -0.6087,-1.25302 -1.03917,-1.79988 -0.90019,0.25557 -1.15806,0.34787 -1.71111,0.51208 -0.35307,-0.35363 -0.75066,-0.6703 -1.19526,-0.92359 0.0166,-0.57394 0.0405,-0.83895 0.0543,-1.7692 -0.31838,-0.13645 -0.63942,-0.25001 -0.98379,-0.34229 z m -0.88532,3.30405 c 2.06808,0.55415 3.29538,2.67987 2.74123,4.74796 -0.55414,2.06807 -2.67987,3.29537 -4.74795,2.74123 -2.06808,-0.55414 -3.29538,-2.67988 -2.74124,-4.74795 0.55415,-2.06809 2.67988,-3.29537 4.74796,-2.74124 z"
+       id="path3703-6"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/waiting_icon2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 173.64864,136.04254 c -0.30875,-0.17826 -0.61605,-0.32496 -0.93767,-0.4536 -0.64803,0.66754 -0.81853,0.87182 -1.21257,1.28944 -0.49349,-0.13527 -0.99856,-0.1925 -1.49827,-0.1921 -0.27495,-0.50718 -0.39202,-0.75479 -0.84784,-1.57203 -0.69108,0.0823 -1.36726,0.26515 -2.0075,0.5379 0.0139,0.93708 0.0363,1.20907 0.0518,1.78535 -0.43737,0.24916 -0.83805,0.55008 -1.20149,0.91548 -0.55749,-0.16144 -0.82158,-0.24339 -1.72945,-0.50112 -0.21032,0.26849 -0.4098,0.55779 -0.58524,0.86167 -0.17379,0.30101 -0.31433,0.60243 -0.44094,0.91573 0.67713,0.65737 0.88015,0.8451 1.29871,1.24719 -0.13474,0.49745 -0.195,0.9949 -0.19209,1.49826 -0.5068,0.27473 -0.75355,0.39134 -1.57204,0.84785 0.0834,0.69409 0.2624,1.36497 0.53791,2.00749 0.93567,-0.0139 1.20864,-0.0363 1.78534,-0.0518 0.24986,0.43537 0.55015,0.83991 0.9155,1.20149 -0.16464,0.55006 -0.25631,0.79986 -0.5104,1.69484 0.27222,0.21421 0.54024,0.42894 0.849,0.6072 0.30874,0.17825 0.62876,0.30297 0.95034,0.43165 0.64804,-0.66753 0.81853,-0.87183 1.21258,-1.28944 0.49581,0.13561 0.99629,0.19339 1.49826,0.19209 0.27495,0.50719 0.39202,0.7548 0.84784,1.57204 0.6942,-0.0827 1.3647,-0.26309 2.00751,-0.5379 -0.0139,-0.93708 -0.0363,-1.20907 -0.0518,-1.78535 0.43737,-0.24916 0.83804,-0.55008 1.2015,-0.91548 0.55748,0.16143 0.82157,0.24338 1.72945,0.50112 0.20801,-0.2663 0.39878,-0.53872 0.57257,-0.83973 0.17545,-0.30388 0.32625,-0.62128 0.45361,-0.93767 -0.67714,-0.65738 -0.88017,-0.84511 -1.29871,-1.24719 0.13473,-0.49745 0.195,-0.9949 0.19209,-1.49826 0.5068,-0.27474 0.75355,-0.39134 1.57203,-0.84785 -0.0839,-0.69084 -0.26365,-1.36786 -0.53792,-2.0075 -0.93565,0.0139 -1.20862,0.0363 -1.78534,0.0518 -0.24951,-0.43296 -0.55159,-0.84175 -0.91549,-1.20148 0.16463,-0.55007 0.25631,-0.79987 0.5104,-1.69485 -0.2722,-0.2142 -0.55292,-0.40698 -0.86167,-0.58524 z m -1.7103,2.96234 c 1.85419,1.07052 2.48948,3.44145 1.41896,5.29565 -1.07052,1.85419 -3.44145,2.48949 -5.29565,1.41897 -1.85419,-1.07052 -2.48948,-3.44147 -1.41897,-5.29566 1.07052,-1.85419 3.44146,-2.48948 5.29566,-1.41896 z"
+       id="path3703-2"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/waiting_icon3.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 55.000004,135.06489 c -0.356521,0 -0.696007,0.0266 -1.038853,0.076 -0.227442,0.90212 -0.272946,1.16429 -0.405405,1.72298 -0.495009,0.12959 -0.961023,0.33257 -1.393581,0.58277 -0.491709,-0.30176 -0.716896,-0.45766 -1.52027,-0.9375 -0.557343,0.41681 -1.051506,0.91326 -1.469595,1.46959 0.480566,0.80459 0.63597,1.02894 0.9375,1.52027 -0.254194,0.43447 -0.450727,0.89541 -0.58277,1.39358 -0.563515,0.13894 -0.833206,0.20001 -1.748311,0.43074 -0.04788,0.33768 -0.07601,0.68796 -0.07601,1.03885 0,0.34758 0.02902,0.67889 0.07601,1.01352 0.915105,0.23073 1.184796,0.2918 1.748311,0.43074 0.132043,0.49817 0.328576,0.95911 0.58277,1.39358 -0.30153,0.49132 -0.456934,0.71568 -0.9375,1.52027 0.419275,0.5594 0.909732,1.0509 1.469595,1.46959 0.803376,-0.47984 1.028561,-0.63574 1.52027,-0.9375 0.434068,0.25211 0.896395,0.45231 1.393581,0.58277 0.132459,0.55869 0.177962,0.82086 0.405405,1.72298 0.342845,0.0494 0.682332,0.10135 1.038853,0.10135 0.356521,0 0.696006,-0.052 1.038852,-0.10135 0.227443,-0.90212 0.272946,-1.16429 0.405405,-1.72298 0.497186,-0.13046 0.959513,-0.33066 1.393581,-0.58277 0.491709,0.30176 0.716896,0.45766 1.52027,0.9375 0.55986,-0.41869 1.050318,-0.91019 1.469598,-1.46959 -0.48057,-0.80459 -0.63597,-1.02894 -0.937498,-1.52027 0.254188,-0.43447 0.450718,-0.89541 0.582768,-1.39358 0.56351,-0.13894 0.8332,-0.20001 1.74831,-0.43074 0.047,-0.33463 0.076,-0.66594 0.076,-1.01352 0,-0.35089 -0.0281,-0.70117 -0.076,-1.03885 -0.91511,-0.23073 -1.1848,-0.2918 -1.74831,-0.43074 -0.13205,-0.49817 -0.32858,-0.95911 -0.582768,-1.39358 0.301528,-0.49133 0.456928,-0.71568 0.937498,-1.52027 -0.41809,-0.55633 -0.912258,-1.05278 -1.469598,-1.46959 -0.803375,0.47984 -1.028561,0.63574 -1.52027,0.9375 -0.432558,-0.2502 -0.898571,-0.45318 -1.393581,-0.58277 -0.132459,-0.55869 -0.177962,-0.82086 -0.405405,-1.72298 -0.342845,-0.0494 -0.682331,-0.076 -1.038852,-0.076 z m 0,3.42061 c 2.141036,0 3.87669,1.73565 3.87669,3.87669 0,2.14103 -1.735654,3.87669 -3.87669,3.87669 -2.141036,0 -3.87669,-1.73566 -3.87669,-3.87669 0,-2.14104 1.735654,-3.87669 3.87669,-3.87669 z"
+       id="path3703-5" />
+    <text
+       xml:space="preserve"
+       style="font-size:18.36697197px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="22.646446"
+       y="156.74344"
+       id="text3623-7"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/music_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan3625-3"
+         x="22.646446"
+         y="156.74344">♫</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="45"
+       y="167.36218"
+       id="text2885-6"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/error_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan2887-4"
+         x="45"
+         y="167.36218"
+         style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O">x</tspan></text>
+    <rect
+       style="color:#000000;fill:none;stroke:none;stroke-width:0.1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2865"
+       width="50"
+       height="27"
+       x="10"
+       y="195.36218"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_1.png"
+       inkscape:export-xdpi="93.599998"
+       inkscape:export-ydpi="93.599998" />
+    <path
+       style="fill:none;stroke:#00a8fd;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 55,200.36218 -8,0 -12,17"
+       id="path4511-6"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_1.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 15,200.36218 8,0 12,17"
+       id="path4511"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_1.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 15,217.36218 40,0"
+       id="path3683"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_1.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.70866144;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:1.41732283, 0.70866142;stroke-dashoffset:0"
+       d="m 35,198.36218 0,19"
+       id="path4509"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_1.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623" />
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;color:#000000;fill:#fd9b00;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="16"
+       y="215.36218"
+       id="text4580"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_1.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"><tspan
+         sodipodi:role="line"
+         id="tspan4582"
+         x="16"
+         y="215.36218"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;color:#000000;fill:#fd9b00;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O Bold">m</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;text-anchor:end;color:#000000;fill:#00a8fd;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="53.895306"
+       y="215.36218"
+       id="text4584"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_1.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"><tspan
+         sodipodi:role="line"
+         id="tspan4586"
+         x="53.895306"
+         y="215.36218"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;text-anchor:end;color:#000000;fill:#00a8fd;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O Bold">b</tspan></text>
+    <path
+       style="fill:#00a8fd;fill-opacity:0.50196078;stroke:none"
+       d="m 110,217.36218 0,-17 -14,0 -12,17 26,0 z"
+       id="path4535-7"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_2.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"
+       sodipodi:nodetypes="ccccc" />
+    <rect
+       style="color:#000000;fill:none;stroke:none;stroke-width:0.1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2865-5"
+       width="50"
+       height="27"
+       x="65"
+       y="195.36218"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_2.png"
+       inkscape:export-xdpi="93.599991"
+       inkscape:export-ydpi="93.599991" />
+    <path
+       style="fill:none;stroke:#00a8fd;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 110,200.36218 -14,0 -12,17"
+       id="path4511-6-5"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_2.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 70,200.36218 14,0 12,17"
+       id="path4511-0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_2.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:#fd9b00;fill-opacity:0.50196078;stroke:none"
+       d="m 70,217.36218 0,-17 14,0 12,17 -26,0 z"
+       id="path4535-1-6"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_2.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 70,217.36218 40,0"
+       id="path3683-1"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_2.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.70866144;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:1.41732283, 0.70866142;stroke-dashoffset:0"
+       d="m 90,198.36218 0,19"
+       id="path4509-6"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_2.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623" />
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;color:#000000;fill:#fd9b00;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="71"
+       y="215.36218"
+       id="text4580-9"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_2.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"><tspan
+         sodipodi:role="line"
+         id="tspan4582-9"
+         x="71"
+         y="215.36218"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;color:#000000;fill:#fd9b00;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O Bold">m</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;text-anchor:end;color:#000000;fill:#00a8fd;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="108.89531"
+       y="215.36218"
+       id="text4584-0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_2.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"><tspan
+         sodipodi:role="line"
+         id="tspan4586-0"
+         x="108.89531"
+         y="215.36218"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;text-anchor:end;color:#000000;fill:#00a8fd;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O Bold">b</tspan></text>
+    <path
+       style="fill:#00a8fd;fill-opacity:0.50196078;stroke:none"
+       d="m 165,217.36218 0,-17 -20,0 -12,17 32,0 z"
+       id="path4535-5"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_3.png"
+       inkscape:export-xdpi="108.6502"
+       inkscape:export-ydpi="108.6502"
+       sodipodi:nodetypes="ccccc" />
+    <rect
+       style="color:#000000;fill:none;stroke:none;stroke-width:0.1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2865-56"
+       width="50"
+       height="27"
+       x="120"
+       y="195.36218"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_3.png"
+       inkscape:export-xdpi="93.599998"
+       inkscape:export-ydpi="93.599998" />
+    <path
+       style="fill:none;stroke:#00a8fd;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 165,200.36218 -20,0 -12,17"
+       id="path4511-6-2"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_3.png"
+       inkscape:export-xdpi="108.6502"
+       inkscape:export-ydpi="108.6502"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:#fd9b00;fill-opacity:0.50196078;stroke:none"
+       d="m 125,217.36218 0,-17 20,0 12,17 -32,0 z"
+       id="path4535-1-9"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_3.png"
+       inkscape:export-xdpi="108.6502"
+       inkscape:export-ydpi="108.6502"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:none;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 125,200.36218 20,0 12,17"
+       id="path4511-9"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_3.png"
+       inkscape:export-xdpi="108.6502"
+       inkscape:export-ydpi="108.6502"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+       d="m 125,217.36218 40,0"
+       id="path3683-0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_3.png"
+       inkscape:export-xdpi="108.6502"
+       inkscape:export-ydpi="108.6502" />
+    <path
+       style="fill:none;stroke:#4e4e4e;stroke-width:0.88582677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:1.77165353, 0.88582677;stroke-dashoffset:0"
+       d="m 145,198.36218 0,21"
+       id="path4509-4"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_3.png"
+       inkscape:export-xdpi="108.6502"
+       inkscape:export-ydpi="108.6502" />
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;color:#000000;fill:#fd9b00;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="126"
+       y="215.36218"
+       id="text4580-8"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_3.png"
+       inkscape:export-xdpi="108.6502"
+       inkscape:export-ydpi="108.6502"><tspan
+         sodipodi:role="line"
+         id="tspan4582-8"
+         x="126"
+         y="215.36218"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;color:#000000;fill:#fd9b00;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O Bold">m</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;text-anchor:end;color:#000000;fill:#00a8fd;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="163.89531"
+       y="215.36218"
+       id="text4584-9"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_3.png"
+       inkscape:export-xdpi="108.6502"
+       inkscape:export-ydpi="108.6502"><tspan
+         sodipodi:role="line"
+         id="tspan4586-3"
+         x="163.89531"
+         y="215.36218"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;text-anchor:end;color:#000000;fill:#00a8fd;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O Bold">b</tspan></text>
+    <rect
+       style="color:#000000;fill:none;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3629-7-7"
+       width="28"
+       height="46"
+       x="121"
+       y="78.362183"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/error_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff5555;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3627-6-19"
+       width="20"
+       height="20"
+       x="125"
+       y="82.362183"
+       ry="2"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/error_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:13.72077751px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="51.950935"
+       y="130.25314"
+       id="text2885-9-9"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/tooshort_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan2887-2-1"
+         x="51.950935"
+         y="130.25314"
+         style="font-size:24.3924942px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O Bold">!</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:11.85616112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="95.322372"
+       y="99.715683"
+       id="text2885-9-3-3"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/tooshort_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan2887-2-4-8"
+         x="95.322372"
+         y="99.715683"
+         style="font-size:21.07761955px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ffffff;font-family:Frutiger 55;-inkscape-font-specification:Frutiger 55 Bold">!</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:11.85616112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="130.32237"
+       y="99.715683"
+       id="text2885-9-3-3-8"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/error_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan2887-2-4-8-9"
+         x="130.32237"
+         y="99.715683"
+         style="font-size:21.07761955px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ffffff;font-family:Frutiger 55;-inkscape-font-specification:Frutiger 55 Bold">!</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="10"
+       y="302.36218"
+       id="text2936"><tspan
+         sodipodi:role="line"
+         id="tspan2938"
+         x="10"
+         y="302.36218">Icon Legend</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="10"
+       y="32.362183"
+       id="text2936-3"><tspan
+         sodipodi:role="line"
+         id="tspan2938-3"
+         x="10"
+         y="32.362183">Icons</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:11.85616112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="65"
+       y="137.36218"
+       id="text2885-9-3-3-8-2"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/error_icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan2887-2-4-8-9-4"
+         x="65"
+         y="137.36218"
+         style="font-size:21.07761955px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;font-family:Frutiger 55;-inkscape-font-specification:Frutiger 55 Bold">!</tspan></text>
+    <g
+       id="g4101"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/footage/imc_icon_legend.png"
+       inkscape:export-xdpi="177.31343"
+       inkscape:export-ydpi="177.31343">
+      <rect
+         ry="0"
+         y="317.36218"
+         x="10"
+         height="115"
+         width="335"
+         id="rect4097"
+         style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.35433072;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <g
+         transform="translate(0,55)"
+         id="g3913">
+        <rect
+           style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#dddddd;stroke-width:0.35433072;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect3629-9"
+           width="28"
+           height="46"
+           x="16"
+           y="323.36218"
+           ry="0"
+           inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/music_icon.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <rect
+           style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect3627-3"
+           width="20"
+           height="20"
+           x="20"
+           y="327.36218"
+           ry="2"
+           inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/music_icon.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <text
+           xml:space="preserve"
+           style="font-size:18.36697197px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+           x="22.646446"
+           y="341.74347"
+           id="text3623-3"
+           inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/music_icon.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"><tspan
+             sodipodi:role="line"
+             id="tspan3625-8"
+             x="22.646446"
+             y="341.74347">♫</tspan></text>
+      </g>
+      <g
+         transform="translate(-40,0)"
+         id="g3919">
+        <rect
+           style="color:#000000;fill:#ffffff;fill-opacity:1;stroke:#dddddd;stroke-width:0.35433072;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect3629-7-8-3-9"
+           width="28"
+           height="46"
+           x="56"
+           y="323.36218"
+           ry="0"
+           inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/waiting_icon1.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <rect
+           style="color:#000000;fill:#fecb00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect3627-6-1-8-8"
+           width="20"
+           height="20"
+           x="60"
+           y="327.36218"
+           ry="2"
+           inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/waiting_icon1.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <path
+           style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           d="m 70,330.06489 c -0.356517,0 -0.696003,0.0266 -1.038849,0.076 -0.227442,0.90211 -0.272946,1.16428 -0.405405,1.72297 -0.495009,0.12959 -0.961023,0.33257 -1.393581,0.58277 -0.491709,-0.30176 -0.716896,-0.45765 -1.52027,-0.9375 -0.557343,0.41681 -1.051506,0.91327 -1.469595,1.4696 0.480566,0.80459 0.63597,1.02893 0.9375,1.52027 -0.254194,0.43447 -0.450727,0.89541 -0.58277,1.39358 -0.563515,0.13894 -0.833206,0.20001 -1.748311,0.43074 -0.04788,0.33768 -0.07601,0.68796 -0.07601,1.03885 0,0.34758 0.02902,0.67889 0.07601,1.01352 0.915105,0.23073 1.184796,0.2918 1.748311,0.43074 0.132043,0.49817 0.328576,0.95911 0.58277,1.39358 -0.30153,0.49132 -0.456934,0.71568 -0.9375,1.52027 0.419275,0.5594 0.909732,1.0509 1.469595,1.46959 0.803376,-0.47984 1.028561,-0.63574 1.52027,-0.9375 0.434068,0.25211 0.896395,0.45231 1.393581,0.58277 0.132459,0.55869 0.177962,0.82086 0.405405,1.72298 0.342845,0.0494 0.682332,0.10135 1.038849,0.10135 0.35653,0 0.69601,-0.052 1.03886,-0.10135 0.22744,-0.90212 0.27294,-1.16429 0.4054,-1.72298 0.49719,-0.13046 0.95951,-0.33066 1.39358,-0.58277 0.49171,0.30176 0.7169,0.45766 1.52027,0.9375 0.55986,-0.41869 1.05032,-0.91019 1.4696,-1.46959 -0.48057,-0.80459 -0.63597,-1.02894 -0.9375,-1.52027 0.25419,-0.43447 0.45072,-0.89541 0.58277,-1.39358 0.56351,-0.13894 0.8332,-0.20001 1.74831,-0.43074 0.047,-0.33463 0.076,-0.66594 0.076,-1.01352 0,-0.35089 -0.0281,-0.70117 -0.076,-1.03885 -0.91511,-0.23073 -1.1848,-0.2918 -1.74831,-0.43074 -0.13205,-0.49817 -0.32858,-0.95911 -0.58277,-1.39358 0.30153,-0.49133 0.45693,-0.71568 0.9375,-1.52027 -0.41809,-0.55633 -0.91226,-1.05279 -1.4696,-1.4696 -0.80337,0.47985 -1.02856,0.63574 -1.52027,0.9375 -0.43256,-0.2502 -0.89857,-0.45318 -1.39358,-0.58277 -0.13246,-0.55869 -0.17796,-0.82086 -0.4054,-1.72297 -0.34285,-0.0494 -0.68233,-0.076 -1.03886,-0.076 z m 0,3.42061 c 2.14104,0 3.87669,1.73565 3.87669,3.87669 0,2.14103 -1.73565,3.87669 -3.87669,3.87669 -2.141032,0 -3.876686,-1.73566 -3.876686,-3.87669 0,-2.14104 1.735654,-3.87669 3.876686,-3.87669 z"
+           id="path3703-7"
+           inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/waiting_icon1.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+      </g>
+      <g
+         transform="translate(90,0)"
+         id="g3924">
+        <rect
+           style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#dddddd;stroke-width:0.35433072;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect3629-7-8-9"
+           width="28"
+           height="46"
+           x="96"
+           y="323.36218"
+           ry="0"
+           inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/tooshort_icon.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <rect
+           style="color:#000000;fill:#fecb00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect3627-6-1-9"
+           width="20"
+           height="20"
+           x="100"
+           y="327.36218"
+           ry="2"
+           inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/tooshort_icon.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <text
+           xml:space="preserve"
+           style="font-size:11.85616112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+           x="105.32237"
+           y="344.7157"
+           id="text2885-9-3-3-2"
+           inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/tooshort_icon.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"><tspan
+             sodipodi:role="line"
+             id="tspan2887-2-4-8-7"
+             x="105.32237"
+             y="344.7157"
+             style="font-size:21.07761955px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ffffff;font-family:Frutiger 55;-inkscape-font-specification:Frutiger 55 Bold">!</tspan></text>
+      </g>
+      <g
+         transform="translate(55,55)"
+         id="g3930">
+        <rect
+           style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#dddddd;stroke-width:0.35433072;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect3629-7-7-6"
+           width="28"
+           height="46"
+           x="131"
+           y="323.36218"
+           ry="0"
+           inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/error_icon.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <rect
+           style="color:#000000;fill:#ff5555;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect3627-6-19-0"
+           width="20"
+           height="20"
+           x="135"
+           y="327.36218"
+           ry="2"
+           inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/error_icon.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <text
+           xml:space="preserve"
+           style="font-size:11.85616112px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+           x="140.32237"
+           y="344.7157"
+           id="text2885-9-3-3-8-6"
+           inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/error_icon.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"><tspan
+             sodipodi:role="line"
+             id="tspan2887-2-4-8-9-1"
+             x="140.32237"
+             y="344.7157"
+             style="font-size:21.07761955px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ffffff;font-family:Frutiger 55;-inkscape-font-specification:Frutiger 55 Bold">!</tspan></text>
+      </g>
+      <text
+         id="text3936"
+         y="387.50235"
+         x="50"
+         style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O"
+         xml:space="preserve"><tspan
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           y="387.50235"
+           x="50"
+           id="tspan3938"
+           sodipodi:role="line">EN: The file was successfully imported and</tspan><tspan
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           id="tspan3940"
+           y="396.25235"
+           x="50"
+           sodipodi:role="line">is now ready to process.</tspan><tspan
+           id="tspan3954"
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           y="405.00235"
+           x="50"
+           sodipodi:role="line" /><tspan
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           id="tspan3942"
+           y="413.75235"
+           x="50"
+           sodipodi:role="line">DE: Die Datei wurde erfolgreich importiert</tspan><tspan
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           id="tspan3950"
+           y="422.50235"
+           x="50"
+           sodipodi:role="line">und steht nun zur Verwendung bereit.</tspan></text>
+      <text
+         id="text3936-5"
+         y="332.36218"
+         x="49.999996"
+         style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O"
+         xml:space="preserve"><tspan
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           id="tspan3940-3"
+           y="332.36218"
+           x="49.999996"
+           sodipodi:role="line">EN: The file is being imported or processed.</tspan><tspan
+           id="tspan3954-7"
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           y="341.11218"
+           x="49.999996"
+           sodipodi:role="line" /><tspan
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           id="tspan3950-4"
+           y="349.86218"
+           x="49.999996"
+           sodipodi:role="line">DE: Die Datei wird gerade importiert</tspan><tspan
+           id="tspan4034"
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           y="358.61218"
+           x="49.999996"
+           sodipodi:role="line">oder sonstwie verarbeitet.</tspan></text>
+      <text
+         id="text3936-5-7"
+         y="332.36218"
+         x="220"
+         style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O"
+         xml:space="preserve"><tspan
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           id="tspan3940-3-8"
+           y="332.36218"
+           x="220"
+           sodipodi:role="line">EN: The file is too short for the this settings.</tspan><tspan
+           id="tspan4075"
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           y="341.11218"
+           x="220"
+           sodipodi:role="line">If you start the process now, it is omitted.</tspan><tspan
+           id="tspan3954-7-8"
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           y="349.86218"
+           x="220"
+           sodipodi:role="line" /><tspan
+           id="tspan4079"
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           y="358.61218"
+           x="220"
+           sodipodi:role="line">DE: Die Datei ist für die Einstellungen zu </tspan><tspan
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           y="367.36218"
+           x="220"
+           sodipodi:role="line"
+           id="tspan4297">kurz. Sie wird so nicht verwendet.</tspan></text>
+      <text
+         id="text3936-5-7-4"
+         y="387.36218"
+         x="220"
+         style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O"
+         xml:space="preserve"><tspan
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           id="tspan3940-3-8-9"
+           y="387.36218"
+           x="220"
+           sodipodi:role="line">EN: There was a problem with the encoding</tspan><tspan
+           id="tspan4083"
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           y="396.11218"
+           x="220"
+           sodipodi:role="line">of the file. It can't be used by the software.</tspan><tspan
+           id="tspan3954-7-8-6"
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           y="404.86218"
+           x="220"
+           sodipodi:role="line" /><tspan
+           id="tspan4095"
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           y="413.61218"
+           x="220"
+           sodipodi:role="line">DE: Die Kodierung wird nicht verstanden. </tspan><tspan
+           style="font-size:7px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+           y="422.36218"
+           x="220"
+           sodipodi:role="line"
+           id="tspan4305">Die Datei kann nicht verwendet werden.</tspan></text>
+    </g>
+    <g
+       id="g3868"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/stop_icon.png"
+       inkscape:export-xdpi="125.99974"
+       inkscape:export-ydpi="125.99974">
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/stop_icon.png"
+         ry="2"
+         y="102.36218"
+         x="300"
+         height="20"
+         width="20"
+         id="rect3627-4-7"
+         style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/stop_icon.png"
+         sodipodi:nodetypes="ccccc"
+         id="path3864"
+         d="m 305,107.36218 0,10 10,0 0,-10 -10,0 z"
+         style="fill:#ffffff;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1" />
+    </g>
+    <g
+       id="g3872"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/play_icon.png"
+       inkscape:export-xdpi="126"
+       inkscape:export-ydpi="126">
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/play_icon.png"
+         ry="2"
+         y="102.36218"
+         x="265"
+         height="20"
+         width="20"
+         id="rect3627-4"
+         style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/play_icon.png"
+         id="path3866"
+         d="m 270,107.36218 10,5 -10,5 0,-10 z"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+    </g>
+    <rect
+       style="color:#000000;fill:#50bb56;fill-opacity:0.22683705;fill-rule:nonzero;stroke:none;stroke-width:7.08661413000000007;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3056-6"
+       width="65"
+       height="30"
+       x="260"
+       y="132.36218"
+       ry="0"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/tap_icon.png"
+       inkscape:export-xdpi="126"
+       inkscape:export-ydpi="126" />
+    <g
+       id="g4270"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/footage/imc_bpm_legend.png"
+       inkscape:export-xdpi="177.31343"
+       inkscape:export-ydpi="177.31343">
+      <rect
+         style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.35433072;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect4097-1"
+         width="335"
+         height="75"
+         x="10"
+         y="447.36218"
+         ry="0" />
+      <g
+         id="g4253">
+        <text
+           id="text3936-7"
+           y="457.36218"
+           x="50"
+           style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O"
+           xml:space="preserve"><tspan
+             id="tspan3954-5"
+             style="font-size:8;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+             y="457.36218"
+             x="50"
+             sodipodi:role="line">EN: The value was read from the original file's meta data and is considered reliable.</tspan><tspan
+             style="font-size:8;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+             id="tspan3950-7"
+             y="464.86218"
+             x="50"
+             sodipodi:role="line">DE: Der Wert wurde aus den Metadaten der Originaldatei gelesen und gilt als zuverlässig.</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:4px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#366ec4;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O;color:#000000;fill-rule:nonzero;stroke-width:0.30000000999999998;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           x="15"
+           y="457.36218"
+           id="text3115"><tspan
+             sodipodi:role="line"
+             id="tspan3117"
+             x="15"
+             y="457.36218"
+             style="font-size:8px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O Bold;color:#000000;fill:#366ec4;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000000999999998;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate">120 bpm</tspan></text>
+        <text
+           id="text3936-7-9"
+           y="482.36218"
+           x="50"
+           style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O"
+           xml:space="preserve"><tspan
+             id="tspan3954-5-0"
+             style="font-size:8px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+             y="482.36218"
+             x="50"
+             sodipodi:role="line">EN: The value was calculated from an extract and is of unconfirmed reliability.</tspan><tspan
+             style="font-size:8px;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+             id="tspan3950-7-7"
+             y="492.36218"
+             x="50"
+             sodipodi:role="line">DE: Der Wert wurde aus einem Ausschnitt berechnet. Die Zuverlässigkeit ist unbestätigt.</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:4px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#c49c00;fill-opacity:1;stroke:none;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O;color:#000000;fill-rule:nonzero;stroke-width:0.30000000999999998;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           x="15"
+           y="482.36218"
+           id="text3115-3"><tspan
+             sodipodi:role="line"
+             id="tspan3117-2"
+             x="15"
+             y="482.36218"
+             style="font-size:8px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O Bold;color:#000000;fill:#c49c00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000000999999998;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate">120 bpm</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:8px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#51ad00;fill-opacity:1;stroke:none;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O Bold;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#000000;fill-rule:nonzero;stroke-width:0.30000000999999998;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           x="15"
+           y="507.36218"
+           id="text3115-3-7"><tspan
+             sodipodi:role="line"
+             id="tspan3117-2-2"
+             x="15"
+             y="507.36218"
+             style="font-size:8px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O Bold;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#000000;fill:#51ad00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000000999999998;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate">120 bpm</tspan></text>
+        <text
+           id="text3936-7-9-8"
+           y="507.36218"
+           x="50"
+           style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O"
+           xml:space="preserve"><tspan
+             id="tspan3954-5-0-4"
+             style="font-size:8;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+             y="507.36218"
+             x="50"
+             sodipodi:role="line">EN: The value was entered manually and is considered reliable.</tspan><tspan
+             style="font-size:8;font-style:italic;-inkscape-font-specification:Adobe Garamond Italic"
+             id="tspan3950-7-7-0"
+             y="514.86218"
+             x="50"
+             sodipodi:role="line">DE: Der Wert wurde manuell eingegeben und gilt als zuverlässig.</tspan></text>
+      </g>
+    </g>
+    <path
+       style="color:#000000;fill:none;stroke:#000000;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 14.173228,226.77163 10.629922,0 0,7.08662 -10.629922,0"
+       id="path3205"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="color:#000000;fill:none;stroke:#000000;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 28.346457,226.77163 0,7.08662 14.173228,0 0,-7.08662 z"
+       id="path3207"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="color:#000000;fill:none;stroke:#000000;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 56.692913,226.77163 -10.629921,0 0,7.08662 10.629921,0"
+       id="path3211"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <text
+       xml:space="preserve"
+       style="font-size:9px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;color:#000000;fill:#fd9b00;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Libertine O;-inkscape-font-specification:Linux Libertine O"
+       x="30.173229"
+       y="240.16533"
+       id="text4580-4"
+       inkscape:export-filename="/home/nw/projekte/prg/eclipse_workspace/interval_music_compositor/resources/blend_mode_1.png"
+       inkscape:export-xdpi="134.72623"
+       inkscape:export-ydpi="134.72623"><tspan
+         sodipodi:role="line"
+         id="tspan4582-3"
+         x="30.173229"
+         y="240.16533"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;color:#000000;fill:#fd9b00;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Linux Biolinum O;-inkscape-font-specification:Linux Biolinum O Bold" /></text>
+    <rect
+       style="color:#000000;fill:#fd9b00;fill-opacity:0.50196078;fill-rule:nonzero;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3278"
+       width="4.2519684"
+       height="7.0866194"
+       x="14.173228"
+       y="240.94485"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#fd9b00;fill-opacity:0.50196078;fill-rule:nonzero;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3280"
+       width="4.2519693"
+       height="7.0866194"
+       x="21.259842"
+       y="240.94485"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#fd9b00;fill-opacity:0.50196078;fill-rule:nonzero;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3282"
+       width="4.2519689"
+       height="7.0866194"
+       x="28.346457"
+       y="240.94485"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#fd9b00;fill-opacity:0.50196078;fill-rule:nonzero;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3284"
+       width="4.2519684"
+       height="7.0866194"
+       x="35.433071"
+       y="240.94485"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#fd9b00;fill-opacity:0.50196078;fill-rule:nonzero;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3286"
+       width="4.2519698"
+       height="7.0866194"
+       x="42.519684"
+       y="240.94485"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#fd9b00;fill-opacity:0.50196078;fill-rule:nonzero;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3288"
+       width="4.2519674"
+       height="7.0866194"
+       x="49.6063"
+       y="240.94485"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#888a85;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1.41732287;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4104"
+       width="2.834646"
+       height="5.6692915"
+       x="15.590551"
+       y="227.48029"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#888a85;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1.41732287;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4104-2"
+       width="2.834646"
+       height="5.6692915"
+       x="20.55118"
+       y="227.48029"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#888a85;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1.41732287;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4104-2-7"
+       width="2.834646"
+       height="5.6692915"
+       x="31.181103"
+       y="227.48029"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#888a85;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1.41732287;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4104-2-9"
+       width="2.834646"
+       height="5.6692915"
+       x="38.267715"
+       y="227.48029"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#888a85;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1.41732287;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4104-2-0"
+       width="2.834646"
+       height="5.6692915"
+       x="48.188976"
+       y="227.48029"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#888a85;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1.41732287;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4104-2-1"
+       width="2.834646"
+       height="5.6692915"
+       x="53.149609"
+       y="227.48029"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="color:#000000;fill:none;stroke:#000000;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 70.866141,226.77163 10.629922,0 0,7.08662 -10.629922,0"
+       id="path3205-4"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="color:#000000;fill:none;stroke:#000000;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 85.03937,226.77163 0,7.08662 14.173228,0 0,-7.08662 z"
+       id="path3207-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="color:#000000;fill:none;stroke:#000000;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 113.38583,226.77163 -10.62993,0 0,7.08662 10.62993,0"
+       id="path3211-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#fd9b00;fill-opacity:0.50196078;fill-rule:nonzero;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3278-7"
+       width="4.2519679"
+       height="7.0866194"
+       x="70.866142"
+       y="240.94485"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#fd9b00;fill-opacity:0.50196078;fill-rule:nonzero;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3280-5"
+       width="4.2519732"
+       height="7.0866194"
+       x="77.952751"
+       y="240.94485"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#fd9b00;fill-opacity:0.50196078;fill-rule:nonzero;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3282-8"
+       width="4.2519708"
+       height="7.0866194"
+       x="85.039368"
+       y="240.94485"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#fd9b00;fill-opacity:0.50196078;fill-rule:nonzero;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3284-5"
+       width="4.2519684"
+       height="7.0866194"
+       x="92.125984"
+       y="240.94485"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#fd9b00;fill-opacity:0.50196078;fill-rule:nonzero;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3286-2"
+       width="4.2519736"
+       height="7.0866194"
+       x="99.212593"
+       y="240.94485"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#fd9b00;fill-opacity:0.50196078;fill-rule:nonzero;stroke:#fd9800;stroke-width:1.41732287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3288-9"
+       width="4.2519717"
+       height="7.0866194"
+       x="106.29921"
+       y="240.94485"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#888a85;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1.41732287;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4104-1"
+       width="2.834646"
+       height="5.6692915"
+       x="72.283463"
+       y="227.48029"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#888a85;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1.41732287;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4104-2-05"
+       width="2.834646"
+       height="5.6692915"
+       x="75.826775"
+       y="227.48029"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#888a85;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1.41732287;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4104-2-7-2"
+       width="2.834646"
+       height="5.6692915"
+       x="86.456696"
+       y="227.48029"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#888a85;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1.41732287;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4104-2-9-4"
+       width="2.834646"
+       height="5.6692915"
+       x="90"
+       y="227.48029"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#888a85;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1.41732287;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4104-2-0-1"
+       width="2.834646"
+       height="5.6692915"
+       x="93.543304"
+       y="227.48029"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <rect
+       style="color:#000000;fill:#888a85;fill-opacity:0.50196078;fill-rule:nonzero;stroke:none;stroke-width:1.41732287;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4104-2-1-9"
+       width="2.834646"
+       height="5.6692915"
+       x="104.17323"
+       y="227.48029"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.35433071999999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       d="m 73.700787,233.85825 -0.708661,8.50393"
+       id="path4225"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.35433071999999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       d="m 77.244094,233.85825 2.834646,8.50393"
+       id="path4227"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.35433071999999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       d="m 87.874016,233.85825 -0.708662,8.50393"
+       id="path4229"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.35433071999999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       d="m 91.417323,233.85825 2.834646,8.50393"
+       id="path4231"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.35433071999999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       d="m 94.96063,233.85825 6.37795,8.50393"
+       id="path4233"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.35433071999999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       d="m 105.59055,233.85825 2.83465,8.50393"
+       id="path4235"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_2.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.35433071999999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       d="m 21.968504,233.85825 -5.669291,8.50393"
+       id="path4237"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.35433072;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       d="m 32.598425,233.85825 -9.212598,8.50393"
+       id="path4239"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.35433072;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       d="m 49.606299,233.85825 -19.133858,8.50393"
+       id="path4241"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.35433071999999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       d="m 17.007874,233.85825 20.551181,8.50393"
+       id="path4243"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.35433071999999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       d="m 39.685039,233.85825 4.96063,8.50393"
+       id="path4245"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.35433071999999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       d="m 54.566929,233.85825 -2.834646,8.50393"
+       id="path4247"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/nw/projekte/prg/_workitems/imc/workspace/interval_music_compositor/resources/enumeration_mode_1.png"
+       inkscape:export-xdpi="129.09447"
+       inkscape:export-ydpi="129.09447" />
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+group = 'ch.retorte.intervalmusiccompositor'
+version = '2.4.0'
+
+dependencies {
+  compile project(':intervalmusiccompositor.spi')
+  compile project(':intervalmusiccompositor.model')
+  compile project(':intervalmusiccompositor.commons')
+
+  compile 'com.tritonus:org.tritonus.share:0.3.6'
+  compile 'com.tritonus:org.tritonus.remaining:0.3.6'
+  compile 'com.tritonus:org.tritonus.dsp:0.3.6'
+  compile 'javazoom:javazoom.javalayer:1.0.1'
+}

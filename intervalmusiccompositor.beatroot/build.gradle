@@ -1,0 +1,10 @@
+apply plugin: 'java'
+
+group = 'at.ofai.music'
+version = '0.5.8-custom'
+
+dependencies {
+  compile project(':intervalmusiccompositor.spi')
+  
+  testCompile project(':intervalmusiccompositor.decoder.mp3')
+}

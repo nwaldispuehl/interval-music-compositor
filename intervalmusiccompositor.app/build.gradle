@@ -1,0 +1,149 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'macAppBundle'
+apply plugin: 'launch4j'
+apply plugin: 'gradle-one-jar'
+apply plugin: 'findbugs'
+
+group = 'ch.retorte.intervalmusiccompositor'
+applicationName = "IntervalMusicCompositor"
+mainClassName = "ch.retorte.intervalmusiccompositor.Main"
+
+applicationDefaultJvmArgs = ["-Xmx1024m"]
+
+ext.macosxOutputDir = '/macosxApp'
+ext.windowsOutputDir = '/windowsApp'
+ext.linuxOutputDir = '/linuxApp'
+ext.windowsUberJar = 'uberJar.jar'
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+ }
+
+jar {
+    manifest {
+        attributes(provider: 'gradle', "Main-Class": mainClassName)
+    }
+}
+
+macAppBundle {
+  appOutputDir = project.ext.macosxOutputDir
+  mainClassName = project.mainClassName
+  icon = project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.icns')
+  appStyle = 'Oracle'
+  appName = project.applicationName
+  jvmVersion = "1.7+"
+  arguments = ["-Xmx=2048M"]
+}
+
+task distOsxApp(type: Tar, dependsOn: createApp) {
+  description = "Creates an archive from the Mac OS X version." 
+  compression = Compression.GZIP
+  baseName = project.applicationName + '-macosx'
+  
+  into (project.applicationName + '-' + version) {
+    from buildDir.absolutePath + project.ext.macosxOutputDir
+    from project(':intervalmusiccompositor.build').files('documentation/')
+  }
+}
+
+task uberJar(type: OneJar) {
+    mainClass = project.mainClassName
+    archiveName = project.ext.windowsUberJar
+}
+
+task copyUberJar(type: Copy, dependsOn: [copyL4jLib, uberJar]) {
+  from uberJar.outputs.files
+  into buildDir.absolutePath + project.ext.windowsOutputDir + '/lib'
+}
+
+task distWindowsApp(type: Zip, dependsOn: [uberJar, copyUberJar, createExe]) {
+  description = "Creates an archive from the Microsoft Windows version." 
+  baseName = applicationName + '-windows'
+  
+  into (applicationName + '-' + version) {
+    from buildDir.absolutePath + project.ext.windowsOutputDir + '/' + applicationName + '.exe'
+    from project(':intervalmusiccompositor.build').files('documentation/')
+  }
+}
+
+task distLinuxApp(type: Tar, dependsOn: installApp) {
+  description = "Creates an archive from the Linux version."
+  compression = Compression.GZIP
+  baseName = applicationName + '-linux'
+  extension = 'tar.gz'
+  
+  into (applicationName + '-' + version) {
+    from installApp.outputs
+    from project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.svg')
+    from project(':intervalmusiccompositor.build').files('documentation/')
+  }
+}
+
+task distAll(dependsOn: [distOsxApp, distWindowsApp, distLinuxApp]) {
+  description = "Creates archives for all supported operating systems."
+}
+
+
+
+
+launch4j {
+    outputDir = project.ext.windowsOutputDir
+    mainClassName = "com.simontuffs.onejar.Boot" // This is the OneJar wrapper.
+    icon = project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.ico')
+
+    jreMinVersion = '1.7.0'
+    version = project.version
+
+    downloadUrl = "http://www.java.com/download/"
+    supportUrl = "http://www.retorte.ch/tools/interval_music_compositor/feedback_support"
+  
+    launch4jCmd = project(':intervalmusiccompositor.build').file('3rdparty/launch4j/launch4j')
+
+    jar = "lib/" + project.ext.windowsUberJar
+
+    outfile = project.applicationName + '.exe'
+    copyright = "retorte.ch"
+    maxHeapSize = 1024
+}
+
+dependencies {
+  compile project(':intervalmusiccompositor.spi')
+  compile project(':intervalmusiccompositor.model')
+  
+	compile project(':intervalmusiccompositor.core')
+	compile project(':intervalmusiccompositor.ui')
+	
+	compile project(':intervalmusiccompositor.beatroot')
+	
+	compile project(':intervalmusiccompositor.decoder.wave')
+	compile project(':intervalmusiccompositor.decoder.flac')
+	compile project(':intervalmusiccompositor.decoder.mp3')
+	compile project(':intervalmusiccompositor.decoder.ogg')
+	compile project(':intervalmusiccompositor.decoder.aac')
+	
+	compile project(':intervalmusiccompositor.encoder.wave')
+	compile project(':intervalmusiccompositor.encoder.mp3')
+}
+
+buildscript {
+    repositories {
+    
+        mavenLocal()
+        mavenCentral()
+        
+         maven {
+            url project(':intervalmusiccompositor.build').file("plugin_repository").absolutePath
+        }
+        
+    }
+    dependencies {
+        classpath 'edu.sc.seis.gradle:launch4j:1.0.6'
+        classpath 'edu.sc.seis.gradle:gradle-macappbundle:2.0.0-custom' // Custom version, replace as soon as the official v2.0.0 is published.
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+
