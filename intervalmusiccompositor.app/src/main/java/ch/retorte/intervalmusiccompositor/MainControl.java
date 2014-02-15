@@ -130,7 +130,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
       compilationGenerator.createCompilationWith(compilationParameters);
     }
     catch (CompilationException e) {
-      ui.showErrorMessage(e.getMessage());
+      messageBus.send(new ErrorMessage(e.getMessage()));
     }
     finally {
       activateUI();
@@ -150,7 +150,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
       addTrack(musicList, i, file);
     }
     else {
-      ui.showErrorMessage("Too much tracks.");
+      messageBus.send(new ErrorMessage("Too much tracks."));
     }
   }
 
@@ -309,7 +309,6 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
 
     }
     catch (Exception e) {
-      messageBus.send(new ErrorMessage("Was not able to tidy temporary directory ..."));
       addDebugMessage(e.getMessage());
     }
     finally {
@@ -469,7 +468,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
       audioFile.writeBpm(audioFile.getBpm());
     }
     catch (IOException e) {
-      ui.showErrorMessage("Not able to write BPM information: " + e.getMessage());
+      messageBus.send(new ErrorMessage("Not able to write BPM information: " + e.getMessage()));
       addDebugMessage(e.getMessage());
     }
     ui.refresh();

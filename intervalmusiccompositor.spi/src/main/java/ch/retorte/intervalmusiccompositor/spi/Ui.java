@@ -11,8 +11,6 @@ public interface Ui {
 
   void launch();
 
-  void showErrorMessage(String message);
-
   void setActive();
 
   void setInactive();

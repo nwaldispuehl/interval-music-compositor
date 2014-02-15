@@ -16,6 +16,7 @@ import org.tritonus.dsp.ais.AmplitudeAudioInputStream;
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.spi.audio.MusicPlayer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
@@ -131,7 +132,8 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
       inputStream.setAmplitudeLinear(audioFile.getVolumeRatio());
     }
     catch (IOException e) {
-      e.printStackTrace();
+      messageProducer.send(new ErrorMessage(e.getMessage()));
+      addDebugMessage(e.getMessage());
     }
 
     if (inputStream != null) {

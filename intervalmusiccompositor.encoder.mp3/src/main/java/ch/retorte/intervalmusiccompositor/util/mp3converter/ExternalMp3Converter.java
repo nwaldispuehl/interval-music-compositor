@@ -14,23 +14,18 @@ public abstract class ExternalMp3Converter {
     return getLocalBinary().exists() || getSystemBinary().exists();
   }
 
-  public void convertToMp3(File inputFile, File outputFile) {
+  public void convertToMp3(File inputFile, File outputFile) throws IOException {
 
     String execution_string = getAbsoluteLamePath() + " " + options + " " + inputFile.getAbsolutePath() + " " + outputFile.getAbsolutePath();
 
-    Process p = null;
-    try {
-      p = Runtime.getRuntime().exec(execution_string);
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-    }
+    Process p = Runtime.getRuntime().exec(execution_string);
 
     try {
       p.waitFor();
     }
     catch (InterruptedException e) {
-      e.printStackTrace();
+      // We warm-heartedly convert the thread exception into an io exception.
+      throw new IOException(e);
     }
   }
 

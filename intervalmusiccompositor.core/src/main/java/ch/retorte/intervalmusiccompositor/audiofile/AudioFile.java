@@ -137,7 +137,7 @@ public class AudioFile extends File implements IAudioFile {
       temporaryFile = File.createTempFile(getName(), bundle.getString("imc.temporaryFile.suffix"));
     }
     catch (IOException e) {
-      e.printStackTrace();
+      addDebugMessage(e.getMessage());
     }
 
     if (temporaryFile != null) {

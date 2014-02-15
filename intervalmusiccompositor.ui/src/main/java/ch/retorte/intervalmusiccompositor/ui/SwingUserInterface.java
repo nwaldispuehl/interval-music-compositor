@@ -77,6 +77,7 @@ import ch.retorte.intervalmusiccompositor.list.CompositionMode;
 import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.ProgressMessage;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.MusicCompilationControl;
@@ -239,7 +240,7 @@ public class SwingUserInterface extends JFrame implements Ui {
     this.messageProducer = messageProducer;
 
     setUiProperties();
-    addProgressMessageSubscriber(messageSubscriber);
+    addMessageSubscribers(messageSubscriber);
     createAboutDialogControl(updateAvailabilityChecker);
 
     setTitle();
@@ -1106,12 +1107,21 @@ public class SwingUserInterface extends JFrame implements Ui {
     adc = new AboutDialogControl(this, updateAvailabilityChecker, applicationData, messageProducer);
   }
 
-  private void addProgressMessageSubscriber(MessageSubscriber messageSubscriber) {
+  private void addMessageSubscribers(MessageSubscriber messageSubscriber) {
     messageSubscriber.addHandler(new MessageHandler<ProgressMessage>() {
 
       @Override
       public void handle(ProgressMessage message) {
         updateProgressBar(message.getProgressInPercent(), message.getCurrentActivity());
+      }
+
+    });
+
+    messageSubscriber.addHandler(new MessageHandler<ErrorMessage>() {
+
+      @Override
+      public void handle(ErrorMessage message) {
+        showErrorMessage(message.getMessage());
       }
 
     });
@@ -1379,7 +1389,6 @@ public class SwingUserInterface extends JFrame implements Ui {
   }
 
 
-  @Override
   public void showErrorMessage(String message) {
     JOptionPane.showMessageDialog(this, message, bundle.getString("ui.error.title"), JOptionPane.WARNING_MESSAGE);
   }

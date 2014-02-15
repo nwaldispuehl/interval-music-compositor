@@ -259,7 +259,7 @@ public class SoundHelper implements AudioStandardizer {
       result = new AudioInputStream(new ByteArrayInputStream(streamExtract), TARGET_AUDIO_FORMAT, extractFrameLength);
     }
     catch (IOException e) {
-      e.printStackTrace();
+      // nop
     }
 
     return result;
