@@ -7,15 +7,15 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageHandler;
  * 
  * @author nw
  */
-public class ConsoleMessageHandler implements MessageHandler<ConsoleMessage> {
+public class ConsoleMessageHandler extends ConsolePrinter implements MessageHandler<ConsoleMessage> {
 
   @Override
   public void handle(ConsoleMessage message) {
     if (message instanceof InfoMessage) {
-      System.out.println(message.getMessage());
+      printToStdOut(message.getMessage());
     }
     else if (message instanceof ErrorMessage) {
-      System.err.println(message.getMessage());
+      printToStdErr(message.getMessage());
     }
   }
 

@@ -25,7 +25,6 @@ public class MessageBus implements MessageProducer, MessageSubscriber {
   @Override
   public void send(Message message) {
     for (MessageHandler<? super Message> handler : messageHandlers) {
-
       if (canHandleMessageType(handler, message)) {
         handler.handle(message);
       }
