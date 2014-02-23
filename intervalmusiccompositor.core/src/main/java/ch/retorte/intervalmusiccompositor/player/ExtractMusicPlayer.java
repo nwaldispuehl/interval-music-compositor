@@ -26,6 +26,8 @@ import ch.retorte.intervalmusiccompositor.util.SoundHelper;
  */
 public class ExtractMusicPlayer implements Runnable, MusicPlayer {
 
+  private static final int AUDIO_BUFFER_SIZE = 32768;
+
   private MessageFormatBundle bundle = getBundle("core_imc");
 
   private AmplitudeAudioInputStream inputStream;
@@ -52,9 +54,6 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
 
   public void stop() {
     play = false;
-    if (line != null) {
-      line.drain();
-    }
   }
 
   public Boolean isPlaying() {
@@ -72,7 +71,7 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
       line.start();
 
       int nBytesRead = 0;
-      byte[] abData = new byte[128000];
+      byte[] abData = new byte[AUDIO_BUFFER_SIZE];
 
       while (nBytesRead != -1 && play) {
         try {
@@ -88,15 +87,28 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
 
       line.stop();
       line.close();
+      line = null;
 
       play = false;
 
+      clearStream();
     }
     catch (LineUnavailableException e) {
       addDebugMessage("Unable to play music: " + e.getMessage());
     }
 
     addDebugMessage("Stopped playing.");
+  }
+
+  private void clearStream() {
+    if (inputStream != null) {
+      try {
+        inputStream.close();
+      }
+      catch (IOException e) {
+        // We don't do anything in this case.
+      }
+    }
   }
 
   @Override
@@ -116,16 +128,6 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
     }
 
     int extractStart = (audioFileDurationInSeconds - extractLength) / 2;
-
-    // Tidy stuff
-    if (inputStream != null) {
-      try {
-        inputStream.close();
-      }
-      catch (IOException e) {
-        // nop
-      }
-    }
 
     try {
       inputStream = new AmplitudeAudioInputStream(soundHelper.getStreamExtract(audioFile.getAudioInputStream(), extractLength, extractStart));
