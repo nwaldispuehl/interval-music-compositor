@@ -17,10 +17,14 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageHandler;
 public class MessageBusTest {
 
   private MessageBus messageBus;
+  private MatchingMessageHandler matchingHandler;
+  private NonMatchingMessageHandler nonMatchingHandler;
 
   @Before
   public void setup() {
     messageBus = new MessageBus();
+    matchingHandler = new MatchingMessageHandler();
+    nonMatchingHandler = new NonMatchingMessageHandler();
   }
 
   @Test
@@ -37,51 +41,45 @@ public class MessageBusTest {
   @Test
   public void shouldIgnoreMessagesIfWrongHandlerExists() {
     // given
-    MatchingMessageHandler handler = new MatchingMessageHandler();
-    messageBus.addHandler(handler);
+    messageBus.addHandler(matchingHandler);
 
     // when
     messageBus.send(mock(NonMatchingMessage.class));
 
     // then
-    assertFalse(handler.hasBeenCalled());
+    assertFalse(matchingHandler.hasBeenCalled());
   }
 
   @Test
   public void shouldUseMatchingHandlerForMessages() {
     // given
-    MatchingMessageHandler handler = new MatchingMessageHandler();
-    NonMatchingMessageHandler nonMatchingHandler = new NonMatchingMessageHandler();
-    messageBus.addHandler(handler);
+    messageBus.addHandler(matchingHandler);
     messageBus.addHandler(nonMatchingHandler);
 
     // when
     messageBus.send(mock(MatchingMessage.class));
 
     // then
-    assertTrue(handler.hasBeenCalled());
+    assertTrue(matchingHandler.hasBeenCalled());
     assertFalse(nonMatchingHandler.hasBeenCalled());
   }
 
   @Test
   public void shouldUseMatchingHandlerEvenForSubclassesOfMessages() {
     // given
-    MatchingMessageHandler handler = new MatchingMessageHandler();
-    messageBus.addHandler(handler);
+    messageBus.addHandler(matchingHandler);
 
     // when
     messageBus.send(mock(SubTypeOfMatchingMessage.class));
 
     // then
-    assertTrue(handler.hasBeenCalled());
+    assertTrue(matchingHandler.hasBeenCalled());
   }
 
   @Test
   public void shouldCallHandlerOncePerMessage() {
     // given
-    MatchingMessageHandler handler = new MatchingMessageHandler();
-    NonMatchingMessageHandler nonMatchingHandler = new NonMatchingMessageHandler();
-    messageBus.addHandler(handler);
+    messageBus.addHandler(matchingHandler);
     messageBus.addHandler(nonMatchingHandler);
 
     // when
@@ -91,7 +89,7 @@ public class MessageBusTest {
     messageBus.send(mock(NonMatchingMessage.class));
 
     // then
-    assertTrue(handler.hasBeenCalled(3));
+    assertTrue(matchingHandler.hasBeenCalled(3));
     assertTrue(nonMatchingHandler.hasBeenCalled(1));
   }
 
