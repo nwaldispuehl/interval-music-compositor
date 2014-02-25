@@ -34,4 +34,4 @@ The distribution archives are then to be found in the `intervalmusiccompositor.a
 
 Current build status
 --------------------
-To be added.
+[![Build Status](https://travis-ci.org/nwaldispuehl/interval-music-compositor.png?branch=master)](https://travis-ci.org/nwaldispuehl/interval-music-compositor)
