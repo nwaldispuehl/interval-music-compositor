@@ -3,7 +3,6 @@ apply plugin: 'application'
 apply plugin: 'macAppBundle'
 apply plugin: 'launch4j'
 apply plugin: 'gradle-one-jar'
-apply plugin: 'findbugs'
 
 group = 'ch.retorte.intervalmusiccompositor'
 applicationName = "IntervalMusicCompositor"
