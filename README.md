@@ -30,3 +30,8 @@ or create the distributions:
     $ ./gradlew distAll
   
 The distribution archives are then to be found in the `intervalmusiccompositor.app/build/distributions/` folder.
+
+
+Current build status
+--------------------
+To be added.
