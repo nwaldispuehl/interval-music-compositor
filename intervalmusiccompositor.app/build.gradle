@@ -29,6 +29,11 @@ jar {
     }
 }
 
+
+// We disable tasks which are not successfully performed on non-OSX hosts.
+createDmg.enabled = false
+generatePlist.enabled = false
+
 macAppBundle {
   appOutputDir = project.ext.macosxOutputDir
   mainClassName = project.mainClassName
