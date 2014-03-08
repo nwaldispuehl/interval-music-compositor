@@ -56,7 +56,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
   private List<IAudioFile> musicList = Lists.newArrayList();
   private List<IAudioFile> breakList = Lists.newArrayList();
 
-  private CreateCacheJobManager cacheQueueManager;
+  private CreateCacheJobManager createCacheJobManager;
 
   private CompilationGenerator compilationGenerator;
   private AudioFileFactory audioFileFactory;
@@ -80,7 +80,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
     this.compilationGenerator.setApplicationData(this);
 
     setConfigurationProperties();
-    startCacheQueueManager();
+    createCreateCacheJobManager();
   }
 
   private void setConfigurationProperties() {
@@ -98,14 +98,8 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
     this.ui = ui;
   }
 
-  private void startCacheQueueManager() {
-    cacheQueueManager = new CreateCacheJobManager(messageBus, getThreadLimit());
-    new Thread(cacheQueueManager).start();
-  }
-
-  private void stopCacheQueueManager() {
-    addDebugMessage("Stopping cache queue manager.");
-    cacheQueueManager.stop();
+  private void createCreateCacheJobManager() {
+    createCacheJobManager = new CreateCacheJobManager(messageBus, getThreadLimit());
   }
 
   /**
@@ -157,8 +151,8 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
 
     IAudioFile audioFile = audioFileFactory.createAudioFileFrom(f);
 
-    CreateCacheJob wg = new CreateCacheJob(audioFile, messageBus);
-    wg.addListener(new TaskFinishListener() {
+    CreateCacheJob job = new CreateCacheJob(audioFile, messageBus);
+    job.addListener(new TaskFinishListener() {
 
       @Override
       public void onTaskFinished() {
@@ -166,7 +160,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
       }
     });
 
-    cacheQueueManager.add(wg);
+    createCacheJobManager.addNewJob(job);
 
     if (i < 0 || audioFileList.size() < i) {
       i = audioFileList.size();
@@ -242,7 +236,6 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
 
   public void quit() {
     removeCachedFiles();
-    stopCacheQueueManager();
 
     messageBus.send(new InfoMessage("Gracefully shutting down ..."));
 

@@ -50,10 +50,11 @@ public class CreateCacheJob implements Runnable {
     catch (IOException e) {
       addDebugMessage(e.getMessage());
     }
+    finally {
+      notifyListeners();
+    }
 
     this.audioFile = null;
-
-    notifyListeners();
   }
 
   private void addDebugMessage(String message) {
