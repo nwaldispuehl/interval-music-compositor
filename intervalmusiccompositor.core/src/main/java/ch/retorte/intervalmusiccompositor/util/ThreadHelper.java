@@ -18,7 +18,33 @@ public class ThreadHelper {
     try {
       Thread.sleep(millis);
     } catch (InterruptedException e) {
-      messageProducer.send(new DebugMessage(this, e.getMessage()));
+      addDebugMessage(e.getMessage());
     }
+  }
+
+  public void wait(Runnable t) {
+    try {
+      synchronized (t) {
+        t.wait();
+      }
+    }
+    catch (InterruptedException e) {
+      addDebugMessage(e.getMessage());
+    }
+  }
+
+  public void notify(Runnable t) {
+    try {
+      synchronized (t) {
+        t.notify();
+      }
+    }
+    catch (IllegalMonitorStateException e) {
+      addDebugMessage(e.getMessage());
+    }
+  }
+
+  private void addDebugMessage(String message) {
+    messageProducer.send(new DebugMessage(this, message));
   }
 }

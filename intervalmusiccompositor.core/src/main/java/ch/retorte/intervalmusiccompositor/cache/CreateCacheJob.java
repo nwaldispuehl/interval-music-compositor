@@ -13,13 +13,13 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 /**
  * @author nw
  */
-public class CacheQueueItem implements Runnable {
+public class CreateCacheJob implements Runnable {
 
   private IAudioFile audioFile;
   private ArrayList<TaskFinishListener> listeners = new ArrayList<TaskFinishListener>();
   private MessageProducer messageProducer;
 
-  public CacheQueueItem(IAudioFile audioFile, MessageProducer messageProducer) {
+  public CreateCacheJob(IAudioFile audioFile, MessageProducer messageProducer) {
     this.audioFile = audioFile;
     this.messageProducer = messageProducer;
   }

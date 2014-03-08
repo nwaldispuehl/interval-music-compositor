@@ -16,8 +16,8 @@ import java.util.List;
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFileComparator;
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFileFactory;
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
-import ch.retorte.intervalmusiccompositor.cache.CacheQueueItem;
-import ch.retorte.intervalmusiccompositor.cache.CacheQueueManager;
+import ch.retorte.intervalmusiccompositor.cache.CreateCacheJob;
+import ch.retorte.intervalmusiccompositor.cache.CreateCacheJobManager;
 import ch.retorte.intervalmusiccompositor.commons.ArrayHelper;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.platform.Platform;
@@ -56,7 +56,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
   private List<IAudioFile> musicList = Lists.newArrayList();
   private List<IAudioFile> breakList = Lists.newArrayList();
 
-  private CacheQueueManager cacheQueueManager;
+  private CreateCacheJobManager cacheQueueManager;
 
   private CompilationGenerator compilationGenerator;
   private AudioFileFactory audioFileFactory;
@@ -99,7 +99,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
   }
 
   private void startCacheQueueManager() {
-    cacheQueueManager = new CacheQueueManager(messageBus, getThreadLimit());
+    cacheQueueManager = new CreateCacheJobManager(messageBus, getThreadLimit());
     new Thread(cacheQueueManager).start();
   }
 
@@ -125,7 +125,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
       }
     });
 
-    deactivateUI();
+    ui.setInactive();
     try {
       compilationGenerator.createCompilationWith(compilationParameters);
     }
@@ -133,16 +133,8 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
       messageBus.send(new ErrorMessage(e.getMessage()));
     }
     finally {
-      activateUI();
+      ui.setActive();
     }
-  }
-
-  private void deactivateUI() {
-    ui.setInactive();
-  }
-
-  private void activateUI() {
-    ui.setActive();
   }
 
   public void addMusicTrack(int i, File file) {
@@ -165,7 +157,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
 
     IAudioFile audioFile = audioFileFactory.createAudioFileFrom(f);
 
-    CacheQueueItem wg = new CacheQueueItem(audioFile, messageBus);
+    CreateCacheJob wg = new CreateCacheJob(audioFile, messageBus);
     wg.addListener(new TaskFinishListener() {
 
       @Override
