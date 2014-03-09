@@ -16,7 +16,7 @@ import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
-import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityCheckerException;
+import ch.retorte.intervalmusiccompositor.update.UpdateAvailabilityCheckerException;
 
 /**
  * Contacts home server for text file containing current version.

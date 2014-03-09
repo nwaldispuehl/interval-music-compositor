@@ -1,4 +1,4 @@
-package ch.retorte.intervalmusiccompositor.spi.update;
+package ch.retorte.intervalmusiccompositor.update;
 
 /**
  * @author nw
