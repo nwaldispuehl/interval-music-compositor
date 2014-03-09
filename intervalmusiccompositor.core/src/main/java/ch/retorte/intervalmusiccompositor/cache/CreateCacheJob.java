@@ -11,6 +11,8 @@ import ch.retorte.intervalmusiccompositor.spi.TaskFinishListener;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 /**
+ * Representation of a job for creating an audio files raw data cache.
+ * 
  * @author nw
  */
 public class CreateCacheJob implements Runnable {
