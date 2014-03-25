@@ -1,6 +1,7 @@
 package ch.retorte.intervalmusiccompositor.commons;
 
 import static ch.retorte.intervalmusiccompositor.commons.ArrayHelper.arrayMerge16bit;
+import static ch.retorte.intervalmusiccompositor.commons.ArrayHelper.arrayToList;
 import static ch.retorte.intervalmusiccompositor.commons.ArrayHelper.getAverageInterval;
 import static ch.retorte.intervalmusiccompositor.commons.ArrayHelper.isConvergent;
 import static ch.retorte.intervalmusiccompositor.commons.ArrayHelper.prepareListForRemoval;
@@ -25,7 +26,7 @@ public class ArrayHelperTest {
     int[] intArray = new int[] { 1, 2, 3 };
 
     // when
-    List<Integer> intList = ArrayHelper.arrayToList(intArray);
+    List<Integer> intList = arrayToList(intArray);
 
     // then
     assertThat(arr(intList), is(arr(1, 2, 3)));

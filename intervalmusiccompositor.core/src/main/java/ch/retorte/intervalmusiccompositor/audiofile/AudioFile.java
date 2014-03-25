@@ -93,6 +93,7 @@ public class AudioFile extends File implements IAudioFile {
     try {
       // Obtain result in seconds and make milliseconds out of it
       duration = (long) (soundHelper.getStreamLengthInSeconds(getAudioInputStream()) * 1000);
+      addDebugMessage(getDisplayName() + " duration: " + duration + " ms");
     }
     catch (IOException e) {
       addDebugMessage("Problems on calculating volume: " + e.getMessage());
@@ -122,6 +123,7 @@ public class AudioFile extends File implements IAudioFile {
     }
 
     volume = ((float) maximalAverageAmplitude / (float) averageAmplitude);
+    addDebugMessage(getDisplayName() + " volume ratio: " + volume);
   }
 
   public String getDisplayName() {
@@ -279,7 +281,7 @@ public class AudioFile extends File implements IAudioFile {
 
       try {
         calculatedBpm = calculateBpm(bpmExtractLength, bpmExtractStart);
-        addDebugMessage("Calculated BPM: " + calculatedBpm + " of " + getDisplayName());
+        addDebugMessage(getDisplayName() + " BPM: " + calculatedBpm);
       }
       catch (OutOfMemoryError e) {
         addDebugMessage("Problems when calculating BPM information: " + e.getMessage());

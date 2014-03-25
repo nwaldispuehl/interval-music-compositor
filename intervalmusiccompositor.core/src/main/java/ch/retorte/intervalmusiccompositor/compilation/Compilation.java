@@ -44,6 +44,7 @@ public class Compilation {
       byte[] blendedPlaylistItemByteArray = soundHelper.linearBlend(playlistItemByteArray, playlist.getBlendTime());
 
       arrayMerge16bit(blendedPlaylistItemByteArray, 0, result, currentPosition, blendedPlaylistItemByteArray.length);
+      addDebugMessage("Adding to compilation at " + soundHelper.getSecondsFromSamples(currentPosition) + ": " + playlistItem);
 
       currentPosition += blendedPlaylistItemByteArray.length;
 
@@ -51,7 +52,6 @@ public class Compilation {
         currentPosition -= soundHelper.getSamplesFromSeconds(0.5 * playlist.getBlendTime());
       }
 
-      addDebugMessage("Added to compilation at " + soundHelper.getSecondsFromSamples(currentPosition) + ": " + playlistItem);
     }
 
     return result;

@@ -1,8 +1,8 @@
 package ch.retorte.intervalmusiccompositor.commons;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -20,7 +20,7 @@ public class Utf8BundleIntegrationTest {
     String retrievedString = testBundle.getString("myUmlautsAndAccents");
 
     // then
-    Assert.assertThat(retrievedString, is(umlautsAndAccents));
+    assertThat(retrievedString, is(umlautsAndAccents));
 
   }
 }
