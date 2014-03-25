@@ -108,7 +108,7 @@ public class PlaylistReport {
     String bpmNotReliableString = bundle.getString("imc.playlist.bpm_not_reliable");
 
     if (playlistItem.isSilentBreak()) {
-      if (0 < playlistItem.getExtractDuration()) {
+      if (0 < playlistItem.getExtractDurationInMilliseconds()) {
         builder.append("    ");
         builder.append(formatTime.getStrictFormattedTime(totalDurationSoFar));
         builder.append(ITEM_DELIMITER);

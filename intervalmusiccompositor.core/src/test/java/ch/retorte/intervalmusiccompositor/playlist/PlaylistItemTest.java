@@ -33,7 +33,7 @@ public class PlaylistItemTest {
     PlaylistItem playlistItem = new PlaylistItem(audioFile, 500L, 1500L);
 
     // when
-    long duration = playlistItem.getExtractDuration();
+    long duration = playlistItem.getExtractDurationInMilliseconds();
 
     // then
     assertThat(duration, is(1000L));

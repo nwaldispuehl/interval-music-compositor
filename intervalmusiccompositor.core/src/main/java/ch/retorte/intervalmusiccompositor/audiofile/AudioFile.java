@@ -280,7 +280,7 @@ public class AudioFile extends File implements IAudioFile {
       bpmExtractStart = (int) (((getDuration() / 1000) - bpmExtractLength) / 2);
 
       try {
-        calculatedBpm = calculateBpm(bpmExtractLength, bpmExtractStart);
+        calculatedBpm = calculateBpm(bpmExtractStart, bpmExtractLength);
         addDebugMessage(getDisplayName() + " BPM: " + calculatedBpm);
       }
       catch (OutOfMemoryError e) {
@@ -317,12 +317,12 @@ public class AudioFile extends File implements IAudioFile {
    * @param extractStart
    *          Starting point of the inspected track extract in seconds
    */
-  private int calculateBpm(int extractLength, int extractStart) {
+  private int calculateBpm(int extractStart, int extractLength) {
 
     int result = -1;
 
     try {
-      AudioInputStream shortInputStream = soundHelper.getStreamExtract(getAudioInputStream(), extractLength, extractStart);
+      AudioInputStream shortInputStream = soundHelper.getStreamExtract(getAudioInputStream(), extractStart, extractLength);
       result = bpmCalculator.calculateBPM(shortInputStream);
     }
     catch (Exception e) {

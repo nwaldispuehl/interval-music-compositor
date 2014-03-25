@@ -11,8 +11,6 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-import org.tritonus.dsp.ais.AmplitudeAudioInputStream;
-
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
@@ -30,7 +28,7 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
 
   private MessageFormatBundle bundle = getBundle("core_imc");
 
-  private AmplitudeAudioInputStream inputStream;
+  private AudioInputStream inputStream;
   private SourceDataLine line = null;
   private Boolean play = false;
   private MessageProducer messageProducer;
@@ -123,15 +121,16 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
 
     // Load random audio input stream extract of this track
     int extractLength = Integer.valueOf(bundle.getString("imc.audio.determine_bpm.trackLength"));
-    if (audioFileDurationInSeconds < extractLength) {
+
+    if (!audioFile.isLongEnoughFor(extractLength)) {
       extractLength = audioFileDurationInSeconds;
     }
 
     int extractStart = (audioFileDurationInSeconds - extractLength) / 2;
 
     try {
-      inputStream = new AmplitudeAudioInputStream(soundHelper.getStreamExtract(audioFile.getAudioInputStream(), extractLength, extractStart));
-      inputStream.setAmplitudeLinear(audioFile.getVolumeRatio());
+      inputStream = soundHelper.getLeveledStream(soundHelper.getStreamExtract(audioFile.getAudioInputStream(), extractStart, extractLength),
+          audioFile.getVolumeRatio());
     }
     catch (IOException e) {
       messageProducer.send(new ErrorMessage(e.getMessage()));

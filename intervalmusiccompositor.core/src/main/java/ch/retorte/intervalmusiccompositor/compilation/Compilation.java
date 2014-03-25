@@ -1,15 +1,15 @@
 package ch.retorte.intervalmusiccompositor.compilation;
 
 import static ch.retorte.intervalmusiccompositor.commons.ArrayHelper.arrayMerge16bit;
+import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.list.BlendMode.CROSS;
 
 import java.io.IOException;
 
 import javax.sound.sampled.AudioInputStream;
 
-import org.tritonus.dsp.ais.AmplitudeAudioInputStream;
-
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.playlist.Playlist;
 import ch.retorte.intervalmusiccompositor.playlist.PlaylistItem;
@@ -23,6 +23,8 @@ import ch.retorte.intervalmusiccompositor.util.SoundHelper;
  * @author nw
  */
 public class Compilation {
+
+  private MessageFormatBundle bundle = getBundle("core_imc");
 
   private final SoundHelper soundHelper;
   private MessageProducer messageProducer;
@@ -51,7 +53,6 @@ public class Compilation {
       if (playlist.getBlendMode() == CROSS) {
         currentPosition -= soundHelper.getSamplesFromSeconds(0.5 * playlist.getBlendTime());
       }
-
     }
 
     return result;
@@ -59,16 +60,34 @@ public class Compilation {
 
   private byte[] getByteArrayFrom(PlaylistItem playlistItem) throws IOException {
     if (playlistItem.isSilentBreak()) {
-      return soundHelper.generateSilenceOfLength((playlistItem.getExtractDuration() / 1000));
+      return soundHelper.generateSilenceOfLength((playlistItem.getExtractDurationInSeconds()));
     }
+
+    AudioInputStream leveledStream = soundHelper.getLeveledStream(playlistItem.getAudioFile().getAudioInputStream(), getVolumeRatioOf(playlistItem));
+    return soundHelper.getStreamPart(leveledStream, playlistItem.getExtractStartInMilliseconds(), playlistItem.getExtractDurationInMilliseconds());
+  }
+
+  /**
+   * We try to calculate the volume ratio of the extract we are going to insert into the compilation. This leads to a more homogenous volume over the
+   * compilation.
+   */
+  private float getVolumeRatioOf(PlaylistItem playlistItem) {
+    int maximalAverageAmplitude = Integer.parseInt(bundle.getString("imc.audio.volume.max_average_amplitude"));
+    int averageAmplitudeWindowSize = Integer.parseInt(bundle.getString("imc.audio.volume.window_size"));
 
     IAudioFile audioFile = playlistItem.getAudioFile();
 
-    AudioInputStream ais = audioFile.getAudioInputStream();
-    AmplitudeAudioInputStream aais = new AmplitudeAudioInputStream(ais);
-    aais.setAmplitudeLinear(audioFile.getVolumeRatio());
-
-    return soundHelper.getStreamPart(aais, playlistItem.getExtractStartInMilliseconds(), playlistItem.getExtractDuration());
+    try {
+    AudioInputStream streamExtract = soundHelper.getStreamExtract(audioFile.getAudioInputStream(), (int) playlistItem.getExtractStartInSeconds(),
+        (int) playlistItem.getExtractDurationInSeconds());
+      float averageAmplitude = soundHelper.getAvgAmplitude(streamExtract, averageAmplitudeWindowSize);
+      return maximalAverageAmplitude / averageAmplitude;
+    }
+    catch (IOException e) {
+      addDebugMessage("Problems when calculating amplitude: " + e.getMessage());
+    }
+    
+    return audioFile.getVolumeRatio();
   }
 
   private void addDebugMessage(String message) {

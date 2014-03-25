@@ -25,12 +25,12 @@ public class PlaylistItem {
     return audioFile == null;
   }
 
-  public long getExtractDuration() {
+  public long getExtractDurationInMilliseconds() {
     return extractEndInMilliseconds - extractStartInMilliseconds;
   }
 
   public double getExtractDurationInSeconds() {
-    return getExtractDuration() / 1000;
+    return getExtractDurationInMilliseconds() / 1000;
   }
 
   public IAudioFile getAudioFile() {

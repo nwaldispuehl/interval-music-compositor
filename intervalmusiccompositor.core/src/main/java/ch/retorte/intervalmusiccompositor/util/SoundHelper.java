@@ -8,6 +8,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
+import org.tritonus.dsp.ais.AmplitudeAudioInputStream;
 import org.tritonus.sampled.convert.SampleRateConversionProvider;
 
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
@@ -138,6 +139,12 @@ public class SoundHelper implements AudioStandardizer {
     return maxSample;
   }
 
+  public AudioInputStream getLeveledStream(AudioInputStream audioInputStream, float desiredRelativeAmplitude) {
+    AmplitudeAudioInputStream aais = new AmplitudeAudioInputStream(audioInputStream);
+    aais.setAmplitudeLinear(desiredRelativeAmplitude);
+    return aais;
+  }
+
   public AudioInputStream getStreamFromByteArray(byte[] byteArray) {
     return new AudioInputStream(new ByteArrayInputStream(byteArray), TARGET_AUDIO_FORMAT, (byteArray.length / TARGET_AUDIO_FORMAT.getFrameSize()));
   }
@@ -232,7 +239,7 @@ public class SoundHelper implements AudioStandardizer {
     return samples / AudioStandardizer.SAMPLE_RATE / AudioStandardizer.TARGET_AUDIO_FORMAT.getFrameSize();
   }
 
-  public AudioInputStream getStreamExtract(AudioInputStream ais, int length, int start) {
+  public AudioInputStream getStreamExtract(AudioInputStream ais, int start, int length) {
 
     long startMs = start * 1000;
     long durationMs = length * 1000;

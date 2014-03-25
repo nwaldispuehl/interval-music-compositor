@@ -56,7 +56,7 @@ public class PlaylistTest {
   private void assertTrackLength(List<PlaylistItem> tracks, int... seconds) {
     assertThat(tracks.size(), is(seconds.length));
     for (int i = 0; i < seconds.length; i++) {
-      assertThat(tracks.get(i).getExtractDuration(), is(sec(seconds[i])));
+      assertThat(tracks.get(i).getExtractDurationInMilliseconds(), is(sec(seconds[i])));
     }
   }
 

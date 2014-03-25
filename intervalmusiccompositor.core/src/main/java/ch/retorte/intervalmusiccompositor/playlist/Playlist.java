@@ -237,7 +237,7 @@ public class Playlist implements Iterable<PlaylistItem> {
   public long getTotalLength(List<PlaylistItem> playlistItems) {
     long result = 0L;
     for (PlaylistItem playlistItem : playlistItems) {
-      result += playlistItem.getExtractDuration();
+      result += playlistItem.getExtractDurationInMilliseconds();
 
       if (blendMode == CROSS) {
         // Removing 1/2 of the blend time due to overlapping between the tracks.
