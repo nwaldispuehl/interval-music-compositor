@@ -1,7 +1,5 @@
 build/
 .gradle/
-.metadata/
-.classpath
 .project
 .settings/
 .idea/
