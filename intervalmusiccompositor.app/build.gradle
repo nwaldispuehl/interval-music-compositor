@@ -31,7 +31,6 @@ jar {
 
 // We disable tasks which are not successfully performed on non-OSX hosts.
 createDmg.enabled = false
-generatePlist.enabled = false
 
 macAppBundle {
   appOutputDir = project.ext.macosxOutputDir
@@ -139,14 +138,10 @@ buildscript {
         mavenLocal()
         mavenCentral()
         
-         maven {
-            url project(':intervalmusiccompositor.build').file("plugin_repository").absolutePath
-        }
-        
     }
     dependencies {
         classpath 'edu.sc.seis.gradle:launch4j:1.0.6'
-        classpath 'edu.sc.seis.gradle:gradle-macappbundle:2.0.0-custom' // Custom version, replace as soon as the official v2.0.0 is published.
+        classpath 'edu.sc.seis.gradle:macappbundle:2.0.0'
         classpath 'com.github.rholder:gradle-one-jar:1.0.4'
     }
 }
