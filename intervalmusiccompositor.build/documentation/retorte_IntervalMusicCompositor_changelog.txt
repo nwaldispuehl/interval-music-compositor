@@ -1,7 +1,7 @@
 retorte.ch IntervalMusicCompositor Changelog
 --------------------------------------------------------------------------------
 
-????-??-??  2.4.1
+2014-08-17  2.4.1
 --------------------------------------------------------------------------------
 FIX  #1     Music playback froze program on OpenJDK.
 IMP  #2     Volume normalization acts on single extract now. Plus is more sensible.
