@@ -32,6 +32,8 @@ import com.google.common.base.Charsets;
  */
 public class CompilationGenerator implements Runnable {
 
+  public static final int MAXIMUM_BLEND_TIME = 20;
+
   private MessageFormatBundle bundle = getBundle("core_imc");
 
   private ArrayList<TaskFinishListener> listeners = newArrayList();
@@ -119,7 +121,7 @@ public class CompilationGenerator implements Runnable {
   }
 
   private void adjustBlendTimeIfTooLong() {
-    int shortestSoundPattern = 20;
+    int shortestSoundPattern = MAXIMUM_BLEND_TIME;
     for (int s : compilationParameters.musicPattern) {
       shortestSoundPattern = Math.min(shortestSoundPattern, s);
     }

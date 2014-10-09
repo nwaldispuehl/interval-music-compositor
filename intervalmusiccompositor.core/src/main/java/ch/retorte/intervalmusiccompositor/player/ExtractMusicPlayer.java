@@ -29,7 +29,6 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
   private MessageFormatBundle bundle = getBundle("core_imc");
 
   private AudioInputStream inputStream;
-  private SourceDataLine line = null;
   private Boolean play = false;
   private MessageProducer messageProducer;
   private SoundHelper soundHelper;
@@ -62,7 +61,7 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
     try {
       AudioFormat audioFormat = inputStream.getFormat();
 
-      line = null;
+      SourceDataLine line = null;
       DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
       line = (SourceDataLine) AudioSystem.getLine(info);
       line.open(audioFormat);
