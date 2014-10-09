@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Startpage
+title: Home
 ---
 
 This is the startingpage.
 It is *cool*.
 
-[[content]]
+[a relative link](features)
