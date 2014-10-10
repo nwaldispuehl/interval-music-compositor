@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Features
-url: features
+link: features
 ---
 
 Der retorte.ch *Interval Music Compositor* hat die folgenden Eigenschaften.

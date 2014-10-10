@@ -1,5 +1,5 @@
 ---
 layout: default
 title: Download
-url: download
+link: download
 ---

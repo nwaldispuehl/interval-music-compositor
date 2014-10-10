@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Home
-url: 
+link: 
 ---
 
 *Keywords:* _interval training, circuit training, pyramid training, physical education, PE, sports, music, exercise music, break, iteration, workout, automated generation, compilation, bpm_

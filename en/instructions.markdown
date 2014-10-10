@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Instructions
-url: instructions
+link: instructions
 ---
 
 The *Interval Music Compositor* comes as a single executable file. No installation is needed therefore. However, it is based on Java technology, thus a _Java Runtime Environment (JRE)_ must be present to run it.
