@@ -4,7 +4,7 @@ title: Features
 link: features
 ---
 
-Der retorte.ch *Interval Music Compositor* hat die folgenden Eigenschaften.
+Der retorte.ch **Interval Music Compositor** hat die folgenden Eigenschaften.
 
 ## Was es macht
 

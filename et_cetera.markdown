@@ -28,11 +28,9 @@ Du benutzt es auf eigenes Risiko! :)
 
 Die Software sammelt grundsätzlich keine Daten. Beim Gebrauch des UpdateCheckers ('Über' -> 'Auf Update prüfen!') wird eine Anfrage an diesen Server gestartet. Dabei wird nebst der IP-Adresse auch eine kleine Auswahl von Systemeigenschaften übertragen. Diese umfassen die verwendete Version der Software, das Betriebssystem, dessen Architektur sowie die Sprache. Diese werden lediglich zur Verbesserung des Angebots eingesetzt und fallen in dieser Form an: 
 
-```Interval Music Compositor [Update Checker] (1.2.3, Windows 7, x86, en)```
+    Interval Music Compositor [Update Checker] (1.2.3, Windows 7, x86, en)
 
 ### Website
-
-
 
 Die Website sammelt die üblichen Informationen welche zur Auswertung der Besucher anfallen. Unter anderem die IP-Adresse und Browserkennung. Mailadressen, welche durch eine Supportanfrage via Kontaktformular eingegeben werden, werden nicht systematisch gesammelt und schon gar nicht irgendwie weitergegeben. 
 
@@ -44,24 +42,24 @@ Die Website sammelt die üblichen Informationen welche zur Auswertung der Besuch
 Dieses Projekt nutzt folgende zusätzlichen Bibliotheken: 
 
 ### Tritonus
-Für OGG Vorbis Decoding und Signal processing.
-[www.tritonus.org](http://www.tritonus.org/)
+Für OGG Vorbis Decoding und Signal processing. <br/>
+[www.tritonus.org](http://www.tritonus.org/) <br/>
 Lizenz: [GNU Lesser General Public License](http://www.gnu.org/copyleft/lesser.html)
 
 ### JCraft Jorbis
-Für OGG Vorbis Decoding.
-[www.jcraft.com/jorbis/](http://www.jcraft.com/jorbis/)
+Für OGG Vorbis Decoding. <br/>
+[www.jcraft.com/jorbis/](http://www.jcraft.com/jorbis/) <br/>
 Lizenz: [GNU Lesser General Public License](http://www.gnu.org/copyleft/lesser.html)
 
 ### JavaZoom JLayer and MP3SPI
-Für MP3 Decoding.
-[www.javazoom.net/javalayer/javalayer.html](http://www.javazoom.net/javalayer/javalayer.html)
-[www.javazoom.net/mp3spi/mp3spi.html](http://www.javazoom.net/mp3spi/mp3spi.html)
+Für MP3 Decoding. <br/>
+[www.javazoom.net/javalayer/javalayer.html](http://www.javazoom.net/javalayer/javalayer.html) <br/>
+[www.javazoom.net/mp3spi/mp3spi.html](http://www.javazoom.net/mp3spi/mp3spi.html) <br/>
 Lizenz: [GNU Lesser General Public License](http://www.gnu.org/copyleft/lesser.html)
 
 ### JFLAC
-Für FLAC Decoding.
-[jflac.sourceforge.net](http://jflac.sourceforge.net/)
+Für FLAC Decoding. <br/>
+[jflac.sourceforge.net](http://jflac.sourceforge.net/) <br/>
 Lizenz:
 
     Copyright (C) 2000,2001,2002,2003,2004  Josh Coalson
@@ -94,16 +92,16 @@ Lizenz:
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ### Parts of Dr. Simon Dixons BeatRoot
-Für die Ermittlung der BPM-Werte.
-[www.eecs.qmul.ac.uk/~simond/beatroot/](http://www.eecs.qmul.ac.uk/~simond/beatroot/)
+Für die Ermittlung der BPM-Werte. <br/>
+[www.eecs.qmul.ac.uk/~simond/beatroot/](http://www.eecs.qmul.ac.uk/~simond/beatroot/) <br/>
 Lizenz: [GNU Public License](http://www.gnu.org/licenses/gpl.txt)
 
 ### JAudioTagger
-Für das Lesen und Schreiben der TBPM-Tags in MP3-, FLAC- und OGG-Dateien.
-[www.jthink.net/jaudiotagger/](http://www.jthink.net/jaudiotagger/)
+Für das Lesen und Schreiben der TBPM-Tags in MP3-, FLAC- und OGG-Dateien. <br/>
+[www.jthink.net/jaudiotagger/](http://www.jthink.net/jaudiotagger/) <br/>
 Lizenz: [GNU Lesser General Public License](http://www.gnu.org/copyleft/lesser.html)
 
 ### JAAD – Java Advanced Audio Decoder
-Für AAC Decoding.
-[jaadec.sourceforge.net/](http://jaadec.sourceforge.net/)
+Für AAC Decoding. <br/>
+[jaadec.sourceforge.net/](http://jaadec.sourceforge.net/) <br/>
 Lizenz: [GNU Lesser General Public License V3](http://www.gnu.org/licenses/lgpl-3.0.html)
