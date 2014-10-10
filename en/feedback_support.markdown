@@ -12,7 +12,7 @@ Write me if you've found a bug, have a suggestion for improvements, need help or
  
 ## Issuetracker
 
-If you found a bug, you may file an issue directly: <br/>
+If you found a bug, and have a github account, you may file an issue directly: <br/>
 [github.com/nwaldispuehl/interval-music-compositor/issues/](https://github.com/nwaldispuehl/interval-music-compositor/issues)
 
 ## Known problems

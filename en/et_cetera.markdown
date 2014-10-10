@@ -26,13 +26,13 @@ You're using it at your own risk! :)
 
 ### Software
 
-The software does not collect any data in general. By using the UpdateChecker ('About' -> 'Check for updates!') a request is sent to this server. Besides the ip address also a small collection of system properties is transmitted. They contain the software version, the operating system, its architecture and the used language and are only used to improve the service. They are transmitted in this form:
+The software does not collect any data in general. By using the UpdateChecker ('About' -> 'Check for updates!') a request is sent to this server. Besides the IP address also a small collection of system properties is transmitted. They contain the software version, the operating system, its architecture and the used language and are only used to improve the service. They are transmitted in this form:
 
     Interval Music Compositor [Update Checker] (1.2.3, Windows 7, x86, en)
 
 ### Website
 
-The website collects the usual information to analyse visitors, e.g. the ip address and browser identification string. Mail addresses entered in the contact form are neither collected in a systematic way nor passed over to a third party.
+The website collects the usual information to analyse visitors, e.g. the IP address and browser identification string. Mail addresses entered in the contact form are neither collected in a systematic way nor passed over to a third party.
 
 ## Credits
 The following entities contributed to the project:

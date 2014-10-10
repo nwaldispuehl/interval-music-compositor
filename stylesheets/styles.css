@@ -57,7 +57,7 @@ a small {
 
 .wrapper {
   width:860px;
-  margin:0 auto;
+  margin-left:140px;
 }
 
 blockquote {
@@ -209,7 +209,7 @@ footer {
   
   div.wrapper {
     width:auto;
-    margin:0;
+    margin-left:140px;
   }
 
 

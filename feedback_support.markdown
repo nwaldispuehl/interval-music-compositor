@@ -12,7 +12,7 @@ Schreib mir wenn du einen Fehler gefunden hast, einen Verbesserungsvorschlag mac
     interval_music_compositor at retorte dot ch
  
 ## Bugtracker
-Wenn du einen Bug findest, kannst du ihn gleich selber als Issue erfassen: <br/>
+Wenn du einen Bug findest, und GitHub-Mitglied bist, kannst du ihn gleich selber als Issue erfassen: <br/>
 [github.com/nwaldispuehl/interval-music-compositor/issues/](https://github.com/nwaldispuehl/interval-music-compositor/issues)
 
 ## Bekannte Probleme
