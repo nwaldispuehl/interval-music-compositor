@@ -14,7 +14,7 @@ Write me if you've found a bug, have a suggestion for improvements, need help or
 
 If you found a bug, you may file an issue directly:
 
-https://github.com/nwaldispuehl/interval-music-compositor/issues
+[github.com/nwaldispuehl/interval-music-compositor/issues/](https://github.com/nwaldispuehl/interval-music-compositor/issues)
 
 ## Known problems
 
