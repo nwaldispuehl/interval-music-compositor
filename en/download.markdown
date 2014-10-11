@@ -19,7 +19,7 @@ Support the ongoing developement of the project.
 </form>
 </p>
 
-I hereby declare: The software is free of malicious and snoopy parts in any way (see [privacy](et_cetera/#privacy)).
+I hereby declare: The software is free of malicious and snoopy parts in any way (see [privacy](et_cetera#privacy)).
 
 The following variants are available for download: <br/>
 [Linux](#linux) <br/>

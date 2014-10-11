@@ -19,7 +19,7 @@ Unterstütze die Weiterentwicklung dieses Projekts!
 </form>
 </p>
 
-Ich erkläre hiermit: Die Software enthält keine Mal- oder Spywarekomponenten (vgl. [Datenschutz](et_cetera/#privacy)). 
+Ich erkläre hiermit: Die Software enthält keine Mal- oder Spywarekomponenten (vgl. [Datenschutz](et_cetera#privacy)). 
 
 Folgende Varianten stehen zum Download bereit: <br/>
 [Linux](#linux) <br/>
