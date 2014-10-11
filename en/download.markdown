@@ -31,7 +31,7 @@ The following variants are available for download: <br/>
 <a name="linux"></a>
 
 ## Linux version 
-IntervalMusicCompositor-linux-2.4.1.tar.gz (4 MB)
+[Download Linux version on Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
 Start the program by either double clicking on the start script or calling it from the shell:
 
@@ -45,7 +45,7 @@ Under Linux, the 'lame' binary has to be either existent in the current Interval
 <a name="osx"></a>
 
 ## Mac OS X (>= 10.7) version
-IntervalMusicCompositor-macosx-2.4.1.tgz (4.1 MB)
+[Download Mac OS X version on Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
 After the download you can unzip it by double clicking on it. You can then drag the program into a folder of your choice.
 
@@ -55,7 +55,7 @@ Get an executable version of Lame and either install the package in your system 
 <a name="windows"></a>
 
 ## Microsoft Windows (Vista, 7, 8) version
-IntervalMusicCompositor-windows-2.4.1.zip (4.1 MB)
+[Download Windows version on Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
 This is just a simple executable in a ZIP file which can be unpacked and then placed in the folder of your choice and executed directly.
 

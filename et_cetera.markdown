@@ -23,6 +23,7 @@ Lizenz: [GNU Public License](http://www.gnu.org/licenses/gpl.txt)
 Du benutzt es auf eigenes Risiko! :) 
 
 <a name="privacy"></a>
+
 ## Privacy etc.
 
 ### Software
@@ -92,7 +93,7 @@ Lizenz:
     NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-### Parts of Dr. Simon Dixons BeatRoot
+### Teile von Dr. Simon Dixons BeatRoot
 Für die Ermittlung der BPM-Werte. <br/>
 [www.eecs.qmul.ac.uk/~simond/beatroot/](http://www.eecs.qmul.ac.uk/~simond/beatroot/) <br/>
 Lizenz: [GNU Public License](http://www.gnu.org/licenses/gpl.txt)
