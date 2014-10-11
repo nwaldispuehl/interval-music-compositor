@@ -22,6 +22,7 @@ Die Software wird unter der GPL veröffentlicht.
 Lizenz: [GNU Public License](http://www.gnu.org/licenses/gpl.txt)
 Du benutzt es auf eigenes Risiko! :) 
 
+<a name="privacy"></a>
 ## Privacy etc.
 
 ### Software
