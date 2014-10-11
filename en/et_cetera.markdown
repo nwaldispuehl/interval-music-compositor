@@ -18,8 +18,8 @@ Support the ongoing developement of the project.
 
 
 ## Legal etc.
-The software is distributed under the GPL.
-License: [GNU Public License](http://www.gnu.org/licenses/gpl.txt)
+The software is distributed under the GPL. <br/>
+License: [GNU Public License](http://www.gnu.org/licenses/gpl.txt) <br/>
 You're using it at your own risk! :)
 
 <a name="privacy"></a>

@@ -18,8 +18,8 @@ Unterstütze die Weiterentwicklung dieses Projekts!
 
 
 ## Legal etc.
-Die Software wird unter der GPL veröffentlicht.
-Lizenz: [GNU Public License](http://www.gnu.org/licenses/gpl.txt)
+Die Software wird unter der GPL veröffentlicht. <br/>
+Lizenz: [GNU Public License](http://www.gnu.org/licenses/gpl.txt) <br/>
 Du benutzt es auf eigenes Risiko! :) 
 
 <a name="privacy"></a>
