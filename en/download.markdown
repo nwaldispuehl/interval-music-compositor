@@ -29,8 +29,8 @@ The following variants are available for download: <br/>
 [Source code](#source) 
 
 
-<a name="linux"></a>
-## Linux version
+
+## Linux version <a name="linux"></a>
 
 IntervalMusicCompositor-linux-2.4.1.tar.gz (4 MB)
 
@@ -44,6 +44,7 @@ Under Linux, the 'lame' binary has to be either existent in the current Interval
     user@localhost $ sudo apt-get install lame
 
 <a name="osx"></a>
+
 ## Mac OS X (>= 10.7) version
 
 IntervalMusicCompositor-macosx-2.4.1.tgz (4.1 MB)
@@ -54,6 +55,7 @@ After the download you can unzip it by double clicking on it. You can then drag 
 Get an executable version of Lame and either install the package in your system or place the executable binary 'lame' in the same directory as the Interval Music Compositor lies. You can obtain such installable version i.e. here: [www.thalictrum.com](http://www.thalictrum.com/index.php?pageid=2) (LAME Audio Encoder).
 
 <a name="windows"></a>
+
 ## Microsoft Windows (Vista, 7, 8) version
 
 IntervalMusicCompositor-windows-2.4.1.zip (4.1 MB)
@@ -64,6 +66,7 @@ This is just a simple executable in a ZIP file which can be unpacked and then pl
 Get an executable version of Lame and place the executable binary 'lame.exe' in the same directory as the Interval Music Compositor lies. You can obtain such version i.e. here: [www.rarewares.org](http://www.rarewares.org/mp3-lame-bundle.php) (Lame bundle).
 
 <a name="legacy"></a>
+
 ## Legacy versions
 
 ### Java 6 (Version 1.6)
@@ -81,5 +84,6 @@ Mac OS X: [IntervalMusicCompositor-0.0.9legacy.dmg](/interval-music-compositor/r
 Microsoft Windows: [IntervalMusicCompositor-0.0.9legacy.zip](/interval-music-compositor/resources/IntervalMusicCompositor-0.0.9legacy.zip)
 
 <a name="source"></a>
+
 ## Source code
 Have a look at it on [Github](https://github.com/nwaldispuehl/interval-music-compositor).
