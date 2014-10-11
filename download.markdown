@@ -28,12 +28,9 @@ Folgende Varianten stehen zum Download bereit: <br/>
 [Ältere Versionen (für Java 5 and 6)](#legacy) <br/>
 [Quellcode](#source) 
 
-
 <a name="linux"></a>
 
 ## Linux version
-
-
 IntervalMusicCompositor-linux-2.4.1.tar.gz (4 MB)
 
 Das Programm kann durch Doppelklick des Startscripts gestartet werden oder durch Aufruf in der Konsole:
@@ -48,7 +45,6 @@ Unter Linux kann sich das 'lame'-Binary entweder im aktuellen Verzeichnis des In
 <a name="osx"></a>
 
 ## Mac OS X (>= 10.7) version
-
 IntervalMusicCompositor-macosx-2.4.1.tgz (4.1 MB)
 
 Nach dem Download kann das Archiv mit einem Doppelklick geöffnet werden. Du kannst das Programm dann einfach in ein Verzeichnis deiner Wahl ziehen. 
@@ -59,7 +55,6 @@ Besorge dir eine ausführbare Version von Lame und installiere das Paket oder pl
 <a name="windows"></a>
 
 ## Microsoft Windows (Vista, 7, 8) version
-
 IntervalMusicCompositor-windows-2.4.1.zip (4.1 MB)
 
 Es handelt sich hierbei um eine ausführbare Datei in einem Zip-Archiv. Nach dem Entpacken kann man das Programm einfach in einem Verzeichnis speichern und ausführen.
