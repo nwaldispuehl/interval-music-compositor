@@ -1,11 +1,12 @@
 apply plugin: 'java'
 
 group = 'ch.retorte.intervalmusiccompositor'
-version = '2.4.0'
+version = '2.5.0'
 
 dependencies {
   compile project(':intervalmusiccompositor.spi')
   compile project(':intervalmusiccompositor.model')
   compile project(':intervalmusiccompositor.commons')
-  compile project(':intervalmusiccompositor.encoder.wave')
+
+  compile 'net.sourceforge.lame:net.sourceforge.lame:3.98.4'
 }
