@@ -8,6 +8,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
+import ch.retorte.intervalmusiccompositor.spi.audio.ByteArrayConverter;
 import org.tritonus.dsp.ais.AmplitudeAudioInputStream;
 import org.tritonus.sampled.convert.SampleRateConversionProvider;
 
@@ -20,7 +21,7 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
  * 
  * @author nw
  */
-public class SoundHelper implements AudioStandardizer {
+public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
 
   private MessageProducer messageProducer;
 
@@ -32,6 +33,10 @@ public class SoundHelper implements AudioStandardizer {
     messageProducer.send(new DebugMessage(this, message));
   }
 
+  @Override
+  public byte[] convert(AudioInputStream audioInputStream) throws IOException {
+    return getByteArray(audioInputStream);
+  }
 
   /**
    * Determines the largest average frame value of a audio stream. Uses a 16
@@ -232,11 +237,11 @@ public class SoundHelper implements AudioStandardizer {
   }
 
   public int getSamplesFromSeconds(double seconds) {
-    return (int) (seconds * AudioStandardizer.SAMPLE_RATE * AudioStandardizer.TARGET_AUDIO_FORMAT.getFrameSize());
+    return (int) (seconds * SAMPLE_RATE * TARGET_AUDIO_FORMAT.getFrameSize());
   }
 
   public double getSecondsFromSamples(int samples) {
-    return samples / AudioStandardizer.SAMPLE_RATE / AudioStandardizer.TARGET_AUDIO_FORMAT.getFrameSize();
+    return samples / SAMPLE_RATE / TARGET_AUDIO_FORMAT.getFrameSize();
   }
 
   public AudioInputStream getStreamExtract(AudioInputStream ais, int start, int length) {

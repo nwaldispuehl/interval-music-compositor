@@ -15,11 +15,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public interface AudioFileDecoder {
 
-  /* This is what we want is internal representation, that is, target format. The conventional compact disc standard. */
-  public static final float SAMPLE_RATE = 44100.0F;
-  public static final AudioFormat.Encoding TARGET_ENCODING = AudioFormat.Encoding.PCM_SIGNED;
-  public static final AudioFormat TARGET_AUDIO_FORMAT = new AudioFormat(TARGET_ENCODING, SAMPLE_RATE, 16, 2, 4, SAMPLE_RATE, false);
-
   /**
    * Reads and decodes the input file to a {@link AudioInputStream}. The convention is that the returned {@link AudioInputStream} has the properties of the
    * target audio format.
