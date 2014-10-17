@@ -31,9 +31,3 @@ Folgendes sind die Bedeutungen der Icons, die vor den eingelesenen Dateien angez
 
 Folgendes sind die Bedeutungen der Farben der angezeigten Geschwindigkeit (bpm):
 ![BPM Legende](/interval-music-compositor/img/imc_bpm_legend.png)
-
-## MP3 Erzeugung
-
-Aufgrund patentrechtlicher Gründe ist es einfacher, auf die direkte Integration von MP3-Funktionalität zu verzichten und diese vom Benutzer hinzufügen zu lassen.
-
-Um dem **Interval Music Compositor** also die Eigenschaft zu verleihen, direkt MP3-Dateien zu schreiben, kann das Konvertierungstool [Lame](http://lame.sourceforge.net/) im Verzeichnis hinzugefügt werden. Eine Anleitung für die Systeme folgt den jeweiligen Downloadanweisungen auf der [Downloadseite](download).

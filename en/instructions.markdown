@@ -31,9 +31,3 @@ These are the meanings of the icons displayed in front of imported tracks:
 
 These are the meanings of the colors of the displayed speed (bpm) measurements:
 ![BPM Legend](/interval-music-compositor/img/imc_bpm_legend.png)
-
-## MP3 Generation
-
-Since the encoding of MP3 files is covered by software patents, it is easier to skip it in the software and let it add through the user himself.
-
-To add the ability to directly encode MP3 output files, you need to add the converting tool [Lame](http://lame.sourceforge.net/) to the **Interval Music Compositor** directory. A small guide for it follows the [download](download) instructions.

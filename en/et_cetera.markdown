@@ -107,3 +107,9 @@ License: [GNU Lesser General Public License](http://www.gnu.org/copyleft/lesser.
 For AAC decoding. <br/>
 [jaadec.sourceforge.net/](http://jaadec.sourceforge.net/) <br/>
 License: [GNU Lesser General Public License V3](http://www.gnu.org/licenses/lgpl-3.0.html)
+
+### LAME Project
+For MP3 encoding. <br/>
+[lame.sourceforge.net/](http://lame.sourceforge.net/) <br/>
+Java port from Ken Händel [sourceforge.net/projects/jsidplay2/](http://sourceforge.net/projects/jsidplay2/) <br/>
+License: [GNU Lesser General Public License V3](http://www.gnu.org/licenses/lgpl-3.0.html)

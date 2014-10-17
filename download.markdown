@@ -4,7 +4,7 @@ title: Download
 link: download
 ---
 
-**Die aktuelle Version 2.4.1 wurde am 17. August 2014 veröffentlicht.**<br/>
+**Die aktuelle Version 2.5.0 wurde am 17. Oktober 2014 veröffentlicht.**<br/>
 ([Changelog](https://raw.githubusercontent.com/nwaldispuehl/interval-music-compositor/master/intervalmusiccompositor.build/documentation/retorte_IntervalMusicCompositor_changelog.txt)).
 
 Die Software wird kostenlos zur Verfügung gestellt. Gib mir doch eine [Rückmeldung](feedback_support) wenn du Fehler oder seltsames Verhalten beobachtest!
@@ -37,11 +37,6 @@ Das Programm kann durch Doppelklick des Startscripts gestartet werden oder durch
 
     user@localhost $ ./bin/IntervalMusicCompositor &
 
-### Wie MP3-Unterstützung hinzufügen?
-Unter Linux kann sich das 'lame'-Binary entweder im aktuellen Verzeichnis des Interval Music Compositor befinden, oder aber im Systemverzeichnis für ausführbare Dateien; '/usr/bin'. Am einfachsten ist es wohl, das Programm systemweit zu installieren. Rufe dazu diesen Befehl auf: 
-
-    user@localhost $ sudo apt-get install lame
-
 <a name="osx"></a>
 
 ## Mac OS X (>= 10.7) Version
@@ -49,18 +44,12 @@ Unter Linux kann sich das 'lame'-Binary entweder im aktuellen Verzeichnis des In
 
 Nach dem Download kann das Archiv mit einem Doppelklick geöffnet werden. Du kannst das Programm dann einfach in ein Verzeichnis deiner Wahl ziehen. 
 
-### Wie MP3-Unterstützung hinzufügen?
-Besorge dir eine ausführbare Version von Lame und installiere das Paket oder platziere die Programmdatei 'lame' im selben Verzeichnis wie der Interval Music Compositor. Du kriegst eine solche installierbare Version z.B. hier: [www.thalictrum.com](http://www.thalictrum.com/index.php?pageid=2) (LAME Audio Encoder). 
-
 <a name="windows"></a>
 
 ## Microsoft Windows (Vista, 7, 8) Version
 [Download Windows Version auf Github Releaseseite](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
 Es handelt sich hierbei um eine ausführbare Datei in einem Zip-Archiv. Nach dem Entpacken kann man das Programm einfach in einem Verzeichnis speichern und ausführen.
-
-### Wie MP3-Unterstützung hinzufügen?
-Besorge eine ausführbare Version von Lame und platziere die Programmdatei 'lame.exe' im selben Verzeichnis wie der Interval Music Compositor. Du kriegst eine solche Version z.B. hier: [www.rarewares.org](http://www.rarewares.org/mp3-lame-bundle.php) (Lame bundle). 
 
 <a name="legacy"></a>
 

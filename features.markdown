@@ -37,4 +37,4 @@ Der retorte.ch **Interval Music Compositor** hat die folgenden Eigenschaften.
 * AAC
 
 ## Ausgabeformat
-Die Zusammenstellung ist eine 16bit, 44.1KHz, stereo WAV Datei, oder, sofern ein MP3-Konverter vorhanden ist, eine entsprechende 256kbit MP3 Datei. 
+Die Zusammenstellung ist eine 16bit, 44.1KHz, stereo, 256kbit MP3 Datei. 

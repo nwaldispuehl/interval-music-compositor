@@ -4,7 +4,7 @@ title: Download
 link: download
 ---
 
-**The current version 2.4.1 was issued on 17th August 2014.**<br/>
+**The current version 2.5.0 was issued on 17th October 2014.**<br/>
 ([Changelog](https://raw.githubusercontent.com/nwaldispuehl/interval-music-compositor/master/intervalmusiccompositor.build/documentation/retorte_IntervalMusicCompositor_changelog.txt)).
 
 The software is provided free of charge. Please give me [feedback](feedback_support) if you encounter errors or strange behavior.
@@ -37,11 +37,6 @@ Start the program by either double clicking on the start script or calling it fr
 
     user@localhost $ ./bin/IntervalMusicCompositor &
 
-### How to add MP3 support?
-Under Linux, the 'lame' binary has to be either existent in the current Interval Music Compositor directory or in the system directory for binaries - '/usr/bin'. Install it by calling:
-
-    user@localhost $ sudo apt-get install lame
-
 <a name="osx"></a>
 
 ## Mac OS X (>= 10.7) version
@@ -49,18 +44,12 @@ Under Linux, the 'lame' binary has to be either existent in the current Interval
 
 After the download you can unzip it by double clicking on it. You can then drag the program into a folder of your choice.
 
-### How to add MP3 support?
-Get an executable version of Lame and either install the package in your system or place the executable binary 'lame' in the same directory as the Interval Music Compositor lies. You can obtain such installable version i.e. here: [www.thalictrum.com](http://www.thalictrum.com/index.php?pageid=2) (LAME Audio Encoder).
-
 <a name="windows"></a>
 
 ## Microsoft Windows (Vista, 7, 8) version
 [Download Windows version on Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
 This is just a simple executable in a ZIP file which can be unpacked and then placed in the folder of your choice and executed directly.
-
-### How to add MP3 support?
-Get an executable version of Lame and place the executable binary 'lame.exe' in the same directory as the Interval Music Compositor lies. You can obtain such version i.e. here: [www.rarewares.org](http://www.rarewares.org/mp3-lame-bundle.php) (Lame bundle).
 
 <a name="legacy"></a>
 
