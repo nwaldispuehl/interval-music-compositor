@@ -7,6 +7,7 @@ subprojects {
   
     repositories {
        mavenCentral()
+       mavenLocal()
 
         flatDir {
             dirs project(':intervalmusiccompositor.build').file('flat_repository')
