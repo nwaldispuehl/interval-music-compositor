@@ -1,15 +1,16 @@
 package ch.retorte.intervalmusiccompositor.encoder;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import ch.retorte.intervalmusiccompositor.encoder.WaveAudioFileEncoder;
+import ch.retorte.intervalmusiccompositor.spi.audio.ByteArrayConverter;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
-import ch.retorte.intervalmusiccompositor.util.mp3converter.ExternalMp3Converter;
-import ch.retorte.intervalmusiccompositor.util.mp3converter.ExternalMp3ConverterFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * @author nw
@@ -18,20 +19,33 @@ public class Mp3AudioFileEncoder implements AudioFileEncoder {
 
   private static final String EXTENSION = "mp3";
 
-  private ExternalMp3Converter mp3Converter = new ExternalMp3ConverterFactory().createConverter();
+  private ByteArrayConverter byteArrayConverter;
 
-  public void encode(AudioInputStream audioInputStream, File outputfile) throws UnsupportedAudioFileException, IOException {
-    File temporaryFile = File.createTempFile("mp3EncoderTemporaryFile", "imc");
+  private LameByteArrayEncoder encoder;
 
-    new WaveAudioFileEncoder().encode(audioInputStream, temporaryFile);
+  public Mp3AudioFileEncoder(ByteArrayConverter byteArrayConverter) {
+    this.byteArrayConverter = byteArrayConverter;
+  }
 
-    mp3Converter.convertToMp3(temporaryFile, outputfile);
+  public void encode(AudioInputStream audioInputStream, File outputFile) throws UnsupportedAudioFileException, IOException {
+    createEncoderWithSettings(audioInputStream.getFormat());
+    Files.write(Paths.get(outputFile.getAbsolutePath()), encodeToMp3(convert(audioInputStream)));
+  }
 
-    temporaryFile.delete();
+  private void createEncoderWithSettings(AudioFormat audioFormat) {
+    encoder =  new LameByteArrayEncoder(audioFormat);
+  }
+
+  private byte[] convert(AudioInputStream audioInputStream) throws IOException {
+    return byteArrayConverter.convert(audioInputStream);
+  }
+
+  private byte[] encodeToMp3(byte[] pcmByteArray) {
+    return encoder.encodePcmToMp3(pcmByteArray);
   }
 
   public boolean isAbleToEncode() {
-    return mp3Converter.isLamePresent();
+    return true;
   }
 
   public String getFileExtension() {
