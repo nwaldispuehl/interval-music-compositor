@@ -87,3 +87,12 @@ JAAD – Java Advanced Audio Decoder
 For AAC decoding.
 http://jaadec.sourceforge.net/
 License: GNU Lesser General Public License V3
+
+--
+
+LAME
+For MP3 encoding.
+http://lame.sourceforge.net/
+Java port from Ken Händel (http://sourceforge.net/projects/jsidplay2/)
+License: GNU Lesser General Public License V3
+
