@@ -10,8 +10,8 @@ Interval Music Compositor, a multi-platform software for creating interval music
 How to download binary?
 -----------------------
 
-There are pre-built distributions for the major operating systems to be found either on the projects webpage [retorte.ch download page](http://www.retorte.ch/tools/interval_music_compositor/download) or on the respective github releases page: [Interval Music Compositor releases](https://github.com/nwaldispuehl/interval-music-compositor/releases).
-On the former there is also a small user manual.
+There are pre-built distributions for the major operating systems to be found on the github releases page: [Interval Music Compositor releases](https://github.com/nwaldispuehl/interval-music-compositor/releases).
+A small user manual can be found on the Github [project page](http://nwaldispuehl.github.io/interval-music-compositor/).
 
 
 How to build?
