@@ -38,4 +38,9 @@ public interface AudioFileEncoder {
    * @return the file extension for output files of this encoder.
    */
   String getFileExtension();
+
+  /**
+   * Provides a unique identification string for this encoder.
+   */
+  String getIdentificator();
 }

@@ -34,4 +34,8 @@ public class WaveAudioFileEncoder implements AudioFileEncoder {
     return EXTENSION;
   }
 
+  public String getIdentificator() {
+    return EXTENSION;
+  }
+
 }

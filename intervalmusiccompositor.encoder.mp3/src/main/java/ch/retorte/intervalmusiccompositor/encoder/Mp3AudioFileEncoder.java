@@ -51,4 +51,8 @@ public class Mp3AudioFileEncoder implements AudioFileEncoder {
   public String getFileExtension() {
     return EXTENSION;
   }
+
+  public String getIdentificator() {
+    return EXTENSION;
+  }
 }
