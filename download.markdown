@@ -25,7 +25,7 @@ Folgende Varianten stehen zum Download bereit: <br/>
 [Linux](#linux) <br/>
 [Mac OS X (>= 10.7)](#osx) <br/>
 [Microsoft Windows (Vista, 7, 8)](#windows) <br/>
-[Ältere Versionen (für Java 5 and 6)](#legacy) <br/>
+[Ältere Versionen (auch für Java 5 and 6)](#legacy) <br/>
 [Quellcode](#source) 
 
 <a name="linux"></a>
