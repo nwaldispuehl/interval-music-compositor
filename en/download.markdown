@@ -55,6 +55,9 @@ This is just a simple executable in a ZIP file which can be unpacked and then pl
 
 ## Legacy versions
 
+### Java 7
+Previous versions are to be found on the [Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases).
+
 ### Java 6 (Version 1.6)
 ![Interval Music Compositor 2.3.0](/interval-music-compositor/img/imc-2.3.0.jpg)
 
@@ -62,21 +65,21 @@ Linux: [IntervalMusicCompositor-2.3.2-lin.tar.gz](/interval-music-compositor/res
 Mac OS X: [IntervalMusicCompositor-2.3.2-mac.tgz](/interval-music-compositor/resources/IntervalMusicCompositor-2.3.2-mac.tgz) <br/>
 Microsoft Windows: [IntervalMusicCompositor-2.3.2-win.zip](/interval-music-compositor/resources/IntervalMusicCompositor-2.3.2-win.zip)
 
-#### MP3 Support
+### MP3 Support
 
-This version creates a WAV file as output unless the LAME software is placed in the same directory as the Interval Music Compositor lies. How to get it:
+From version 2.0 until 2.5 a WAV file is created as output unless the LAME software is placed in the same directory as the Interval Music Compositor lies. How to get it:
 
-##### Linux
+#### Linux
 
 Install it as follows:
 
     user@localhost $ sudo apt-get install lame
 
-##### Mac OS X
+#### Mac OS X
 
 Download it from here: [LAME Audio Encoder](http://www.thalictrum.com/index.php?pageid=2).
 
-##### Microsoft Windows
+#### Microsoft Windows
 
 Download it from here: [LAME Bundle](http://www.rarewares.org/mp3-lame-bundle.php).
 
