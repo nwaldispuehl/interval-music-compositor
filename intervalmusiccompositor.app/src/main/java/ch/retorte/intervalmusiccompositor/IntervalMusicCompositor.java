@@ -150,13 +150,13 @@ public class IntervalMusicCompositor {
   }
 
   private Collection<BPMReaderWriter> getBpmReaderWriters() {
-    List<BPMReaderWriter> result = newArrayList();
+    List<BPMReaderWriter> bpmReaderWriters = newArrayList();
 
-    result.add(new FlacBPMReaderWriter());
-    result.add(new Mp3BPMReaderWriter());
-    result.add(new OggBPMReaderWriter());
+    bpmReaderWriters.add(new FlacBPMReaderWriter());
+    bpmReaderWriters.add(new Mp3BPMReaderWriter());
+    bpmReaderWriters.add(new OggBPMReaderWriter());
 
-    return result;
+    return bpmReaderWriters;
   }
 
   private BPMCalculator createBpmCalculator() {
@@ -169,15 +169,12 @@ public class IntervalMusicCompositor {
 
   private List<AudioFileEncoder> getAudioFileEncoders() {
     ByteArrayConverter byteArrayConverter = new SoundHelper(messageBus);
-    List<AudioFileEncoder> result = newArrayList();
+    List<AudioFileEncoder> encoders = newArrayList();
 
-    /*
-     * Note that the order how the encoders are added matters. The compilation is encoded with the first encoder which returns true on 'isAbleToEncode'.
-     */
-    result.add(new Mp3AudioFileEncoder(byteArrayConverter));
-    result.add(new WaveAudioFileEncoder());
+    encoders.add(new Mp3AudioFileEncoder(byteArrayConverter));
+    encoders.add(new WaveAudioFileEncoder());
 
-    return result;
+    return encoders;
   }
 
   private ExtractMusicPlayer createMusicPlayer() {
