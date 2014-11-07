@@ -482,6 +482,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
       }
       IAudioFile movedFile = musicList.remove(sourceIndex);
       musicList.add(destinationIndex, movedFile);
+      musicListSortMode = MANUAL;
       ui.refresh();
     }
   }
@@ -494,6 +495,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
   @Override
   public void moveBreakToMusic(int sourceIndex, int destinationIndex) {
     musicList.add(destinationIndex, breakList.remove(sourceIndex));
+    musicListSortMode = MANUAL;
   }
 
   @Override

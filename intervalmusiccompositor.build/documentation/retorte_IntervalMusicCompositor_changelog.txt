@@ -1,9 +1,10 @@
-retorte laboratories IntervalMusicCompositor Changelog
+retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
 2014-11-07  2.5.1
 --------------------------------------------------------------------------------
 IMP  #5     Output format (currently WAV or MP3) now selectable.
+FIX  #7     Moving tracks around in track list sets ordering to 'manual' again.
 
 
 2014-10-17  2.5.0
@@ -84,7 +85,7 @@ FIX		Fixed Bpm tag writing in MP3 files
 --------------------------------------------------------------------------------
 ADD		Bpm value is written into playlist
 FIX		Deactivate bpm context menu on erroneous tracks
-		
+
 
 2011-03-03 	2.1.0
 --------------------------------------------------------------------------------
@@ -96,7 +97,7 @@ ADD		There is now a pre-listen function for Bpm determination
 ADD		Added context menu for new functions
 FIX		Files with the wrong extensions can't be dragged into the list anymore
 FIX		The number of threads used to process files is now limited to the number 
-		  of available cores
+      of available cores
 
 
 2011-02-18 	2.0.1
