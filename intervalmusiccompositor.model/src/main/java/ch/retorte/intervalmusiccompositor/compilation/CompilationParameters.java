@@ -4,6 +4,7 @@ import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,28 +14,14 @@ import java.util.List;
  */
 public class CompilationParameters {
 
-  public List<Integer> musicPattern;
-  public List<Integer> breakPattern;
+  public List<Integer> musicPattern = new ArrayList<>();
+  public List<Integer> breakPattern = new ArrayList<>();
   public int iterations;
-  public BlendMode blendMode;
+  public BlendMode blendMode = BlendMode.SEPARATE;
   public double blendTime;
-  public EnumerationMode enumerationMode;
-  public ListSortMode listSortMode;
+  public EnumerationMode enumerationMode = EnumerationMode.SINGLE_EXTRACT;
+  public ListSortMode listSortMode = ListSortMode.SORT;
   public String outputPath;
+  public String encoderIdentifier;
 
-  public static CompilationParameters buildFrom(List<Integer> musicPattern, List<Integer> breakPattern, int iterations, BlendMode blendMode, double blendTime,
-      ListSortMode listSortMode, String outputPath, EnumerationMode enumerationMode) {
-    CompilationParameters result = new CompilationParameters();
-
-    result.musicPattern = musicPattern;
-    result.breakPattern = breakPattern;
-    result.iterations = iterations;
-    result.blendMode = blendMode;
-    result.blendTime = blendTime;
-    result.listSortMode = listSortMode;
-    result.outputPath = outputPath;
-    result.enumerationMode = enumerationMode;
-
-    return result;
-  }
 }

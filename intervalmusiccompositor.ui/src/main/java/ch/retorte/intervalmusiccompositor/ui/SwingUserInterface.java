@@ -1,11 +1,9 @@
 package ch.retorte.intervalmusiccompositor.ui;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-import static ch.retorte.intervalmusiccompositor.list.BlendMode.SEPARATE;
 import static ch.retorte.intervalmusiccompositor.list.CompositionMode.SIMPLE;
 import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.CONTINUOUS;
 import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.SINGLE_EXTRACT;
-import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.awt.Toolkit.getDefaultToolkit;
 
@@ -27,36 +25,9 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -74,7 +45,6 @@ import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.list.AudioFileListType;
 import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.list.CompositionMode;
-import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
@@ -84,6 +54,7 @@ import ch.retorte.intervalmusiccompositor.spi.MusicCompilationControl;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.ProgramControl;
 import ch.retorte.intervalmusiccompositor.spi.Ui;
+import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageHandler;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageSubscriber;
@@ -93,6 +64,7 @@ import ch.retorte.intervalmusiccompositor.ui.bpm.DetermineBpmDialogControl;
 import ch.retorte.intervalmusiccompositor.ui.gfx.BarChart;
 import ch.retorte.intervalmusiccompositor.ui.list.AudioFileCellRenderer;
 import ch.retorte.intervalmusiccompositor.ui.list.DraggableAudioFileList;
+import com.google.common.collect.Lists;
 
 /**
  * @author nw
@@ -102,7 +74,6 @@ public class SwingUserInterface extends JFrame implements Ui {
   private MessageFormatBundle bundle = getBundle("ui_imc");
 
   private static final long serialVersionUID = 1L;
-  private JPanel contentPane;
 
   private Platform platform = new PlatformFactory().getPlatform();
 
@@ -111,117 +82,46 @@ public class SwingUserInterface extends JFrame implements Ui {
   private JSpinner iterationsField;
 
   private JSlider blendSlider;
-  private final JProgressBar progressBar;
-  private final IMCButton process;
-  private final IMCButton quit;
-  private final IMCButton about;
+  private JProgressBar progressBar;
+  private IMCButton process;
+  private IMCButton quit;
+  private IMCButton about;
   private JButton outfileChooserButton;
+  private JComboBox<String> outputFormatChooser;
   private JButton sortButton;
   private JButton shuffleButton;
   private AboutDialogControl adc;
   private JLabel musicTracksTitle = null;
   private JLabel listSortModeLabel = null;
-  private final DraggableAudioFileList musicTracks;
-  private final DraggableAudioFileList breakTracks;
+  private DraggableAudioFileList musicTracks;
+  private DraggableAudioFileList breakTracks;
 
   private CompositionMode compositionMode = SIMPLE;
 
   private ImageIcon titleImage;
-  private final JLabel image;
-  private JPanel blendPanel;
+  private JLabel image;
   private JLabel durationEstimation;
-  private JPanel blendModeButtonsPanel;
 
-  private JToggleButton blendModeRadiobutton1;
-  private JToggleButton blendModeRadiobutton2;
+  private JToggleButton blendModeRadioButton1;
+  private JToggleButton blendModeRadioButton2;
 
-  private JToggleButton enumerationModeRadiobutton1;
-  private JToggleButton enumerationModeRadiobutton2;
+  private JToggleButton enumerationModeRadioButton1;
+  private JToggleButton enumerationModeRadioButton2;
 
-  private List<Integer> soundPattern = new ArrayList<Integer>();
-  private List<Integer> breakPattern = new ArrayList<Integer>();
-  private Integer iterations = 0;
-  private double blendTime = 0;
-  private BlendMode blendMode = SEPARATE;
-  private String outputDirectory = platform.getDesktopPath();
-  private ListSortMode listSortMode = SORT;
-  private EnumerationMode enumerationMode = SINGLE_EXTRACT;
+  private CompilationParameters compilationParameters = new CompilationParameters();
 
-  private JLabel blendModeLabel;
-  private JLabel blendMode1Label;
-  private JLabel blendMode2Label;
-  private JLabel enumerationModeLabel;
-  private JLabel enumerationMode1Label;
-  private JLabel enumerationMode2Label;
+
+
   private JTabbedPane simpleAdvancedPane;
-  private JPanel simplePanel;
-  private JPanel advancedPanel;
-  private JPanel iterationsPanel;
-  private Component verticalStrut;
-  private Component verticalStrut_1;
-  private Component verticalStrut_2;
-  private JPanel settingsPanel;
-  private Box horizontalBox;
-  private Component verticalStrut_3;
-  private Component verticalStrut_4;
-  private Box verticalBox_2;
-  private Component horizontalStrut_3;
-  private Box verticalBox_3;
-  private Component verticalStrut_5;
-  private Box horizontalBox_4;
-  private Component horizontalStrut_4;
-  private Component horizontalStrut_5;
-  private JPanel blendBorderPanel;
-  private JPanel outfileBorderPanel;
-  private Box horizontalBox_5;
-  private Component horizontalStrut_6;
-  private Component horizontalGlue_3;
-  private Component horizontalGlue_4;
-  private Component verticalStrut_7;
-  private JPanel sliderLabelPanel;
-  private JPanel blendModeLabelPanel;
-  private Component verticalStrut_8;
-  private JPanel durationPanel;
-  private Component verticalGlue;
-  private Box verticalBox_4;
-  private JLabel soundPatternLabel;
   private JTextField soundPatternField;
-  private JLabel breakPatternLabel;
   private JTextField breakPatternField;
-  private Component verticalStrut_9;
-  private Component verticalGlue_2;
-  private JPanel blendSpacePanel;
-  private Box verticalBox_5;
-  private Component verticalGlue_3;
-  private JPanel numberSpacePanel;
-  private Box verticalBox_6;
-  private Component verticalGlue_4;
-  private Component verticalStrut_10;
-  private Component verticalStrut_11;
-  private Component verticalGlue_5;
-  private Box verticalBox_7;
-  private Component verticalStrut_12;
-  private Component verticalStrut_13;
-  private JPanel sortShuffleButtonPanel;
-  private JPanel enumerationModePanel;
-  private Component verticalStrut_14;
-  private Component verticalStrut_15;
-  private Component verticalStrut_16;
-  private JPanel breakTracksTitlePanel;
-  private JPanel musicTracksTitlePanel;
-  private Box horizontalBox_1;
-  private Component horizontalStrut;
-  private Component horizontalStrut_7;
-  private Component horizontalGlue;
-  private Component verticalStrut_17;
-  private Component verticalStrut_18;
-  private Component verticalStrut_19;
-  private Component verticalGlue_1;
 
   private MusicListControl musicListControl;
 
+  private MusicCompilationControl musicCompilationController;
   private ProgramControl programControl;
 
+  private UpdateAvailabilityChecker updateAvailabilityChecker;
   private MessageProducer messageProducer;
 
   private ApplicationData applicationData;
@@ -235,12 +135,23 @@ public class SwingUserInterface extends JFrame implements Ui {
                             MessageProducer messageProducer) {
 
     this.musicListControl = musicListControl;
+    this.musicCompilationController = musicCompilationController;
     this.programControl = programControl;
     this.applicationData = applicationData;
+    this.updateAvailabilityChecker = updateAvailabilityChecker;
     this.messageProducer = messageProducer;
 
-    setUiProperties();
+    musicTracks = new DraggableAudioFileList(this, AudioFileListType.MUSIC, musicListControl, messageProducer);
+    breakTracks = new DraggableAudioFileList(this, AudioFileListType.BREAK, musicListControl, messageProducer);
+
     addMessageSubscribers(messageSubscriber);
+
+    init();
+  }
+
+  public void init() {
+    setUiProperties();
+
     createAboutDialogControl(updateAvailabilityChecker);
 
     setTitle();
@@ -249,10 +160,8 @@ public class SwingUserInterface extends JFrame implements Ui {
 
     setDefaultClosingAction();
 
-
-    contentPane = new JPanel();
+    JPanel contentPane = new JPanel();
     contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
-    // contentPane.setMaximumSize(new Dimension(990, 720));
     setContentPane(contentPane);
 
     JSplitPane splitPane = new JSplitPane();
@@ -263,10 +172,10 @@ public class SwingUserInterface extends JFrame implements Ui {
     splitPane.setLeftComponent(left_panel);
     left_panel.setLayout(new BoxLayout(left_panel, BoxLayout.X_AXIS));
 
-    verticalBox_7 = Box.createVerticalBox();
+    Box verticalBox_7 = Box.createVerticalBox();
     left_panel.add(verticalBox_7);
 
-    musicTracksTitlePanel = new JPanel();
+    JPanel musicTracksTitlePanel = new JPanel();
     musicTracksTitlePanel.setMaximumSize(new Dimension(320, 60));
     musicTracksTitlePanel.setAlignmentY(Component.TOP_ALIGNMENT);
     musicTracksTitlePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -276,10 +185,9 @@ public class SwingUserInterface extends JFrame implements Ui {
     musicTracksTitlePanel.add(musicTracksTitle);
     musicTracksTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
-    verticalStrut_12 = Box.createVerticalStrut(10);
-    verticalBox_7.add(verticalStrut_12);
+    verticalBox_7.add(Box.createVerticalStrut(10));
 
-    musicTracks = new DraggableAudioFileList(this, AudioFileListType.MUSIC, musicListControl, messageProducer);
+
 
     musicTracks.getModel().addListDataListener(new ListDataListener() {
 
@@ -338,36 +246,32 @@ public class SwingUserInterface extends JFrame implements Ui {
     musicTracks.setValueIsAdjusting(true);
     musicScrollPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 
-    verticalStrut_13 = Box.createVerticalStrut(10);
-    verticalBox_7.add(verticalStrut_13);
+    verticalBox_7.add(Box.createVerticalStrut(10));
 
-    sortShuffleButtonPanel = new JPanel();
+    JPanel sortShuffleButtonPanel = new JPanel();
     sortShuffleButtonPanel.setMaximumSize(new Dimension(320, 40));
     sortShuffleButtonPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
     sortShuffleButtonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     verticalBox_7.add(sortShuffleButtonPanel);
     sortShuffleButtonPanel.setLayout(new BoxLayout(sortShuffleButtonPanel, BoxLayout.X_AXIS));
 
-    horizontalBox_1 = Box.createHorizontalBox();
+    Box horizontalBox_1 = Box.createHorizontalBox();
     sortShuffleButtonPanel.add(horizontalBox_1);
 
     sortButton = new JButton(bundle.getString("ui.form.sort_button_text"));
     horizontalBox_1.add(sortButton);
 
-    horizontalStrut = Box.createHorizontalStrut(10);
-    horizontalBox_1.add(horizontalStrut);
+    horizontalBox_1.add(Box.createHorizontalStrut(10));
 
     shuffleButton = new JButton(bundle.getString("ui.form.shuffle_button_text"));
     horizontalBox_1.add(shuffleButton);
 
-    horizontalStrut_7 = Box.createHorizontalStrut(10);
-    horizontalBox_1.add(horizontalStrut_7);
+    horizontalBox_1.add(Box.createHorizontalStrut(10));
 
     listSortModeLabel = new JLabel("");
     horizontalBox_1.add(listSortModeLabel);
 
-    horizontalGlue = Box.createHorizontalGlue();
-    horizontalBox_1.add(horizontalGlue);
+    horizontalBox_1.add(Box.createHorizontalGlue());
     shuffleButton.addActionListener(new ActionListener() {
 
       @Override
@@ -391,8 +295,7 @@ public class SwingUserInterface extends JFrame implements Ui {
       }
     });
 
-    verticalStrut_14 = Box.createVerticalStrut(10);
-    verticalBox_7.add(verticalStrut_14);
+    verticalBox_7.add(Box.createVerticalStrut(10));
 
     JSeparator topSeparator = new JSeparator();
     topSeparator.setMaximumSize(new Dimension(320, 10));
@@ -400,11 +303,10 @@ public class SwingUserInterface extends JFrame implements Ui {
     topSeparator.setAlignmentX(Component.LEFT_ALIGNMENT);
     verticalBox_7.add(topSeparator);
 
-    Component verticalStrut_100 = Box.createVerticalStrut(10);
-    verticalBox_7.add(verticalStrut_100);
+    verticalBox_7.add(Box.createVerticalStrut(10));
 
     /* Enumeration selectors */
-    enumerationModePanel = new JPanel();
+    JPanel enumerationModePanel = new JPanel();
     enumerationModePanel.setMaximumSize(new Dimension(320, 40));
     enumerationModePanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
     enumerationModePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -418,58 +320,57 @@ public class SwingUserInterface extends JFrame implements Ui {
 
     enumerationBox.add(Box.createHorizontalGlue());
 
-    enumerationModeLabel = new JLabel(bundle.getString("ui.form.enumeration_mode.label"));
+    JLabel enumerationModeLabel = new JLabel(bundle.getString("ui.form.enumeration_mode.label"));
     enumerationBox.add(enumerationModeLabel);
 
     enumerationBox.add(Box.createHorizontalStrut(10));
 
-    enumerationModeRadiobutton1 = new JRadioButton("");
-    enumerationModeRadiobutton1.setToolTipText(bundle.getString("ui.form.enumeration_mode.icon1.tooltip"));
-    enumerationBox.add(enumerationModeRadiobutton1);
-    enumerationModeGroup.add(enumerationModeRadiobutton1);
-    enumerationModeGroup.setSelected(enumerationModeRadiobutton1.getModel(), true);
+    enumerationModeRadioButton1 = new JRadioButton("");
+    enumerationModeRadioButton1.setToolTipText(bundle.getString("ui.form.enumeration_mode.icon1.tooltip"));
+    enumerationBox.add(enumerationModeRadioButton1);
+    enumerationModeGroup.add(enumerationModeRadioButton1);
+    enumerationModeGroup.setSelected(enumerationModeRadioButton1.getModel(), true);
 
-    enumerationModeRadiobutton1.addActionListener(new ActionListener() {
+    enumerationModeRadioButton1.addActionListener(new ActionListener() {
 
       @Override
       public void actionPerformed(ActionEvent e) {
         addDebugMessage("Enumeration mode: " + SINGLE_EXTRACT);
-        enumerationMode = SINGLE_EXTRACT;
+        compilationParameters.enumerationMode = SINGLE_EXTRACT;
         refresh();
       }
     });
 
-    enumerationMode1Label = new JLabel();
+    JLabel enumerationMode1Label = new JLabel();
     enumerationMode1Label.setIcon(new ImageIcon(getClass().getClassLoader().getResource(bundle.getString("ui.form.enumeration_mode.icon1"))));
     enumerationMode1Label.setToolTipText(bundle.getString("ui.form.enumeration_mode.icon1.tooltip"));
     enumerationBox.add(enumerationMode1Label);
 
     enumerationBox.add(Box.createHorizontalStrut(10));
 
-    enumerationModeRadiobutton2 = new JRadioButton("");
-    enumerationModeRadiobutton2.setToolTipText(bundle.getString("ui.form.enumeration_mode.icon2.tooltip"));
-    enumerationBox.add(enumerationModeRadiobutton2);
-    enumerationModeGroup.add(enumerationModeRadiobutton2);
+    enumerationModeRadioButton2 = new JRadioButton("");
+    enumerationModeRadioButton2.setToolTipText(bundle.getString("ui.form.enumeration_mode.icon2.tooltip"));
+    enumerationBox.add(enumerationModeRadioButton2);
+    enumerationModeGroup.add(enumerationModeRadioButton2);
 
-    enumerationModeRadiobutton2.addActionListener(new ActionListener() {
+    enumerationModeRadioButton2.addActionListener(new ActionListener() {
 
       @Override
       public void actionPerformed(ActionEvent e) {
         addDebugMessage("Enumeration mode: " + CONTINUOUS);
-        enumerationMode = CONTINUOUS;
+        compilationParameters.enumerationMode = CONTINUOUS;
         refresh();
       }
     });
 
-    enumerationMode2Label = new JLabel();
+    JLabel enumerationMode2Label = new JLabel();
     enumerationMode2Label.setIcon(new ImageIcon(getClass().getClassLoader().getResource(bundle.getString("ui.form.enumeration_mode.icon2"))));
     enumerationMode2Label.setToolTipText(bundle.getString("ui.form.enumeration_mode.icon2.tooltip"));
     enumerationBox.add(enumerationMode2Label);
 
     enumerationBox.add(Box.createHorizontalGlue());
 
-    Component verticalStrut_101 = Box.createVerticalStrut(10);
-    verticalBox_7.add(verticalStrut_101);
+    verticalBox_7.add(Box.createVerticalStrut(10));
 
     JSeparator bottomSeparator = new JSeparator();
     bottomSeparator.setMaximumSize(new Dimension(320, 10));
@@ -477,10 +378,9 @@ public class SwingUserInterface extends JFrame implements Ui {
     bottomSeparator.setAlignmentX(Component.LEFT_ALIGNMENT);
     verticalBox_7.add(bottomSeparator);
 
-    verticalStrut_16 = Box.createVerticalStrut(10);
-    verticalBox_7.add(verticalStrut_16);
+    verticalBox_7.add(Box.createVerticalStrut(10));
 
-    breakTracksTitlePanel = new JPanel();
+    JPanel breakTracksTitlePanel = new JPanel();
     breakTracksTitlePanel.setMaximumSize(new Dimension(320, 40));
     breakTracksTitlePanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
     breakTracksTitlePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -490,10 +390,10 @@ public class SwingUserInterface extends JFrame implements Ui {
     breakTracksTitlePanel.add(breakTracksTitle);
     breakTracksTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
-    verticalStrut_15 = Box.createVerticalStrut(10);
+    Component verticalStrut_15 = Box.createVerticalStrut(10);
     verticalBox_7.add(verticalStrut_15);
 
-    breakTracks = new DraggableAudioFileList(this, AudioFileListType.BREAK, musicListControl, messageProducer);
+
     breakTracks.getModel().addListDataListener(new ListDataListener() {
 
       @Override
@@ -577,15 +477,13 @@ public class SwingUserInterface extends JFrame implements Ui {
     instructions.setText("<html><b>" + applicationData.getProgramName() + " " + applicationData.getProgramVersion() + "</b><br/><br/>"
         + bundle.getString("ui.instructions") + "</html>");
 
-    verticalStrut = Box.createVerticalStrut(20);
-    verticalBox_1.add(verticalStrut);
+    verticalBox_1.add(Box.createVerticalStrut(20));
     this.image = new JLabel(titleImage);
     image.setAlignmentY(Component.TOP_ALIGNMENT);
     verticalBox_1.add(image);
     this.image.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
-    verticalStrut_1 = Box.createVerticalStrut(20);
-    verticalBox_1.add(verticalStrut_1);
+    verticalBox_1.add(Box.createVerticalStrut(20));
 
     progressBar = new JProgressBar(0, 100);
     progressBar.setMaximumSize(new Dimension(620, 120));
@@ -595,24 +493,23 @@ public class SwingUserInterface extends JFrame implements Ui {
     progressBar.setStringPainted(true);
     progressBar.setEnabled(false);
 
-    verticalStrut_2 = Box.createVerticalStrut(20);
-    verticalBox_1.add(verticalStrut_2);
+    verticalBox_1.add(Box.createVerticalStrut(20));
 
-    settingsPanel = new JPanel();
+    JPanel settingsPanel = new JPanel();
     settingsPanel.setMaximumSize(new Dimension(620, 620));
     settingsPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     settingsPanel.setAlignmentY(Component.TOP_ALIGNMENT);
     verticalBox_1.add(settingsPanel);
     settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.X_AXIS));
 
-    horizontalBox = Box.createHorizontalBox();
+    Box horizontalBox = Box.createHorizontalBox();
     settingsPanel.add(horizontalBox);
 
-    numberSpacePanel = new JPanel();
+    JPanel numberSpacePanel = new JPanel();
     horizontalBox.add(numberSpacePanel);
     numberSpacePanel.setLayout(new BoxLayout(numberSpacePanel, BoxLayout.X_AXIS));
 
-    verticalBox_6 = Box.createVerticalBox();
+    Box verticalBox_6 = Box.createVerticalBox();
     numberSpacePanel.add(verticalBox_6);
 
     JPanel numbersPanel = new JPanel();
@@ -623,7 +520,7 @@ public class SwingUserInterface extends JFrame implements Ui {
     Box verticalBox = Box.createVerticalBox();
     numbersPanel.add(verticalBox);
 
-    iterationsPanel = new JPanel();
+    JPanel iterationsPanel = new JPanel();
     verticalBox.add(iterationsPanel);
     iterationsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -643,27 +540,25 @@ public class SwingUserInterface extends JFrame implements Ui {
       }
     });
 
-    verticalStrut_5 = Box.createVerticalStrut(10);
-    verticalBox.add(verticalStrut_5);
+    verticalBox.add(Box.createVerticalStrut(10));
 
     simpleAdvancedPane = new JTabbedPane(JTabbedPane.TOP);
     verticalBox.add(simpleAdvancedPane);
 
-    simplePanel = new JPanel();
+    JPanel simplePanel = new JPanel();
     simplePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     simpleAdvancedPane.addTab(bundle.getString("ui.form.simple_pane.title"), null, simplePanel, null);
 
     simplePanel.setLayout(new BoxLayout(simplePanel, BoxLayout.X_AXIS));
 
-    verticalBox_2 = Box.createVerticalBox();
+    Box verticalBox_2 = Box.createVerticalBox();
     simplePanel.add(verticalBox_2);
 
     JLabel periodFieldLabel = new JLabel(bundle.getString("ui.form.sound_period.label"));
     verticalBox_2.add(periodFieldLabel);
     periodFieldLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
-    verticalStrut_17 = Box.createVerticalStrut(5);
-    verticalBox_2.add(verticalStrut_17);
+    verticalBox_2.add(Box.createVerticalStrut(5));
 
     periodField = new JSpinner(new SpinnerNumberModel(0, 0, 9999, 1));
     periodField.addChangeListener(new ChangeListener() {
@@ -676,15 +571,13 @@ public class SwingUserInterface extends JFrame implements Ui {
     });
     verticalBox_2.add(periodField);
 
-    verticalStrut_18 = Box.createVerticalStrut(10);
-    verticalBox_2.add(verticalStrut_18);
+    verticalBox_2.add(Box.createVerticalStrut(10));
 
     JLabel breakFieldLabel = new JLabel(bundle.getString("ui.form.break_duration.label"));
     verticalBox_2.add(breakFieldLabel);
     breakFieldLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
-    verticalStrut_19 = Box.createVerticalStrut(5);
-    verticalBox_2.add(verticalStrut_19);
+    verticalBox_2.add(Box.createVerticalStrut(5));
 
     breakField = new JSpinner(new SpinnerNumberModel(0, 0, 9999, 1));
     breakField.addChangeListener(new ChangeListener() {
@@ -697,10 +590,9 @@ public class SwingUserInterface extends JFrame implements Ui {
     });
     verticalBox_2.add(breakField);
 
-    verticalGlue_1 = Box.createVerticalGlue();
-    verticalBox_2.add(verticalGlue_1);
+    verticalBox_2.add(Box.createVerticalGlue());
 
-    advancedPanel = new JPanel();
+    JPanel advancedPanel = new JPanel();
     advancedPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     simpleAdvancedPane.addTab(bundle.getString("ui.form.advanced_pane.title"), null, advancedPanel, null);
 
@@ -730,14 +622,13 @@ public class SwingUserInterface extends JFrame implements Ui {
 
     advancedPanel.setLayout(new BoxLayout(advancedPanel, BoxLayout.X_AXIS));
 
-    verticalBox_4 = Box.createVerticalBox();
+    Box verticalBox_4 = Box.createVerticalBox();
     advancedPanel.add(verticalBox_4);
 
-    soundPatternLabel = new JLabel(bundle.getString("ui.form.sound_pattern.label"));
+    JLabel soundPatternLabel = new JLabel(bundle.getString("ui.form.sound_pattern.label"));
     verticalBox_4.add(soundPatternLabel);
 
-    verticalStrut_10 = Box.createVerticalStrut(5);
-    verticalBox_4.add(verticalStrut_10);
+    verticalBox_4.add(Box.createVerticalStrut(5));
 
     soundPatternField = new JTextField();
 
@@ -759,16 +650,13 @@ public class SwingUserInterface extends JFrame implements Ui {
     });
 
     verticalBox_4.add(soundPatternField);
-    // soundPattern.setColumns(10);
 
-    verticalStrut_9 = Box.createVerticalStrut(10);
-    verticalBox_4.add(verticalStrut_9);
+    verticalBox_4.add(Box.createVerticalStrut(10));
 
-    breakPatternLabel = new JLabel(bundle.getString("ui.form.break_pattern.label"));
+    JLabel breakPatternLabel = new JLabel(bundle.getString("ui.form.break_pattern.label"));
     verticalBox_4.add(breakPatternLabel);
 
-    verticalStrut_11 = Box.createVerticalStrut(5);
-    verticalBox_4.add(verticalStrut_11);
+    verticalBox_4.add(Box.createVerticalStrut(5));
 
     breakPatternField = new JTextField();
 
@@ -793,16 +681,13 @@ public class SwingUserInterface extends JFrame implements Ui {
     verticalBox_4.add(breakPatternField);
     // breakPattern.setColumns(10);
 
-    verticalGlue_5 = Box.createVerticalGlue();
-    verticalBox_4.add(verticalGlue_5);
+    verticalBox_4.add(Box.createVerticalGlue());
 
-    verticalGlue_2 = Box.createVerticalGlue();
-    verticalBox.add(verticalGlue_2);
+    verticalBox.add(Box.createVerticalGlue());
 
-    verticalStrut_8 = Box.createVerticalStrut(20);
-    verticalBox.add(verticalStrut_8);
+    verticalBox.add(Box.createVerticalStrut(20));
 
-    durationPanel = new JPanel();
+    JPanel durationPanel = new JPanel();
     verticalBox.add(durationPanel);
 
     durationEstimation = new JLabel(bundle.getString("ui.form.duration_estimation.label.init"));
@@ -810,37 +695,35 @@ public class SwingUserInterface extends JFrame implements Ui {
 
     durationPanel.add(durationEstimation);
 
-    verticalGlue_4 = Box.createVerticalGlue();
-    verticalBox_6.add(verticalGlue_4);
+    verticalBox_6.add(Box.createVerticalGlue());
 
-    horizontalStrut_3 = Box.createHorizontalStrut(20);
-    horizontalBox.add(horizontalStrut_3);
+    horizontalBox.add(Box.createHorizontalStrut(20));
 
-    blendSpacePanel = new JPanel();
+    JPanel blendSpacePanel = new JPanel();
     horizontalBox.add(blendSpacePanel);
     blendSpacePanel.setLayout(new BoxLayout(blendSpacePanel, BoxLayout.X_AXIS));
 
-    verticalBox_5 = Box.createVerticalBox();
+    Box verticalBox_5 = Box.createVerticalBox();
     blendSpacePanel.add(verticalBox_5);
 
-    blendBorderPanel = new JPanel();
+    JPanel blendBorderPanel = new JPanel();
     verticalBox_5.add(blendBorderPanel);
     blendBorderPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     blendBorderPanel.setAlignmentY(Component.TOP_ALIGNMENT);
     blendBorderPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
     blendBorderPanel.setLayout(new BoxLayout(blendBorderPanel, BoxLayout.X_AXIS));
 
-    blendPanel = new JPanel();
+    JPanel blendPanel = new JPanel();
     blendBorderPanel.add(blendPanel);
 
     blendPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
     blendPanel.setLayout(new BoxLayout(blendPanel, BoxLayout.X_AXIS));
 
-    verticalBox_3 = Box.createVerticalBox();
+    Box verticalBox_3 = Box.createVerticalBox();
     blendPanel.add(verticalBox_3);
 
-    sliderLabelPanel = new JPanel();
+    JPanel sliderLabelPanel = new JPanel();
     verticalBox_3.add(sliderLabelPanel);
 
     JLabel blendSliderLabel = new JLabel(bundle.getString("ui.form.blend_duration.label"));
@@ -864,42 +747,42 @@ public class SwingUserInterface extends JFrame implements Ui {
       }
     });
 
-    blendModeLabelPanel = new JPanel();
+    JPanel blendModeLabelPanel = new JPanel();
     verticalBox_3.add(blendModeLabelPanel);
 
-    blendModeLabel = new JLabel(bundle.getString("ui.form.blend_mode.label"));
+    JLabel blendModeLabel = new JLabel(bundle.getString("ui.form.blend_mode.label"));
     blendModeLabelPanel.add(blendModeLabel);
 
     blendModeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-    blendModeButtonsPanel = new JPanel();
+    JPanel blendModeButtonsPanel = new JPanel();
     verticalBox_3.add(blendModeButtonsPanel);
     blendModeButtonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 12, 5));
 
-    blendModeRadiobutton1 = new JRadioButton("");
-    blendModeRadiobutton1.setToolTipText(bundle.getString("ui.form.blend_mode.icon1.tooltip"));
+    blendModeRadioButton1 = new JRadioButton("");
+    blendModeRadioButton1.setToolTipText(bundle.getString("ui.form.blend_mode.icon1.tooltip"));
 
-    blendModeButtonsPanel.add(blendModeRadiobutton1);
+    blendModeButtonsPanel.add(blendModeRadioButton1);
 
-    blendModeRadiobutton2 = new JRadioButton("");
-    blendModeRadiobutton2.setToolTipText(bundle.getString("ui.form.blend_mode.icon2.tooltip"));
+    blendModeRadioButton2 = new JRadioButton("");
+    blendModeRadioButton2.setToolTipText(bundle.getString("ui.form.blend_mode.icon2.tooltip"));
 
-    blendMode1Label = new JLabel();
+    JLabel blendMode1Label = new JLabel();
     blendMode1Label.setIcon(new ImageIcon(getClass().getClassLoader().getResource(bundle.getString("ui.form.blend_mode.icon1"))));
     blendMode1Label.setToolTipText(bundle.getString("ui.form.blend_mode.icon1.tooltip"));
     blendModeButtonsPanel.add(blendMode1Label);
-    blendModeButtonsPanel.add(blendModeRadiobutton2);
+    blendModeButtonsPanel.add(blendModeRadioButton2);
 
-    blendMode2Label = new JLabel();
+    JLabel blendMode2Label = new JLabel();
     blendMode2Label.setIcon(new ImageIcon(getClass().getClassLoader().getResource(bundle.getString("ui.form.blend_mode.icon2"))));
     blendMode2Label.setToolTipText(bundle.getString("ui.form.blend_mode.icon2.tooltip"));
     blendModeButtonsPanel.add(blendMode2Label);
-    blendModeGroup.add(blendModeRadiobutton1);
-    blendModeGroup.add(blendModeRadiobutton2);
+    blendModeGroup.add(blendModeRadioButton1);
+    blendModeGroup.add(blendModeRadioButton2);
 
-    blendModeGroup.setSelected(blendModeRadiobutton1.getModel(), true);
+    blendModeGroup.setSelected(blendModeRadioButton1.getModel(), true);
 
-    blendModeRadiobutton1.addActionListener(new ActionListener() {
+    blendModeRadioButton1.addActionListener(new ActionListener() {
 
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -908,7 +791,7 @@ public class SwingUserInterface extends JFrame implements Ui {
       }
     });
 
-    blendModeRadiobutton2.addActionListener(new ActionListener() {
+    blendModeRadioButton2.addActionListener(new ActionListener() {
 
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -917,13 +800,11 @@ public class SwingUserInterface extends JFrame implements Ui {
       }
     });
 
-    verticalGlue_3 = Box.createVerticalGlue();
-    verticalBox_5.add(verticalGlue_3);
+    verticalBox_5.add(Box.createVerticalGlue());
 
-    verticalStrut_3 = Box.createVerticalStrut(20);
-    verticalBox_1.add(verticalStrut_3);
+    verticalBox_1.add(Box.createVerticalStrut(20));
 
-    outfileBorderPanel = new JPanel();
+    JPanel outfileBorderPanel = new JPanel();
     outfileBorderPanel.setMaximumSize(new Dimension(620, 120));
     outfileBorderPanel.setAlignmentY(Component.TOP_ALIGNMENT);
     outfileBorderPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -939,20 +820,18 @@ public class SwingUserInterface extends JFrame implements Ui {
     outfilePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     outfilePanel.setLayout(new BoxLayout(outfilePanel, BoxLayout.X_AXIS));
 
-    horizontalBox_5 = Box.createHorizontalBox();
-    horizontalBox_5.setAlignmentX(Component.LEFT_ALIGNMENT);
-    outfilePanel.add(horizontalBox_5);
+    Box outputFileBox = Box.createHorizontalBox();
+    outputFileBox.setAlignmentX(Component.LEFT_ALIGNMENT);
+    outfilePanel.add(outputFileBox);
 
     outfileChooserButton = new JButton(bundle.getString("ui.form.outfile_button_text"));
-    horizontalBox_5.add(outfileChooserButton);
+    outputFileBox.add(outfileChooserButton);
 
-    horizontalStrut_6 = Box.createHorizontalStrut(20);
-    horizontalBox_5.add(horizontalStrut_6);
+    outputFileBox.add(Box.createHorizontalStrut(20));
     final JLabel outfileLabel = new JLabel(bundle.getString("ui.form.outfile_label"));
-    horizontalBox_5.add(outfileLabel);
+    outputFileBox.add(outfileLabel);
 
-    horizontalGlue_3 = Box.createHorizontalGlue();
-    horizontalBox_5.add(horizontalGlue_3);
+
 
     outfileChooserButton.addActionListener(new ActionListener() {
 
@@ -972,7 +851,7 @@ public class SwingUserInterface extends JFrame implements Ui {
           selectedFile = new File(dir);
         }
         else {
-          JFileChooser fc = new JFileChooser(outputDirectory);
+          JFileChooser fc = new JFileChooser(compilationParameters.outputPath);
           fc.setDialogTitle(dialogTitle);
           fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
           returnVal = fc.showSaveDialog(getParent());
@@ -980,23 +859,66 @@ public class SwingUserInterface extends JFrame implements Ui {
         }
 
         if (returnVal == JFileChooser.APPROVE_OPTION || (platform.isMac() && selectedFile != null)) {
-          outputDirectory = selectedFile.getAbsolutePath();
-          String shortPath = outputDirectory;
+          compilationParameters.outputPath = selectedFile.getAbsolutePath();
+          String shortPath = compilationParameters.outputPath;
 
-          if (50 < outputDirectory.length()) {
-            shortPath = "..." + outputDirectory.substring(outputDirectory.length() - 47, outputDirectory.length());
+          if (50 < compilationParameters.outputPath.length()) {
+            shortPath = "..." + compilationParameters.outputPath.substring(compilationParameters.outputPath.length() - 47, compilationParameters.outputPath.length());
           }
 
-          outfileLabel.setToolTipText(outputDirectory);
+          outfileLabel.setToolTipText(compilationParameters.outputPath);
           outfileLabel.setText(shortPath);
 
-          addDebugMessage("Changed output directory to: " + outputDirectory);
+          addDebugMessage("Changed output directory to: " + compilationParameters.outputPath);
         }
       }
     });
 
-    verticalStrut_4 = Box.createVerticalStrut(20);
-    verticalBox_1.add(verticalStrut_4);
+
+    // TODO: New horizontal box.
+//    JPanel encoderBorderPanel = new JPanel();
+//    encoderBorderPanel.setMaximumSize(new Dimension(620, 120));
+//    encoderBorderPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+//    encoderBorderPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+//    encoderBorderPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+
+//    verticalBox_1.add(encoderBorderPanel);
+//    encoderBorderPanel.setLayout(new BoxLayout(encoderBorderPanel, BoxLayout.X_AXIS));
+
+    JPanel encoderPanel = new JPanel();
+//    encoderBorderPanel.add(encoderPanel);
+    verticalBox_1.add(encoderPanel);
+    encoderPanel.setMaximumSize(new Dimension(620, 120));
+    encoderPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    encoderPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+    encoderPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+    encoderPanel.setLayout(new BoxLayout(encoderPanel, BoxLayout.X_AXIS));
+
+    Box encoderBox = Box.createHorizontalBox();
+    encoderBox.setAlignmentX(Component.RIGHT_ALIGNMENT);
+    encoderPanel.add(encoderBox);
+
+    final JLabel encoderLabel = new JLabel(bundle.getString("ui.form.encoder_label"));
+    encoderBox.add(encoderLabel);
+
+    encoderBox.add(Box.createHorizontalGlue());
+
+    outputFormatChooser = createEncoderComboBoxWithDataFrom(musicCompilationController);
+    encoderBox.add(outputFormatChooser);
+    outputFormatChooser.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        compilationParameters.encoderIdentifier = (String) outputFormatChooser.getSelectedItem();
+      }
+
+    });
+    compilationParameters.encoderIdentifier = (String) outputFormatChooser.getSelectedItem();
+    outputFormatChooser.doLayout();
+
+
+
+    verticalBox_1.add(Box.createVerticalStrut(20));
 
     JPanel buttonsPanel = new JPanel();
     buttonsPanel.setMaximumSize(new Dimension(620, 120));
@@ -1004,7 +926,7 @@ public class SwingUserInterface extends JFrame implements Ui {
     verticalBox_1.add(buttonsPanel);
     buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.X_AXIS));
 
-    horizontalBox_4 = Box.createHorizontalBox();
+    Box horizontalBox_4 = Box.createHorizontalBox();
     horizontalBox_4.setAlignmentX(Component.LEFT_ALIGNMENT);
     buttonsPanel.add(horizontalBox_4);
 
@@ -1012,25 +934,25 @@ public class SwingUserInterface extends JFrame implements Ui {
     process.doLayout();
     horizontalBox_4.add(process);
 
-    horizontalStrut_4 = Box.createHorizontalStrut(20);
+    Component horizontalStrut_4 = Box.createHorizontalStrut(20);
     horizontalBox_4.add(horizontalStrut_4);
 
     about = new IMCButton(bundle.getString("ui.form.about_button_text"));
     horizontalBox_4.add(about);
 
-    horizontalStrut_5 = Box.createHorizontalStrut(20);
+    Component horizontalStrut_5 = Box.createHorizontalStrut(20);
     horizontalBox_4.add(horizontalStrut_5);
 
     quit = new IMCButton(bundle.getString("ui.form.quit_button_text"));
     horizontalBox_4.add(quit);
 
-    horizontalGlue_4 = Box.createHorizontalGlue();
+    Component horizontalGlue_4 = Box.createHorizontalGlue();
     horizontalBox_4.add(horizontalGlue_4);
 
-    verticalGlue = Box.createVerticalGlue();
+    Component verticalGlue = Box.createVerticalGlue();
     verticalBox_1.add(verticalGlue);
 
-    verticalStrut_7 = Box.createVerticalStrut(20);
+    Component verticalStrut_7 = Box.createVerticalStrut(20);
     verticalBox_1.add(verticalStrut_7);
 
     quit.addActionListener(new ActionListener() {
@@ -1054,18 +976,17 @@ public class SwingUserInterface extends JFrame implements Ui {
       public void actionPerformed(ActionEvent arg0) {
 
         int soundPeriod = 0;
-        for (int p : soundPattern) {
+        for (int p : compilationParameters.musicPattern) {
           soundPeriod += p;
         }
 
-        if (0 <= soundPeriod && 0 < iterations && musicListControl.isTrackListReady()) {
+        if (0 <= soundPeriod && 0 < compilationParameters.iterations && musicListControl.isTrackListReady()) {
 
           // Reset to start image
           ((SwingUserInterface) ((JButton) arg0.getSource()).getTopLevelAncestor()).image.setIcon(titleImage);
 
           // Transfer values to control
-          musicCompilationController.startCompilation(CompilationParameters.buildFrom(soundPattern, breakPattern, iterations, blendMode, blendTime,
-              listSortMode, outputDirectory, enumerationMode));
+          musicCompilationController.startCompilation(compilationParameters);
         }
 
       }
@@ -1076,6 +997,14 @@ public class SwingUserInterface extends JFrame implements Ui {
     setMinimumSize(new Dimension(1010, 760));
 
     pack();
+  }
+
+  private JComboBox<String> createEncoderComboBoxWithDataFrom(MusicCompilationControl musicCompilationControl) {
+    List<String> encoders = Lists.newArrayList();
+    for (AudioFileEncoder e : musicCompilationControl.getAvailableEncoders()) {
+      encoders.add(e.getIdentificator());
+    }
+    return new JComboBox<>(encoders.toArray(new String[encoders.size()]));
   }
 
   private void setProgramIcons() {
@@ -1129,8 +1058,8 @@ public class SwingUserInterface extends JFrame implements Ui {
 
   private void setUIComponentsEnablement(boolean enabled) {
     Component[] statusChangingComponents = new Component[] { process, about, quit, sortButton, shuffleButton, outfileChooserButton, iterationsField,
-        periodField, breakField, soundPatternField, breakPatternField, simpleAdvancedPane, blendSlider, musicTracks, breakTracks, blendModeRadiobutton1,
-        blendModeRadiobutton2, enumerationModeRadiobutton1, enumerationModeRadiobutton2 };
+        periodField, breakField, soundPatternField, breakPatternField, simpleAdvancedPane, blendSlider, musicTracks, breakTracks, blendModeRadioButton1,
+        blendModeRadioButton2, enumerationModeRadioButton1, enumerationModeRadioButton2, outputFormatChooser};
 
     for (Component c : statusChangingComponents) {
       c.setEnabled(enabled);
@@ -1194,7 +1123,7 @@ public class SwingUserInterface extends JFrame implements Ui {
   }
 
   private void fetchSortOrder() {
-    listSortMode = musicListControl.getSortMode();
+    compilationParameters.listSortMode = musicListControl.getSortMode();
   }
 
   private void fetchSoundLists() {
@@ -1216,28 +1145,28 @@ public class SwingUserInterface extends JFrame implements Ui {
 
     int singleDuration = 0;
 
-    for (int i = 0; i < soundPattern.size(); i++) {
+    for (int i = 0; i < compilationParameters.musicPattern.size(); i++) {
 
       // Add current pattern item
-      singleDuration += soundPattern.get(i);
+      singleDuration += compilationParameters.musicPattern.get(i);
 
       // Add current break item (or restart if there are not enough of them)
-      singleDuration += breakPattern.get(i % breakPattern.size());
+      singleDuration += compilationParameters.breakPattern.get(i % compilationParameters.breakPattern.size());
     }
 
-    int durationEstimationValue = singleDuration * iterations;
+    int durationEstimationValue = singleDuration * compilationParameters.iterations;
 
     // If crossfading is activated, add fade interval once (= a half at start
     // and one at the end)
-    if (blendMode.equals(BlendMode.CROSS) && 0 < singleDuration && 0 < iterations) {
-      durationEstimationValue += blendTime;
+    if (compilationParameters.blendMode == BlendMode.CROSS && 0 < singleDuration && 0 < compilationParameters.iterations) {
+      durationEstimationValue += compilationParameters.blendTime;
     }
 
     durationEstimation.setText(prefix + " " + getFormattedTime(durationEstimationValue));
 
     if (0 < durationEstimationValue) {
       BarChart bar = new BarChart(620, 140);
-      bar.generate(soundPattern, breakPattern, iterations, (0 < breakTracks.getModel().getSize()));
+      bar.generate(compilationParameters.musicPattern, compilationParameters.breakPattern, compilationParameters.iterations, (0 < breakTracks.getModel().getSize()));
       image.setIcon(new ImageIcon(bar.getBufferedImage()));
     }
     else {
@@ -1251,24 +1180,24 @@ public class SwingUserInterface extends JFrame implements Ui {
 
   public void parseFields() {
 
-    iterations = (Integer) iterationsField.getValue();
-    blendTime = blendSlider.getValue();
+    compilationParameters.iterations = (Integer) iterationsField.getValue();
+    compilationParameters.blendTime = blendSlider.getValue();
 
-    if (blendModeRadiobutton1.getModel().isSelected()) {
-      blendMode = BlendMode.SEPARATE;
+    if (blendModeRadioButton1.getModel().isSelected()) {
+      compilationParameters.blendMode = BlendMode.SEPARATE;
     }
-    else if (blendModeRadiobutton2.getModel().isSelected()) {
-      blendMode = BlendMode.CROSS;
+    else if (blendModeRadioButton2.getModel().isSelected()) {
+      compilationParameters.blendMode = BlendMode.CROSS;
     }
 
-    soundPattern.clear();
-    breakPattern.clear();
+    compilationParameters.musicPattern.clear();
+    compilationParameters.breakPattern.clear();
 
-    if (compositionMode.equals(CompositionMode.ADVANCED)) {
+    if (compositionMode == CompositionMode.ADVANCED) {
 
       for (String s : soundPatternField.getText().split(",")) {
         try {
-          soundPattern.add(Math.abs(Integer.parseInt(s)));
+          compilationParameters.musicPattern.add(Math.abs(Integer.parseInt(s)));
         }
         catch (NumberFormatException e) {
           // We just ignore non-numeric input.
@@ -1277,7 +1206,7 @@ public class SwingUserInterface extends JFrame implements Ui {
 
       for (String s : breakPatternField.getText().split(",")) {
         try {
-          breakPattern.add(Math.abs(Integer.parseInt(s)));
+          compilationParameters.breakPattern.add(Math.abs(Integer.parseInt(s)));
         }
         catch (NumberFormatException e) {
           // We just ignore non-numeric input.
@@ -1286,18 +1215,18 @@ public class SwingUserInterface extends JFrame implements Ui {
 
     }
     else {
-      soundPattern.add((Integer) periodField.getValue());
-      breakPattern.add((Integer) breakField.getValue());
+      compilationParameters.musicPattern.add((Integer) periodField.getValue());
+      compilationParameters.breakPattern.add((Integer) breakField.getValue());
     }
 
     // We want at least one element in the lists
 
-    if (soundPattern.size() == 0) {
-      soundPattern.add(0);
+    if (compilationParameters.musicPattern.size() == 0) {
+      compilationParameters.musicPattern.add(0);
     }
 
-    if (breakPattern.size() == 0) {
-      breakPattern.add(0);
+    if (compilationParameters.breakPattern.size() == 0) {
+      compilationParameters.breakPattern.add(0);
     }
 
   }
@@ -1318,7 +1247,7 @@ public class SwingUserInterface extends JFrame implements Ui {
 
     String tracksText = tracksTextPl;
 
-    int usableTracks = musicListControl.getUsableTracks(soundPattern);
+    int usableTracks = musicListControl.getUsableTracks(compilationParameters.musicPattern);
 
     // If there is only one track, we're using the singular
     if (usableTracks == 1) {
@@ -1352,8 +1281,8 @@ public class SwingUserInterface extends JFrame implements Ui {
   }
 
   public void updateTrackListExtractLengthInformation() {
-   ((AudioFileCellRenderer) musicTracks.getCellRenderer()).setDurationPatterns(soundPattern, listSortMode, blendMode, blendTime);
-   ((AudioFileCellRenderer) breakTracks.getCellRenderer()).setDurationPatterns(soundPattern, listSortMode, blendMode, blendTime);
+   ((AudioFileCellRenderer) musicTracks.getCellRenderer()).setDurationPatterns(compilationParameters.musicPattern, compilationParameters.listSortMode, compilationParameters.blendMode, compilationParameters.blendTime);
+   ((AudioFileCellRenderer) breakTracks.getCellRenderer()).setDurationPatterns(compilationParameters.musicPattern, compilationParameters.listSortMode, compilationParameters.blendMode, compilationParameters.blendTime);
   }
 
   public synchronized void updateMusicListSortModeIndicator() {
@@ -1364,18 +1293,18 @@ public class SwingUserInterface extends JFrame implements Ui {
     String manual = bundle.getString("ui.form.music_list.list_mode.manual");
     String labelText = "";
 
-    listSortMode = musicListControl.getSortMode();
+    compilationParameters.listSortMode = musicListControl.getSortMode();
 
-    if (listSortMode.equals(ListSortMode.SORT)) {
+    if (compilationParameters.listSortMode == ListSortMode.SORT) {
       labelText = prefix + " " + sort;
     }
-    else if (listSortMode.equals(ListSortMode.SORT_REV)) {
+    else if (compilationParameters.listSortMode == ListSortMode.SORT_REV) {
       labelText = prefix + " " + sort_rev;
     }
-    else if (listSortMode.equals(ListSortMode.SHUFFLE)) {
+    else if (compilationParameters.listSortMode == ListSortMode.SHUFFLE) {
       labelText = prefix + " " + shuffle;
     }
-    else if (listSortMode.equals(ListSortMode.MANUAL)) {
+    else if (compilationParameters.listSortMode == ListSortMode.MANUAL) {
       labelText = prefix + " " + manual;
     }
 

@@ -37,6 +37,7 @@ import ch.retorte.intervalmusiccompositor.spi.ProgramControl;
 import ch.retorte.intervalmusiccompositor.spi.TaskFinishListener;
 import ch.retorte.intervalmusiccompositor.spi.Ui;
 import ch.retorte.intervalmusiccompositor.spi.audio.MusicPlayer;
+import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.util.AudioFilesLoader;
 
 import com.google.common.collect.Lists;
@@ -129,6 +130,17 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
     finally {
       ui.setActive();
     }
+  }
+
+  @Override
+  public List<AudioFileEncoder> getAvailableEncoders() {
+    List<AudioFileEncoder> availableEncoders = Lists.newArrayList();
+    for (AudioFileEncoder e : compilationGenerator.getEncoders()) {
+      if (e.isAbleToEncode()) {
+        availableEncoders.add(e);
+      }
+    }
+    return availableEncoders;
   }
 
   public void addMusicTrack(int i, File file) {
@@ -285,9 +297,8 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
         if (f.lastModified() < System.currentTimeMillis() - ONE_DAY_IN_MILLISECONDS) {
           messageBus.send(new InfoMessage("Purging old temporary file: " + f));
           boolean deleted = f.delete();
-
           if (!deleted) {
-            // TODO do something interesting
+            addDebugMessage("Was not able to delete temporary file: " + f);
           }
         }
       }

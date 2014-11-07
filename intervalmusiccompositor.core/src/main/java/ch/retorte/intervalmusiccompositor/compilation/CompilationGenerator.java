@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.ArrayHelper;
@@ -23,6 +24,7 @@ import ch.retorte.intervalmusiccompositor.playlist.PlaylistReport;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.TaskFinishListener;
+import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 import com.google.common.base.Charsets;
@@ -73,7 +75,7 @@ public class CompilationGenerator implements Runnable {
     updateProgress(0, bundle.getString("compilation.status.reading"));
     adjustBlendTimeIfTooLong();
     clearOldData();
-    compileOutputFileNames();
+    compileOutputParameters();
 
     updateProgress(10, bundle.getString("compilation.status.loadingMusic"));
     collectMusicTracks();
@@ -141,7 +143,7 @@ public class CompilationGenerator implements Runnable {
     badSoundFiles.clear();
   }
 
-  private void compileOutputFileNames() {
+  private void compileOutputParameters() {
     correctedOutputPath = compilationParameters.outputPath;
     if (correctedOutputPath == null || correctedOutputPath.equals("")) {
       correctedOutputPath = bundle.getString("imc.workPath");
@@ -222,7 +224,7 @@ public class CompilationGenerator implements Runnable {
   }
 
   private void writeOutputFile() {
-    outputGenerator.generateOutput(compilationData, correctedOutputPath, outfile_prefix);
+    outputGenerator.generateOutput(compilationData, correctedOutputPath, outfile_prefix, compilationParameters.encoderIdentifier);
   }
 
   private void createEnvelope() {
@@ -255,5 +257,9 @@ public class CompilationGenerator implements Runnable {
 
   public void setApplicationData(ApplicationData applicationData) {
     this.applicationData = applicationData;
+  }
+
+  public List<AudioFileEncoder> getEncoders() {
+    return outputGenerator.getEncoders();
   }
 }

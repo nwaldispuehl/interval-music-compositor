@@ -3,11 +3,9 @@ package ch.retorte.intervalmusiccompositor.output;
 import static java.io.File.separator;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
@@ -20,20 +18,19 @@ import ch.retorte.intervalmusiccompositor.util.SoundHelper;
  */
 public class OutputGenerator {
 
-  private List<AudioFileEncoder> encoders;
   private SoundHelper soundHelper;
+  private List<AudioFileEncoder> encoders;
   private MessageProducer messageProducer;
 
   public OutputGenerator(SoundHelper soundHelper, List<AudioFileEncoder> encoders, MessageProducer messageProducer) {
-    this.encoders = encoders;
     this.soundHelper = soundHelper;
+    this.encoders = encoders;
     this.messageProducer = messageProducer;
   }
 
-  public void generateOutput(byte[] soundData, String path, String filePrefix) {
+  public void generateOutput(byte[] soundData, String path, String filePrefix, String encoderIdentifier) {
     AudioInputStream audioInputStream = soundHelper.getStreamFromByteArray(soundData);
-    AudioFileEncoder encoder = getEncoder();
-
+    AudioFileEncoder encoder = getEncoderFor(encoderIdentifier);
 
     File outputFile = generateOutputFile(encoder, path, filePrefix);
     addDebugMessage("Encoding compilation data with: " + encoder.getClass().getSimpleName() + " to: " + outputFile);
@@ -41,29 +38,20 @@ public class OutputGenerator {
     try {
       encoder.encode(audioInputStream, outputFile);
     }
-    catch (UnsupportedAudioFileException e) {
-      addDebugMessage(e.getMessage());
-      addErrorMessage(e.getMessage());
-    }
-    catch (IOException e) {
+    catch (Exception e) {
       addDebugMessage(e.getMessage());
       addErrorMessage(e.getMessage());
     }
   }
 
-  private File generateOutputFile(AudioFileEncoder encoder, String path, String filePrefix) {
-    String normalizedPath = path;
-    if (!normalizedPath.endsWith(separator)) {
-      normalizedPath += separator;
-    }
-
-    return new File(normalizedPath + filePrefix + "." + encoder.getFileExtension());
+  public List<AudioFileEncoder> getEncoders() {
+    return encoders;
   }
 
-  private AudioFileEncoder getEncoder() {
+  private AudioFileEncoder getEncoderFor(String encoderIdentifier) {
     for (AudioFileEncoder encoder : encoders) {
       try {
-        if (encoder.isAbleToEncode()) {
+        if (encoder.isAbleToEncode() && encoder.getIdentificator().equals(encoderIdentifier)) {
           return encoder;
         }
       }
@@ -75,6 +63,15 @@ public class OutputGenerator {
     throw new IllegalStateException("No encoder found.");
   }
 
+  private File generateOutputFile(AudioFileEncoder encoder, String path, String filePrefix) {
+    String normalizedPath = path;
+    if (!normalizedPath.endsWith(separator)) {
+      normalizedPath += separator;
+    }
+
+    return new File(normalizedPath + filePrefix + "." + encoder.getFileExtension());
+  }
+
   private void addDebugMessage(String message) {
     messageProducer.send(new DebugMessage(this, message));
   }
@@ -82,5 +79,4 @@ public class OutputGenerator {
   private void addErrorMessage(String message) {
     messageProducer.send(new ErrorMessage(message));
   }
-
 }
