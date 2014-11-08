@@ -183,8 +183,7 @@ public class CompilationGenerator implements Runnable {
 
   private void createPlaylist() {
     playlist = new Playlist(compilationParameters, messageProducer);
-    playlist.generatePlaylist(musicPlaylistCandidates, compilationParameters.musicPattern, breakPlaylistCandidates, compilationParameters.breakPattern,
-        compilationParameters.iterations);
+    playlist.generatePlaylist(musicPlaylistCandidates, compilationParameters.musicPattern, breakPlaylistCandidates, compilationParameters.breakPattern, compilationParameters.iterations);
   }
 
   private void createPlaylistReport() {
