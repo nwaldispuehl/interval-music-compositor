@@ -110,8 +110,6 @@ public class SwingUserInterface extends JFrame implements Ui {
 
   private CompilationParameters compilationParameters = new CompilationParameters();
 
-
-
   private JTabbedPane simpleAdvancedPane;
   private JTextField soundPatternField;
   private JTextField breakPatternField;
@@ -150,6 +148,7 @@ public class SwingUserInterface extends JFrame implements Ui {
   }
 
   public void init() {
+    initializeCompilationParameters();
     setUiProperties();
 
     createAboutDialogControl(updateAvailabilityChecker);
@@ -988,6 +987,10 @@ public class SwingUserInterface extends JFrame implements Ui {
     setMinimumSize(new Dimension(1010, 760));
 
     pack();
+  }
+
+  private void initializeCompilationParameters() {
+    compilationParameters.outputPath = platform.getDesktopPath();
   }
 
   private JComboBox<String> createEncoderComboBoxWithDataFrom(MusicCompilationControl musicCompilationControl) {
