@@ -875,18 +875,8 @@ public class SwingUserInterface extends JFrame implements Ui {
     });
 
 
-    // TODO: New horizontal box.
-//    JPanel encoderBorderPanel = new JPanel();
-//    encoderBorderPanel.setMaximumSize(new Dimension(620, 120));
-//    encoderBorderPanel.setAlignmentY(Component.TOP_ALIGNMENT);
-//    encoderBorderPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-//    encoderBorderPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-
-//    verticalBox_1.add(encoderBorderPanel);
-//    encoderBorderPanel.setLayout(new BoxLayout(encoderBorderPanel, BoxLayout.X_AXIS));
-
     JPanel encoderPanel = new JPanel();
-//    encoderBorderPanel.add(encoderPanel);
+
     verticalBox_1.add(encoderPanel);
     encoderPanel.setMaximumSize(new Dimension(620, 120));
     encoderPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -910,6 +900,7 @@ public class SwingUserInterface extends JFrame implements Ui {
       @Override
       public void actionPerformed(ActionEvent e) {
         compilationParameters.encoderIdentifier = (String) outputFormatChooser.getSelectedItem();
+        addDebugMessage("Changed output format to: " + compilationParameters.encoderIdentifier);
       }
 
     });
@@ -1057,6 +1048,7 @@ public class SwingUserInterface extends JFrame implements Ui {
   }
 
   private void setUIComponentsEnablement(boolean enabled) {
+    addDebugMessage("Setting UI components enablement:" + enabled);
     Component[] statusChangingComponents = new Component[] { process, about, quit, sortButton, shuffleButton, outfileChooserButton, iterationsField,
         periodField, breakField, soundPatternField, breakPatternField, simpleAdvancedPane, blendSlider, musicTracks, breakTracks, blendModeRadioButton1,
         blendModeRadioButton2, enumerationModeRadioButton1, enumerationModeRadioButton2, outputFormatChooser};
