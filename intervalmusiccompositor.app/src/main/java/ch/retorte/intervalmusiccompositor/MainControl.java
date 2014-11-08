@@ -117,6 +117,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
     compilationGenerator.addListener(new TaskFinishListener() {
       public void onTaskFinished() {
         ui.setEnvelopeImage(compilationGenerator.getEnvelope());
+        ui.setActive();
       }
     });
 
@@ -126,8 +127,6 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
     }
     catch (CompilationException e) {
       messageBus.send(new ErrorMessage(e.getMessage()));
-    }
-    finally {
       ui.setActive();
     }
   }
