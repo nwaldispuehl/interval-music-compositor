@@ -3,7 +3,7 @@ Interval Music Compositor
 
 Interval Music Compositor, a multi-platform software for creating interval music compilations out of multiple sound files.
 
-![Interval Music Compositor screenshot](https://github.com/nwaldispuehl/interval-music-compositor/raw/master/intervalmusiccompositor.build/footage/imc_screenshot_small.jpg)
+![Interval Music Compositor screenshot](https://github.com/nwaldispuehl/interval-music-compositor/raw/master/intervalmusiccompositor.build/footage/imc_screenshot_small.png)
 
 
 
