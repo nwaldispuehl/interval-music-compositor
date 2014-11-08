@@ -38,11 +38,6 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
     this.soundHelper = new SoundHelper(messageProducer);
   }
 
-  public ExtractMusicPlayer(SoundHelper soundHelper, MessageProducer messageProducer) {
-    this.soundHelper = soundHelper;
-    this.messageProducer = messageProducer;
-  }
-
   @Override
   public void run() {
     play = true;
@@ -61,9 +56,8 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
     try {
       AudioFormat audioFormat = inputStream.getFormat();
 
-      SourceDataLine line = null;
       DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-      line = (SourceDataLine) AudioSystem.getLine(info);
+      SourceDataLine line = (SourceDataLine) AudioSystem.getLine(info);
       line.open(audioFormat);
       line.start();
 
@@ -74,8 +68,8 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
         try {
           nBytesRead = inputStream.read(abData, 0, abData.length);
         }
-        catch (IOException ioex) {
-          addDebugMessage("Unable to read data stream: " + ioex.getMessage());
+        catch (IOException e) {
+          addDebugMessage("Unable to read data stream: " + e.getMessage());
         }
         if (nBytesRead >= 0) {
           line.write(abData, 0, nBytesRead);
@@ -84,7 +78,6 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
 
       line.stop();
       line.close();
-      line = null;
 
       play = false;
 
