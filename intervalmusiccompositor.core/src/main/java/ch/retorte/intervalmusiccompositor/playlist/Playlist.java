@@ -3,7 +3,6 @@ package ch.retorte.intervalmusiccompositor.playlist;
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.compilation.CompilationParameters.*;
 import static ch.retorte.intervalmusiccompositor.list.BlendMode.CROSS;
-import static ch.retorte.intervalmusiccompositor.list.BlendMode.SEPARATE;
 import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.CONTINUOUS;
 import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.SINGLE_EXTRACT;
 import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SHUFFLE;
