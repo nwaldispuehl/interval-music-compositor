@@ -6,7 +6,7 @@ link:
 
 _**Keywords:** interval training, circuit training, pyramid training, physical education, PE, sports, music, exercise music, break, iteration, workout, automated generation, compilation, bpm_
 
-![Interval Music Compositor Screenshot](/interval-music-compositor/img/imc_screenshot_small.jpg)
+![Interval Music Compositor Screenshot](/interval-music-compositor/img/imc_screenshot_small.png)
 
 **Interval Music Compositor** is a small, multi-platform software which generates a random interval sequence out of an arbitrary number of music files. One can choose the duration of the music parts and the intermediate breaks as well as the number of iterations. The output is a single, large audio file to be processed further or burnt to cd.
 

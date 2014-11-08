@@ -6,7 +6,7 @@ link:
 
 _**Schlüsselwörter:** Intervalltraining, Kreistraining, Stationstraining, Zirkeltraining, Circuit, Pyramidentraining, Turnunterricht, Sportunterricht, Sport, Fitness, Musik, Pause, Iteration, Wiederholung, automatisch erzeugen, Zusammenstellung, Mixtape, bpm_
 
-![Interval Music Compositor Screenshot](/interval-music-compositor/img/imc_screenshot_small.jpg)
+![Interval Music Compositor Screenshot](/interval-music-compositor/img/imc_screenshot_small.png)
 
 Der retorte.ch **Interval Music Compositor** ist ein kleines multiplattform Programm das eine beliebige Anzahl Musikdateien zufällig zu einer einzigen grossen Musikdatei zusammenstückelt. Die Dauer der Musikteile und der Pausen sowie die Anzahl der Wiederholungen ist frei wählbar. Die Ausgabe ist eine einzelne, grosse Musikdatei die auf AudioCD gebrannt oder sonst wie weiterverarbeitet werden kann.
 
