@@ -52,7 +52,7 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
    */
   public int getAvgAmplitude(AudioInputStream inputBuffer, int sampleWindow) throws IOException {
 
-    int sample = 0;
+    int sample;
 
     int sampleWindowCounter = 0;
     long sampleWindowSum = 0;
@@ -64,13 +64,13 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     int numberOfBytes = 2 * bytesPerFrame * 8;
     byte[] audioBytes = new byte[numberOfBytes];
 
-    int numberOfBytesRead = 0;
+    int numberOfBytesRead;
 
     while ((numberOfBytesRead = inputBuffer.read(audioBytes)) != -1) {
 
       if (numberOfBytesRead == numberOfBytes) {
 
-        // Here we do a rollout to speed up the whole thing
+        // Here we do a roll out to speed up the whole thing
         sample = Math.abs((audioBytes[0] & 0xFF) | (audioBytes[1] << 8));
         sample += Math.abs((audioBytes[2] & 0xFF) | (audioBytes[3] << 8));
         sample += Math.abs((audioBytes[4] & 0xFF) | (audioBytes[5] << 8));
@@ -105,45 +105,6 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     return maxSample;
   }
 
-  /**
-   * Returns the largest amplitude value of the provided
-   * {@link AudioInputStream}
-   * 
-   * @param inputBuffer
-   *          The to be inspected stream
-   * @return The maximum amplitude value of the stream
-   * @throws IOException
-   */
-  public int getMaxAmplitude(AudioInputStream inputBuffer) throws IOException {
-
-    int maxSample = 0;
-    int bytesPerFrame = inputBuffer.getFormat().getFrameSize();
-
-    // Add factor 4 to speed up
-    int numberOfBytes = 2 * bytesPerFrame * 8;
-    byte[] audioBytes = new byte[numberOfBytes];
-
-    int numberOfBytesRead = 0;
-
-    while ((numberOfBytesRead = inputBuffer.read(audioBytes)) != -1) {
-
-      if (numberOfBytesRead == numberOfBytes) {
-
-        // Here we do a roll out to speed up the whole thing
-        maxSample = Math.max(maxSample, Math.abs((audioBytes[0] & 0xFF) | (audioBytes[1] << 8)));
-        maxSample = Math.max(maxSample, Math.abs((audioBytes[2] & 0xFF) | (audioBytes[3] << 8)));
-        maxSample = Math.max(maxSample, Math.abs((audioBytes[4] & 0xFF) | (audioBytes[5] << 8)));
-        maxSample = Math.max(maxSample, Math.abs((audioBytes[6] & 0xFF) | (audioBytes[7] << 8)));
-        maxSample = Math.max(maxSample, Math.abs((audioBytes[8] & 0xFF) | (audioBytes[9] << 8)));
-        maxSample = Math.max(maxSample, Math.abs((audioBytes[10] & 0xFF) | (audioBytes[11] << 8)));
-        maxSample = Math.max(maxSample, Math.abs((audioBytes[12] & 0xFF) | (audioBytes[13] << 8)));
-        maxSample = Math.max(maxSample, Math.abs((audioBytes[14] & 0xFF) | (audioBytes[15] << 8)));
-      }
-    }
-
-    return maxSample;
-  }
-
   public AudioInputStream getLeveledStream(AudioInputStream audioInputStream, float desiredRelativeAmplitude) {
     AmplitudeAudioInputStream aais = new AmplitudeAudioInputStream(audioInputStream);
     aais.setAmplitudeLinear(desiredRelativeAmplitude);
@@ -157,14 +118,18 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
   public byte[] getStreamPart(AudioInputStream inputStream, Long startTimeMS, Long durationMS) throws IOException {
 
     // First skip to the desired position
-    inputStream.skip(Math.round((startTimeMS / 1000) * inputStream.getFormat().getSampleRate() * inputStream.getFormat().getFrameSize()));
+    long bytesToSkip = Math.round((startTimeMS / 1000) * inputStream.getFormat().getSampleRate() * inputStream.getFormat().getFrameSize());
+    long skippedBytes = inputStream.skip(bytesToSkip);
+    if (bytesToSkip != skippedBytes) {
+      addDebugMessage("Tried to skip " + bytesToSkip + " bytes but only skipped " + skippedBytes + " bytes.");
+    }
 
     byte[] result = new byte[Math.round((durationMS / 1000) * inputStream.getFormat().getSampleRate() * inputStream.getFormat().getFrameSize())];
 
     // Choose a buffer of 100 KB
     byte[] audioBytes = new byte[102400];
 
-    int numberOfBytesRead = 0;
+    int numberOfBytesRead;
     int totalNumberOfBytesRead = 0;
 
     while ((numberOfBytesRead = inputStream.read(audioBytes)) != -1) {
@@ -215,7 +180,7 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     AudioFormat af = inputStream.getFormat();
 
     long frameLength = inputStream.getFrameLength();
-    long byteLength = 0;
+    long byteLength;
 
     int frameSize = af.getFrameSize();
 
@@ -301,8 +266,8 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
       }
     }
 
-    int valueFront = 0;
-    int valueEnd = 0;
+    int valueFront;
+    int valueEnd;
 
     for (int i = 0; i < samples; i = i + 2) {
 
@@ -337,10 +302,10 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     }
 
     boolean bDoConvertSampleSize = (stream.getFormat().getSampleSizeInBits() != TARGET_AUDIO_FORMAT.getSampleSizeInBits());
-    boolean bDoConvertEndianess = (stream.getFormat().isBigEndian() != TARGET_AUDIO_FORMAT.isBigEndian());
+    boolean bDoConvertEndianness = (stream.getFormat().isBigEndian() != TARGET_AUDIO_FORMAT.isBigEndian());
 
-    if (bDoConvertSampleSize || bDoConvertEndianess) {
-      stream = convertSampleSizeAndEndianess(TARGET_AUDIO_FORMAT.getSampleSizeInBits(), TARGET_AUDIO_FORMAT.isBigEndian(), stream);
+    if (bDoConvertSampleSize || bDoConvertEndianness) {
+      stream = convertSampleSizeAndEndianness(TARGET_AUDIO_FORMAT.getSampleSizeInBits(), TARGET_AUDIO_FORMAT.isBigEndian(), stream);
     }
 
     if (!equals(stream.getFormat().getSampleRate(), TARGET_AUDIO_FORMAT.getSampleRate())) {
@@ -360,7 +325,7 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     return AudioSystem.getAudioInputStream(targetFormat, sourceStream);
   }
 
-  private AudioInputStream convertSampleSizeAndEndianess(int nSampleSizeInBits, boolean bBigEndian, AudioInputStream sourceStream) {
+  private AudioInputStream convertSampleSizeAndEndianness(int nSampleSizeInBits, boolean bBigEndian, AudioInputStream sourceStream) {
     AudioFormat sourceFormat = sourceStream.getFormat();
 
     AudioFormat targetFormat = new AudioFormat(sourceFormat.getEncoding(), sourceFormat.getSampleRate(), nSampleSizeInBits, sourceFormat.getChannels(),
@@ -389,10 +354,6 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
 
   private boolean equals(float f1, float f2) {
     return (Math.abs(f1 - f2) < 1E-9F);
-  }
-
-  public int sec(long milliseconds) {
-    return (int) (milliseconds / 1000);
   }
 
 }
