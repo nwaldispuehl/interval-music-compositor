@@ -1,6 +1,7 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
+import static ch.retorte.intervalmusiccompositor.compilation.CompilationParameters.*;
 import static ch.retorte.intervalmusiccompositor.list.BlendMode.CROSS;
 import static ch.retorte.intervalmusiccompositor.list.BlendMode.SEPARATE;
 import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.CONTINUOUS;
@@ -21,6 +22,7 @@ import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
+import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -33,7 +35,6 @@ import com.google.common.collect.Maps;
 public class Playlist implements Iterable<PlaylistItem> {
 
   private MessageFormatBundle bundle = getBundle("core_imc");
-
   private List<PlaylistItem> playlistItems = newArrayList();
 
   private Long startCutOffInMilliseconds = Long.parseLong(bundle.getString("imc.audio.cutoff.start"));
@@ -41,47 +42,54 @@ public class Playlist implements Iterable<PlaylistItem> {
 
   private Random random = new Random();
 
-  private BlendMode blendMode = SEPARATE;
-  private Double blendTime = 1.0;
-  private EnumerationMode enumerationMode = SINGLE_EXTRACT;
-  private ListSortMode listSortMode;
+  private BlendMode blendMode = DEFAULT_BLEND_MODE;
+  private Double blendTime = DEFAULT_BLEND_TIME;
+  private EnumerationMode enumerationMode = DEFAULT_ENUMERATION_MODE;
+  private ListSortMode listSortMode = DEFAULT_LIST_SORT_MODE;
 
   private Map<IAudioFile, Long> currentProgress = Maps.newConcurrentMap();
+  private MessageProducer messageProducer;
 
+  @VisibleForTesting
   Playlist(MessageProducer messageProducer) {
+    this.messageProducer = messageProducer;
   }
 
-  public Playlist(BlendMode blendMode, Double blendTime, EnumerationMode enumerationMode, ListSortMode listSortMode, MessageProducer messageProducer) {
+  @VisibleForTesting
+  Playlist(BlendMode blendMode, Double blendTime, EnumerationMode enumerationMode, ListSortMode listSortMode, MessageProducer messageProducer) {
     this.blendMode = blendMode;
     this.blendTime = blendTime;
     this.enumerationMode = enumerationMode;
     this.listSortMode = listSortMode;
+    this.messageProducer = messageProducer;
   }
 
   public Playlist(CompilationParameters p, MessageProducer messageProducer) {
     this(p.blendMode, p.blendTime, p.enumerationMode, p.listSortMode, messageProducer);
   }
 
-  public void generatePlaylist(List<IAudioFile> musicFiles, List<Integer> musicPattern, List<IAudioFile> breakFiles,
-                                          List<Integer> breakPattern,
-                                          Integer iterations) {
+  public void generatePlaylist(List<IAudioFile> musicFiles,
+                               List<Integer> musicPattern,
+                               List<IAudioFile> breakFiles,
+                               List<Integer> breakPattern,
+                               Integer iterations) {
     playlistItems = generatePlaylistFrom(musicFiles, musicPattern, breakFiles, breakPattern, iterations);
   }
 
-
   @VisibleForTesting
-  List<PlaylistItem> generatePlaylistFrom(List<IAudioFile> musicFiles, List<Integer> musicPattern, List<IAudioFile> breakFiles,
-      List<Integer> breakPattern,
- Integer iterations) {
-    List<PlaylistItem> result = newArrayList();
-    
+  List<PlaylistItem> generatePlaylistFrom(List<IAudioFile> musicFiles,
+                                          List<Integer> musicPattern,
+                                          List<IAudioFile> breakFiles,
+                                          List<Integer> breakPattern,
+                                          Integer iterations) {
+
     checkNotNull(musicFiles);
     checkNotNull(musicPattern);
     checkNotNull(breakFiles);
     checkNotNull(breakPattern);
     
     if (iterations == 0 || musicFiles.isEmpty()) {
-      return result;
+      return newArrayList();
     }
 
     List<PlaylistItem> musicTracks = createMusicPlaylist(musicFiles, musicPattern, iterations);
@@ -107,55 +115,63 @@ public class Playlist implements Iterable<PlaylistItem> {
 
 
   private List<PlaylistItem> createMusicPlaylist(List<IAudioFile> musicFiles, List<Integer> musicPattern, Integer iterations) {
-    List<PlaylistItem> result = Lists.newArrayList();
+    List<PlaylistItem> musicPlaylist = Lists.newArrayList();
     int desiredPlaylistSize = musicPattern.size() * iterations;
     int musicTrackCounter = 0;
+    int lastShuffleHappened = 0;
     int musicPatternCounter = 0;
     int skippedTracks = 0;
 
-    while (result.size() < desiredPlaylistSize) {
+    while (musicPlaylist.size() < desiredPlaylistSize) {
 
       IAudioFile currentAudioFile = musicFiles.get((musicTrackCounter) % musicFiles.size());
       int currentSoundPattern = musicPattern.get(musicPatternCounter % musicPattern.size());
 
       PlaylistItem newMusicTrack = createPlaylistItemFrom(currentAudioFile, currentSoundPattern * 1000);
       if (newMusicTrack != null) {
-        result.add(newMusicTrack);
+        musicPlaylist.add(newMusicTrack);
         musicPatternCounter++;
       }
       else {
         skippedTracks++;
       }
 
-      if (enumerationMode == SINGLE_EXTRACT || newMusicTrack == null) {
+      if (isSingleExtractEnumeration() || newMusicTrack == null) {
         musicTrackCounter++;
       }
 
-      if (listSortMode == SHUFFLE && (musicTrackCounter % musicFiles.size() == 0)) {
-          Collections.shuffle(musicFiles, random);
+      if (isShuffleMode() && musicTrackCounter != lastShuffleHappened && (musicTrackCounter % musicFiles.size() == 0)) {
+        shuffle(musicFiles);
+        lastShuffleHappened = musicTrackCounter;
+        skippedTracks = 0;
       }
 
       if (musicFiles.size() < skippedTracks) {
+        messageProducer.send(new ErrorMessage("Too few usable tracks."));
         throw new IllegalStateException("Too few usable tracks.");
       }
 
     }
 
-    return result;
+    return musicPlaylist;
+  }
+
+  private void shuffle(List<IAudioFile> audioFiles) {
+    Collections.shuffle(audioFiles, random);
   }
 
   private List<PlaylistItem> createBreakPlaylist(List<IAudioFile> breakFiles, List<Integer> breakPattern, Integer iterations, int musicPatternSize) {
-    List<PlaylistItem> result = Lists.newArrayList();
+    List<PlaylistItem> breakPlaylist = Lists.newArrayList();
 
-    int desiredBreaklistSize = musicPatternSize * iterations;
+    if (breakPattern.isEmpty()) {
+      return breakPlaylist;
+    }
+
+    int desiredBreakListSize = musicPatternSize * iterations;
     int breakTrackCounter = 0;
     int skippedTracks = 0;
 
-    if (breakPattern.isEmpty()) {
-      return result;
-    }
-
-    while (result.size() < desiredBreaklistSize) {
+    while (breakPlaylist.size() < desiredBreakListSize) {
 
       int currentBreakPattern = breakPattern.get((breakTrackCounter % musicPatternSize) % breakPattern.size());
 
@@ -165,7 +181,7 @@ public class Playlist implements Iterable<PlaylistItem> {
 
         PlaylistItem newBreakTrack = createPlaylistItemFrom(currentBreakFile, currentBreakPattern * 1000);
         if (newBreakTrack != null) {
-          result.add(new BreakPlaylistItem(newBreakTrack));
+          breakPlaylist.add(new BreakPlaylistItem(newBreakTrack));
         }
         else {
           skippedTracks++;
@@ -173,18 +189,19 @@ public class Playlist implements Iterable<PlaylistItem> {
 
       }
       else {
-        result.add(new BreakPlaylistItem(createPlaylistItem(null, 0L, (long) currentBreakPattern * 1000)));
+        breakPlaylist.add(new BreakPlaylistItem(createPlaylistItem(null, 0L, (long) currentBreakPattern * 1000)));
       }
 
       breakTrackCounter++;
 
       if (breakFiles.size() < skippedTracks) {
+        messageProducer.send(new ErrorMessage("Too few usable tracks."));
         throw new IllegalStateException("Too few usable tracks.");
       }
 
     }
 
-    return result;
+    return breakPlaylist;
   }
 
   private PlaylistItem createPlaylistItemFrom(IAudioFile audioFile, long extractLengthInMilliseconds) {
@@ -192,11 +209,11 @@ public class Playlist implements Iterable<PlaylistItem> {
     long maximalRangeForDuration;
     long trackStart = startCutOffInMilliseconds;
 
-    if (blendMode == CROSS) {
+    if (isCrossFadingMode()) {
       extractLengthInMilliseconds += (long) (blendTime * 1000);
     }
 
-    if (enumerationMode == CONTINUOUS) {
+    if (isContinuousExtractEnumerator()) {
       if (!currentProgress.containsKey(audioFile)) {
         currentProgress.put(audioFile, startCutOffInMilliseconds);
       }
@@ -213,13 +230,13 @@ public class Playlist implements Iterable<PlaylistItem> {
     }
 
     if (maximalRangeForDuration < 0) {
-      if (enumerationMode == CONTINUOUS) {
+      if (isContinuousExtractEnumerator()) {
         currentProgress.remove(audioFile);
       }
       return null;
     }
 
-    if (enumerationMode == CONTINUOUS) {
+    if (isContinuousExtractEnumerator()) {
       currentProgress.put(audioFile, trackStart + extractLengthInMilliseconds);
     }
 
@@ -232,24 +249,38 @@ public class Playlist implements Iterable<PlaylistItem> {
     return new PlaylistItem(audioFile, startInMilliseconds, endInMilliseconds);
   }
 
-
-
   public long getTotalLength(List<PlaylistItem> playlistItems) {
     long result = 0L;
     for (PlaylistItem playlistItem : playlistItems) {
       result += playlistItem.getExtractDurationInMilliseconds();
 
-      if (blendMode == CROSS) {
+      if (isCrossFadingMode()) {
         // Removing 1/2 of the blend time due to overlapping between the tracks.
         result -= (blendTime * 500);
       }
     }
 
-    if (blendMode == CROSS) {
+    if (isCrossFadingMode()) {
       result += (blendTime * 1000);
     }
 
     return result;
+  }
+
+  private boolean isCrossFadingMode() {
+    return blendMode == CROSS;
+  }
+
+  private boolean isSingleExtractEnumeration() {
+    return enumerationMode == SINGLE_EXTRACT;
+  }
+
+  private boolean isContinuousExtractEnumerator() {
+    return enumerationMode == CONTINUOUS;
+  }
+
+  private boolean isShuffleMode() {
+    return listSortMode == SHUFFLE;
   }
 
   public long getTotalLength() {
@@ -271,10 +302,6 @@ public class Playlist implements Iterable<PlaylistItem> {
 
   public Double getBlendTime() {
     return blendTime;
-  }
-
-  public boolean isEmpty() {
-    return playlistItems.isEmpty();
   }
 
   @Override

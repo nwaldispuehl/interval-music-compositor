@@ -4,6 +4,7 @@ import static ch.retorte.intervalmusiccompositor.list.BlendMode.CROSS;
 import static ch.retorte.intervalmusiccompositor.list.BlendMode.SEPARATE;
 import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.CONTINUOUS;
 import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.SINGLE_EXTRACT;
+import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SHUFFLE;
 import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.CoreMatchers.is;
@@ -42,38 +43,15 @@ public class PlaylistTest {
   IAudioFile musicTrack60s = createAudioFileMockWithLength(sec(60), MUSIC);
   IAudioFile breakTrack = createAudioFileMockWithLength(sec(60), BREAK);
 
-  private IAudioFile createAudioFileMockWithLength(Long durationInMilliseconds, String name) {
-    IAudioFile result = mock(IAudioFile.class);
-    when(result.getDuration()).thenReturn(durationInMilliseconds);
-    when(result.getDisplayName()).thenReturn(name);
-    return result;
-  }
 
-  private long sec(int seconds) {
-    return (long) seconds * 1000;
-  }
 
-  private void assertTrackLength(List<PlaylistItem> tracks, int... seconds) {
-    assertThat(tracks.size(), is(seconds.length));
-    for (int i = 0; i < seconds.length; i++) {
-      assertThat(tracks.get(i).getExtractDurationInMilliseconds(), is(sec(seconds[i])));
-    }
-  }
-
-  private void assertTotalLength(List<PlaylistItem> tracks, int seconds) {
-    assertThat(new Playlist(msgPrd).getTotalLength(tracks), is(sec(seconds)));
-  }
-
-  private List<Integer> pattern(Integer... patternItems) {
-    return Lists.newArrayList(patternItems);
-  }
 
   @Before
   public void setup() {
     musicList = newArrayList();
     musicPattern = newArrayList();
-    breakPattern = newArrayList();
     breakList = newArrayList();
+    breakPattern = newArrayList();
   }
 
   @Test
@@ -284,5 +262,82 @@ public class PlaylistTest {
     assertThat(tracks.get(7).getAudioFile(), is(musicTrack40s));
     assertThat(tracks.get(8).getAudioFile(), is(musicTrack20s));
     assertThat(tracks.get(9).getAudioFile(), is(musicTrack60s));
+  }
+
+  @Test
+  public void shouldTakeTheSameTrackInContinuousShuffleMode() {
+    // given
+    Playlist playlist = new Playlist(SEPARATE, 0d, CONTINUOUS, SHUFFLE, msgPrd);
+    playlist.setCutOff(sec(5), sec(5));
+
+    musicList.add(musicTrack60s);
+    musicList.add(musicTrack40s);
+    musicList.add(musicTrack20s);
+
+    musicPattern = pattern(10);
+
+    // when
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 9);
+
+    // then
+    assertThat(tracks.size(), is(9));
+    assertTrackLength(tracks, 10, 10, 10, 10, 10, 10, 10, 10, 10);
+    assertThat(tracks.get(0).getAudioFile(), is(musicTrack60s));
+    assertThat(tracks.get(1).getAudioFile(), is(musicTrack60s));
+    assertThat(tracks.get(2).getAudioFile(), is(musicTrack60s));
+    assertThat(tracks.get(3).getAudioFile(), is(musicTrack60s));
+    assertThat(tracks.get(4).getAudioFile(), is(musicTrack60s));
+    assertThat(tracks.get(5).getAudioFile(), is(musicTrack40s));
+    assertThat(tracks.get(6).getAudioFile(), is(musicTrack40s));
+    assertThat(tracks.get(7).getAudioFile(), is(musicTrack40s));
+    assertThat(tracks.get(8).getAudioFile(), is(musicTrack20s));
+  }
+
+  @Test
+  public void shouldNotThrowExceptionInContinuousShuffleMode() {
+    // given
+    Playlist playlist = new Playlist(SEPARATE, 0d, CONTINUOUS, SHUFFLE, msgPrd);
+    playlist.setCutOff(sec(5), sec(5));
+
+    musicList.add(musicTrack20s);
+
+    musicPattern = pattern(10);
+
+    // when
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 3);
+
+    // then
+    assertThat(tracks.size(), is(3));
+    assertTrackLength(tracks, 10, 10, 10);
+    assertThat(tracks.get(0).getAudioFile(), is(musicTrack20s));
+    assertThat(tracks.get(1).getAudioFile(), is(musicTrack20s));
+    assertThat(tracks.get(2).getAudioFile(), is(musicTrack20s));
+  }
+
+  private long sec(int seconds) {
+    return (long) seconds * 1000;
+  }
+
+  private void assertTrackLength(List<PlaylistItem> tracks, int... seconds) {
+    assertThat(tracks.size(), is(seconds.length));
+    for (int i = 0; i < seconds.length; i++) {
+      assertThat(tracks.get(i).getExtractDurationInMilliseconds(), is(sec(seconds[i])));
+    }
+  }
+
+  private void assertTotalLength(List<PlaylistItem> tracks, int seconds) {
+    assertThat(new Playlist(msgPrd).getTotalLength(tracks), is(sec(seconds)));
+  }
+
+  private List<Integer> pattern(Integer... patternItems) {
+    return Lists.newArrayList(patternItems);
+  }
+
+  private IAudioFile createAudioFileMockWithLength(Long durationInMilliseconds, String name) {
+    IAudioFile result = mock(IAudioFile.class);
+    when(result.getDuration()).thenReturn(durationInMilliseconds);
+    when(result.getDisplayName()).thenReturn(name);
+    when(result.toString()).thenReturn(name + " " + durationInMilliseconds/1000 + "s");
+    return result;
   }
 }
