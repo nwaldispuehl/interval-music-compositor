@@ -9,6 +9,7 @@ FIX  #10    UI is properly deactivated again during the compilation process.
 FIX  #8     Continuous enumeration in shuffle mode does not run out of tracks anymore.
 FIX  #9     Set default output path to Desktop again. Was empty.
 
+
 2014-10-17  2.5.0
 --------------------------------------------------------------------------------
 IMP  #3     MP3 conversion now bundled.
