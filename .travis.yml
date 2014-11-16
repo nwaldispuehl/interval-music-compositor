@@ -3,3 +3,5 @@ jdk:
   - oraclejdk7
 notifications:
   email: false
+after_success:
+- ./gradlew cobertura coveralls
