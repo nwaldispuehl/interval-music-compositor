@@ -17,7 +17,7 @@ If you found a bug, and have a github account, you may file an issue directly: <
 
 ## Known problems
 
-In case it is not possible to start the program, first of all download and install the latest Java version: http://www.java.com
+In case it is not possible to start the program, first of all download and install the latest Java version: [java.com](http://www.java.com).
 
 ### General
 
