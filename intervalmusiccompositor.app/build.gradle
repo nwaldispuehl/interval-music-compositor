@@ -73,14 +73,14 @@ task distWindowsApp(type: Zip, dependsOn: [uberJar, copyUberJar, createExe]) {
   }
 }
 
-task distLinuxApp(type: Tar, dependsOn: installApp) {
+task distLinuxApp(type: Tar, dependsOn: installDist) {
   description = "Creates an archive from the Linux version."
   compression = Compression.GZIP
   baseName = applicationName + '-linux'
   extension = 'tar.gz'
   
   into (applicationName + '-' + version) {
-    from installApp.outputs
+    from installDist.outputs
     from project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.svg')
     from project(':intervalmusiccompositor.build').files('documentation/')
   }

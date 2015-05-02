@@ -23,7 +23,7 @@ You certainly need a Java 7 development kit installed on your system. Then, clon
   
 execute its tests, 
 
-    $ ./gradlew test
+    $ ./gradlew check
   
 or create the distributions:
 
