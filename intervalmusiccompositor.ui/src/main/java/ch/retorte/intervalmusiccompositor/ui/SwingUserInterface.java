@@ -46,9 +46,7 @@ import ch.retorte.intervalmusiccompositor.list.AudioFileListType;
 import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.list.CompositionMode;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.ProgressMessage;
+import ch.retorte.intervalmusiccompositor.messagebus.*;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.MusicCompilationControl;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
@@ -83,6 +81,7 @@ public class SwingUserInterface extends JFrame implements Ui {
 
   private JSlider blendSlider;
   private JProgressBar progressBar;
+  private JProgressBar subProgressBar;
   private IMCButton process;
   private IMCButton quit;
   private IMCButton about;
@@ -491,6 +490,16 @@ public class SwingUserInterface extends JFrame implements Ui {
     verticalBox_1.add(progressBar);
     progressBar.setStringPainted(true);
     progressBar.setEnabled(false);
+
+    verticalBox_1.add(Box.createVerticalStrut(4));
+
+    subProgressBar = new JProgressBar(0, 100);
+    subProgressBar.setMaximumSize(new Dimension(620, 40));
+    subProgressBar.setAlignmentX(Component.LEFT_ALIGNMENT);
+    subProgressBar.setAlignmentY(Component.TOP_ALIGNMENT);
+    verticalBox_1.add(subProgressBar);
+    subProgressBar.setEnabled(false);
+    subProgressBar.setVisible(false);
 
     verticalBox_1.add(Box.createVerticalStrut(20));
 
@@ -1032,21 +1041,24 @@ public class SwingUserInterface extends JFrame implements Ui {
 
   private void addMessageSubscribers(MessageSubscriber messageSubscriber) {
     messageSubscriber.addHandler(new MessageHandler<ProgressMessage>() {
-
       @Override
       public void handle(ProgressMessage message) {
         updateProgressBar(message.getProgressInPercent(), message.getCurrentActivity());
       }
-
     });
 
     messageSubscriber.addHandler(new MessageHandler<ErrorMessage>() {
-
       @Override
       public void handle(ErrorMessage message) {
         showErrorMessage(message.getMessage());
       }
+    });
 
+    messageSubscriber.addHandler(new MessageHandler<SubProcessProgressMessage>() {
+      @Override
+      public void handle(SubProcessProgressMessage message) {
+        updateSubProgressBar(message.getPercentage());
+      }
     });
   }
 
@@ -1087,12 +1099,19 @@ public class SwingUserInterface extends JFrame implements Ui {
   }
 
   public void updateProgressBar(int n, String s) {
+    subProgressBar.setVisible(false);
+
     progressBar.setIndeterminate(false);
     progressBar.setValue(n);
     if (s == null) {
       s = bundle.getString("compilation.status.default");
     }
     progressBar.setString(s);
+  }
+
+  public void updateSubProgressBar(int n) {
+    subProgressBar.setVisible(true);
+    subProgressBar.setValue(n);
   }
 
   public synchronized void refresh() {
@@ -1151,7 +1170,7 @@ public class SwingUserInterface extends JFrame implements Ui {
 
     int durationEstimationValue = singleDuration * compilationParameters.iterations;
 
-    // If crossfading is activated, add fade interval once (= a half at start
+    // If cross fading is activated, add fade interval once (= a half at start
     // and one at the end)
     if (compilationParameters.blendMode == BlendMode.CROSS && 0 < singleDuration && 0 < compilationParameters.iterations) {
       durationEstimationValue += compilationParameters.blendTime;

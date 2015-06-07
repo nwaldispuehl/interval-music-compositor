@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2015-06-07  2.5.2
+--------------------------------------------------------------------------------
+IMP  #14    Added file output conversion progress indicator.
+
+
 2014-11-08  2.5.1
 --------------------------------------------------------------------------------
 IMP  #5     Output format (currently WAV or MP3) now selectable.

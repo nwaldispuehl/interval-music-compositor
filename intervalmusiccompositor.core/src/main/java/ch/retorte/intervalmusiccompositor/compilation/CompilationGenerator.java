@@ -18,6 +18,7 @@ import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.ProgressMessage;
+import ch.retorte.intervalmusiccompositor.messagebus.SubProcessProgressMessage;
 import ch.retorte.intervalmusiccompositor.output.OutputGenerator;
 import ch.retorte.intervalmusiccompositor.playlist.Playlist;
 import ch.retorte.intervalmusiccompositor.playlist.PlaylistReport;
@@ -27,6 +28,7 @@ import ch.retorte.intervalmusiccompositor.spi.TaskFinishListener;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
+import ch.retorte.intervalmusiccompositor.spi.progress.ProgressIndicator;
 import com.google.common.base.Charsets;
 
 /**
@@ -223,7 +225,13 @@ public class CompilationGenerator implements Runnable {
   }
 
   private void writeOutputFile() {
-    outputGenerator.generateOutput(compilationData, correctedOutputPath, outfile_prefix, compilationParameters.encoderIdentifier);
+    outputGenerator.generateOutput(compilationData, correctedOutputPath, outfile_prefix, compilationParameters.encoderIdentifier, new ProgressIndicator() {
+
+      @Override
+      public void onProgressUpdate(int percent) {
+        updateSubProgress(percent);
+      }
+    });
   }
 
   private void createEnvelope() {
@@ -244,6 +252,11 @@ public class CompilationGenerator implements Runnable {
   private void updateProgress(Integer progressInPercent, String currentActivity) {
     messageProducer.send(new ProgressMessage(progressInPercent, currentActivity));
     addDebugMessage("Progress: " + progressInPercent + ", " + currentActivity);
+  }
+
+  private void updateSubProgress(Integer progressInPercent) {
+    messageProducer.send(new SubProcessProgressMessage(progressInPercent));
+    addDebugMessage("Progress of sub process: " + progressInPercent);
   }
 
   private void addDebugMessage(String message) {
