@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.encoder;
 
-import ch.retorte.intervalmusiccompositor.spi.progress.ProgressIndicator;
+import ch.retorte.intervalmusiccompositor.spi.progress.ProgressListener;
 import net.sourceforge.lame.lowlevel.LameEncoder;
 import net.sourceforge.lame.mp3.Lame;
 import net.sourceforge.lame.mp3.MPEGMode;
@@ -17,11 +17,11 @@ public class LameByteArrayEncoder {
   private static final int GOOD_QUALITY_BITRATE = 256;
 
   private AudioFormat inputFormat;
-  private ProgressIndicator progressIndicator;
+  private ProgressListener progressListener;
 
-  public LameByteArrayEncoder(AudioFormat inputFormat, ProgressIndicator progressIndicator) {
+  public LameByteArrayEncoder(AudioFormat inputFormat, ProgressListener progressListener) {
     this.inputFormat = inputFormat;
-    this.progressIndicator = progressIndicator;
+    this.progressListener = progressListener;
   }
 
   public byte[] encodePcmToMp3(byte[] pcm) {
@@ -47,6 +47,6 @@ public class LameByteArrayEncoder {
   }
 
   private void updateProgressWith(long currentPosition, long total) {
-    progressIndicator.onProgressUpdate((int) (100.0 / total * currentPosition));
+    progressListener.onProgressUpdate((int) (100.0 / total * currentPosition));
   }
 }

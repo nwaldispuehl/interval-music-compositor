@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.sound.sampled.AudioInputStream;
 
-import ch.retorte.intervalmusiccompositor.spi.progress.ProgressIndicator;
+import ch.retorte.intervalmusiccompositor.spi.progress.ProgressListener;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
@@ -30,7 +30,7 @@ public class OutputGenerator {
     this.messageProducer = messageProducer;
   }
 
-  public void generateOutput(byte[] soundData, String path, String filePrefix, String encoderIdentifier, ProgressIndicator progressIndicator) {
+  public void generateOutput(byte[] soundData, String path, String filePrefix, String encoderIdentifier, ProgressListener progressListener) {
     AudioInputStream audioInputStream = soundHelper.getStreamFromByteArray(soundData);
     AudioFileEncoder encoder = getEncoderFor(encoderIdentifier);
 
@@ -38,7 +38,7 @@ public class OutputGenerator {
     addDebugMessage("Encoding compilation data with: " + encoder.getClass().getSimpleName() + " to: " + outputFile);
 
     try {
-      checkForProgressIndicationCapabilities(encoder, progressIndicator);
+      checkForProgressIndicationCapabilities(encoder, progressListener);
       encoder.encode(audioInputStream, outputFile);
     }
     catch (Exception e) {
@@ -47,9 +47,9 @@ public class OutputGenerator {
     }
   }
 
-  private void checkForProgressIndicationCapabilities(AudioFileEncoder encoder, ProgressIndicator progressIndicator) {
+  private void checkForProgressIndicationCapabilities(AudioFileEncoder encoder, ProgressListener progressListener) {
     if (encoder instanceof ProgressUpdatable) {
-      ((ProgressUpdatable) encoder).setProgressIndicator(progressIndicator);
+      ((ProgressUpdatable) encoder).setProgressListener(progressListener);
     }
   }
 

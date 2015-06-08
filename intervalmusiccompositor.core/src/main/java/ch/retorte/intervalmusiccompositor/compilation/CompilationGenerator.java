@@ -28,7 +28,7 @@ import ch.retorte.intervalmusiccompositor.spi.TaskFinishListener;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
-import ch.retorte.intervalmusiccompositor.spi.progress.ProgressIndicator;
+import ch.retorte.intervalmusiccompositor.spi.progress.ProgressListener;
 import com.google.common.base.Charsets;
 
 /**
@@ -225,7 +225,7 @@ public class CompilationGenerator implements Runnable {
   }
 
   private void writeOutputFile() {
-    outputGenerator.generateOutput(compilationData, correctedOutputPath, outfile_prefix, compilationParameters.encoderIdentifier, new ProgressIndicator() {
+    outputGenerator.generateOutput(compilationData, correctedOutputPath, outfile_prefix, compilationParameters.encoderIdentifier, new ProgressListener() {
 
       @Override
       public void onProgressUpdate(int percent) {

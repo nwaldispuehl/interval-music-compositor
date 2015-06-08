@@ -8,5 +8,5 @@ public interface ProgressUpdatable {
   /**
    * Sets a progress indicator which is notified on progress changes.
    */
-  void setProgressIndicator(ProgressIndicator progressIndicator);
+  void setProgressListener(ProgressListener progressListener);
 }

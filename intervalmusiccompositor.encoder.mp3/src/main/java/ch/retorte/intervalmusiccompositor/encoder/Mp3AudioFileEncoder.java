@@ -4,7 +4,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import ch.retorte.intervalmusiccompositor.spi.progress.ProgressIndicator;
+import ch.retorte.intervalmusiccompositor.spi.progress.ProgressListener;
 import ch.retorte.intervalmusiccompositor.spi.audio.ByteArrayConverter;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.progress.ProgressUpdatable;
@@ -24,7 +24,7 @@ public class Mp3AudioFileEncoder implements AudioFileEncoder, ProgressUpdatable 
   private ByteArrayConverter byteArrayConverter;
 
   private LameByteArrayEncoder encoder;
-  private ProgressIndicator progressIndicator;
+  private ProgressListener progressListener;
 
   public Mp3AudioFileEncoder(ByteArrayConverter byteArrayConverter) {
     this.byteArrayConverter = byteArrayConverter;
@@ -36,7 +36,7 @@ public class Mp3AudioFileEncoder implements AudioFileEncoder, ProgressUpdatable 
   }
 
   private void createEncoderWithSettings(AudioFormat audioFormat) {
-    encoder =  new LameByteArrayEncoder(audioFormat, progressIndicator);
+    encoder =  new LameByteArrayEncoder(audioFormat, progressListener);
   }
 
   private byte[] convert(AudioInputStream audioInputStream) throws IOException {
@@ -60,7 +60,7 @@ public class Mp3AudioFileEncoder implements AudioFileEncoder, ProgressUpdatable 
   }
 
   @Override
-  public void setProgressIndicator(ProgressIndicator progressIndicator) {
-    this.progressIndicator = progressIndicator;
+  public void setProgressListener(ProgressListener progressListener) {
+    this.progressListener = progressListener;
   }
 }
