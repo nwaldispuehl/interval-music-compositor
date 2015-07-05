@@ -38,7 +38,7 @@ macAppBundle {
   icon = project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.icns')
   appStyle = 'Oracle'
   appName = project.applicationName
-  jvmVersion = "1.7+"
+  jvmVersion = "1.8+"
   arguments = ["-Xmx=2048M"]
 }
 
@@ -98,7 +98,7 @@ launch4j {
     mainClassName = "com.simontuffs.onejar.Boot" // This is the OneJar wrapper.
     icon = project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.ico')
 
-    jreMinVersion = '1.7.0'
+    jreMinVersion = '1.8.0'
     version = project.version
 
     downloadUrl = "http://www.java.com/download/"

@@ -3,8 +3,8 @@
 subprojects {
     apply plugin:'java'
 
-    sourceCompatibility=1.7
-    targetCompatibility=1.7
+    sourceCompatibility=1.8
+    targetCompatibility=1.8
 
     repositories {
        mavenCentral()
@@ -16,11 +16,11 @@ subprojects {
     }
 
     dependencies {
-      compile group: 'com.google.guava', name: 'guava', version: '15.0'
+      compile group: 'com.google.guava', name: 'guava', version: '18.0'
     
       testCompile 'org.hamcrest:hamcrest-all:1.3' // Note: Hamcrest needs to be placed before JUnit to use hamcrests versions of certain classes in the tests.
-      testCompile 'junit:junit:4.11'
-      testCompile 'org.mockito:mockito-all:1.9.5'
+      testCompile 'junit:junit:4.12'
+      testCompile 'org.mockito:mockito-all:1.10.19'
     }
 
 }

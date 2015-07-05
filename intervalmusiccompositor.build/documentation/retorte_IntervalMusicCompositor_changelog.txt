@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2015-xx-xx  2.x.x
+--------------------------------------------------------------------------------
+IMP         Now built with Java 8.
+
+
 2015-06-07  2.5.2
 --------------------------------------------------------------------------------
 IMP  #14    Added file output conversion progress indicator.
