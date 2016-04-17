@@ -247,10 +247,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
 
   public void quit() {
     removeCachedFiles();
-
     messageBus.send(new InfoMessage("Gracefully shutting down ..."));
-
-    System.exit(0);
   }
 
   private void removeCachedFiles() {

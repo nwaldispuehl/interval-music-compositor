@@ -38,7 +38,7 @@ import ch.retorte.intervalmusiccompositor.spi.bpm.BPMCalculator;
 import ch.retorte.intervalmusiccompositor.spi.bpm.BPMReaderWriter;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
-import ch.retorte.intervalmusiccompositor.ui.SwingUserInterface;
+import ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
 import ch.retorte.intervalmusiccompositor.util.UpdateChecker;
 
@@ -182,7 +182,7 @@ public class IntervalMusicCompositor {
   }
 
   private Ui createUserInterface(MainControl control) {
-    Ui userInterface = new SwingUserInterface(control, control, control, control, createUpdateAvailabilityChecker(control), messageBus, messageBus);
+    Ui userInterface = new IntervalMusicCompositorUI(control, control, control, control, createUpdateAvailabilityChecker(control), messageBus, messageBus);
     control.setUi(userInterface);
     return userInterface;
   }
