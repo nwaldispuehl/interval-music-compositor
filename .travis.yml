@@ -1,7 +1,5 @@
 language: java
 jdk:
-  - oraclejdk7
+  - oraclejdk8
 notifications:
   email: false
-after_success:
-- ./gradlew cobertura coveralls
