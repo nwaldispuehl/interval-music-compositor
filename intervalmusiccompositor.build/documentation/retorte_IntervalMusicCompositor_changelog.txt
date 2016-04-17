@@ -1,9 +1,10 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
-2015-xx-xx  2.x.x
+2016-04-17  2.5.3
 --------------------------------------------------------------------------------
 IMP         Now built with Java 8.
+IMP  #15    Added OGG/Vorbis as output format.
 
 
 2015-06-07  2.5.2
