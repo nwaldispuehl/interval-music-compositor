@@ -23,6 +23,7 @@ import ch.retorte.intervalmusiccompositor.decoder.OggAudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.decoder.OggBPMReaderWriter;
 import ch.retorte.intervalmusiccompositor.decoder.WaveAudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.encoder.Mp3AudioFileEncoder;
+import ch.retorte.intervalmusiccompositor.encoder.OggAudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.encoder.WaveAudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.messagebus.ConsoleMessageHandler;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
@@ -49,7 +50,7 @@ import com.google.common.collect.Lists;
  * 
  * @author nw
  */
-public class IntervalMusicCompositor {
+class IntervalMusicCompositor {
 
   private MessageFormatBundle bundle = getBundle("imc");
 
@@ -72,7 +73,7 @@ public class IntervalMusicCompositor {
    * @param debugMode
    *          if set to true, debug messages are printed to stdout.
    */
-  public void startApp(boolean debugMode) {
+  void startApp(boolean debugMode) {
 
     configureDebugMode(debugMode);
 
@@ -172,6 +173,7 @@ public class IntervalMusicCompositor {
     List<AudioFileEncoder> encoders = newArrayList();
 
     encoders.add(new Mp3AudioFileEncoder(byteArrayConverter));
+    encoders.add(new OggAudioFileEncoder(byteArrayConverter));
     encoders.add(new WaveAudioFileEncoder());
 
     return encoders;
