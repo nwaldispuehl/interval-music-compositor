@@ -25,15 +25,12 @@ subprojects {
 
 }
 
-apply plugin:'com.github.kt3k.coveralls'
-
 buildscript {
   repositories {
     mavenCentral()
   }
 
   dependencies {
-    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
   }
 }
 
