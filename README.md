@@ -17,7 +17,7 @@ A small user manual can be found on the Github [project page](http://nwaldispueh
 How to build?
 -------------
 
-You certainly need a Java 7 development kit installed on your system. Then, clone the repository and use the packaged gradle binary to either run the program,
+You certainly need a Java 8 development kit installed on your system. Then, clone the repository and use the packaged gradle binary to either run the program,
 
     $ ./gradlew run
   
