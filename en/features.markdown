@@ -26,7 +26,7 @@ The retorte.ch **Interval Music Compositor** has the following properties.
 
 * Lots of diskspace (the temporary files and the output file need 10MB per minute music): 1GB
 * Lots of main memory
-* Installed Java Runtime Environment (Version 7)
+* Installed Java Runtime Environment (Version 8)
 
 ## Supported input file formats
 
@@ -37,4 +37,5 @@ The retorte.ch **Interval Music Compositor** has the following properties.
 * AAC
 
 ## Output file format
-The resulting sound file is a 16bit, 44.1KHz, stereo, 256kbit MP3 file.
+
+The resulting sound file is a 16bit, 44.1KHz, stereo, 256kbit MP3, WAV, or OGG file.
