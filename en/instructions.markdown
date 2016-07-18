@@ -11,7 +11,7 @@ Otherwise, download and install Java from [java.com](http://java.com/).
 ## Usage
 
 1. Start the **Interval Music Compositor** by double-clicking it
-1. (If necessary, follow the instructions for installing the Java Runtime Environment >= version 7)
+1. (If necessary, follow the instructions for installing the Java Runtime Environment >= version 8)
 1. Drag all the audio files you'd like to have processed from your desktop or a folder into the music track list. Note that this is only possible for the supported audio file types MP3, OGG, FLAC and WAV.
 1. If you want a track being played during breaks, drag one into the break track list
 1. Wait until all tracks have been imported properly. This is indicated by a blue icon in front of each track

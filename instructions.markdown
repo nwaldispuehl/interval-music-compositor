@@ -11,7 +11,7 @@ Ansonsten kannst du Java von [java.com](http://java.com/) herunterladen und inst
 ## Gebrauch
 
 1. Starte den **Interval Music Compositor** indem du ihn doppelklickst
-1. (Falls nötig, befolge die Anleitung um das Java Runtime Environment (>= Version 7) zu installieren)
+1. (Falls nötig, befolge die Anleitung um das Java Runtime Environment (>= Version 8) zu installieren)
 1. Ziehe alle Musikstücke, die du in der Tracklist haben möchtest, vom Desktop oder einem Ordner in die Liste. Beachte, dass nur Musikstücke der unterstützten Formate MP3, OGG, FLAC und WAV der Liste hinzugefügt werden können.
 1. Falls du eine Pausenmusik haben möchtest, ziehe ein Musikstück in das Pausenmusikfeld.
 1. Warte bis alle Tracks komplett eingelesen wurden. Du siehst das daran, dass das Lied ein blaues Icon erhält.
