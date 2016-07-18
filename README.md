@@ -17,7 +17,7 @@ A small user manual can be found on the Github [project page](http://nwaldispueh
 How to build?
 -------------
 
-You certainly need a Java 7 development kit installed on your system. Then, clone the repository and use the packaged gradle binary to either run the program,
+You certainly need a Java 8 development kit installed on your system. Then, clone the repository and use the packaged gradle binary to either run the program,
 
     $ ./gradlew run
   
@@ -35,4 +35,3 @@ The distribution archives are then to be found in the `intervalmusiccompositor.a
 Current build status
 --------------------
 [![Build Status](https://travis-ci.org/nwaldispuehl/interval-music-compositor.png?branch=master)](https://travis-ci.org/nwaldispuehl/interval-music-compositor)
-[![Coverage Status](https://coveralls.io/repos/nwaldispuehl/interval-music-compositor/badge.png)](https://coveralls.io/r/nwaldispuehl/interval-music-compositor)

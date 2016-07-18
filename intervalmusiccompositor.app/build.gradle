@@ -130,6 +130,7 @@ dependencies {
 	
 	compile project(':intervalmusiccompositor.encoder.wave')
 	compile project(':intervalmusiccompositor.encoder.mp3')
+  compile project(':intervalmusiccompositor.encoder.ogg')
 }
 
 buildscript {

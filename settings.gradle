@@ -12,4 +12,5 @@ include "intervalmusiccompositor.spi",
   "intervalmusiccompositor.decoder.flac",
   "intervalmusiccompositor.decoder.aac",
   "intervalmusiccompositor.encoder.wave",
-  "intervalmusiccompositor.encoder.mp3"
+  "intervalmusiccompositor.encoder.mp3",
+  "intervalmusiccompositor.encoder.ogg"
