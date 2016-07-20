@@ -54,6 +54,8 @@ public class AudioFilesLoader implements Runnable {
 
   @VisibleForTesting
   synchronized void loadAudioFiles() {
+    messageProducer.send(new DebugMessage(this, "Looking for music tracks to add in current directory: " + getAbsolutePath()));
+
     List<File> allFiles = getAllFilesFromCurrentDirectory();
     List<File> audioFiles = keepKnownNewSoundFilesFrom(allFiles);
 
@@ -74,7 +76,7 @@ public class AudioFilesLoader implements Runnable {
 
     File[] files = new File(getWorkPath()).listFiles();
     if (files == null) {
-      messageProducer.send(new DebugMessage(this, "Problems with reading files from current directory: " + getWorkPath()));
+      messageProducer.send(new DebugMessage(this, "Problems with reading files from current directory: " + getAbsolutePath()));
       return result;
     }
 
@@ -90,6 +92,10 @@ public class AudioFilesLoader implements Runnable {
   @VisibleForTesting
   String getWorkPath() {
     return bundle.getString("imc.workPath");
+  }
+
+  private String getAbsolutePath() {
+    return new File(getWorkPath()).getAbsolutePath();
   }
 
   @VisibleForTesting
