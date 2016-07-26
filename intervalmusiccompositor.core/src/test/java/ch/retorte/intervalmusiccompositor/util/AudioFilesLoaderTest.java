@@ -24,17 +24,15 @@ public class AudioFilesLoaderTest {
 
   private static final String OWN_FILE_INFIX = "XXX";
 
-  MusicListControl musicListControl;
-  AudioFileFactory audioFileFactory;
-  MessageProducer messageProducer;
+  private MusicListControl musicListControl;
 
-  AudioFilesLoader loader;
+  private AudioFilesLoader loader;
 
   @Before
   public void setup() {
     musicListControl = mock(MusicListControl.class);
-    audioFileFactory = mock(AudioFileFactory.class);
-    messageProducer = mock(MessageProducer.class);
+    AudioFileFactory audioFileFactory = mock(AudioFileFactory.class);
+    MessageProducer messageProducer = mock(MessageProducer.class);
 
     loader = spy(new AudioFilesLoader(musicListControl, audioFileFactory, messageProducer));
 

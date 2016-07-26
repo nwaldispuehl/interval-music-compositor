@@ -2,13 +2,13 @@ package ch.retorte.intervalmusiccompositor.util;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static com.google.common.collect.Lists.newArrayList;
-import static java.util.Arrays.asList;
 import static java.util.Collections.reverse;
 import static java.util.Collections.sort;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFileFactory;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
@@ -29,7 +29,7 @@ public class AudioFilesLoader implements Runnable {
   private MusicListControl musicListControl;
   private AudioFileFactory audioFileFactory;
   private MessageProducer messageProducer;
-  private ArrayList<TaskFinishListener> taskFinishListeners = new ArrayList<TaskFinishListener>();
+  private ArrayList<TaskFinishListener> taskFinishListeners = new ArrayList<>();
 
   public AudioFilesLoader(MusicListControl musicListControl, AudioFileFactory audioFileFactory, MessageProducer messageProducer) {
     this.musicListControl = musicListControl;
@@ -42,9 +42,7 @@ public class AudioFilesLoader implements Runnable {
   }
 
   private void notifyListeners() {
-    for (TaskFinishListener l : taskFinishListeners) {
-      l.onTaskFinished();
-    }
+    taskFinishListeners.forEach(TaskFinishListener::onTaskFinished);
   }
 
   @Override
@@ -86,11 +84,10 @@ public class AudioFilesLoader implements Runnable {
       }
     }
 
-    return asList(files);
+    return result;
   }
 
-  @VisibleForTesting
-  String getWorkPath() {
+  private String getWorkPath() {
     return bundle.getString("imc.workPath");
   }
 
@@ -100,15 +97,9 @@ public class AudioFilesLoader implements Runnable {
 
   @VisibleForTesting
   synchronized List<File> keepKnownNewSoundFilesFrom(List<File> files) {
-    List<File> result = newArrayList();
-
-    for (File file : files) {
-      if (isNotSelfProduced(file) && audioFileFactory.hasDecoderFor(file)) {
-        result.add(file);
-      }
-    }
-
-    return result;
+    return files.stream().filter(file ->
+        isNotSelfProduced(file) && audioFileFactory.hasDecoderFor(file)
+    ).collect(Collectors.toList());
   }
 
   @VisibleForTesting
