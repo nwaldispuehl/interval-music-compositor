@@ -1,9 +1,10 @@
 package ch.retorte.intervalmusiccompositor.spi.decoder;
 
+
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 
-import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -36,4 +37,11 @@ public interface AudioFileDecoder {
    * @return true if this decoder thinks he is able to decode the provided file.
    */
   boolean isAbleToDecode(File file);
+
+  /**
+   * Returns the extensions associated with this decoder.
+   *
+   * @return a string collection of extensions for this decoder, or the empty collection.
+   */
+  Collection<String> getExtensions();
 }

@@ -74,4 +74,8 @@ public class AudioFileFactory {
   private void addDebugMessage(String message) {
     messageProducer.send(new DebugMessage(this, message));
   }
+
+  public Collection<AudioFileDecoder> getDecoders() {
+    return decoders;
+  }
 }

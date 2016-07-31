@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Collection;
 import java.util.List;
 
 import javax.sound.sampled.AudioFormat;
@@ -23,6 +24,8 @@ import net.sourceforge.jaad.mp4.api.Track;
 import net.sourceforge.jaad.spi.javasound.AACAudioFileReader;
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * @author nw
@@ -63,6 +66,11 @@ public class AacAudioFileDecoder implements AudioFileDecoder {
   @Override
   public boolean isAbleToDecode(File file) {
     return aacFile.isOfThisType(file);
+  }
+
+  @Override
+  public Collection<String> getExtensions() {
+    return newArrayList(aacFile.getFileExtensions());
   }
 
   private AudioInputStream decodeAAC(File inputFile) throws IOException {

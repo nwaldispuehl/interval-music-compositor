@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -17,6 +18,8 @@ import javazoom.spi.mpeg.sampled.convert.DecodedMpegAudioInputStream;
 import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * @author nw
@@ -35,9 +38,9 @@ public class Mp3AudioFileDecoder implements AudioFileDecoder {
   public AudioInputStream decode(File inputFile) throws UnsupportedAudioFileException, IOException {
 
     MpegAudioFileReader mafr = new MpegAudioFileReader();
-    AudioInputStream mp3Ais = null;
+    AudioInputStream mp3Ais;
     // AudioInputStream mp3Dmais = null;
-    AudioInputStream result = null;
+    AudioInputStream result;
 
     try {
       mp3Ais = mafr.getAudioInputStream(inputFile);
@@ -83,6 +86,11 @@ public class Mp3AudioFileDecoder implements AudioFileDecoder {
     return mp3File.isOfThisType(file);
   }
 
+  @Override
+  public Collection<String> getExtensions() {
+    return newArrayList(mp3File.getFileExtensions());
+  }
+
   /**
    * Creates a new, fresh {@link AudioInputStream} from an existing one. This showed to cure some MP3-related problems.
    */
@@ -105,7 +113,7 @@ public class Mp3AudioFileDecoder implements AudioFileDecoder {
 
   private byte[] getByteArrayOfUndefStream(AudioInputStream inputStream) throws IOException {
 
-    ArrayList<byte[]> totalBuffer = new ArrayList<byte[]>();
+    ArrayList<byte[]> totalBuffer = new ArrayList<>();
 
     int size = 10240000;
     byte[] metaBuffer = new byte[size];
@@ -114,7 +122,7 @@ public class Mp3AudioFileDecoder implements AudioFileDecoder {
     // Choose a buffer of 100 KB
     byte[] buffer = new byte[102400];
 
-    int len = 0;
+    int len;
     int writtenBytes = 0;
     while ((len = inputStream.read(buffer)) != -1) {
 

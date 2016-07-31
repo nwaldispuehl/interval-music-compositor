@@ -2,6 +2,7 @@ package ch.retorte.intervalmusiccompositor.decoder;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -12,6 +13,8 @@ import org.kc7bfi.jflac.sound.spi.FlacFormatConversionProvider;
 
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * @author nw
@@ -29,8 +32,8 @@ public class FlacAudioFileDecoder implements AudioFileDecoder {
   @Override
   public AudioInputStream decode(File inputFile) throws UnsupportedAudioFileException, IOException {
 
-    AudioInputStream flacAis = null;
-    AudioInputStream result = null;
+    AudioInputStream flacAis;
+    AudioInputStream result;
 
     FlacAudioFileReader fafr = new FlacAudioFileReader();
     flacAis = fafr.getAudioInputStream(inputFile);
@@ -49,6 +52,10 @@ public class FlacAudioFileDecoder implements AudioFileDecoder {
     return flacFile.isOfThisType(file);
   }
 
+  @Override
+  public Collection<String> getExtensions() {
+    return newArrayList(flacFile.getFileExtensions());
+  }
 
 
 }
