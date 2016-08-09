@@ -119,6 +119,7 @@ dependencies {
   
 	compile project(':intervalmusiccompositor.core')
 	compile project(':intervalmusiccompositor.fxUi')
+  compile project(':intervalmusiccompositor.ui')
 	
 	compile project(':intervalmusiccompositor.beatroot')
 	
