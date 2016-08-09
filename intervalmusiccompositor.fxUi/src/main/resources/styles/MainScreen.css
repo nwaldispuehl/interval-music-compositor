@@ -1,0 +1,16 @@
+* {
+  -fx-font-family: 'Roboto', sans-serif;
+  -fx-font-smoothing-type: gray;
+
+  /*-fx-border-color: dodgerblue;*/
+  /*-fx-border-width: 1;*/
+  /*-fx-border-style: solid;*/
+}
+
+.layout-borders {
+  -fx-border-color: dodgerblue;
+  -fx-border-width: 1;
+  -fx-border-style: solid;
+}
+
+

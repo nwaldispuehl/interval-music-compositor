@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Text?>
+
+<fx:root stylesheets="@/styles/AudioFileListCell.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+         type="javafx.scene.layout.HBox"  spacing="5">
+        <ImageView fx:id="imageView">
+            <Image url="@/images/waiting_icon.gif"/>
+        </ImageView>
+        <VBox>
+            <HBox spacing="5" fx:id="metaDataLine">
+                <Text fx:id="trackPrefix" text="%ui.form.music_list.cell.track"/>
+                <Text fx:id="track"/>
+                <Text fx:id="duration">03:43</Text>
+                <Text fx:id="bpm">120 bpm</Text>
+            </HBox>
+            <TextFlow fx:id="titleLine">
+                <Text fx:id="title">Red Hot Chili Peppers - Wheeee</Text>
+            </TextFlow>
+            <TextFlow fx:id="contextLine">
+                <Text fx:id="status"/>
+            </TextFlow>
+        </VBox>
+</fx:root>

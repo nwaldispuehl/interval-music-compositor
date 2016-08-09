@@ -1,0 +1,52 @@
+
+
+
+#metaDataLine {
+  -fx-font-weight: 100;
+  /*-fx-font-style: italic;*/
+}
+
+
+#track, #trackPrefix {
+}
+
+#duration {
+ -fx-min-width: 5;
+}
+
+#bpm {
+ -fx-background-color: green;
+}
+
+#titleLine {
+  -fx-font-size: 120%;
+
+  -fx-text-overrun: ellipsis;
+  -fx-wrap-text: false;
+
+  -fx-tab-min-width:200;
+  -fx-tab-max-width:300;
+}
+
+#title {
+  -fx-fill: #333333;
+
+  -fx-text-overrun: ellipsis;
+  -fx-wrap-text: false;
+
+  -fx-font-weight: 700;
+  -fx-font-family: 'Roboto Condensed';
+
+  -fx-tab-min-width:200;
+  -fx-tab-max-width:300;
+}
+
+#contextLine {
+  -fx-font-size: 90%;
+}
+
+#status {
+  -fx-font-family: 'Roboto Condensed';
+  -fx-fill: #aaaaaa;
+}
+

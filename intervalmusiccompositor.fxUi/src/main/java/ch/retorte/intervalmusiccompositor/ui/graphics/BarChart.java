@@ -1,6 +1,5 @@
 package ch.retorte.intervalmusiccompositor.ui.graphics;
 
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
 import javafx.scene.canvas.Canvas;
@@ -15,16 +14,12 @@ import javafx.scene.text.FontWeight;
 import java.util.Collection;
 import java.util.List;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-
 /**
  * BarChart class. Used to generate bars with different widths and a specified spacing between.
  * 
  * @author nw
  */
 public class BarChart {
-
-  private MessageFormatBundle bundle = getBundle("ui_imc");
 
   // / The image where the bar chart is drawn.
   private WritableImage image;
@@ -72,7 +67,7 @@ public class BarChart {
     graphicsContext.setFontSmoothingType(FontSmoothingType.LCD);
     graphicsContext.drawImage(image, 0, 0);
 
-    int absoluteWidth = 0;
+    double absoluteWidth = 0;
 
     for (int i = 0; i < soundPattern.size(); i++) {
 
@@ -98,10 +93,10 @@ public class BarChart {
     Color evenLighterBlue = Color.rgb(182, 216, 255);
     Color textColor = Color.GRAY;
 
-    int top = 0;
+    double top = 0;
     double bottom = Math.max(soundFontMetrics.getLineHeight(), breakFontMetrics.getLineHeight()) * 1.2;
-    int border = 0;
-    int p = border;
+    double border = 0;
+    double p = border;
 
     double scale = (image.getWidth() - (2.0 * border)) / absoluteWidth;
 
@@ -112,12 +107,12 @@ public class BarChart {
 
         graphicsContext.setFont(soundFont);
 
-        int width = (int) (soundPattern.get(j) * scale);
+        double width = soundPattern.get(j) * scale;
 
         graphicsContext.setFill(lightBlue);
-        graphicsContext.fillRect(p + 0.5, top + 0.5, width, image.getHeight() - top - bottom);
+        graphicsContext.fillRect(p, top, width, image.getHeight() - top - bottom);
         graphicsContext.setFill(darkBlue);
-        graphicsContext.strokeRect(p + 0.5, top + 0.5, width, image.getHeight() - top - bottom);
+        graphicsContext.strokeRect(p, top, width, image.getHeight() - top - bottom);
 
         graphicsContext.setFill(textColor);
         float labelWidth = soundFontMetrics.computeStringWidth(soundPattern.get(j).toString());
@@ -163,7 +158,7 @@ public class BarChart {
     image = canvas.snapshot(null, null);
   }
 
-  private boolean has(Collection<? extends Object> collection) {
+  private boolean has(Collection<?> collection) {
     return !collection.isEmpty();
   }
 

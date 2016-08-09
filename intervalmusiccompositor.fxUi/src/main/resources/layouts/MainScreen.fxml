@@ -1,121 +1,278 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+<?import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileBreakListView?>
+<?import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileListView?>
+<VBox stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" maxHeight="Infinity" maxWidth="Infinity" minWidth="1024" minHeight="768"
+      xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController">
+    <AnchorPane>
+        <MenuBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Menu mnemonicParsing="false" text="%ui.menu.file">
+                <MenuItem mnemonicParsing="false" fx:id="menuLoadMusicFile" text="%ui.menu.file.load_music_file"/>
+                <MenuItem mnemonicParsing="false" fx:id="menuLoadBreakFile" text="%ui.menu.file.load_break_file"/>
+                <MenuItem mnemonicParsing="false" fx:id="menuQuit" text="%ui.menu.file.quit"/>
+            </Menu>
+            <Menu mnemonicParsing="false" text="%ui.menu.help">
+                <MenuItem mnemonicParsing="false" fx:id="menuVersion" disable="true"/>
+                <MenuItem mnemonicParsing="false" fx:id="menuHelp" text="%ui.menu.help.help"/>
+                <MenuItem mnemonicParsing="false" fx:id="menuAbout" text="%ui.menu.help.about"/>
+                <MenuItem mnemonicParsing="false" fx:id="menuCheckForUpdates" text="%ui.menu.help.checkForUpdates"/>
+                <MenuItem mnemonicParsing="false" fx:id="menuShowDebugLog" text="%ui.menu.help.show_debug_log"/>
+            </Menu>
+        </MenuBar>
+    </AnchorPane>
+    <AnchorPane>
+        <SplitPane dividerPositions="0.1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0"
+                   minWidth="0" AnchorPane.bottomAnchor="0.0"
+                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+                   fx:id="container">
+            <AnchorPane minHeight="0.0" minWidth="300" prefWidth="300" maxWidth="400">
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </padding>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController">
-  <items>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-         <children>
-            <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" prefHeight="766.0" prefWidth="301.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Label contentDisplay="CENTER" text="%ui.form.music_list.label">
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </VBox.margin></Label>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="178.0" VBox.vgrow="ALWAYS">
-                    <content>
-                      <AnchorPane maxHeight="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <ListView fx:id="musicTrackListView" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                           </children></AnchorPane>
-                    </content>
-                  </ScrollPane>
-                  <HBox alignment="CENTER_LEFT" spacing="10.0">
-                     <children>
-                        <Button fx:id="sortTrackList" mnemonicParsing="false" text="%ui.form.sort_button_text" />
-                        <Button fx:id="shuffleTrackList" mnemonicParsing="false" text="%ui.form.shuffle_button_text" />
-                        <Label fx:id="trackListSortOrderIndicator" text="%ui.form.music_list.list_mode.prefix" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets bottom="10.0" top="10.0" />
-                     </padding></HBox>
-                  <Separator prefWidth="200.0" />
-                  <HBox alignment="CENTER_LEFT" spacing="10.0">
-                     <children>
-                        <Label text="%ui.form.enumeration_mode.label" />
-                        <RadioButton contentDisplay="CENTER" mnemonicParsing="false" selected="true">
+                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" prefHeight="766.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <HBox alignment="BASELINE_CENTER">
+                        <padding>
+                            <Insets bottom="5.0" top="5.0"/>
+                        </padding>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="%ui.form.music_list.label"
+                               HBox.hgrow="ALWAYS"/>
+                        <Button mnemonicParsing="false" text="%ui.form.music_list.add_label" fx:id="addMusicTrackButton">
                             <tooltip>
-                                <Tooltip text="%ui.form.enumeration_mode.icon1.tooltip" />
+                                <Tooltip text="%ui.form.music_list.add_tooltip"/>
+                            </tooltip>
+                        </Button>
+                    </HBox>
+                    <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <AnchorPane maxHeight="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                            <DraggableAudioFileListView fx:id="musicTrackListView" editable="true" maxHeight="1.7976931348623157E308"
+                                                        maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0"
+                                                        AnchorPane.leftAnchor="0.0"
+                                                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        </AnchorPane>
+                    </ScrollPane>
+                    <HBox alignment="CENTER_LEFT" spacing="5">
+                        <opaqueInsets>
+                            <Insets/>
+                        </opaqueInsets>
+                        <padding>
+                            <Insets bottom="10.0" top="10.0"/>
+                        </padding>
+                        <Button fx:id="sortTrackList" mnemonicParsing="false" text="%ui.form.sort_button_text"/>
+                        <Button fx:id="shuffleTrackList" mnemonicParsing="false" text="%ui.form.shuffle_button_text"/>
+                        <Label text="%ui.form.music_list.list_mode.prefix"/>
+                        <Label fx:id="trackListSortOrderIndicator" text="%ui.form.music_list.list_mode.sort"/>
+                    </HBox>
+                    <Separator prefWidth="200.0"/>
+                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <VBox.margin>
+                            <Insets bottom="10.0" top="10.0"/>
+                        </VBox.margin>
+                        <Label text="%ui.form.enumeration_mode.label"/>
+                        <RadioButton contentDisplay="CENTER" mnemonicParsing="false" selected="true" userData="SINGLE_EXTRACT">
+                            <tooltip>
+                                <Tooltip text="%ui.form.enumeration_mode.icon1.tooltip"/>
                             </tooltip>
                             <graphic>
                                 <ImageView>
-                                    <image>
-                                        <Image url="@/images/enumeration_mode_1.png" />
-                                    </image>
+                                    <Image url="@/images/enumeration_mode_1.png"/>
                                 </ImageView>
                             </graphic>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="enumerationToggleGroup" />
-                           </toggleGroup>
+                            <toggleGroup>
+                                <ToggleGroup fx:id="enumerationToggleGroup"/>
+                            </toggleGroup>
                         </RadioButton>
-                         <RadioButton contentDisplay="CENTER" mnemonicParsing="false" toggleGroup="$enumerationToggleGroup">
-                             <tooltip>
-                                 <Tooltip text="%ui.form.enumeration_mode.icon2.tooltip" />
-                             </tooltip>
-                             <graphic>
-                                 <ImageView>
-                                     <image>
-                                         <Image url="@/images/enumeration_mode_2.png" />
-                                     </image>
-                                 </ImageView>
-                             </graphic>
-                         </RadioButton>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </VBox.margin></HBox>
-                  <Separator prefWidth="200.0" />
-                  <Label fx:id="breakTrackTitle" text="%ui.form.break_list.label">
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </VBox.margin></Label>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="80.0" VBox.vgrow="NEVER">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0">
-                           <children>
-                              <ListView fx:id="breakTrackListView" editable="true" minHeight="0.0" minWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                           </children>
+                        <RadioButton contentDisplay="CENTER" mnemonicParsing="false" userData="CONTINUOUS"
+                                     toggleGroup="$enumerationToggleGroup">
+                            <tooltip>
+                                <Tooltip text="%ui.form.enumeration_mode.icon2.tooltip"/>
+                            </tooltip>
+                            <graphic>
+                                <ImageView>
+                                    <Image url="@/images/enumeration_mode_2.png"/>
+                                </ImageView>
+                            </graphic>
+                        </RadioButton>
+                    </HBox>
+                    <Separator prefWidth="200.0"/>
+                    <HBox alignment="BASELINE_CENTER">
+                        <padding>
+                            <Insets bottom="5.0" top="5.0"/>
+                        </padding>
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="%ui.form.break_list.label"
+                               HBox.hgrow="ALWAYS"/>
+                        <Button mnemonicParsing="false" text="%ui.form.break_list.add_label" fx:id="addBreakTrackButton">
+                            <tooltip>
+                                <Tooltip text="%ui.form.break_list.add_tooltip"/>
+                            </tooltip>
+                        </Button>
+                    </HBox>
+                    <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="80.0" VBox.vgrow="NEVER" vbarPolicy="NEVER">
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                            <DraggableAudioFileBreakListView fx:id="breakTrackListView" editable="true" minHeight="0.0" minWidth="0.0"
+                                                             AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                             AnchorPane.rightAnchor="0.0"
+                                                             AnchorPane.topAnchor="0.0"/>
                         </AnchorPane>
-                    </content>
-                  </ScrollPane>
-               </children>
-            </VBox>
-         </children>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-         <children>
-            <VBox layoutX="181.0" layoutY="85.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <TextFlow prefHeight="40.0" />
-                  <Canvas height="140.0" width="620.0" />
-                  <ProgressBar maxWidth="1.7976931348623157E308" progress="0.0" />
-                  <ProgressBar maxWidth="1.7976931348623157E308" progress="0.0" visible="false" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Region prefHeight="200.0" prefWidth="200.0" />
-                        <Region prefHeight="200.0" prefWidth="200.0" />
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-         </children></AnchorPane>
-  </items>
-</SplitPane>
+                    </ScrollPane>
+                </VBox>
+
+
+            </AnchorPane>
+            <AnchorPane maxWidth="Infinity">
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </padding>
+                <VBox maxWidth="Infinity" alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                      AnchorPane.topAnchor="0.0" spacing="10">
+
+                    <TextFlow fx:id="instructions" prefHeight="40.0" maxWidth="720">
+                        <Text text="%ui.instructions"/>
+                    </TextFlow>
+                    <Pane>
+                        <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true">
+                            <Image fx:id="starterBackgroundImage" url="@/images/starter_background.png"/>
+                        </ImageView>
+                    </Pane>
+                    <VBox>
+                        <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" progress="0.0"/>
+                        <ProgressBar fx:id="secondaryProgressBar" maxWidth="1.7976931348623157E308" progress="0.0" visible="false"/>
+                    </VBox>
+
+                    <Separator prefWidth="200.0"/>
+                    <HBox spacing="10" alignment="TOP_CENTER">
+                        <TabPane fx:id="periodTabPane" tabClosingPolicy="UNAVAILABLE" prefWidth="360">
+                            <Tab fx:id="simpleTab" text="%ui.form.simple_pane.title">
+                                <AnchorPane>
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                    <VBox alignment="CENTER" spacing="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">x
+
+                                        <VBox spacing="5" alignment="CENTER">
+                                            <Label text="%ui.form.sound_period.label"/>
+                                            <Spinner prefWidth="100" fx:id="soundPeriod" editable="true">
+                                                <valueFactory>
+                                                    <SpinnerValueFactory.IntegerSpinnerValueFactory min="0" max="2048"/>
+                                                </valueFactory>
+                                            </Spinner>
+                                        </VBox>
+                                        <VBox spacing="5" alignment="CENTER">
+                                            <Label text="%ui.form.break_duration.label"/>
+                                            <Spinner prefWidth="100" fx:id="breakPeriod" editable="true">
+                                                <valueFactory>
+                                                    <SpinnerValueFactory.IntegerSpinnerValueFactory min="0" max="2048"/>
+                                                </valueFactory>
+                                            </Spinner>
+                                        </VBox>
+                                    </VBox>
+                                </AnchorPane>
+                            </Tab>
+                            <Tab fx:id="advancedTab" text="%ui.form.advanced_pane.title">
+                                <AnchorPane>
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                    <VBox alignment="CENTER" spacing="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <VBox spacing="5" alignment="CENTER">
+                                            <Label text="%ui.form.sound_pattern.label"/>
+                                            <TextField fx:id="soundPattern"/>
+                                        </VBox>
+                                        <VBox spacing="5" alignment="CENTER">
+                                            <Label text="%ui.form.break_pattern.label"/>
+                                            <TextField fx:id="breakPattern"/>
+                                        </VBox>
+                                    </VBox>
+                                </AnchorPane>
+                            </Tab>
+                        </TabPane>
+                        <AnchorPane maxHeight="Infinity" prefWidth="360">
+                            <VBox spacing="10" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <HBox spacing="10" alignment="BASELINE_CENTER">
+                                    <Label text="%ui.form.iterations.label"/>
+                                    <Spinner prefWidth="100" fx:id="iterations" editable="true">
+                                        <valueFactory>
+                                            <SpinnerValueFactory.IntegerSpinnerValueFactory min="0" max="2048"/>
+                                        </valueFactory>
+                                    </Spinner>
+
+                                </HBox>
+                                <HBox alignment="CENTER" spacing="5">
+                                    <Label text="%ui.form.duration_estimation.label.prefix"/>
+                                    <Label fx:id="duration" text="%ui.form.duration_estimation.label.init"/>
+                                </HBox>
+
+                            </VBox>
+                        </AnchorPane>
+                    </HBox>
+                    <Separator prefWidth="200.0"/>
+                    <HBox spacing="10" alignment="TOP_CENTER">
+                        <VBox spacing="10.0" prefWidth="360">
+                            <Label text="%ui.form.blend_mode.label" alignment="CENTER" maxWidth="Infinity"/>
+                            <HBox spacing="10.0" alignment="CENTER">
+                                <RadioButton mnemonicParsing="false" selected="true" userData="SEPARATE">
+                                    <tooltip>
+                                        <Tooltip text="%ui.form.blend_mode.icon1.tooltip"/>
+                                    </tooltip>
+                                    <graphic>
+                                        <ImageView>
+                                            <Image url="@/images/blend_mode_1.png"/>
+                                        </ImageView>
+                                    </graphic>
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="blendModeToggleGroup"/>
+                                    </toggleGroup>
+                                </RadioButton>
+                                <RadioButton mnemonicParsing="false" toggleGroup="$blendModeToggleGroup" userData="CROSS">
+                                    <tooltip>
+                                        <Tooltip text="%ui.form.blend_mode.icon2.tooltip"/>
+                                    </tooltip>
+                                    <graphic>
+                                        <ImageView>
+                                            <Image url="@/images/blend_mode_2.png"/>
+                                        </ImageView>
+                                    </graphic>
+                                </RadioButton>
+                            </HBox>
+                        </VBox>
+                        <VBox prefWidth="360" spacing="10.0">
+                            <Label maxWidth="Infinity" text="%ui.form.blend_duration.label" alignment="CENTER"/>
+                            <VBox alignment="CENTER">
+                                <Slider fx:id="blendDuration" value="1" maxWidth="200" snapToTicks="true" showTickMarks="true"
+                                        showTickLabels="true"  max="10" majorTickUnit="5" minorTickCount="4"/>
+                            </VBox>
+                        </VBox>
+                    </HBox>
+                    <Separator prefWidth="200.0"/>
+                    <HBox spacing="10.0" alignment="BASELINE_RIGHT">
+                        <Label text="%ui.form.encoder_label"/>
+                        <ChoiceBox fx:id="outputFileFormat" prefWidth="150.0"/>
+                    </HBox>
+                    <Separator prefWidth="200.0"/>
+                    <HBox spacing="10.0" alignment="BASELINE_LEFT">
+                        <Button fx:id="chooseOutputDirectory" mnemonicParsing="false" text="%ui.form.outfile_button_text"/>
+                        <Label fx:id="outputDirectory" text="%ui.form.outfile_label"/>
+                    </HBox>
+                    <Separator prefWidth="200.0"/>
+                    <ButtonBar>
+                        <buttons>
+                            <Button fx:id="process" mnemonicParsing="false" text="%ui.form.process_button_text"/>
+                        </buttons>
+                    </ButtonBar>
+                </VBox>
+            </AnchorPane>
+        </SplitPane>
+    </AnchorPane>
+</VBox>

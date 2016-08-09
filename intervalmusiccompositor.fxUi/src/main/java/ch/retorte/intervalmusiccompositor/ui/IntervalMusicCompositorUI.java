@@ -1,25 +1,34 @@
 package ch.retorte.intervalmusiccompositor.ui;
 
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.Utf8Control;
+import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
+import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.spi.*;
+import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
+import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageSubscriber;
 import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
 import ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController;
+import com.sun.javafx.collections.ImmutableObservableList;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
 
-import java.awt.image.BufferedImage;
-import java.util.Locale;
+import java.net.URI;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 
 /**
  * A ui based on JavaFx.
@@ -29,11 +38,8 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   //---- Static
 
   private static final String MAIN_SCREEN_LAYOUT_FILE = "/layouts/MainScreen.fxml";
-  public static final String RESOURCE_BUNDLE_NAME = "ui_imc";
-
-  //---- Fields
-
-  private MessageFormatBundle bundle = getBundle(RESOURCE_BUNDLE_NAME);
+  public static final String CORE_RESOURCE_BUNDLE_NAME = "core_imc";
+  public static final String UI_RESOURCE_BUNDLE_NAME = "ui_imc";
 
   private static MusicListControl musicListControl;
   private static MusicCompilationControl musicCompilationController;
@@ -42,6 +48,17 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   private static UpdateAvailabilityChecker updateAvailabilityChecker;
   private static MessageSubscriber messageSubscriber;
   private static MessageProducer messageProducer;
+  private static MainScreenController mainScreenController;
+
+  //---- Fields
+
+  private CompilationParameters compilationParameters = new CompilationParameters();
+
+  private ResourceBundle resourceBundle = ResourceBundle.getBundle(UI_RESOURCE_BUNDLE_NAME, new Utf8Control());
+
+  private ch.retorte.intervalmusiccompositor.commons.platform.Platform platform = new PlatformFactory().getPlatform();
+
+  private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
   //---- Constructors
 
@@ -54,39 +71,73 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
                                    UpdateAvailabilityChecker updateAvailabilityChecker,
                                    MessageSubscriber messageSubscriber,
                                    MessageProducer messageProducer) {
-    this.musicListControl = musicListControl;
-    this.musicCompilationController = musicCompilationController;
-    this.programControl = programControl;
-    this.applicationData = applicationData;
-    this.updateAvailabilityChecker = updateAvailabilityChecker;
-    this.messageSubscriber = messageSubscriber;
-    this.messageProducer = messageProducer;
+    IntervalMusicCompositorUI.musicListControl = musicListControl;
+    IntervalMusicCompositorUI.musicCompilationController = musicCompilationController;
+    IntervalMusicCompositorUI.programControl = programControl;
+    IntervalMusicCompositorUI.applicationData = applicationData;
+    IntervalMusicCompositorUI.updateAvailabilityChecker = updateAvailabilityChecker;
+    IntervalMusicCompositorUI.messageSubscriber = messageSubscriber;
+    IntervalMusicCompositorUI.messageProducer = messageProducer;
+
+    installUncaughtExceptionHandler();
   }
 
   //---- Methods
 
+  private void installUncaughtExceptionHandler() {
+    Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
+      messageProducer.send(new ErrorMessage(throwable.getMessage()));
+      messageProducer.send(new DebugMessage(IntervalMusicCompositorUI.this, throwable));
+    });
+  }
+
   @Override
   public void start(Stage primaryStage) throws Exception {
-    ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, new Utf8Control());
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_SCREEN_LAYOUT_FILE), resourceBundle);
+    Platform.setImplicitExit(true);
+    try {
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_SCREEN_LAYOUT_FILE), resourceBundle);
+      Parent root = fxmlLoader.load();
+      primaryStage.setTitle(applicationData.getProgramName());
+      primaryStage.setScene(new Scene(root));
+      primaryStage.show();
+      addProgramIconsTo(primaryStage);
 
-    Parent root = fxmlLoader.load();
+      mainScreenController = fxmlLoader.getController();
 
+      initialize(mainScreenController);
+      initializeCompilationParameters();
+    }
+    catch (Exception e) {
+      messageProducer.send(new ErrorMessage("UI failed to load due to: " + e.getMessage() + " Quitting."));
+      messageProducer.send(new DebugMessage(this, e));
+      quit();
+    }
+  }
 
-
-    primaryStage.setTitle(applicationData.getProgramName());
-    primaryStage.setScene(new Scene(root));
-    primaryStage.show();
-
-    addProgramIconsTo(primaryStage);
-
-    MainScreenController controller = fxmlLoader.getController();
+  private void initializeCompilationParameters() {
+    compilationParameters.setOutputPath(platform.getDesktopPath());
   }
 
   @Override
   public void quit() {
-    programControl.quit();
     Platform.exit();
+  }
+
+  @Override
+  public void stop() throws Exception {
+    /* Is called right before the platform exits. */
+    shutdownExecutorService();
+    programControl.quit();
+    super.stop();
+  }
+
+  private void shutdownExecutorService() {
+    try {
+      executorService.shutdown();
+    }
+    catch (Exception e) {
+      e.getMessage();
+    }
   }
 
   @Override
@@ -99,36 +150,57 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
         e.printStackTrace();
       }
     });
-
   }
 
   private void addProgramIconsTo(Stage stage) {
-    stage.getIcons().add(new Image("file:images/program_icon.png"));
-    stage.getIcons().add(new Image("file:images/program_icon_small.png"));
+    stage.getIcons().add(new Image("/images/program_icon.png"));
+    stage.getIcons().add(new Image("/images/program_icon_small.png"));
   }
 
   @Override
   public void setActive() {
-
+    mainScreenController.setActive();
   }
 
   @Override
   public void setInactive() {
-
+    mainScreenController.setInactive();
   }
 
   @Override
-  public void setEnvelopeImage(BufferedImage envelopeImage) {
-
+  public void setEnvelopeImage(WritableImage envelopeImage) {
+    mainScreenController.setEnvelopeImage(envelopeImage);
   }
 
   @Override
   public void refresh() {
-
+    // Still needed?
   }
 
   @Override
   public void updateUsableTracks() {
+    // Still needed?
+  }
 
+  @Override
+  public void openInDesktopBrowser(URI uri) {
+    if (uri != null) {
+      messageProducer.send(new DebugMessage(this, "Sending URL to systems Desktop for opening in web browser: " + uri));
+      getHostServices().showDocument(uri.toASCIIString());
+    }
+  }
+
+  private void initialize(MainScreenController mainScreenController) {
+    mainScreenController.initializeFieldsWith(this, programControl, applicationData, musicListControl, musicCompilationController, compilationParameters, messageSubscriber, messageProducer, updateAvailabilityChecker, executorService);
+    mainScreenController.updateOutputFileFormatWith(getAudioFileEncoders());
+    mainScreenController.updateAvailableDecodersWith(getAudioFileDecoderExtensions());
+  }
+
+  private ObservableList<AudioFileEncoder> getAudioFileEncoders() {
+    return new ImmutableObservableList<>(musicCompilationController.getAvailableEncoders().toArray(new AudioFileEncoder[0]));
+  }
+
+  private List<AudioFileDecoder> getAudioFileDecoderExtensions() {
+    return musicCompilationController.getAvailableDecoders();
   }
 }
