@@ -42,6 +42,7 @@ public class UpdateChecker implements UpdateAvailabilityChecker {
 
   private Version getRemoteVersion(URL url) throws IOException {
     addDebugMessage("Attempting to fetch remote version on URL: " + url);
+    addDebugMessage("Setting user agent to: " + compileUserAgentString());
 
     String versionString = "";
     BufferedReader in = null;
@@ -57,6 +58,7 @@ public class UpdateChecker implements UpdateAvailabilityChecker {
       addDebugMessage("Fetched remote version string: " + versionString);
     }
     catch (IOException e) {
+      addDebugMessage(e);
       throw new IOException("Not able to contact home server!");
     }
     finally {
@@ -107,6 +109,10 @@ public class UpdateChecker implements UpdateAvailabilityChecker {
 
   private void addDebugMessage(String message) {
     messageProducer.send(new DebugMessage(this, message));
+  }
+
+  private void addDebugMessage(Throwable throwable) {
+    messageProducer.send(new DebugMessage(this, throwable));
   }
 
 }
