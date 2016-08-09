@@ -10,7 +10,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:version="0.48.3.1 r9886"
+   inkscape:version="0.91 r13725"
    version="1.1"
    id="svg2"
    height="297mm"
@@ -18,6 +18,21 @@
    sodipodi:docname="starter_background.svg">
   <defs
      id="defs4">
+    <linearGradient
+       id="linearGradient3613">
+      <stop
+         id="stop3615"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:1;" />
+      <stop
+         style="stop-color:#cbe9ff;stop-opacity:1;"
+         offset="1"
+         id="stop3617" />
+      <stop
+         id="stop3619"
+         offset="1"
+         style="stop-color:#99ceff;stop-opacity:0.99242425;" />
+    </linearGradient>
     <linearGradient
        id="linearGradient4238">
       <stop
@@ -336,15 +351,6 @@
        r="63.77953"
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(0.83333328,0,0,0.83333328,13.202103,15.944886)" />
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter3865-1">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.59433328"
-         id="feGaussianBlur3867-5" />
-    </filter>
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient4238"
@@ -356,6 +362,30 @@
        fx="124.47244"
        fy="116.92911"
        r="63.77953" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3613"
+       id="radialGradient3826-0"
+       cx="278.45898"
+       cy="134.00104"
+       fx="278.45898"
+       fy="134.00104"
+       r="310"
+       gradientTransform="matrix(-3.3868748,-0.1282554,0.11430026,-2.4003048,1636.4508,701.058)"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="pad" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3613"
+       id="radialGradient3826-0-3"
+       cx="278.45898"
+       cy="134.00104"
+       fx="278.45898"
+       fy="134.00104"
+       r="310"
+       gradientTransform="matrix(-3.3868748,-0.1282554,0.11430026,-2.4003048,1636.4508,878.22335)"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="pad" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -365,16 +395,21 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.61"
-     inkscape:cx="380.42474"
-     inkscape:cy="976.70457"
+     inkscape:cx="246.84709"
+     inkscape:cy="673.59384"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1620"
-     inkscape:window-height="969"
-     inkscape:window-x="230"
-     inkscape:window-y="30"
-     inkscape:window-maximized="0">
+     inkscape:window-width="2260"
+     inkscape:window-height="1119"
+     inkscape:window-x="214"
+     inkscape:window-y="55"
+     inkscape:window-maximized="0"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true">
     <inkscape:grid
        type="xygrid"
        id="grid2929" />
@@ -387,7 +422,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -535,7 +570,7 @@
    id="tspan4283"
    style="font-size:48px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;line-height:100%;font-family:Frutiger 55;-inkscape-font-specification:Frutiger 55">Interval </tspan>Music<tspan
    style="font-size:48px;font-weight:bold;-inkscape-font-specification:Frutiger 55 Bold"
-   id="tspan4274"></tspan></tspan><tspan
+   id="tspan4274" /></tspan><tspan
          sodipodi:role="line"
          x="199.20193"
          y="151.80507"
@@ -1138,5 +1173,848 @@
            inkscape:export-ydpi="203.20015" />
       </g>
     </g>
+    <rect
+       style="fill:url(#radialGradient3826-0);fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="rect2939-4"
+       width="708.66138"
+       height="159.44879"
+       x="17.716536"
+       y="237.40158"
+       inkscape:export-filename="/home/nw/projects/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.fxUi/src/main/resources/images/starter_background.png"
+       inkscape:export-xdpi="91.440002"
+       inkscape:export-ydpi="91.440002" />
+    <rect
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.09999999;marker:none;enable-background:accumulate"
+       id="rect3006-5"
+       width="124.01572"
+       height="124.01572"
+       x="35.433083"
+       y="255.1181"
+       ry="9.3011827"
+       inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+       inkscape:export-xdpi="812.79993"
+       inkscape:export-ydpi="812.79993" />
+    <g
+       id="g3096-0"
+       transform="matrix(4.3749991,0,0,4.3749991,-225.91284,56.873913)"
+       style="fill:#babdb6"
+       inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+       inkscape:export-xdpi="812.79993"
+       inkscape:export-ydpi="812.79993">
+      <rect
+         y="49.606274"
+         x="61.653557"
+         height="21.259848"
+         width="2.1259711"
+         id="rect3776-5-78"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500003;marker:none;enable-background:accumulate" />
+      <rect
+         y="51.732262"
+         x="65.90551"
+         height="17.00786"
+         width="2.1259837"
+         id="rect3776-5-6-4-3"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="63.779526"
+         height="26.45668"
+         width="2.125989"
+         id="rect3776-5-6-46"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="50.314938"
+         x="70.866142"
+         height="18.897627"
+         width="2.1259849"
+         id="rect3776-5-0-8"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="75.118111"
+         height="26.220459"
+         width="2.125984"
+         id="rect3776-5-6-4-5-91"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="48.188953"
+         x="72.992126"
+         height="23.62203"
+         width="2.1259851"
+         id="rect3776-5-6-43-8"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate" />
+      <rect
+         y="50.314938"
+         x="80.078743"
+         height="18.897627"
+         width="2.1259868"
+         id="rect3776-5-0-5-7"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="49.606277"
+         x="84.330711"
+         height="21.259829"
+         width="2.1259842"
+         id="rect3776-5-6-4-5-9-88"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="82.204727"
+         height="26.220472"
+         width="2.1259854"
+         id="rect3776-5-6-43-9-4"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate" />
+    </g>
+    <g
+       id="g3096"
+       transform="matrix(4.3749991,0,0,4.3749991,-228.10033,54.626141)"
+       inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+       inkscape:export-xdpi="812.79993"
+       inkscape:export-ydpi="812.79993"
+       style="stroke:none">
+      <rect
+         y="49.606274"
+         x="61.653557"
+         height="21.259848"
+         width="2.1259711"
+         id="rect3776-5-3"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500003;marker:none;enable-background:accumulate" />
+      <rect
+         y="51.732262"
+         x="65.90551"
+         height="17.00786"
+         width="2.1259837"
+         id="rect3776-5-6-4"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="63.779526"
+         height="26.45668"
+         width="2.125989"
+         id="rect3776-5-6"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="50.314938"
+         x="70.866142"
+         height="18.897627"
+         width="2.1259849"
+         id="rect3776-5-0"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="75.118111"
+         height="26.220459"
+         width="2.125984"
+         id="rect3776-5-6-4-5"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="48.188953"
+         x="72.992126"
+         height="23.62203"
+         width="2.1259851"
+         id="rect3776-5-6-43"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate" />
+      <rect
+         y="50.314938"
+         x="80.078743"
+         height="18.897627"
+         width="2.1259868"
+         id="rect3776-5-0-5"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="49.606277"
+         x="84.330711"
+         height="21.259829"
+         width="2.1259842"
+         id="rect3776-5-6-4-5-9"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="82.204727"
+         height="26.220472"
+         width="2.1259854"
+         id="rect3776-5-6-43-9"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate" />
+    </g>
+    <g
+       transform="matrix(4.3749991,0,0,2.6171949,-228.10033,160.09435)"
+       id="g3096-5"
+       style="fill:#3465a4"
+       inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+       inkscape:export-xdpi="812.79993"
+       inkscape:export-ydpi="812.79993">
+      <rect
+         y="49.606274"
+         x="61.653557"
+         height="21.259848"
+         width="2.1259711"
+         id="rect3776-5-7"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500003;marker:none;enable-background:accumulate" />
+      <rect
+         y="51.732262"
+         x="65.90551"
+         height="17.00786"
+         width="2.1259837"
+         id="rect3776-5-6-4-1"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="63.779526"
+         height="26.45668"
+         width="2.125989"
+         id="rect3776-5-6-8"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="50.314938"
+         x="70.866142"
+         height="18.897627"
+         width="2.1259849"
+         id="rect3776-5-0-1"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="75.118111"
+         height="26.220459"
+         width="2.125984"
+         id="rect3776-5-6-4-5-3"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="48.188953"
+         x="72.992126"
+         height="23.62203"
+         width="2.1259851"
+         id="rect3776-5-6-43-2"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate" />
+      <rect
+         y="50.314938"
+         x="80.078743"
+         height="18.897627"
+         width="2.1259868"
+         id="rect3776-5-0-5-4"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="49.606277"
+         x="84.330711"
+         height="21.259829"
+         width="2.1259842"
+         id="rect3776-5-6-4-5-9-8"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="82.204727"
+         height="26.220472"
+         width="2.1259854"
+         id="rect3776-5-6-43-9-6"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate" />
+    </g>
+    <g
+       transform="matrix(4.3749991,0,0,1.5361076,-228.10033,224.95956)"
+       id="g3096-5-2"
+       style="fill:#729fcf"
+       inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+       inkscape:export-xdpi="812.79993"
+       inkscape:export-ydpi="812.79993">
+      <rect
+         y="49.606274"
+         x="61.653557"
+         height="21.259848"
+         width="2.1259711"
+         id="rect3776-5-7-1"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500003;marker:none;enable-background:accumulate" />
+      <rect
+         y="51.732262"
+         x="65.90551"
+         height="17.00786"
+         width="2.1259837"
+         id="rect3776-5-6-4-1-2"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="63.779526"
+         height="26.45668"
+         width="2.125989"
+         id="rect3776-5-6-8-0"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="50.314938"
+         x="70.866142"
+         height="18.897627"
+         width="2.1259849"
+         id="rect3776-5-0-1-3"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="75.118111"
+         height="26.220459"
+         width="2.125984"
+         id="rect3776-5-6-4-5-3-8"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="48.188953"
+         x="72.992126"
+         height="23.62203"
+         width="2.1259851"
+         id="rect3776-5-6-43-2-9"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate" />
+      <rect
+         y="50.314938"
+         x="80.078743"
+         height="18.897627"
+         width="2.1259868"
+         id="rect3776-5-0-5-4-6"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="49.606277"
+         x="84.330711"
+         height="21.259829"
+         width="2.1259842"
+         id="rect3776-5-6-4-5-9-8-2"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="82.204727"
+         height="26.220472"
+         width="2.1259854"
+         id="rect3776-5-6-43-9-6-6"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate" />
+    </g>
+    <g
+       id="g3096-4"
+       transform="matrix(4.3749991,0,0,4.3749991,-228.10032,54.54969)"
+       inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+       inkscape:export-xdpi="812.79993"
+       inkscape:export-ydpi="812.79993"
+       style="fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
+      <rect
+         y="49.606274"
+         x="61.653557"
+         height="21.259848"
+         width="2.1259711"
+         id="rect3776-5-64"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate" />
+      <rect
+         y="51.732262"
+         x="65.90551"
+         height="17.00786"
+         width="2.1259837"
+         id="rect3776-5-6-4-9"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="63.779526"
+         height="26.45668"
+         width="2.125989"
+         id="rect3776-5-6-9"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate" />
+      <rect
+         y="50.314938"
+         x="70.866142"
+         height="18.897627"
+         width="2.1259849"
+         id="rect3776-5-0-7"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="75.118111"
+         height="26.220459"
+         width="2.125984"
+         id="rect3776-5-6-4-5-2"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate" />
+      <rect
+         y="48.188953"
+         x="72.992126"
+         height="23.62203"
+         width="2.1259851"
+         id="rect3776-5-6-43-4"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate" />
+      <rect
+         y="50.314938"
+         x="80.078743"
+         height="18.897627"
+         width="2.1259868"
+         id="rect3776-5-0-5-9"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate" />
+      <rect
+         y="49.606277"
+         x="84.330711"
+         height="21.259829"
+         width="2.1259842"
+         id="rect3776-5-6-4-5-9-4"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate" />
+      <rect
+         y="46.771633"
+         x="82.204727"
+         height="26.220472"
+         width="2.1259854"
+         id="rect3776-5-6-43-9-5"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate" />
+    </g>
+    <path
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#729fcf;stroke-width:0.87499982;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
+       d="m 44.734256,317.12597 102.312974,0"
+       id="path4030-4"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+       inkscape:export-xdpi="812.79993"
+       inkscape:export-ydpi="812.79993" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:72px;line-height:100%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="176.27769"
+       y="308.26773"
+       id="text3607"
+       sodipodi:linespacing="100%"
+       inkscape:export-filename="/home/nw/projects/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.fxUi/src/main/resources/images/starter_background.png"
+       inkscape:export-xdpi="91.440002"
+       inkscape:export-ydpi="91.440002"><tspan
+         sodipodi:role="line"
+         id="tspan3609"
+         x="176.27769"
+         y="308.26773"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:60px;line-height:100%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light';text-align:start;writing-mode:lr;text-anchor:start">Interval Music</tspan><tspan
+         sodipodi:role="line"
+         x="176.27769"
+         y="373.26773"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:60px;line-height:100%;font-family:Roboto;-inkscape-font-specification:'Roboto, Normal';text-align:start;writing-mode:lr;text-anchor:start"
+         id="tspan3611">Compositor</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:72px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="718.69318"
+       y="360.64029"
+       id="text3621"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/nw/projects/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.fxUi/src/main/resources/images/starter_background.png"
+       inkscape:export-xdpi="91.440002"
+       inkscape:export-ydpi="91.440002"><tspan
+         sodipodi:role="line"
+         id="tspan3623"
+         x="718.69318"
+         y="360.64029"
+         style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:22.5px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light Italic';text-align:end;writing-mode:lr-tb;text-anchor:end" /><tspan
+         sodipodi:role="line"
+         x="718.69318"
+         y="386.28241"
+         style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:20px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light Italic';text-align:end;writing-mode:lr-tb;text-anchor:end"
+         id="tspan3627">retorte laboratories</tspan></text>
+    <rect
+       style="fill:url(#radialGradient3826-0-3);fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="rect2939-4-3"
+       width="708.66138"
+       height="159.44879"
+       x="17.716536"
+       y="414.56693"
+       inkscape:export-filename="/home/nw/projects/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.fxUi/src/main/resources/images/starter_background.png"
+       inkscape:export-xdpi="91.440002"
+       inkscape:export-ydpi="91.440002" />
+    <g
+       id="g3812"
+       inkscape:export-filename="/home/nw/projects/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.fxUi/src/main/resources/images/starter_background.png"
+       inkscape:export-xdpi="91.440002"
+       inkscape:export-ydpi="91.440002">
+      <g
+         inkscape:export-ydpi="812.79993"
+         inkscape:export-xdpi="812.79993"
+         inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+         style="fill:#babdb6"
+         transform="matrix(4.3749991,0,0,4.3749991,-225.91286,234.03926)"
+         id="g3096-0-6">
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500003;marker:none;enable-background:accumulate"
+           id="rect3776-5-78-2"
+           width="2.1259711"
+           height="21.259848"
+           x="61.653557"
+           y="49.606274" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-3-9"
+           width="2.1259837"
+           height="17.00786"
+           x="65.90551"
+           y="51.732262" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-46-1"
+           width="2.125989"
+           height="26.45668"
+           x="63.779526"
+           y="46.771633" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-0-8-2"
+           width="2.1259849"
+           height="18.897627"
+           x="70.866142"
+           y="50.314938" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-5-91-7"
+           width="2.125984"
+           height="26.220459"
+           x="75.118111"
+           y="46.771633" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-43-8-0"
+           width="2.1259851"
+           height="23.62203"
+           x="72.992126"
+           y="48.188953" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-0-5-7-9"
+           width="2.1259868"
+           height="18.897627"
+           x="80.078743"
+           y="50.314938" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-5-9-88-3"
+           width="2.1259842"
+           height="21.259829"
+           x="84.330711"
+           y="49.606277" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#babdb6;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-43-9-4-6"
+           width="2.1259854"
+           height="26.220472"
+           x="82.204727"
+           y="46.771633" />
+      </g>
+      <g
+         style="stroke:none"
+         inkscape:export-ydpi="812.79993"
+         inkscape:export-xdpi="812.79993"
+         inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+         transform="matrix(4.3749991,0,0,4.3749991,-228.10035,231.79149)"
+         id="g3096-06">
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500003;marker:none;enable-background:accumulate"
+           id="rect3776-5-3-2"
+           width="2.1259711"
+           height="21.259848"
+           x="61.653557"
+           y="49.606274" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-6"
+           width="2.1259837"
+           height="17.00786"
+           x="65.90551"
+           y="51.732262" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-1"
+           width="2.125989"
+           height="26.45668"
+           x="63.779526"
+           y="46.771633" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-0-87"
+           width="2.1259849"
+           height="18.897627"
+           x="70.866142"
+           y="50.314938" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-5-92"
+           width="2.125984"
+           height="26.220459"
+           x="75.118111"
+           y="46.771633" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-43-0"
+           width="2.1259851"
+           height="23.62203"
+           x="72.992126"
+           y="48.188953" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-0-5-2"
+           width="2.1259868"
+           height="18.897627"
+           x="80.078743"
+           y="50.314938" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-5-9-3"
+           width="2.1259842"
+           height="21.259829"
+           x="84.330711"
+           y="49.606277" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#204a87;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-43-9-7"
+           width="2.1259854"
+           height="26.220472"
+           x="82.204727"
+           y="46.771633" />
+      </g>
+      <g
+         inkscape:export-ydpi="812.79993"
+         inkscape:export-xdpi="812.79993"
+         inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+         style="fill:#3465a4"
+         id="g3096-5-5"
+         transform="matrix(4.3749991,0,0,2.6171949,-228.10035,337.25969)">
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500003;marker:none;enable-background:accumulate"
+           id="rect3776-5-7-9"
+           width="2.1259711"
+           height="21.259848"
+           x="61.653557"
+           y="49.606274" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-1-22"
+           width="2.1259837"
+           height="17.00786"
+           x="65.90551"
+           y="51.732262" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-8-8"
+           width="2.125989"
+           height="26.45668"
+           x="63.779526"
+           y="46.771633" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-0-1-9"
+           width="2.1259849"
+           height="18.897627"
+           x="70.866142"
+           y="50.314938" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-5-3-7"
+           width="2.125984"
+           height="26.220459"
+           x="75.118111"
+           y="46.771633" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-43-2-3"
+           width="2.1259851"
+           height="23.62203"
+           x="72.992126"
+           y="48.188953" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-0-5-4-61"
+           width="2.1259868"
+           height="18.897627"
+           x="80.078743"
+           y="50.314938" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-5-9-8-29"
+           width="2.1259842"
+           height="21.259829"
+           x="84.330711"
+           y="49.606277" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-43-9-6-3"
+           width="2.1259854"
+           height="26.220472"
+           x="82.204727"
+           y="46.771633" />
+      </g>
+      <g
+         inkscape:export-ydpi="812.79993"
+         inkscape:export-xdpi="812.79993"
+         inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+         style="fill:#729fcf"
+         id="g3096-5-2-1"
+         transform="matrix(4.3749991,0,0,1.5361076,-228.10035,402.1249)">
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500003;marker:none;enable-background:accumulate"
+           id="rect3776-5-7-1-9"
+           width="2.1259711"
+           height="21.259848"
+           x="61.653557"
+           y="49.606274" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-1-2-4"
+           width="2.1259837"
+           height="17.00786"
+           x="65.90551"
+           y="51.732262" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-8-0-7"
+           width="2.125989"
+           height="26.45668"
+           x="63.779526"
+           y="46.771633" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-0-1-3-8"
+           width="2.1259849"
+           height="18.897627"
+           x="70.866142"
+           y="50.314938" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-5-3-8-4"
+           width="2.125984"
+           height="26.220459"
+           x="75.118111"
+           y="46.771633" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-43-2-9-5"
+           width="2.1259851"
+           height="23.62203"
+           x="72.992126"
+           y="48.188953" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-0-5-4-6-0"
+           width="2.1259868"
+           height="18.897627"
+           x="80.078743"
+           y="50.314938" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500006;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-5-9-8-2-3"
+           width="2.1259842"
+           height="21.259829"
+           x="84.330711"
+           y="49.606277" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#729fcf;fill-opacity:1;stroke:none;stroke-width:0.07500005;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-43-9-6-6-6"
+           width="2.1259854"
+           height="26.220472"
+           x="82.204727"
+           y="46.771633" />
+      </g>
+      <g
+         style="fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:export-ydpi="812.79993"
+         inkscape:export-xdpi="812.79993"
+         inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+         transform="matrix(4.3749991,0,0,4.3749991,-228.10034,231.71504)"
+         id="g3096-4-1">
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+           id="rect3776-5-64-0"
+           width="2.1259711"
+           height="21.259848"
+           x="61.653557"
+           y="49.606274" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-9-6"
+           width="2.1259837"
+           height="17.00786"
+           x="65.90551"
+           y="51.732262" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-9-3"
+           width="2.125989"
+           height="26.45668"
+           x="63.779526"
+           y="46.771633" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+           id="rect3776-5-0-7-2"
+           width="2.1259849"
+           height="18.897627"
+           x="70.866142"
+           y="50.314938" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-5-2-0"
+           width="2.125984"
+           height="26.220459"
+           x="75.118111"
+           y="46.771633" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-43-4-6"
+           width="2.1259851"
+           height="23.62203"
+           x="72.992126"
+           y="48.188953" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+           id="rect3776-5-0-5-9-1"
+           width="2.1259868"
+           height="18.897627"
+           x="80.078743"
+           y="50.314938" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-4-5-9-4-5"
+           width="2.1259842"
+           height="21.259829"
+           x="84.330711"
+           y="49.606277" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+           id="rect3776-5-6-43-9-5-5"
+           width="2.1259854"
+           height="26.220472"
+           x="82.204727"
+           y="46.771633" />
+      </g>
+      <path
+         inkscape:export-ydpi="812.79993"
+         inkscape:export-xdpi="812.79993"
+         inkscape:export-filename="/home/nw/projekte/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.build/footage/program_icon.png"
+         inkscape:connector-curvature="0"
+         id="path4030-4-4"
+         d="m 44.734241,494.29131 102.312969,0"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#729fcf;stroke-width:0.87499982;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:72px;line-height:100%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="176.27769"
+       y="485.43307"
+       id="text3607-7"
+       sodipodi:linespacing="100%"
+       inkscape:export-filename="/home/nw/projects/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.fxUi/src/main/resources/images/starter_background.png"
+       inkscape:export-xdpi="91.440002"
+       inkscape:export-ydpi="91.440002"><tspan
+         sodipodi:role="line"
+         id="tspan3609-6"
+         x="176.27769"
+         y="485.43307"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:60px;line-height:100%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light';text-align:start;writing-mode:lr-tb;text-anchor:start">Interval Music</tspan><tspan
+         sodipodi:role="line"
+         x="176.27769"
+         y="545.43311"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:60px;line-height:100%;font-family:Roboto;-inkscape-font-specification:'Roboto, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start"
+         id="tspan3611-5">Compositor</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:72px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="718.69312"
+       y="537.80566"
+       id="text3621-6"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/nw/projects/interval_music_compositor/workspace/interval-music-compositor/intervalmusiccompositor.fxUi/src/main/resources/images/starter_background.png"
+       inkscape:export-xdpi="91.440002"
+       inkscape:export-ydpi="91.440002"><tspan
+         sodipodi:role="line"
+         id="tspan3623-9"
+         x="718.69312"
+         y="537.80566"
+         style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:22.5px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light Italic';text-align:end;writing-mode:lr-tb;text-anchor:end" /><tspan
+         sodipodi:role="line"
+         x="718.69312"
+         y="563.44781"
+         style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:20px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light Italic';text-align:end;writing-mode:lr-tb;text-anchor:end"
+         id="tspan3627-3">retorte laboratories</tspan></text>
   </g>
 </svg>
