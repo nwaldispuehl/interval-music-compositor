@@ -42,7 +42,7 @@ public class Playlist implements Iterable<PlaylistItem> {
   private Random random = new Random();
 
   private BlendMode blendMode = DEFAULT_BLEND_MODE;
-  private Double blendTime = DEFAULT_BLEND_TIME;
+  private Double blendTime = DEFAULT_BLEND_DURATION;
   private EnumerationMode enumerationMode = DEFAULT_ENUMERATION_MODE;
   private ListSortMode listSortMode = DEFAULT_LIST_SORT_MODE;
 
@@ -64,7 +64,7 @@ public class Playlist implements Iterable<PlaylistItem> {
   }
 
   public Playlist(CompilationParameters p, MessageProducer messageProducer) {
-    this(p.blendMode, p.blendTime, p.enumerationMode, p.listSortMode, messageProducer);
+    this(p.getBlendMode(), p.getBlendDuration(), p.getEnumerationMode(), p.getListSortMode(), messageProducer);
   }
 
   public void generatePlaylist(List<IAudioFile> musicFiles,
@@ -248,7 +248,7 @@ public class Playlist implements Iterable<PlaylistItem> {
     return new PlaylistItem(audioFile, startInMilliseconds, endInMilliseconds);
   }
 
-  public long getTotalLength(List<PlaylistItem> playlistItems) {
+  long getTotalLength(List<PlaylistItem> playlistItems) {
     long result = 0L;
     for (PlaylistItem playlistItem : playlistItems) {
       result += playlistItem.getExtractDurationInMilliseconds();
@@ -282,7 +282,7 @@ public class Playlist implements Iterable<PlaylistItem> {
     return listSortMode == SHUFFLE;
   }
 
-  public long getTotalLength() {
+  private long getTotalLength() {
     return getTotalLength(playlistItems);
   }
 
@@ -290,7 +290,7 @@ public class Playlist implements Iterable<PlaylistItem> {
     return (int) (getTotalLength() / 1000);
   }
 
-  public void setCutOff(long startCutOffInMilliseconds, long endCutOffInMilliseconds) {
+  void setCutOff(long startCutOffInMilliseconds, long endCutOffInMilliseconds) {
     this.startCutOffInMilliseconds = startCutOffInMilliseconds;
     this.endCutOffInMilliseconds = endCutOffInMilliseconds;
   }

@@ -5,13 +5,14 @@ import static ch.retorte.intervalmusiccompositor.list.ListSortMode.MANUAL;
 import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SHUFFLE;
 import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT;
 import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT_REV;
+import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.Integer.valueOf;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFileComparator;
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFileFactory;
@@ -26,36 +27,34 @@ import ch.retorte.intervalmusiccompositor.compilation.CompilationException;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationGenerator;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.InfoMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.MessageBus;
+import ch.retorte.intervalmusiccompositor.messagebus.*;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.MusicCompilationControl;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.ProgramControl;
-import ch.retorte.intervalmusiccompositor.spi.TaskFinishListener;
 import ch.retorte.intervalmusiccompositor.spi.Ui;
 import ch.retorte.intervalmusiccompositor.spi.audio.MusicPlayer;
+import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.util.AudioFilesLoader;
 
-import com.google.common.collect.Lists;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * Main controller of the software; collects data and reacts to ui events. Implements a lot of control interfaces.
  * 
  * @author nw
  */
-public class MainControl implements MusicListControl, MusicCompilationControl, ProgramControl, ApplicationData {
+class MainControl implements MusicListControl, MusicCompilationControl, ProgramControl, ApplicationData {
 
   private static final int ONE_DAY_IN_MILLISECONDS = 86400000;
 
   private ListSortMode musicListSortMode = null;
   private int maxListEntries;
 
-  private List<IAudioFile> musicList = Lists.newArrayList();
-  private List<IAudioFile> breakList = Lists.newArrayList();
+  private ObservableList<IAudioFile> musicList =  FXCollections.observableArrayList();
+  private ObservableList<IAudioFile> breakList =  FXCollections.observableArrayList();
 
   private CreateCacheJobManager createCacheJobManager;
 
@@ -71,7 +70,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
   private String temporaryFileSuffix;
   private int maximumImportWorkerThreads;
 
-  public MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, MusicPlayer musicPlayer, MessageBus messageBus) {
+  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, MusicPlayer musicPlayer, MessageBus messageBus) {
     this.compilationGenerator = compilationGenerator;
     this.audioFileFactory = audioFileFactory;
     this.musicPlayer = musicPlayer;
@@ -95,7 +94,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
     maximumImportWorkerThreads = valueOf(coreBundle.getString("imc.import.maximumWorkerThreads"));
   }
 
-  public void setUi(Ui ui) {
+  void setUi(Ui ui) {
     this.ui = ui;
   }
 
@@ -111,14 +110,22 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
   }
 
   public void startCompilation(CompilationParameters compilationParameters) {
-    addDebugMessage("Started compilation with: " + compilationParameters.musicPattern + " " + compilationParameters.breakPattern + " "
-        + compilationParameters.iterations);
+    if (!compilationParameters.hasUsableData()) {
+      addDebugMessage("Compilation must not be of 0 length; aborting.");
+      return;
+    }
 
-    compilationGenerator.addListener(new TaskFinishListener() {
-      public void onTaskFinished() {
-        ui.setEnvelopeImage(compilationGenerator.getEnvelope());
-        ui.setActive();
-      }
+    addDebugMessage("Started compilation with: " + compilationParameters.getMusicPattern() + " " + compilationParameters.getBreakPattern() + " " + compilationParameters.getIterations());
+
+    if (!hasUsableTracksWith(compilationParameters)) {
+      addDebugMessage("Not enough usable tracks; aborting.");
+      return;
+    }
+
+    compilationGenerator.clearListeners();
+    compilationGenerator.addListener(() -> {
+      ui.setEnvelopeImage(compilationGenerator.getEnvelope());
+      ui.setActive();
     });
 
     ui.setInactive();
@@ -127,50 +134,56 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
     }
     catch (CompilationException e) {
       messageBus.send(new ErrorMessage(e.getMessage()));
+      addDebugMessage(e);
       ui.setActive();
     }
   }
 
-  @Override
-  public List<AudioFileEncoder> getAvailableEncoders() {
-    List<AudioFileEncoder> availableEncoders = Lists.newArrayList();
-    for (AudioFileEncoder e : compilationGenerator.getEncoders()) {
-      if (e.isAbleToEncode()) {
-        availableEncoders.add(e);
-      }
-    }
-    return availableEncoders;
+  private boolean hasUsableTracksWith(CompilationParameters compilationParameters) {
+    return 0 < getUsableTracks(compilationParameters.getMusicPattern());
   }
 
-  public void addMusicTrack(int i, File file) {
+  @Override
+  public List<AudioFileDecoder> getAvailableDecoders() {
+    return newArrayList(audioFileFactory.getDecoders());
+  }
+
+  @Override
+  public List<AudioFileEncoder> getAvailableEncoders() {
+    return compilationGenerator.getEncoders().stream().filter(AudioFileEncoder::isAbleToEncode).collect(Collectors.toList());
+  }
+
+  public IAudioFile addMusicTrack(int i, File file) {
     if (musicList.size() < maxListEntries) {
-      addTrack(musicList, i, file);
+      return addTrack(musicList, i, file);
     }
     else {
       messageBus.send(new ErrorMessage("Too much tracks."));
     }
+    return null;
   }
 
-  public void addBreakTrack(int i, File file) {
+  public IAudioFile appendMusicTrack(File file) {
+    return addMusicTrack(getMusicList().size(), file);
+  }
+
+  public IAudioFile addBreakTrack(int i, File file) {
     if (breakList.size() < 1) {
-      addTrack(breakList, i, file);
+      return addTrack(breakList, i, file);
     }
+    return null;
   }
 
-  private synchronized void addTrack(List<IAudioFile> audioFileList, int i, File f) {
+  public IAudioFile appendBreakTrack(File file) {
+    return addBreakTrack(getBreakList().size(), file);
+  }
+
+  private synchronized IAudioFile addTrack(List<IAudioFile> audioFileList, int i, File f) {
     addDebugMessage("Added new file: " + f);
 
     IAudioFile audioFile = audioFileFactory.createAudioFileFrom(f);
 
     CreateCacheJob job = new CreateCacheJob(audioFile, messageBus);
-    job.addListener(new TaskFinishListener() {
-
-      @Override
-      public void onTaskFinished() {
-        ui.updateUsableTracks();
-      }
-    });
-
     createCacheJobManager.addNewJob(job);
 
     if (i < 0 || audioFileList.size() < i) {
@@ -179,13 +192,13 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
     audioFileList.add(i, audioFile);
 
     musicListSortMode = MANUAL;
+
+    return audioFile;
   }
 
   public void removeMusicTracks(int[] list) {
     List<Integer> preparedList = ArrayHelper.prepareListForRemoval(list);
-    for (int i : preparedList) {
-      removeMusicTrack(i);
-    }
+    preparedList.forEach(this::removeMusicTrack);
   }
 
   public void removeMusicTrack(int i) {
@@ -196,9 +209,7 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
 
   public void removeBreakTracks(int[] list) {
     List<Integer> preparedList = ArrayHelper.prepareListForRemoval(list);
-    for (int i : preparedList) {
-      removeBreakTrack(i);
-    }
+    preparedList.forEach(this::removeBreakTrack);
   }
 
   public void removeBreakTrack(int i) {
@@ -227,20 +238,11 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
         addDebugMessage(e.getMessage());
       }
     }
-
-    ui.refresh();
   }
 
-  public void loadAudioFiles() {
+  void loadAudioFiles() {
     AudioFilesLoader audioFilesLoader = new AudioFilesLoader(this, audioFileFactory, messageBus);
-    audioFilesLoader.addListener(new TaskFinishListener() {
-
-      @Override
-      public void onTaskFinished() {
-        musicListSortMode = SORT;
-        ui.refresh();
-      }
-    });
+    audioFilesLoader.addListener(() -> musicListSortMode = SORT);
 
     new Thread(audioFilesLoader).start();
   }
@@ -248,6 +250,11 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
   public void quit() {
     removeCachedFiles();
     messageBus.send(new InfoMessage("Gracefully shutting down ..."));
+  }
+
+  @Override
+  public LogBuffer getLogBuffer() {
+    return messageBus.getLogBuffer();
   }
 
   private void removeCachedFiles() {
@@ -274,27 +281,23 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
     breakList.clear();
   }
 
-  public void tidyOldTemporaryFiles() {
+  void tidyOldTemporaryFiles() {
     File tmpFile = null;
     try {
       tmpFile = File.createTempFile("imc", ".imc");
       File directory = new File(tmpFile.getParent());
 
-      File[] fileList = directory.listFiles(new FilenameFilter() {
+      File[] fileList = directory.listFiles((dir, name) -> name.toLowerCase().endsWith(temporaryFileSuffix));
 
-        @Override
-        public boolean accept(File dir, String name) {
-          return name.toLowerCase().endsWith(temporaryFileSuffix);
-        }
-      });
+      if (fileList != null) {
+        for (File f : fileList) {
 
-      for (File f : fileList) {
-
-        if (f.lastModified() < System.currentTimeMillis() - ONE_DAY_IN_MILLISECONDS) {
-          messageBus.send(new InfoMessage("Purging old temporary file: " + f));
-          boolean deleted = f.delete();
-          if (!deleted) {
-            addDebugMessage("Was not able to delete temporary file: " + f);
+          if (f.lastModified() < System.currentTimeMillis() - ONE_DAY_IN_MILLISECONDS) {
+            messageBus.send(new InfoMessage("Purging old temporary file: " + f));
+            boolean deleted = f.delete();
+            if (!deleted) {
+              addDebugMessage("Was not able to delete temporary file: " + f);
+            }
           }
         }
       }
@@ -356,13 +359,13 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
   }
 
   @Override
-  public List<IAudioFile> getMusicList() {
-    return Lists.newArrayList(musicList);
+  public ObservableList<IAudioFile> getMusicList() {
+    return musicList;
   }
 
   @Override
-  public List<IAudioFile> getBreakList() {
-    return Lists.newArrayList(breakList);
+  public ObservableList<IAudioFile> getBreakList() {
+    return breakList;
   }
 
   public void shuffleMusicList() {
@@ -458,16 +461,20 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
   private void writeBpm(IAudioFile audioFile) {
     try {
       audioFile.writeBpm(audioFile.getBpm());
+      addDebugMessage("Wrote BPM value '" + audioFile.getBpm() + "' into file: " + audioFile.getDisplayName());
     }
     catch (IOException e) {
       messageBus.send(new ErrorMessage("Not able to write BPM information: " + e.getMessage()));
-      addDebugMessage(e.getMessage());
+      addDebugMessage(e);
     }
-    ui.refresh();
   }
 
   private void addDebugMessage(String message) {
     messageBus.send(new DebugMessage(this, message));
+  }
+
+  private void addDebugMessage(Throwable throwable) {
+    messageBus.send(new DebugMessage(this, throwable));
   }
 
   @Override
@@ -479,7 +486,6 @@ public class MainControl implements MusicListControl, MusicCompilationControl, P
       IAudioFile movedFile = musicList.remove(sourceIndex);
       musicList.add(destinationIndex, movedFile);
       musicListSortMode = MANUAL;
-      ui.refresh();
     }
   }
 

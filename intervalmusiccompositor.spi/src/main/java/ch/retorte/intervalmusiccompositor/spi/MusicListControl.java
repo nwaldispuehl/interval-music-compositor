@@ -5,6 +5,7 @@ import java.util.List;
 
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
+import javafx.collections.ObservableList;
 
 /**
  * Offers instruments to control the music list.
@@ -17,7 +18,9 @@ public interface MusicListControl {
 
   void moveBreakToMusic(int sourceIndex, int destinationIndex);
 
-  void addMusicTrack(int index, File f);
+  IAudioFile addMusicTrack(int index, File f);
+
+  IAudioFile appendMusicTrack(File f);
 
   void removeMusicTrack(int index);
 
@@ -30,8 +33,10 @@ public interface MusicListControl {
   int getMusicBPM(int index);
 
   void setMusicBpm(int index, int bpm);
-  
-  void addBreakTrack(int index, File f);
+
+  IAudioFile addBreakTrack(int index, File f);
+
+  IAudioFile appendBreakTrack(File f);
 
   void removeBreakTrack(int index);
 
@@ -53,9 +58,9 @@ public interface MusicListControl {
 
   ListSortMode getSortMode();
 
-  List<IAudioFile> getMusicList();
+  ObservableList<IAudioFile> getMusicList();
 
-  List<IAudioFile> getBreakList();
+  ObservableList<IAudioFile> getBreakList();
 
   void shuffleMusicList();
 

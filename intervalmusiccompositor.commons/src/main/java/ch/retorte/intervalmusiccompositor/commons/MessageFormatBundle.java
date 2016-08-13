@@ -22,4 +22,8 @@ public class MessageFormatBundle {
   public Locale getLocale() {
     return bundle.getLocale();
   }
+
+  public ResourceBundle getBundle() {
+    return bundle;
+  }
 }

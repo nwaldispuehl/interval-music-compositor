@@ -1,6 +1,9 @@
 package ch.retorte.intervalmusiccompositor.spi;
 
+import javafx.scene.image.WritableImage;
+
 import java.awt.image.BufferedImage;
+import java.net.URI;
 
 /**
  * @author nw
@@ -15,10 +18,7 @@ public interface Ui {
 
   void setInactive();
 
-  void setEnvelopeImage(BufferedImage envelopeImage);
+  void setEnvelopeImage(WritableImage envelopeImage);
 
-  // Shouldn't this be managed by the ui itself?
-  void refresh();
-
-  void updateUsableTracks();
+  void openInDesktopBrowser(URI uri);
 }

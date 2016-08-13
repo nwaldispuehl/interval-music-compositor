@@ -1,6 +1,7 @@
 package ch.retorte.intervalmusiccompositor.spi;
 
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 
 import java.util.List;
@@ -13,6 +14,11 @@ import java.util.List;
 public interface MusicCompilationControl {
 
   void startCompilation(CompilationParameters compilationParameters);
+
+  /**
+   *  Provides all available decoders.
+   */
+  List<AudioFileDecoder> getAvailableDecoders();
 
   /**
    *  Provides all encoders which are valid in this environment.

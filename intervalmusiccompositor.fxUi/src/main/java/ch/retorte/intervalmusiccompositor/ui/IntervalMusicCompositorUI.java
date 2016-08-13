@@ -173,16 +173,6 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   }
 
   @Override
-  public void refresh() {
-    // Still needed?
-  }
-
-  @Override
-  public void updateUsableTracks() {
-    // Still needed?
-  }
-
-  @Override
   public void openInDesktopBrowser(URI uri) {
     if (uri != null) {
       messageProducer.send(new DebugMessage(this, "Sending URL to systems Desktop for opening in web browser: " + uri));

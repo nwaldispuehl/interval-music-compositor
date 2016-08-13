@@ -4,7 +4,6 @@ import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.list.BlendMode.SEPARATE;
 import static com.google.common.collect.Lists.newArrayList;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,15 +27,15 @@ import ch.retorte.intervalmusiccompositor.spi.TaskFinishListener;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
-import ch.retorte.intervalmusiccompositor.spi.progress.ProgressListener;
 import com.google.common.base.Charsets;
+import javafx.scene.image.WritableImage;
 
 /**
  * @author nw
  */
 public class CompilationGenerator implements Runnable {
 
-  public static final int MAXIMUM_BLEND_TIME = 20;
+  private static final int MAXIMUM_BLEND_TIME = 20;
 
   private MessageFormatBundle bundle = getBundle("core_imc");
 
@@ -61,7 +60,7 @@ public class CompilationGenerator implements Runnable {
 
   private OutputGenerator outputGenerator;
 
-  private BufferedImage envelope;
+  private WritableImage envelope;
 
   private ApplicationData applicationData;
 
@@ -110,7 +109,7 @@ public class CompilationGenerator implements Runnable {
     new Thread(this).start();
   }
 
-  public BufferedImage getEnvelope() {
+  public WritableImage getEnvelope() {
     return envelope;
   }
 
@@ -118,24 +117,26 @@ public class CompilationGenerator implements Runnable {
     listeners.add(l);
   }
 
+  public void clearListeners() {
+    listeners.clear();
+  }
+
   private void notifyListeners() {
-    for (final TaskFinishListener l : listeners) {
-      l.onTaskFinished();
-    }
+    listeners.forEach(TaskFinishListener::onTaskFinished);
   }
 
   private void adjustBlendTimeIfTooLong() {
     int shortestSoundPattern = MAXIMUM_BLEND_TIME;
-    for (int s : compilationParameters.musicPattern) {
+    for (int s : compilationParameters.getMusicPattern()) {
       shortestSoundPattern = Math.min(shortestSoundPattern, s);
     }
 
-    if (compilationParameters.blendMode.equals(SEPARATE) && shortestSoundPattern / 2 < compilationParameters.blendTime) {
-      compilationParameters.blendTime = Math.floor(shortestSoundPattern / 2.0);
+    if (compilationParameters.getBlendMode().equals(SEPARATE) && shortestSoundPattern / 2 < compilationParameters.getBlendDuration()) {
+      compilationParameters.setBlendDuration(Math.floor(shortestSoundPattern / 2.0));
 
     }
-    else if (compilationParameters.blendMode.equals(BlendMode.CROSS) && shortestSoundPattern < compilationParameters.blendTime) {
-      compilationParameters.blendTime = Math.min(shortestSoundPattern, 10);
+    else if (compilationParameters.getBlendMode().equals(BlendMode.CROSS) && shortestSoundPattern < compilationParameters.getBlendDuration()) {
+      compilationParameters.setBlendDuration((double) Math.min(shortestSoundPattern, 10));
     }
   }
 
@@ -146,13 +147,13 @@ public class CompilationGenerator implements Runnable {
   }
 
   private void compileOutputParameters() {
-    correctedOutputPath = compilationParameters.outputPath;
+    correctedOutputPath = compilationParameters.getOutputPath();
     if (correctedOutputPath == null || correctedOutputPath.equals("")) {
       correctedOutputPath = bundle.getString("imc.workPath");
     }
 
-    String identification_prefix = ArrayHelper.prettyPrintList(compilationParameters.musicPattern) + "_"
-        + ArrayHelper.prettyPrintList(compilationParameters.breakPattern) + "_" + compilationParameters.iterations + ".";
+    String identification_prefix = ArrayHelper.prettyPrintList(compilationParameters.getMusicPattern()) + "_"
+        + ArrayHelper.prettyPrintList(compilationParameters.getBreakPattern()) + "_" + compilationParameters.getIterations() + ".";
     playlist_outfile = identification_prefix + bundle.getString("imc.outfile.playlist.suffix");
     outfile_prefix = identification_prefix + bundle.getString("imc.outfile.sound.infix");
   }
@@ -160,7 +161,7 @@ public class CompilationGenerator implements Runnable {
   private void collectMusicTracks() {
     int i = 0;
     for (IAudioFile audioFile : musicListControl.getMusicList()) {
-      if (audioFile.isOK() && audioFile.isLongEnoughFor(compilationParameters.musicPattern.get(i % compilationParameters.musicPattern.size()))) {
+      if (audioFile.isOK() && audioFile.isLongEnoughFor(compilationParameters.getMusicPattern().get(i % compilationParameters.getMusicPattern().size()))) {
         musicPlaylistCandidates.add(audioFile);
       }
       else {
@@ -173,7 +174,7 @@ public class CompilationGenerator implements Runnable {
   private void collectBreakTracks() {
     int i = 0;
     for (IAudioFile audioFile : musicListControl.getBreakList()) {
-      if (audioFile.isOK() && audioFile.isLongEnoughFor(compilationParameters.breakPattern.get(i % compilationParameters.breakPattern.size()))) {
+      if (audioFile.isOK() && audioFile.isLongEnoughFor(compilationParameters.getBreakPattern().get(i % compilationParameters.getBreakPattern().size()))) {
         breakPlaylistCandidates.add(audioFile);
       }
       else {
@@ -185,7 +186,7 @@ public class CompilationGenerator implements Runnable {
 
   private void createPlaylist() {
     playlist = new Playlist(compilationParameters, messageProducer);
-    playlist.generatePlaylist(musicPlaylistCandidates, compilationParameters.musicPattern, breakPlaylistCandidates, compilationParameters.breakPattern, compilationParameters.iterations);
+    playlist.generatePlaylist(musicPlaylistCandidates, compilationParameters.getMusicPattern(), breakPlaylistCandidates, compilationParameters.getBreakPattern(), compilationParameters.getIterations());
   }
 
   private void createPlaylistReport() {
@@ -225,10 +226,10 @@ public class CompilationGenerator implements Runnable {
   }
 
   private void writeOutputFile() {
-    outputGenerator.generateOutput(compilationData, correctedOutputPath, outfile_prefix, compilationParameters.encoderIdentifier, new ProgressListener() {
+    outputGenerator.generateOutput(compilationData, correctedOutputPath, outfile_prefix, compilationParameters.getEncoderIdentifier(), new InertProgressListener() {
 
       @Override
-      public void onProgressUpdate(int percent) {
+      protected void onProgressChange(int percent) {
         updateSubProgress(percent);
       }
     });
@@ -239,7 +240,7 @@ public class CompilationGenerator implements Runnable {
     Integer height = Integer.valueOf(bundle.getString("ui.envelope.height"));
 
     EnvelopeImage envelopeImage = new EnvelopeImage(width, height);
-    envelopeImage.generateEnvelope(compilationData, compilationParameters.musicPattern, compilationParameters.breakPattern, compilationParameters.iterations);
+    envelopeImage.generateEnvelope(compilationData, compilationParameters.getMusicPattern(), compilationParameters.getBreakPattern(), compilationParameters.getIterations());
     envelope = envelopeImage.getBufferedImage();
   }
 
@@ -274,4 +275,5 @@ public class CompilationGenerator implements Runnable {
   public List<AudioFileEncoder> getEncoders() {
     return outputGenerator.getEncoders();
   }
+
 }

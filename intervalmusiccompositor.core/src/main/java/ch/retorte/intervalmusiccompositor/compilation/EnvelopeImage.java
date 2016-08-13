@@ -1,17 +1,20 @@
 package ch.retorte.intervalmusiccompositor.compilation;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
+
 import java.util.List;
 
 /**
  * @author nw
  */
-public class EnvelopeImage {
+class EnvelopeImage {
 
-  private Integer width = 0;
-  private Integer height = 0;
-  private int[] imageData;
+  private WritableImage writableImage;
+
+  private int width = 0;
+  private int height = 0;
+
   private int background_red = 245;
   private int background_green = 245;
   private int background_blue = 245;
@@ -22,17 +25,17 @@ public class EnvelopeImage {
   private int env_mean_green = 174;
   private int env_mean_blue = 243;
 
-  public EnvelopeImage(Integer width, Integer height) {
+  EnvelopeImage(Integer width, Integer height) {
+    writableImage = new WritableImage(width, height);
+
     this.width = width;
     this.height = height;
-
-    this.imageData = new int[width * height];
 
     // Initialize image with color
     fill(background_red, background_green, background_blue);
   }
 
-  public void generateEnvelope(byte[] audioByteArray, List<Integer> soundPattern, List<Integer> breakPattern, int iterations) {
+  void generateEnvelope(byte[] audioByteArray, List<Integer> soundPattern, List<Integer> breakPattern, int iterations) {
     if (audioByteArray == null || audioByteArray.length == 0) {
       return;
     }
@@ -76,8 +79,7 @@ public class EnvelopeImage {
       aggregatedAudioIntArrayRightMean[i] = aggregatedAudioIntArrayRightMean[i] / samplesPerPixel;
 
       drawEnvelopeAmplitude(i, (double) aggregatedAudioIntArrayLeft[i] / 32767, (double) aggregatedAudioIntArrayRight[i] / 32767, env_red, env_green, env_blue);
-      drawEnvelopeAmplitude(i, (double) aggregatedAudioIntArrayLeftMean[i] / 32767, (double) aggregatedAudioIntArrayRightMean[i] / 32767, env_mean_red,
-          env_mean_green, env_mean_blue);
+      drawEnvelopeAmplitude(i, (double) aggregatedAudioIntArrayLeftMean[i] / 32767, (double) aggregatedAudioIntArrayRightMean[i] / 32767, env_mean_red, env_mean_green, env_mean_blue);
     }
 
   }
@@ -117,7 +119,7 @@ public class EnvelopeImage {
   }
 
   private void setPixel(int x, int y, int red, int green, int blue) {
-    this.imageData[(y * this.width) + x] = (red << 16) | (green << 8) | blue;
+    writableImage.getPixelWriter().setColor(x, y, Color.rgb(red, green, blue));
   }
 
   private void fill(int red, int green, int blue) {
@@ -128,17 +130,8 @@ public class EnvelopeImage {
     }
   }
 
-  public BufferedImage getBufferedImage() {
-
-    BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-
-    // Get the writable raster so that data can be changed.
-    WritableRaster wr = bi.getRaster();
-
-    // Now write the byte data to the raster
-    wr.setDataElements(0, 0, width, height, imageData);
-
-    return bi;
+  WritableImage getBufferedImage() {
+    return writableImage;
   }
 
   /**
