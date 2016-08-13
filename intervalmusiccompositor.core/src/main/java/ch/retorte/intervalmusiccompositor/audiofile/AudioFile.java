@@ -6,17 +6,21 @@ import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.IN_PR
 import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.OK;
 import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.QUEUED;
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
+import static com.google.common.collect.Lists.newArrayList;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import ch.retorte.intervalmusiccompositor.ChangeListener;
 import org.tritonus.sampled.file.WaveAudioFileReader;
 import org.tritonus.sampled.file.WaveAudioFileWriter;
 
@@ -32,6 +36,8 @@ import ch.retorte.intervalmusiccompositor.util.SoundHelper;
  * @author nw
  */
 public class AudioFile extends File implements IAudioFile {
+
+  private UUID uuid = UUID.randomUUID();
 
   private MessageFormatBundle bundle = getBundle("core_imc");
 
@@ -65,7 +71,9 @@ public class AudioFile extends File implements IAudioFile {
   private BPMCalculator bpmCalculator;
   private MessageProducer messageProducer;
 
-  public AudioFile(String pathname, SoundHelper soundHelper, List<AudioFileDecoder> audioFileDecoders, BPMReaderWriter bpmReaderWriter,
+  private Collection<ChangeListener<IAudioFile>> changeListeners = newArrayList();
+
+  AudioFile(String pathname, SoundHelper soundHelper, List<AudioFileDecoder> audioFileDecoders, BPMReaderWriter bpmReaderWriter,
       BPMCalculator bpmCalculator, MessageProducer messageProducer) {
     super(pathname);
     this.soundHelper = soundHelper;
@@ -93,6 +101,7 @@ public class AudioFile extends File implements IAudioFile {
     try {
       // Obtain result in seconds and make milliseconds out of it
       duration = (long) (soundHelper.getStreamLengthInSeconds(getAudioInputStream()) * 1000);
+      notifyChangeListeners();
       addDebugMessage(getDisplayName() + " duration: " + duration + " ms");
     }
     catch (IOException e) {
@@ -123,6 +132,7 @@ public class AudioFile extends File implements IAudioFile {
     }
 
     volume = ((float) maximalAverageAmplitude / (float) averageAmplitude);
+    notifyChangeListeners();
     addDebugMessage(getDisplayName() + " volume ratio: " + volume);
   }
 
@@ -131,7 +141,7 @@ public class AudioFile extends File implements IAudioFile {
   }
 
   public void createCache() throws UnsupportedAudioFileException, IOException {
-    status = AudioFileStatus.IN_PROGRESS;
+    setStatus(AudioFileStatus.IN_PROGRESS);
 
     File temporaryFile = null;
 
@@ -152,14 +162,14 @@ public class AudioFile extends File implements IAudioFile {
         new WaveAudioFileWriter().write(ais, AudioFileFormat.Type.WAVE, cache);
       }
       catch (UnsupportedAudioFileException e) {
-        status = AudioFileStatus.ERROR;
+        setStatus(AudioFileStatus.ERROR);
         errorMessage = "Audio format not supported!";
         cache.delete();
         cache = null;
         throw e;
       }
       catch (IOException e) {
-        status = AudioFileStatus.ERROR;
+        setStatus(AudioFileStatus.ERROR);
         errorMessage = "Read / write error!";
         cache.delete();
         cache = null;
@@ -173,7 +183,7 @@ public class AudioFile extends File implements IAudioFile {
 
     }
     else {
-      status = AudioFileStatus.ERROR;
+      setStatus(AudioFileStatus.ERROR);
       throw new IOException("Was not able to create temporary cache file.");
     }
 
@@ -186,11 +196,11 @@ public class AudioFile extends File implements IAudioFile {
 
     // Now check if the track is long enough
     if (duration < startCutOff + endCutOff) {
-      status = AudioFileStatus.ERROR;
+      setStatus(AudioFileStatus.ERROR);
       errorMessage = "Track too short! (Duration: " + getFormattedTime(duration) + " s)";
     }
     else {
-      status = AudioFileStatus.OK;
+      setStatus(AudioFileStatus.OK);
     }
   }
 
@@ -201,11 +211,12 @@ public class AudioFile extends File implements IAudioFile {
         return decoder.decode(this);
       }
       catch (Exception e) {
+        addDebugMessage("Audio decoder complained for file '" + getDisplayName() + "': " + e.getMessage());
         // If there is trouble, we just try the next decoder.
       }
     }
 
-    throw new UnsupportedAudioFileException("Audio file not recognized by any decoder.");
+    throw new UnsupportedAudioFileException("Audio file not recognized by any decoder: " + getDisplayName());
   }
 
   private String getFormattedTime(long milliseconds) {
@@ -213,19 +224,19 @@ public class AudioFile extends File implements IAudioFile {
   }
 
   public void removeCache() {
-    if (cache != null && cache.exists()) {
+    if (hasCache()) {
       addDebugMessage("Deleting cache file: " + cache);
       cache.delete();
     }
-    status = EMPTY;
+    setStatus(EMPTY);
   }
 
   public void setQueuedStatus() {
-    status = QUEUED;
+    setStatus(QUEUED);
   }
 
   public void setInProgressStatus() {
-    status = IN_PROGRESS;
+    setStatus(IN_PROGRESS);
   }
 
   public int getBpm() {
@@ -239,6 +250,8 @@ public class AudioFile extends File implements IAudioFile {
 
     isBpmReliable = true;
     isBpmStored = false;
+
+    notifyChangeListeners();
   }
 
   /**
@@ -248,7 +261,7 @@ public class AudioFile extends File implements IAudioFile {
   private void readBpm() {
 
     // Read bpm info
-    int loadedBpm = -1;
+    int loadedBpm;
     int calculatedBpm = -1;
 
     // Get threshold data from property file
@@ -290,6 +303,7 @@ public class AudioFile extends File implements IAudioFile {
       // Only set bpm value if it is in valid range.
       if (bpmBottomThreshold <= calculatedBpm && calculatedBpm <= bpmTopThreshold) {
         bpm = calculatedBpm;
+        notifyChangeListeners();
       }
     }
   }
@@ -335,7 +349,7 @@ public class AudioFile extends File implements IAudioFile {
   @Override
   public AudioInputStream getAudioInputStream() throws IOException {
     try {
-      if (cache == null || !cache.exists()) {
+      if (!hasCache()) {
         createCache();
       }
 
@@ -346,6 +360,10 @@ public class AudioFile extends File implements IAudioFile {
       addDebugMessage("Problems with reading cache audio file: " + e.getMessage());
       throw new IOException(e.getMessage());
     }
+  }
+
+  private boolean hasCache() {
+    return cache != null && cache.exists();
   }
 
   @Override
@@ -368,6 +386,7 @@ public class AudioFile extends File implements IAudioFile {
     bpmReaderWriter.writeBPMTo(bpm, this);
     isBpmReliable = true;
     isBpmStored = true;
+    notifyChangeListeners();
   }
 
   @Override
@@ -376,18 +395,32 @@ public class AudioFile extends File implements IAudioFile {
   }
 
   @Override
-  public boolean isQueued() {
-    return status.equals(QUEUED);
-  }
-
-  @Override
   public boolean isLoading() {
     return status.equals(IN_PROGRESS);
   }
 
   @Override
-  public boolean hasError() {
-    return status.equals(ERROR);
+  public AudioFileStatus getStatus() {
+    return status;
+  }
+
+  private void setStatus(AudioFileStatus status) {
+    this.status = status;
+    notifyChangeListeners();
+  }
+
+  @Override
+  public File getSource() {
+    return this;
+  }
+
+  @Override
+  public void addChangeListener(ChangeListener<IAudioFile> changeListener) {
+    changeListeners.add(changeListener);
+  }
+
+  private void notifyChangeListeners() {
+    changeListeners.forEach(changeListener -> changeListener.changed(this));
   }
 
   private void addDebugMessage(String message) {
@@ -398,4 +431,24 @@ public class AudioFile extends File implements IAudioFile {
     return extractInSeconds <= ((getDuration() - startCutOffInMilliseconds - endCutOffInMilliseconds) / 1000);
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof AudioFile) {
+      if (hasCache()) {
+        return cache.equals(((AudioFile) obj).cache);
+      }
+      else {
+        return uuid.equals(((AudioFile) obj).uuid);
+      }
+
+    }
+    else {
+      return super.equals(obj);
+    }
+  }
+
+  @Override
+  public int hashCode() {
+    return cache.hashCode();
+  }
 }

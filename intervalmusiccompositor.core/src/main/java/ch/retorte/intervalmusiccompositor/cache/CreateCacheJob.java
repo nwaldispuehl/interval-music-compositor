@@ -1,9 +1,6 @@
 package ch.retorte.intervalmusiccompositor.cache;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
@@ -18,7 +15,7 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 public class CreateCacheJob implements Runnable {
 
   private IAudioFile audioFile;
-  private ArrayList<TaskFinishListener> listeners = new ArrayList<TaskFinishListener>();
+  private ArrayList<TaskFinishListener> listeners = new ArrayList<>();
   private MessageProducer messageProducer;
 
   public CreateCacheJob(IAudioFile audioFile, MessageProducer messageProducer) {
@@ -26,15 +23,12 @@ public class CreateCacheJob implements Runnable {
     this.messageProducer = messageProducer;
   }
 
-  public void addListener(TaskFinishListener l) {
+  void addListener(TaskFinishListener l) {
     listeners.add(l);
   }
 
   private void notifyListeners() {
-
-    for (final TaskFinishListener l : listeners) {
-      l.onTaskFinished();
-    }
+    listeners.forEach(TaskFinishListener::onTaskFinished);
   }
 
   public IAudioFile getAudioFile() {
@@ -46,10 +40,7 @@ public class CreateCacheJob implements Runnable {
     try {
       audioFile.createCache();
     }
-    catch (UnsupportedAudioFileException e) {
-      addDebugMessage(e.getMessage());
-    }
-    catch (IOException e) {
+    catch (Exception e) {
       addDebugMessage(e.getMessage());
     }
     finally {
@@ -61,5 +52,10 @@ public class CreateCacheJob implements Runnable {
 
   private void addDebugMessage(String message) {
     messageProducer.send(new DebugMessage(this, message));
+  }
+
+  @Override
+  public String toString() {
+    return "Cache job for " + audioFile;
   }
 }
