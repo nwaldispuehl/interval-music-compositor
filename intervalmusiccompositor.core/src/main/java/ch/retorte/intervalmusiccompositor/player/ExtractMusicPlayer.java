@@ -48,7 +48,7 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
     play = false;
   }
 
-  public Boolean isPlaying() {
+  private Boolean isPlaying() {
     return play;
   }
 
@@ -126,7 +126,7 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
     }
     catch (IOException e) {
       messageProducer.send(new ErrorMessage(e.getMessage()));
-      addDebugMessage(e.getMessage());
+      addDebugMessage(e);
     }
 
     if (inputStream != null) {
@@ -136,6 +136,10 @@ public class ExtractMusicPlayer implements Runnable, MusicPlayer {
 
   private void addDebugMessage(String message) {
     messageProducer.send(new DebugMessage(this, message));
+  }
+
+  private void addDebugMessage(Throwable throwable) {
+    messageProducer.send(new DebugMessage(this, throwable));
   }
 
 }

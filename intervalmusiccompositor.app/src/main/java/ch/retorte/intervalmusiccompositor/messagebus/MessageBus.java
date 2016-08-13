@@ -4,6 +4,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageHandler;
@@ -20,15 +21,44 @@ import com.google.common.collect.Lists;
  */
 public class MessageBus implements MessageProducer, MessageSubscriber {
 
-  List<MessageHandler<? super Message>> messageHandlers = newArrayList();
+
+
+  //---- Fields
+
+  private LogBuffer logBuffer = new LogBuffer();
+  private List<MessageHandler<? super Message>> messageHandlers = newArrayList();
+  private boolean storeMessages;
+
+  //---- Constructor
+
+  public MessageBus(boolean storeMessages) {
+    this.storeMessages = storeMessages;
+  }
 
   @Override
   public void send(Message message) {
-    for (MessageHandler<? super Message> handler : messageHandlers) {
-      if (canHandleMessageType(handler, message)) {
-        handler.handle(message);
+    conditionallyStore(message);
+
+    messageHandlers.stream()
+        .filter(handler -> canHandleMessageType(handler, message))
+        .forEach(handler -> new Thread(() -> handler.handle(message)).start());
+  }
+
+  private void conditionallyStore(Message message) {
+    if (storeMessages && message instanceof StringMessage) {
+      LocalDateTime date = null;
+      String caller = null;
+      if (message instanceof DebugMessage) {
+        date = ((DebugMessage) message).getDate();
+        caller = ((DebugMessage) message).getCallerClassName();
       }
+
+      store(date, caller, ((StringMessage) message).getMessage());
     }
+  }
+
+  private void store(LocalDateTime date, String caller, String message) {
+    logBuffer.append(date, caller, message);
   }
 
   private boolean canHandleMessageType(MessageHandler<? super Message> handler, Message message) {
@@ -49,6 +79,10 @@ public class MessageBus implements MessageProducer, MessageSubscriber {
     ParameterizedType firstGenericInterface = (ParameterizedType) genericInterfaces[0];
     return Lists.newArrayList(firstGenericInterface.getActualTypeArguments());
 
+  }
+
+  public LogBuffer getLogBuffer() {
+    return logBuffer;
   }
 
   @Override

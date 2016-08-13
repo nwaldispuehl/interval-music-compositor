@@ -8,4 +8,5 @@ public class ErrorMessage extends ConsoleMessage {
   public ErrorMessage(String message) {
     super(message);
   }
+
 }

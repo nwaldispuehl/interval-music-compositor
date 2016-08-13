@@ -5,12 +5,12 @@ package ch.retorte.intervalmusiccompositor.messagebus;
  * 
  * @author nw
  */
-public class ConsolePrinter {
-  public void printToStdOut(String message) {
+class ConsolePrinter {
+  void printToStdOut(String message) {
     System.out.println(message);
   }
 
-  public void printToStdErr(String message) {
+  void printToStdErr(String message) {
     System.err.println(message);
   }
 }

@@ -22,7 +22,7 @@ public class MessageBusTest {
 
   @Before
   public void setup() {
-    messageBus = new MessageBus();
+    messageBus = new MessageBus(false);
     matchingHandler = new MatchingMessageHandler();
     nonMatchingHandler = new NonMatchingMessageHandler();
   }
@@ -60,6 +60,7 @@ public class MessageBusTest {
     messageBus.send(mock(MatchingMessage.class));
 
     // then
+    waitForDispatchedHandlerThreadsMs(50);
     assertTrue(matchingHandler.hasBeenCalled());
     assertFalse(nonMatchingHandler.hasBeenCalled());
   }
@@ -73,7 +74,16 @@ public class MessageBusTest {
     messageBus.send(mock(SubTypeOfMatchingMessage.class));
 
     // then
+    waitForDispatchedHandlerThreadsMs(50);
     assertTrue(matchingHandler.hasBeenCalled());
+  }
+
+  private void waitForDispatchedHandlerThreadsMs(int ms) {
+    try {
+      Thread.sleep(ms);
+    } catch (InterruptedException e) {
+      // nop
+    }
   }
 
   @Test
@@ -89,6 +99,7 @@ public class MessageBusTest {
     messageBus.send(mock(NonMatchingMessage.class));
 
     // then
+    waitForDispatchedHandlerThreadsMs(50);
     assertTrue(matchingHandler.hasBeenCalled(3));
     assertTrue(nonMatchingHandler.hasBeenCalled(1));
   }
@@ -119,13 +130,13 @@ public class MessageBusTest {
   }
 
   private class CallInterceptor {
-    protected int callCount = 0;
+    int callCount = 0;
 
-    public boolean hasBeenCalled() {
+    boolean hasBeenCalled() {
       return 0 < callCount;
     }
 
-    public boolean hasBeenCalled(int nTimes) {
+    boolean hasBeenCalled(int nTimes) {
       return callCount == nTimes;
     }
   }

@@ -5,11 +5,11 @@ package ch.retorte.intervalmusiccompositor.messagebus;
  * 
  * @author nw
  */
-public class ConsoleMessage implements Message {
+class ConsoleMessage implements StringMessage {
 
   private final String message;
 
-  public ConsoleMessage(String message) {
+  ConsoleMessage(String message) {
     this.message = message;
   }
 

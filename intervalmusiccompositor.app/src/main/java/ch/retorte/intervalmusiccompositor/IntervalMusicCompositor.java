@@ -27,7 +27,7 @@ import ch.retorte.intervalmusiccompositor.encoder.OggAudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.encoder.WaveAudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.messagebus.ConsoleMessageHandler;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessageHandler;
+import ch.retorte.intervalmusiccompositor.messagebus.DebugMessagePrinter;
 import ch.retorte.intervalmusiccompositor.messagebus.MessageBus;
 import ch.retorte.intervalmusiccompositor.output.OutputGenerator;
 import ch.retorte.intervalmusiccompositor.player.ExtractMusicPlayer;
@@ -58,7 +58,7 @@ class IntervalMusicCompositor {
   private SoundHelper soundHelper = createSoundHelper();
 
   private MessageBus createMessageBus() {
-    MessageBus result = new MessageBus();
+    MessageBus result = new MessageBus(true);
     result.addHandler(new ConsoleMessageHandler());
     return result;
   }
@@ -91,10 +91,10 @@ class IntervalMusicCompositor {
 
   private void configureDebugMode(boolean debugMode) {
     if (debugMode) {
-      messageBus.addHandler(new DebugMessageHandler());
+      messageBus.addHandler(new DebugMessagePrinter());
       addDebugMessage("Debug mode");
-      addDebugMessage(bundle.getString("imc.name") + ", V " + bundle.getString("imc.version"));
     }
+    addDebugMessage(bundle.getString("imc.name") + ", V " + bundle.getString("imc.version"));
   }
 
   private void setLoggingProperties() {

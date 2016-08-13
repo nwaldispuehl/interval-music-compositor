@@ -1,10 +1,14 @@
 package ch.retorte.intervalmusiccompositor.spi;
 
+import ch.retorte.intervalmusiccompositor.messagebus.LogBuffer;
+
 /**
  * @author nw
  */
 public interface ProgramControl {
 
-  public void quit();
+  void quit();
+
+  LogBuffer getLogBuffer();
 
 }
