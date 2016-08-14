@@ -10,6 +10,10 @@ link: feedback_support
 Schreib mir wenn du einen Fehler gefunden hast, einen Verbesserungsvorschlag machen möchtest, Hilfe brauchst oder sonst etwas auf dem Herzen hast.
 
     interval_music_compositor at retorte dot ch
+
+### Wie Feedback geben?
+
+Falls das Programm nicht richtig funktioniert, sende bitte immer auch den Inhalt der Ereignisanzeige (öffnen mittels Menü 'Hilfe' -> 'Ereignisanzeige') mit deiner Anfrage mit.
  
 ## Bugtracker
 Wenn du einen Bug findest, und GitHub-Mitglied bist, kannst du ihn gleich selber als Issue erfassen: <br/>

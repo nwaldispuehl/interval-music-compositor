@@ -9,7 +9,12 @@ link: feedback_support
 Write me if you've found a bug, have a suggestion for improvements, need help or just want to drop some lines.
 
     interval_music_compositor at retorte dot ch
- 
+
+
+### How to give feedback?
+
+If the software does not work correctly, please also send the contents of the debug log window (open via menu 'Help' -> 'Debug log') with your inquiry.
+
 ## Issuetracker
 
 If you found a bug, and have a github account, you may file an issue directly: <br/>

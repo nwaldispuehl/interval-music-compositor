@@ -9,7 +9,7 @@ The retorte.ch **Interval Music Compositor** has the following properties.
 ## What it does
 
 * Reads audio files (tracks) in current directory
-* Via drag'n'drop more tracks can be added to the list
+* More tracks can be added to the list
 * The track list can be sorted or shuffled
 * The speed of a track (bpm) is loaded from the metadata or calculated (identifies speeds between 60 and 185 bpm). It can also be entered manually or determined by tapping. The value can be stored back into the original file.
 * Ignores the first and the last 5 seconds of a track
@@ -26,7 +26,7 @@ The retorte.ch **Interval Music Compositor** has the following properties.
 
 * Lots of diskspace (the temporary files and the output file need 10MB per minute music): 1GB
 * Lots of main memory
-* Installed Java Runtime Environment (Version 8)
+* Installed Java Runtime Environment (at least version 8 update 60)
 
 ## Supported input file formats
 

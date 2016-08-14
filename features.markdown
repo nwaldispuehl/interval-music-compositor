@@ -9,7 +9,7 @@ Der retorte.ch **Interval Music Compositor** hat die folgenden Eigenschaften.
 ## Was es macht
 
 * Liest Musikdateien (Tracks) im aktuellen Verzeichnis
-* Per Drag and Drop können der Liste weitere Tracks hinzugefügt werden
+* Weitere Tracks können hinzugefügt werden
 * Die Liste kann sortiert oder gemischt werden
 * Die Geschwindigkeit der Tracks (bpm) wird aus den Metadaten geladen oder berechnet (erkennt Tempi zwischen 60 und 185 bpm). Sie kann auch manuell eingegeben oder durch Klicken ermittelt werden. Der Wert kann in der Datei gespeichert werden.
 * Ignoriert die ersten und letzten 5 Sekunden eines Tracks
@@ -24,9 +24,9 @@ Der retorte.ch **Interval Music Compositor** hat die folgenden Eigenschaften.
 
 ## Systemvoraussetzungen
 
-* Massenhaft Festplattenspeicher (1 Minute Musik der Zusammenstellung kostet 10MB). Mit 1GB ist man also dabei
+* Massenhaft Festplattenspeicher (1 Minute Musik der Zusammenstellung kostet 10MB). Mit 1GB ist man also dabei.
 * Massenhaft Hauptspeicher (> 1GB)
-* Installiertes Java Runtime Environment (Version 8)
+* Installiertes Java Runtime Environment (mindestens Version 8 Update 60)
 
 ## Unterstützte Eingabeformate
 
