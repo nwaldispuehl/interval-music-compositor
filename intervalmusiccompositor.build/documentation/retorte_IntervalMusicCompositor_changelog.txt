@@ -10,6 +10,7 @@ IMP         Introduced links to help and credits web page.
 IMP         Added debug log dialog.
 IMP         Added a menu.
 IMP         Added explicit means to add tracks: add button and menu entries.
+IMP  #13    Adapt output filename to better reflect the sound/break patterns.
 
 
 2016-04-17  2.5.3

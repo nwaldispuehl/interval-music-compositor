@@ -3,6 +3,7 @@ package ch.retorte.intervalmusiccompositor.compilation;
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.list.BlendMode.SEPARATE;
 import static com.google.common.collect.Lists.newArrayList;
+import static java.lang.String.valueOf;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
-import ch.retorte.intervalmusiccompositor.commons.ArrayHelper;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
@@ -27,7 +27,10 @@ import ch.retorte.intervalmusiccompositor.spi.TaskFinishListener;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import javafx.scene.image.WritableImage;
 
 /**
@@ -36,6 +39,12 @@ import javafx.scene.image.WritableImage;
 public class CompilationGenerator implements Runnable {
 
   private static final int MAXIMUM_BLEND_TIME = 20;
+  private static final String FILENAME_PART_DELIMITER = ".";
+  private static final String FILENAME_PREFIX_SOUND_MARKER = "s";
+  private static final String FILENAME_PREFIX_BREAK_MARKER = "b";
+  private static final String FILENAME_PREFIX_ITERATION_MARKER = "x";
+  private static final String FILENAME_PREFIX_PART_DELIMITER = "_";
+  private static final String FILENAME_PREFIX_ITERATION_DELIMITER = "-";
 
   private MessageFormatBundle bundle = getBundle("core_imc");
 
@@ -152,10 +161,30 @@ public class CompilationGenerator implements Runnable {
       correctedOutputPath = bundle.getString("imc.workPath");
     }
 
-    String identification_prefix = ArrayHelper.prettyPrintList(compilationParameters.getMusicPattern()) + "_"
-        + ArrayHelper.prettyPrintList(compilationParameters.getBreakPattern()) + "_" + compilationParameters.getIterations() + ".";
-    playlist_outfile = identification_prefix + bundle.getString("imc.outfile.playlist.suffix");
-    outfile_prefix = identification_prefix + bundle.getString("imc.outfile.sound.infix");
+    String identification_prefix = createMusicAndBreakPatternPrefixWith(compilationParameters.getMusicPattern(), compilationParameters.getBreakPattern(), compilationParameters.getIterations());
+    playlist_outfile = identification_prefix + FILENAME_PART_DELIMITER + bundle.getString("imc.outfile.playlist.suffix");
+    outfile_prefix = identification_prefix + FILENAME_PART_DELIMITER + bundle.getString("imc.outfile.sound.infix");
+  }
+
+  @VisibleForTesting
+  String createMusicAndBreakPatternPrefixWith(List<Integer> musicPattern, List<Integer> breakPattern, int iterations) {
+    List<String> parts = Lists.newArrayList();
+    for (int i = 0; i < musicPattern.size(); i++) {
+      parts.add(valueOf(musicPattern.get(i)) + FILENAME_PREFIX_SOUND_MARKER);
+      if (hasAtLeastOneNonNullElement(breakPattern)) {
+        parts.add(valueOf(breakPattern.get(i % breakPattern.size())) + FILENAME_PREFIX_BREAK_MARKER);
+      }
+    }
+    return Joiner.on(FILENAME_PREFIX_PART_DELIMITER).join(parts) + FILENAME_PREFIX_ITERATION_DELIMITER + FILENAME_PREFIX_ITERATION_MARKER + valueOf(iterations);
+  }
+
+  private boolean hasAtLeastOneNonNullElement(List<Integer> breakPattern) {
+    for (int element : breakPattern) {
+      if (element != 0) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private void collectMusicTracks() {
