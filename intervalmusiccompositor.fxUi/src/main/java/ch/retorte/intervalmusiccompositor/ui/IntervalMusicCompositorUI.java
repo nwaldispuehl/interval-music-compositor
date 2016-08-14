@@ -136,7 +136,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
       executorService.shutdown();
     }
     catch (Exception e) {
-      e.getMessage();
+      // nop
     }
   }
 
@@ -153,8 +153,8 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   }
 
   private void addProgramIconsTo(Stage stage) {
-    stage.getIcons().add(new Image("/images/program_icon.png"));
-    stage.getIcons().add(new Image("/images/program_icon_small.png"));
+    stage.getIcons().add(new Image("file:images/program_icon.png"));
+    stage.getIcons().add(new Image("file:images/program_icon_small.png"));
   }
 
   @Override
