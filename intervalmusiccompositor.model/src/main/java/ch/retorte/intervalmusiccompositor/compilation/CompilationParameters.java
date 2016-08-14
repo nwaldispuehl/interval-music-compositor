@@ -110,7 +110,7 @@ public class CompilationParameters {
     return blendDuration;
   }
 
-  public void setEnumerationMode(EnumerationMode enumerationMode) {
+  private void setEnumerationMode(EnumerationMode enumerationMode) {
     this.enumerationMode = enumerationMode;
   }
 
@@ -135,7 +135,7 @@ public class CompilationParameters {
     this.outputPath = outputPath;
   }
 
-  public String getEncoderIdentifier() {
+  String getEncoderIdentifier() {
     return encoderIdentifier;
   }
 

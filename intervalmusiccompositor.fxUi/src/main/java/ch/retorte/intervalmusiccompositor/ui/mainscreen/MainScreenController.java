@@ -33,7 +33,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Region;
-import javafx.scene.text.TextFlow;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 
@@ -42,7 +41,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
@@ -115,11 +113,6 @@ public class MainScreenController implements Initializable {
   @FXML
   private DraggableAudioFileBreakListView breakTrackListView;
 
-  // Instructions
-
-  @FXML
-  private TextFlow instructions;
-
   // Visual
 
   @FXML
@@ -138,12 +131,6 @@ public class MainScreenController implements Initializable {
 
   @FXML
   private TabPane periodTabPane;
-
-  @FXML
-  private Tab simpleTab;
-
-  @FXML
-  private Tab advancedTab;
 
   @FXML
   private Spinner<Integer> soundPeriod;
@@ -444,7 +431,7 @@ public class MainScreenController implements Initializable {
   }
 
   private void updateSortModeLabel() {
-    trackListSortOrderIndicator.setText(getLabelFor(musicListControl.getSortMode()));
+    trackListSortOrderIndicator.setText(getLabelFor(compilationParameters.getListSortMode()));
   }
 
   private String getLabelFor(ListSortMode listSortMode) {
@@ -534,6 +521,7 @@ public class MainScreenController implements Initializable {
   }
 
   private void updateUiDataWidgets() {
+    compilationParameters.setListSortMode(musicListControl.getSortMode());
     updateDurationEstimation();
     updateEnvelopeImage();
     updateSortModeLabel();
