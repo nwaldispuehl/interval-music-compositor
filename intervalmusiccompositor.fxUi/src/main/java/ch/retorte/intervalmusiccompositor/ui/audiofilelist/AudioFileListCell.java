@@ -7,6 +7,7 @@ import ch.retorte.intervalmusiccompositor.commons.Utf8Control;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.ui.bpm.BpmWindow;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -32,6 +33,8 @@ class AudioFileListCell extends ListCell<IAudioFile> {
   private MessageFormatBundle messageFormatBundle;
   private MusicListControl musicListControl;
   private MessageProducer messageProducer;
+
+  private SimpleBooleanProperty isBpmSupported = new SimpleBooleanProperty(false);
 
   AudioFileListCell(MessageFormatBundle messageFormatBundle, MusicListControl musicListControl, MessageProducer messageProducer) {
     this.messageFormatBundle = messageFormatBundle;
@@ -80,6 +83,7 @@ class AudioFileListCell extends ListCell<IAudioFile> {
       BpmWindow bpmWindow = createBpmWindowFrom(messageFormatBundle, musicListControl, messageProducer, getItem(), getIndex());
       bpmWindow.show();
     });
+    changeBpmItem.disableProperty().bind(isBpmSupported.not());
     return changeBpmItem;
   }
 
@@ -91,6 +95,7 @@ class AudioFileListCell extends ListCell<IAudioFile> {
     MenuItem writeBpmItem = new MenuItem();
     writeBpmItem.setText(resourceBundle.getString("ui.list_context.write_bpm"));
     writeBpmItem.setOnAction(event -> listView().writeBpmFor(getItem()));
+    writeBpmItem.disableProperty().bind(isBpmSupported.not());
     return writeBpmItem;
   }
 
@@ -112,6 +117,11 @@ class AudioFileListCell extends ListCell<IAudioFile> {
 
   private void updateWith(IAudioFile audioFile) {
     listCellController.updateWith(getOrdinalNumberFor(audioFile), audioFile);
+    registerBpmStateListenerWith(audioFile);
+  }
+
+  private void registerBpmStateListenerWith(IAudioFile audioFile) {
+    audioFile.addChangeListener(updatedAudioFile -> isBpmSupported.setValue(updatedAudioFile.isBpmSupported()));
   }
 
   private int getOrdinalNumberFor(IAudioFile audioFile) {
