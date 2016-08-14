@@ -54,8 +54,12 @@ task distOsxApp(type: Tar, dependsOn: createApp) {
 }
 
 task uberJar(type: OneJar) {
-    mainClass = project.mainClassName
-    archiveName = project.ext.windowsUberJar
+  mainClass = project.mainClassName
+  archiveName = project.ext.windowsUberJar
+
+  /* This is a little hack putting the ui resources right into the root dir of the uber jar.
+      Otherwise the JavaFX application seems to not be able to find them. */
+  additionalDir = project(':intervalmusiccompositor.fxUi').file('src/main/resources/')
 }
 
 task copyUberJar(type: Copy, dependsOn: [copyL4jLib, uberJar]) {
@@ -102,7 +106,7 @@ launch4j {
     version = project.version
 
     downloadUrl = "http://www.java.com/download/"
-    supportUrl = "http://www.retorte.ch/tools/interval_music_compositor/feedback_support"
+    supportUrl = "https://nwaldispuehl.github.io/interval-music-compositor/en/feedback_support"
   
     launch4jCmd = project(':intervalmusiccompositor.build').file('3rdparty/launch4j/launch4j')
 
