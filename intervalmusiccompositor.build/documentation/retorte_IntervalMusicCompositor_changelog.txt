@@ -3,7 +3,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 
 2016-08-14  2.6.0
 --------------------------------------------------------------------------------
-IMP         Now built with Java > 8.40.
+IMP         Now built with Java >= version 8 update 60.
 IMP  #12    Upgraded UI to JavaFX. Moved things around a little bit.
 IMP  #11    Moved things away from main control.
 IMP         Introduced links to help and credits web page.
