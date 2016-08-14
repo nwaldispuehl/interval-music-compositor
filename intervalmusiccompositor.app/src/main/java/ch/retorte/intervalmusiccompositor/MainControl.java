@@ -320,13 +320,25 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
     int usableTracks = 0;
     int i = 0;
     for (IAudioFile audioFile : musicList) {
-      if (audioFile.isOK() && audioFile.isLongEnoughFor(pattern.get(i % pattern.size()))) {
+      if (audioFile.isOK() && audioFile.isLongEnoughFor(getIthPatternOf(pattern, i))) {
         usableTracks++;
       }
       i++;
     }
 
     return usableTracks;
+  }
+
+  private int getIthPatternOf(List<Integer> pattern, int i) {
+    if (pattern == null || pattern.isEmpty()) {
+      return 0;
+    }
+    return pattern.get(i % pattern.size());
+  }
+
+  @Override
+  public int getOkTracks() {
+    return (int) musicList.stream().filter(IAudioFile::isOK).count();
   }
 
   /**

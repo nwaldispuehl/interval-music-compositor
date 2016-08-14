@@ -43,8 +43,12 @@
                         <padding>
                             <Insets bottom="5.0" top="5.0"/>
                         </padding>
-                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="%ui.form.music_list.label"
-                               HBox.hgrow="ALWAYS"/>
+
+                        <HBox HBox.hgrow="ALWAYS" spacing="5" alignment="BASELINE_CENTER">
+                            <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="%ui.form.music_list.label" />
+                            <Label fx:id="trackCount"/>
+                        </HBox>
+
                         <Button mnemonicParsing="false" text="%ui.form.music_list.add_label" fx:id="addMusicTrackButton">
                             <tooltip>
                                 <Tooltip text="%ui.form.music_list.add_tooltip"/>
@@ -135,7 +139,7 @@
                 <VBox maxWidth="Infinity" alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                       AnchorPane.topAnchor="0.0" spacing="10">
 
-                    <TextFlow fx:id="instructions" prefHeight="40.0" maxWidth="720">
+                    <TextFlow prefHeight="40.0" maxWidth="720">
                         <Text text="%ui.instructions"/>
                     </TextFlow>
                     <Pane>
@@ -151,7 +155,7 @@
                     <Separator prefWidth="200.0"/>
                     <HBox spacing="10" alignment="TOP_CENTER">
                         <TabPane fx:id="periodTabPane" tabClosingPolicy="UNAVAILABLE" prefWidth="360">
-                            <Tab fx:id="simpleTab" text="%ui.form.simple_pane.title">
+                            <Tab text="%ui.form.simple_pane.title">
                                 <AnchorPane>
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
@@ -178,7 +182,7 @@
                                     </VBox>
                                 </AnchorPane>
                             </Tab>
-                            <Tab fx:id="advancedTab" text="%ui.form.advanced_pane.title">
+                            <Tab text="%ui.form.advanced_pane.title">
                                 <AnchorPane>
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>

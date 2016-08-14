@@ -19,7 +19,7 @@
                 <Text fx:id="bpm">120 bpm</Text>
             </HBox>
             <TextFlow fx:id="titleLine">
-                <Text fx:id="title">Red Hot Chili Peppers - Wheeee</Text>
+                <Text fx:id="title">Track Title</Text>
             </TextFlow>
             <TextFlow fx:id="contextLine">
                 <Text fx:id="status"/>

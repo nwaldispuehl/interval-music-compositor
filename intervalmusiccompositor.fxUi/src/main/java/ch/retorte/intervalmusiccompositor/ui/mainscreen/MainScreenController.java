@@ -1,5 +1,6 @@
 package ch.retorte.intervalmusiccompositor.ui.mainscreen;
 
+import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
@@ -86,6 +87,9 @@ public class MainScreenController implements Initializable {
   private SplitPane container;
 
   // Music track
+
+  @FXML
+  private Label trackCount;
 
   @FXML
   private Button addMusicTrackButton;
@@ -456,7 +460,10 @@ public class MainScreenController implements Initializable {
   private void openFileChooserFor(DraggableAudioFileListView listView) {
     MusicFileChooser musicFileChooser = new MusicFileChooser(messageProducer, bundle, audioFileDecoders);
     List<File> chosenFile = musicFileChooser.chooseFileIn(getWindow());
-    chosenFile.forEach(listView::addTrack);
+    chosenFile.forEach(file -> {
+      IAudioFile newTrack = listView.addTrack(file);
+      newTrack.addChangeListener(newValue -> Platform.runLater(() -> updateTrackCount()));
+    });
   }
 
   private Window getWindow() {
@@ -525,6 +532,16 @@ public class MainScreenController implements Initializable {
     updateDurationEstimation();
     updateEnvelopeImage();
     updateSortModeLabel();
+    updateTrackCount();
+  }
+
+  private void updateTrackCount() {
+    int tracks = musicListControl.getOkTracks();
+    String labelText = bundle.getString("ui.form.music_list.tracks_label_pl", tracks);
+    if (tracks == 1) {
+      labelText = bundle.getString("ui.form.music_list.tracks_label_sg", tracks);
+    }
+    trackCount.setText(labelText);
   }
 
   //---- Inner classes

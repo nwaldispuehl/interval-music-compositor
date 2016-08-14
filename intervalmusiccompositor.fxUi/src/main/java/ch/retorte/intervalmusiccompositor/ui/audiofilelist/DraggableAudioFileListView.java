@@ -130,10 +130,11 @@ public class DraggableAudioFileListView extends ListView<IAudioFile> {
     return result;
   }
 
-  public void addTrack(File file) {
+  public IAudioFile addTrack(File file) {
     IAudioFile newTrack = musicListControl.appendMusicTrack(file);
     addChangeListenerTo(newTrack);
     notifyListChangeListeners();
+    return newTrack;
   }
 
   public void removeTrack(IAudioFile audioFile) {

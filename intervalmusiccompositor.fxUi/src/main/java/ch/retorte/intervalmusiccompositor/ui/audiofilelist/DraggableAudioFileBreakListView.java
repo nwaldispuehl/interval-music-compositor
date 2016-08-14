@@ -21,7 +21,7 @@ public class DraggableAudioFileBreakListView extends DraggableAudioFileListView 
   }
 
   @Override
-  public void addTrack(File file) {
+  public IAudioFile addTrack(File file) {
     if (!trackList().isEmpty()) {
       getMusicListControl().removeBreakTrack(0);
     }
@@ -29,6 +29,7 @@ public class DraggableAudioFileBreakListView extends DraggableAudioFileListView 
     IAudioFile newTrack = getMusicListControl().appendBreakTrack(file);
     addChangeListenerTo(newTrack);
     notifyListChangeListeners();
+    return newTrack;
   }
 
   @Override

@@ -52,6 +52,8 @@ public interface MusicListControl {
 
   int getUsableTracks(List<Integer> pattern);
 
+  int getOkTracks();
+
   void moveTrack(int sourceIndex, int destinationIndex);
 
   boolean isTrackListReady();
