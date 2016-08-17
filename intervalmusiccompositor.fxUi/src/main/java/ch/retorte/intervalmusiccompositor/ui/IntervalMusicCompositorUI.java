@@ -86,7 +86,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
 
   private void installUncaughtExceptionHandler() {
     Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
-      messageProducer.send(new ErrorMessage(throwable.getMessage()));
+      messageProducer.send(new ErrorMessage(throwable));
       messageProducer.send(new DebugMessage(IntervalMusicCompositorUI.this, throwable));
     });
   }
