@@ -1,6 +1,12 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2016-08-17  2.6.1
+--------------------------------------------------------------------------------
+FIX         Fixed NullPointerException occurring when changing sound pattern tabs.
+IMP         Improved error dialog.
+
+
 2016-08-14  2.6.0
 --------------------------------------------------------------------------------
 IMP         Now built with Java >= version 8 update 60.
