@@ -137,6 +137,9 @@ public class MainScreenController implements Initializable {
   private TabPane periodTabPane;
 
   @FXML
+  private Tab simpleTab;
+
+  @FXML
   private Spinner<Integer> soundPeriod;
 
   @FXML
@@ -387,7 +390,7 @@ public class MainScreenController implements Initializable {
   }
 
   private boolean isSimpleTab(Tab tab) {
-    return tab.getId().equalsIgnoreCase("simpleTab");
+    return tab.equals(simpleTab);
   }
 
   public void updateOutputFileFormatWith(ObservableList<AudioFileEncoder> audioFileEncoders) {
