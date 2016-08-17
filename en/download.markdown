@@ -4,7 +4,7 @@ title: Download
 link: download
 ---
 
-**The current version 2.6.0 was issued on 14th August 2016.**<br/>
+**The current version 2.6.1 was issued on 17th August 2016.**<br/>
 ([Changelog](https://raw.githubusercontent.com/nwaldispuehl/interval-music-compositor/master/intervalmusiccompositor.build/documentation/retorte_IntervalMusicCompositor_changelog.txt)).
 
 The software is provided free of charge. Please give me [feedback](feedback_support) if you encounter errors or strange behavior.
