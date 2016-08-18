@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2016-08-18  2.6.2
+--------------------------------------------------------------------------------
+FIX  #17    Updated launch4j to 3.9 to fix program execution on some Windows 10 instances.
+
+
 2016-08-17  2.6.1
 --------------------------------------------------------------------------------
 FIX         Fixed NullPointerException occurring when changing sound pattern tabs.
