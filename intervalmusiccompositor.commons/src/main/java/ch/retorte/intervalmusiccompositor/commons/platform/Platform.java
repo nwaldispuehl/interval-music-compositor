@@ -46,11 +46,16 @@ public abstract class Platform {
     return System.getProperty("sun.arch.data.model");
   }
 
+  private String getMaximalHeapSize() {
+    return Runtime.getRuntime().maxMemory() / (1024 * 1024) + " MB";
+  }
+
   public String getSystemIdentificationString() {
     return "os: " + getOsName() + ", " //
          + "os arch: " + getOsArchitecture() + ", " //
          + "jvm: " + getJvmName() + ", " //
-         + "jvm arch: " + getJvmArchitecture();
+         + "jvm arch: " + getJvmArchitecture() + ", " //
+         + "max heap size: " + getMaximalHeapSize();
   }
 
   /**
