@@ -8,7 +8,7 @@ group = 'ch.retorte.intervalmusiccompositor'
 applicationName = "IntervalMusicCompositor"
 mainClassName = "ch.retorte.intervalmusiccompositor.Main"
 
-applicationDefaultJvmArgs = ["-Xmx1024m"]
+applicationDefaultJvmArgs = ["-Xmx2048m"]
 
 ext.macosxOutputDir = '/macosxApp'
 ext.windowsOutputDir = '/windowsApp'
@@ -114,7 +114,7 @@ launch4j {
 
     outfile = project.applicationName + '.exe'
     copyright = "retorte.ch"
-    maxHeapSize = 1024
+    maxHeapSize = 1280
 }
 
 dependencies {
