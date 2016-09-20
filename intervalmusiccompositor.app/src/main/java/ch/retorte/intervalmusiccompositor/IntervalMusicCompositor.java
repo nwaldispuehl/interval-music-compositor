@@ -12,6 +12,8 @@ import java.util.logging.LogManager;
 import at.ofai.music.beatroot.BeatRoot;
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFileFactory;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.platform.Platform;
+import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
 import ch.retorte.intervalmusiccompositor.compilation.Compilation;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationGenerator;
 import ch.retorte.intervalmusiccompositor.decoder.AacAudioFileDecoder;
@@ -52,6 +54,7 @@ import com.google.common.collect.Lists;
  */
 class IntervalMusicCompositor {
 
+  private Platform platform = new PlatformFactory().getPlatform();
   private MessageFormatBundle bundle = getBundle("imc");
 
   private MessageBus messageBus = createMessageBus();
@@ -95,6 +98,7 @@ class IntervalMusicCompositor {
       addDebugMessage("Debug mode");
     }
     addDebugMessage(bundle.getString("imc.name") + ", V " + bundle.getString("imc.version"));
+    addDebugMessage("System properties: " + platform.getSystemIdentificationString());
   }
 
   private void setLoggingProperties() {

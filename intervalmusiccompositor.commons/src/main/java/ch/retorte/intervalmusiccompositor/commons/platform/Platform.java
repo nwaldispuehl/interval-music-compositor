@@ -14,19 +14,19 @@ public abstract class Platform {
     this.osName = osName;
   }
 
-	public boolean isLinux() {
+	boolean isLinux() {
     return this instanceof LinuxPlatform;
 	}
 	
-	public boolean isWindows() {
+	boolean isWindows() {
     return this instanceof WindowsPlatform;
 	}
 	
-	public boolean isMac() {
+	boolean isMac() {
     return this instanceof MacOsxPlatform;
 	}
 	
-  public String getOSName() {
+  private String getOsName() {
     return osName;
 	}
 	
@@ -34,8 +34,23 @@ public abstract class Platform {
 		return Runtime.getRuntime().availableProcessors();
 	}
 
-  public String getArchitecture() {
+  private String getOsArchitecture() {
     return System.getProperty("os.arch");
+  }
+
+  private String getJvmName() {
+    return System.getProperty("java.version");
+  }
+
+  private String getJvmArchitecture() {
+    return System.getProperty("sun.arch.data.model");
+  }
+
+  public String getSystemIdentificationString() {
+    return "os: " + getOsName() + ", " //
+         + "os arch: " + getOsArchitecture() + ", " //
+         + "jvm: " + getJvmName() + ", " //
+         + "jvm arch: " + getJvmArchitecture();
   }
 
   /**

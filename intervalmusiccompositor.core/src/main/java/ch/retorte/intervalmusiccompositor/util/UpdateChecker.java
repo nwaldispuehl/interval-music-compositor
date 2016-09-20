@@ -77,10 +77,9 @@ public class UpdateChecker implements UpdateAvailabilityChecker {
 
   private String compileUserAgentString() {
     return bundle.getString("web.userAgent.update") + " (" //
-        + applicationData.getProgramVersion() + ", " //
-        + platform.getOSName() + ", " //
-        + platform.getArchitecture() + ", " //
-        + bundle.getLocale() + ")";
+        + "v: " + applicationData.getProgramVersion() + ", " //
+        + platform.getSystemIdentificationString() + " " //
+        + "locale: " + bundle.getLocale() + ")";
   }
 
   @Override
