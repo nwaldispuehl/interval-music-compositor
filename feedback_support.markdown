@@ -21,7 +21,7 @@ Wenn du einen Bug findest, und GitHub-Mitglied bist, kannst du ihn gleich selber
 
 ## Bekannte Probleme
 
-Ist das Starten des Programms nicht möglich, solltest du zuerst die neuste Java-Version herunterladen und installieren: [java.com](http://www.java.com).
+Ist das Starten des Programms nicht möglich, solltest du zuerst die neuste Java-Version herunterladen und installieren: [java.com](http://www.java.com). Verwende die 64bit Version falls möglich.
 
 ### Generell
 

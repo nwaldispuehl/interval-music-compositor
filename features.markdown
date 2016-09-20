@@ -26,7 +26,7 @@ Der retorte.ch **Interval Music Compositor** hat die folgenden Eigenschaften.
 
 * Massenhaft Festplattenspeicher (1 Minute Musik der Zusammenstellung kostet 10MB). Mit 1GB ist man also dabei.
 * Massenhaft Hauptspeicher (> 1GB)
-* Installiertes Java Runtime Environment (mindestens Version 8 Update 60)
+* Installiertes Java Runtime Environment (mindestens Version 8 Update 60, bevorzugt die 64bit Version)
 
 ## Unterstützte Eingabeformate
 

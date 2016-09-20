@@ -6,7 +6,7 @@ link: instructions
 
 The **Interval Music Compositor** comes as a single executable file. No installation is needed therefore. However, it is based on Java technology, thus a _Java Runtime Environment (JRE)_ must be present to run it.
 If you don't have one installed, you are prompted to do so on the first start of the software on the Microsoft Windows version. Users of Linux and Mac OS X operating systems are expected to have one installed already.
-Otherwise, download and install Java from [java.com](http://java.com/).
+Otherwise, download and install Java from [java.com](http://java.com/). If possible install the 64bit version.
 
 ## Usage
 

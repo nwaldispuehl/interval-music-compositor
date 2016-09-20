@@ -6,7 +6,7 @@ link: instructions
 
 Der retorte.ch **Interval Music Compositor** wird als einzelne, ausführbare Datei ausgeliefert. Man muss ihn also nicht installieren, sondern kann ihn einfach auf die Festplatte kopieren. Allerdings basiert er auf Java Technologie, ein _Java Runtime Environment (JRE)_ muss auf dem System also vorhanden sein damit das Programm funktioniert.
 Solltest du keines installiert haben, wirst du beim ersten Start der Software in der Microsoft Windows Version darum gebeten. Benutzer mit Linux und Mac OS X Systemen haben in den meisten Fällen bereits eine installiert.
-Ansonsten kannst du Java von [java.com](http://java.com/) herunterladen und installieren.
+Ansonsten kannst du Java von [java.com](http://java.com/) herunterladen und installieren. Falls möglich installiere die 64bit Version.
 
 ## Gebrauch
 

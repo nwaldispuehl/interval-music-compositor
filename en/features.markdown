@@ -26,7 +26,7 @@ The retorte.ch **Interval Music Compositor** has the following properties.
 
 * Lots of diskspace (the temporary files and the output file need 10MB per minute music): 1GB
 * Lots of main memory
-* Installed Java Runtime Environment (at least version 8 update 60)
+* Installed Java Runtime Environment (at least version 8 update 60, preferably the 64bit version)
 
 ## Supported input file formats
 
