@@ -30,7 +30,7 @@ You're using it at your own risk! :)
 
 The software does not collect any data in general. By using the UpdateChecker ('About' -> 'Check for updates!') a request is sent to this server. Besides the IP address also a small collection of system properties is transmitted. They contain the software version, the operating system, its architecture and the used language and are only used to improve the service. They are transmitted in this form:
 
-    Interval Music Compositor [Update Checker] (1.2.3, Windows 7, x86, en)
+    Interval Music Compositor [Update Checker] (v: 1.2.3, os: Windows 7, os arch: x86, jvm: 1.8.0_60, jvm arch: 32, locale: en)
 
 ### Website
 

@@ -28,9 +28,9 @@ Du benutzt es auf eigenes Risiko! :)
 
 ### Software
 
-Die Software sammelt grundsätzlich keine Daten. Beim Gebrauch des UpdateCheckers ('Über' -> 'Auf Update prüfen!') wird eine Anfrage an diesen Server gestartet. Dabei wird nebst der IP-Adresse auch eine kleine Auswahl von Systemeigenschaften übertragen. Diese umfassen die verwendete Version der Software, das Betriebssystem, dessen Architektur sowie die Sprache. Diese werden lediglich zur Verbesserung des Angebots eingesetzt und fallen in dieser Form an: 
+Die Software sammelt grundsätzlich keine Daten. Beim Gebrauch des UpdateCheckers ('Über' -> 'Auf Update prüfen!') wird eine Anfrage an diesen Server gestartet. Dabei wird nebst der IP-Adresse auch eine kleine Auswahl von Systemeigenschaften übertragen. Diese umfassen die verwendete Version der Software, das Betriebssystem, dessen Architektur sowie die Sprache. Diese werden lediglich zur Verbesserung des Angebots eingesetzt und fallen in dieser Form an:
 
-    Interval Music Compositor [Update Checker] (1.2.3, Windows 7, x86, en)
+    Interval Music Compositor [Update Checker] (v: 1.2.3, os: Windows 7, os arch: x86, jvm: 1.8.0_60, jvm arch: 32, locale: en)
 
 ### Website
 
