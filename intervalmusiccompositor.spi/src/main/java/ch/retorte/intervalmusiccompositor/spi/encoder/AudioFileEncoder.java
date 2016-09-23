@@ -16,6 +16,8 @@ public interface AudioFileEncoder {
    * 
    * @param audioInputStream
    *          the audio input stream containing the raw audio data to be encoded.
+   * @param streamLengthInBytes
+   *          the length of the audio input stream in bytes
    * @param outputFile
    *          the location where the output file should be placed into.
    * @throws UnsupportedAudioFileException
@@ -23,7 +25,7 @@ public interface AudioFileEncoder {
    * @throws IOException
    *           if we are not able to either read the input or write the output file.
    */
-  void encode(AudioInputStream audioInputStream, File outputFile) throws UnsupportedAudioFileException, IOException;
+  void encode(AudioInputStream audioInputStream, long streamLengthInBytes, File outputFile) throws UnsupportedAudioFileException, IOException;
 
   /**
    * Determines if this encoder is able to encode music data.

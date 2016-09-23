@@ -21,9 +21,9 @@ public class WaveAudioFileEncoder implements AudioFileEncoder {
   private final AudioFormat.Encoding targetEncoding = AudioFormat.Encoding.PCM_SIGNED;
   private final AudioFileFormat.Type fileType = AudioFileFormat.Type.WAVE;
 
-  public void encode(AudioInputStream outputStream, File outputfile) throws UnsupportedAudioFileException, IOException {
-    AudioInputStream pcmAis = AudioSystem.getAudioInputStream(targetEncoding, outputStream);
-    AudioSystem.write(pcmAis, fileType, outputfile);
+  public void encode(AudioInputStream audioInputStream, long streamLengthInBytes, File outputFile) throws UnsupportedAudioFileException, IOException {
+    AudioInputStream pcmAis = AudioSystem.getAudioInputStream(targetEncoding, audioInputStream);
+    AudioSystem.write(pcmAis, fileType, outputFile);
   }
 
   public boolean isAbleToEncode() {

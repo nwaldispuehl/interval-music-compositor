@@ -5,7 +5,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import ch.retorte.intervalmusiccompositor.spi.progress.ProgressListener;
-import ch.retorte.intervalmusiccompositor.spi.audio.ByteArrayConverter;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.progress.ProgressUpdatable;
 
@@ -21,30 +20,20 @@ public class Mp3AudioFileEncoder implements AudioFileEncoder, ProgressUpdatable 
 
   private static final String EXTENSION = "mp3";
 
-  private ByteArrayConverter byteArrayConverter;
-
   private LameByteArrayEncoder encoder;
   private ProgressListener progressListener;
 
-  public Mp3AudioFileEncoder(ByteArrayConverter byteArrayConverter) {
-    this.byteArrayConverter = byteArrayConverter;
-  }
-
-  public void encode(AudioInputStream audioInputStream, File outputFile) throws UnsupportedAudioFileException, IOException {
+  public void encode(AudioInputStream audioInputStream, long streamLengthInBytes, File outputFile) throws UnsupportedAudioFileException, IOException {
     createEncoderWithSettings(audioInputStream.getFormat());
-    Files.write(Paths.get(outputFile.getAbsolutePath()), encodeToMp3(convert(audioInputStream)));
+    Files.write(Paths.get(outputFile.getAbsolutePath()), encodeToMp3(audioInputStream, streamLengthInBytes));
   }
 
   private void createEncoderWithSettings(AudioFormat audioFormat) {
     encoder =  new LameByteArrayEncoder(audioFormat, progressListener);
   }
 
-  private byte[] convert(AudioInputStream audioInputStream) throws IOException {
-    return byteArrayConverter.convert(audioInputStream);
-  }
-
-  private byte[] encodeToMp3(byte[] pcmByteArray) {
-    return encoder.encodePcmToMp3(pcmByteArray);
+  private byte[] encodeToMp3(AudioInputStream audioInputStream, long streamLengthInBytes) throws IOException {
+    return encoder.encodeToMp3(audioInputStream, streamLengthInBytes);
   }
 
   public boolean isAbleToEncode() {

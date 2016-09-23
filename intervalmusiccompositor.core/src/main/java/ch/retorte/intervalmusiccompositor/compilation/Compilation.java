@@ -34,7 +34,7 @@ public class Compilation {
     this.messageProducer = messageProducer;
   }
 
-  public synchronized byte[] generateCompilation(Playlist playlist) throws IOException {
+  synchronized byte[] generateCompilation(Playlist playlist) throws IOException {
     byte[] result = new byte[soundHelper.getSamplesFromSeconds(playlist.getTotalLengthInSeconds())];
 
     addDebugMessage("Generate compilation of length: " + playlist.getTotalLengthInSeconds() + " s");
@@ -68,7 +68,7 @@ public class Compilation {
   }
 
   /**
-   * We try to calculate the volume ratio of the extract we are going to insert into the compilation. This leads to a more homogenous volume over the
+   * We try to calculate the volume ratio of the extract we are going to insert into the compilation. This leads to a more homogeneous volume over the
    * compilation.
    */
   private float getVolumeRatioOf(PlaylistItem playlistItem) {

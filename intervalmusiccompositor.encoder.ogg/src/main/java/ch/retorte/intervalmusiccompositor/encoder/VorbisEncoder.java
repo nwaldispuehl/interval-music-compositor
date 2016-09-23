@@ -1,17 +1,5 @@
 package ch.retorte.intervalmusiccompositor.encoder;
 
-/********************************************************************
- * *
- * THIS FILE IS PART OF THE OggVorbis SOFTWARE CODEC SOURCE CODE.   *
- * USE, DISTRIBUTION AND REPRODUCTION OF THIS LIBRARY SOURCE IS     *
- * GOVERNED BY A BSD-STYLE SOURCE LICENSE INCLUDED WITH THIS SOURCE *
- * IN 'COPYING'. PLEASE READ THESE TERMS BEFORE DISTRIBUTING.       *
- * *
- * THE OggVorbis SOURCE CODE IS (C) COPYRIGHT 1994-2002             *
- * by the Xiph.Org Foundation http://www.xiph.org/                  *
- * *
- ********************************************************************/
-
 import ch.retorte.intervalmusiccompositor.spi.progress.ProgressListener;
 import org.xiph.libogg.ogg_packet;
 import org.xiph.libogg.ogg_page;
@@ -19,11 +7,25 @@ import org.xiph.libogg.ogg_stream_state;
 import org.xiph.libvorbis.*;
 
 import javax.sound.sampled.AudioFormat;
-import java.io.ByteArrayInputStream;
+import javax.sound.sampled.AudioInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
+ * <pre>
+ * ********************************************************************
+ * *                                                                  *
+ * * THIS FILE IS PART OF THE OggVorbis SOFTWARE CODEC SOURCE CODE.   *
+ * * USE, DISTRIBUTION AND REPRODUCTION OF THIS LIBRARY SOURCE IS     *
+ * * GOVERNED BY A BSD-STYLE SOURCE LICENSE INCLUDED WITH THIS SOURCE *
+ * * IN 'COPYING'. PLEASE READ THESE TERMS BEFORE DISTRIBUTING.       *
+ * *                                                                  *
+ * * THE OggVorbis SOURCE CODE IS (C) COPYRIGHT 1994-2002             *
+ * * by the Xiph.Org Foundation http://www.xiph.org/                  *
+ * *                                                                  *
+ * ********************************************************************
+ * </pre>
+ *
  * The VorbisEncoder converts a byte array of pcm wave data into the vorbis format in a ogg container.
  * <p>
  * Code of this class more or less one by one taken from the original VorbisEncoder from here:
@@ -36,7 +38,7 @@ class VorbisEncoder {
   private static final String ENCODER_TAG_NAME = "ENCODER";
   private static final String ENCODER_TAG_CONTENT = "Java Vorbis Encoder";
 
-  private static final float HIGH_QUALITY_256_KBITS = .8f;
+  private static final float HIGH_QUALITY_256_KB = .8f;
 
 
   //---- Fields
@@ -66,8 +68,7 @@ class VorbisEncoder {
 
   //---- Methods
 
-  byte[] encodePcmToOgg(byte[] pcm) throws IOException {
-    ByteArrayInputStream pcmInputStream = new ByteArrayInputStream(pcm);
+  byte[] encodeToOgg(AudioInputStream audioInputStream, long streamLengthInBytes) throws IOException {
     ByteArrayOutputStream result = new ByteArrayOutputStream();
     long bytesReadSoFar = 0;
 
@@ -77,10 +78,10 @@ class VorbisEncoder {
     while (!isOggEndOfStream()) {
 
       int i;
-      int bytes = pcmInputStream.read(readBuffer, 0, READ * 4); // stereo hardwired here
+      int bytes = audioInputStream.read(readBuffer, 0, READ * 4); // stereo hardwired here
 
       bytesReadSoFar = bytesReadSoFar + bytes;
-      updateProgressWith(bytesReadSoFar, pcm.length);
+      updateProgressWith(bytesReadSoFar, streamLengthInBytes);
 
       if (0 < bytes) {
 
@@ -107,7 +108,7 @@ class VorbisEncoder {
         vorbisDspState.vorbis_analysis_wrote(0);
       }
 
-      // vorbis does some data preanalysis, then divides up blocks for more involved
+      // vorbis does some data pre analysis, then divides up blocks for more involved
       // (potentially parallel) processing.  Get a single block for encoding now
 
       while (vorbisBlock.vorbis_analysis_blockout(vorbisDspState)) {
@@ -119,7 +120,7 @@ class VorbisEncoder {
 
         while (vorbisDspState.vorbis_bitrate_flushpacket(oggPacket)) {
 
-          // weld the packet into the bitstream
+          // weld the packet into the bit stream
           oggStreamState.ogg_stream_packetin(oggPacket);
 
           // write out pages (if any)
@@ -136,7 +137,7 @@ class VorbisEncoder {
       }
     }
 
-    pcmInputStream.close();
+    audioInputStream.close();
     result.close();
 
     return result.toByteArray();
@@ -146,7 +147,7 @@ class VorbisEncoder {
     vorbis_info vorbisInfo = new vorbis_info();
     vorbisenc encoder = new vorbisenc();
 
-    if (!encoder.vorbis_encode_init_vbr(vorbisInfo, audioFormat.getChannels(), (int) audioFormat.getSampleRate(), HIGH_QUALITY_256_KBITS)) {
+    if (!encoder.vorbis_encode_init_vbr(vorbisInfo, audioFormat.getChannels(), (int) audioFormat.getSampleRate(), HIGH_QUALITY_256_KB)) {
       throw new IOException("Failed to initialize Vorbis encoder.");
     }
 

@@ -36,7 +36,6 @@ import ch.retorte.intervalmusiccompositor.player.ExtractMusicPlayer;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.Ui;
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
-import ch.retorte.intervalmusiccompositor.spi.audio.ByteArrayConverter;
 import ch.retorte.intervalmusiccompositor.spi.bpm.BPMCalculator;
 import ch.retorte.intervalmusiccompositor.spi.bpm.BPMReaderWriter;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
@@ -173,11 +172,10 @@ class IntervalMusicCompositor {
   }
 
   private List<AudioFileEncoder> getAudioFileEncoders() {
-    ByteArrayConverter byteArrayConverter = new SoundHelper(messageBus);
     List<AudioFileEncoder> encoders = newArrayList();
 
-    encoders.add(new Mp3AudioFileEncoder(byteArrayConverter));
-    encoders.add(new OggAudioFileEncoder(byteArrayConverter));
+    encoders.add(new Mp3AudioFileEncoder());
+    encoders.add(new OggAudioFileEncoder());
     encoders.add(new WaveAudioFileEncoder());
 
     return encoders;

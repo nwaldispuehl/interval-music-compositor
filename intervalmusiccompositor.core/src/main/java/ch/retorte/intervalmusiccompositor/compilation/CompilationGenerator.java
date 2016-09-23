@@ -5,10 +5,8 @@ import static ch.retorte.intervalmusiccompositor.list.BlendMode.SEPARATE;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.String.valueOf;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +63,8 @@ public class CompilationGenerator implements Runnable {
 
   private Playlist playlist;
 
-  private byte[] compilationData;
+  private File compilationDataFile;
+  private long compilationDataSize;
 
   private OutputGenerator outputGenerator;
 
@@ -236,9 +235,13 @@ public class CompilationGenerator implements Runnable {
   }
 
   private void createCompilation() {
-
     try {
-      compilationData = compilation.generateCompilation(playlist);
+      byte[] compilationBytes = compilation.generateCompilation(playlist);
+
+      compilationDataFile = File.createTempFile("compilation", bundle.getString("imc.temporaryFile.suffix"));
+      compilationDataSize = compilationBytes.length;
+
+      writeToCompilationDataFile(compilationBytes);
     }
     catch (IOException e) {
       String message = bundle.getString("ui.error.sound.introduction");
@@ -254,28 +257,69 @@ public class CompilationGenerator implements Runnable {
     }
   }
 
-  private void writeOutputFile() {
-    outputGenerator.generateOutput(compilationData, correctedOutputPath, outfile_prefix, compilationParameters.getEncoderIdentifier(), new InertProgressListener() {
-
-      @Override
-      protected void onProgressChange(int percent) {
-        updateSubProgress(percent);
+  private void writeToCompilationDataFile(byte[] compilationBytes) throws IOException {
+    FileOutputStream fos = null;
+    try {
+      fos = new FileOutputStream(compilationDataFile);
+      fos.write(compilationBytes);
+    } finally {
+      try {
+        if (fos != null) {
+          fos.close();
+        }
+      } catch (Exception e) {
+        // nop
       }
-    });
+    }
   }
+
+  private void writeOutputFile() {
+    try {
+      outputGenerator.generateOutput(readCompilationDataFile(), compilationDataSize, correctedOutputPath, outfile_prefix, compilationParameters.getEncoderIdentifier(), new InertProgressListener() {
+
+        @Override
+        protected void onProgressChange(int percent) {
+          updateSubProgress(percent);
+        }
+      });
+
+    } catch (Exception e) {
+      String message = bundle.getString("ui.error.introduction");
+      message += e.getMessage();
+      throw new CompilationException(message);
+    }
+  }
+
+  private FileInputStream readCompilationDataFile() throws FileNotFoundException {
+    return new FileInputStream(compilationDataFile);
+  }
+
+  private byte[] readCompilationDataFileIntoByteArray() throws IOException {
+    return Files.readAllBytes(compilationDataFile.toPath());
+  }
+
 
   private void createEnvelope() {
     Integer width = Integer.valueOf(bundle.getString("ui.envelope.width"));
     Integer height = Integer.valueOf(bundle.getString("ui.envelope.height"));
 
     EnvelopeImage envelopeImage = new EnvelopeImage(width, height);
-    envelopeImage.generateEnvelope(compilationData, compilationParameters.getMusicPattern(), compilationParameters.getBreakPattern(), compilationParameters.getIterations());
+    try {
+      envelopeImage.generateEnvelope(readCompilationDataFileIntoByteArray(), compilationParameters.getMusicPattern(), compilationParameters.getBreakPattern(), compilationParameters.getIterations());
+    }
+    catch (IOException e) {
+      String message = bundle.getString("ui.error.introduction");
+      message += e.getMessage();
+      throw new CompilationException(message);
+    }
     envelope = envelopeImage.getBufferedImage();
   }
 
   private void cleanUp() {
     /* We want unused objects to be reclaimed. */
-    compilationData = null;
+    if (!compilationDataFile.delete()) {
+      addDebugMessage("Was not able to delete compilation file " + compilationDataFile.getAbsolutePath());
+    }
     System.gc();
   }
 

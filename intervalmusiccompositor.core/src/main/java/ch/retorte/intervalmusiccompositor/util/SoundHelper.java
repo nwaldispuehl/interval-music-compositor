@@ -3,6 +3,7 @@ package ch.retorte.intervalmusiccompositor.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -48,7 +49,7 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
    * @param sampleWindow
    *          How many single samples are to be averaged
    * @return The largest average of the stream
-   * @throws IOException
+   * @throws IOException if there was trouble
    */
   public int getAvgAmplitude(AudioInputStream inputBuffer, int sampleWindow) throws IOException {
 
@@ -106,13 +107,13 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
   }
 
   public AudioInputStream getLeveledStream(AudioInputStream audioInputStream, float desiredRelativeAmplitude) {
-    AmplitudeAudioInputStream aais = new AmplitudeAudioInputStream(audioInputStream);
-    aais.setAmplitudeLinear(desiredRelativeAmplitude);
-    return aais;
+    AmplitudeAudioInputStream amplitudeAudioInputStream = new AmplitudeAudioInputStream(audioInputStream);
+    amplitudeAudioInputStream.setAmplitudeLinear(desiredRelativeAmplitude);
+    return amplitudeAudioInputStream;
   }
 
-  public AudioInputStream getStreamFromByteArray(byte[] byteArray) {
-    return new AudioInputStream(new ByteArrayInputStream(byteArray), TARGET_AUDIO_FORMAT, (byteArray.length / TARGET_AUDIO_FORMAT.getFrameSize()));
+  public AudioInputStream getStreamFromInputStream(InputStream inputStream, long streamSize) {
+    return new AudioInputStream(inputStream, TARGET_AUDIO_FORMAT, (streamSize / TARGET_AUDIO_FORMAT.getFrameSize()));
   }
 
   public byte[] getStreamPart(AudioInputStream inputStream, Long startTimeMS, Long durationMS) throws IOException {
@@ -151,7 +152,7 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     return result;
   }
 
-  public byte[] getByteArray(AudioInputStream inputStream) throws IOException {
+  private byte[] getByteArray(AudioInputStream inputStream) throws IOException {
 
     byte[] result = new byte[(int) getStreamSizeInBytes(inputStream)];
 
@@ -174,7 +175,7 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     return (inputStream.getFrameLength() / inputStream.getFormat().getFrameRate());
   }
 
-  public long getStreamSizeInBytes(AudioInputStream inputStream) {
+  private long getStreamSizeInBytes(AudioInputStream inputStream) {
 
     // Calculate length of wav input stream
     AudioFormat af = inputStream.getFormat();

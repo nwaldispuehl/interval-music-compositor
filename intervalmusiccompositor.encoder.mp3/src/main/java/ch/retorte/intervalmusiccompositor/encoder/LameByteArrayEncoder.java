@@ -6,12 +6,14 @@ import net.sourceforge.lame.mp3.Lame;
 import net.sourceforge.lame.mp3.MPEGMode;
 
 import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * @author nw
  */
-public class LameByteArrayEncoder {
+class LameByteArrayEncoder {
 
   private static final boolean USE_VARIABLE_BITRATE = false;
   private static final int GOOD_QUALITY_BITRATE = 256;
@@ -19,27 +21,26 @@ public class LameByteArrayEncoder {
   private AudioFormat inputFormat;
   private ProgressListener progressListener;
 
-  public LameByteArrayEncoder(AudioFormat inputFormat, ProgressListener progressListener) {
+  LameByteArrayEncoder(AudioFormat inputFormat, ProgressListener progressListener) {
     this.inputFormat = inputFormat;
     this.progressListener = progressListener;
   }
 
-  public byte[] encodePcmToMp3(byte[] pcm) {
+  byte[] encodeToMp3(AudioInputStream audioInputStream, long streamLengthInBytes) throws IOException {
     LameEncoder encoder = new LameEncoder(inputFormat, GOOD_QUALITY_BITRATE, MPEGMode.STEREO, Lame.QUALITY_HIGHEST, USE_VARIABLE_BITRATE);
-
     ByteArrayOutputStream mp3 = new ByteArrayOutputStream();
-    byte[] buffer = new byte[encoder.getPCMBufferSize()];
+    byte[] inputBuffer = new byte[encoder.getPCMBufferSize()];
+    byte[] outputBuffer = new byte[encoder.getPCMBufferSize()];
 
-    int bytesToTransfer = Math.min(buffer.length, pcm.length);
+    int bytesRead;
     int bytesWritten;
     int currentPcmPosition = 0;
-    while (0 < (bytesWritten = encoder.encodeBuffer(pcm, currentPcmPosition, bytesToTransfer, buffer))) {
-      currentPcmPosition += bytesToTransfer;
-      bytesToTransfer = Math.min(buffer.length, pcm.length - currentPcmPosition);
 
-      updateProgressWith(currentPcmPosition, pcm.length);
-
-      mp3.write(buffer, 0, bytesWritten);
+    while(0 < (bytesRead = audioInputStream.read(inputBuffer))) {
+      bytesWritten = encoder.encodeBuffer(inputBuffer, 0, bytesRead, outputBuffer);
+      currentPcmPosition += bytesRead;
+      updateProgressWith(currentPcmPosition, streamLengthInBytes);
+      mp3.write(outputBuffer, 0, bytesWritten);
     }
 
     encoder.close();

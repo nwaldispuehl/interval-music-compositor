@@ -3,6 +3,7 @@ package ch.retorte.intervalmusiccompositor.output;
 import static java.io.File.separator;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
 import javax.sound.sampled.AudioInputStream;
@@ -30,8 +31,7 @@ public class OutputGenerator {
     this.messageProducer = messageProducer;
   }
 
-  public void generateOutput(byte[] soundData, String path, String filePrefix, String encoderIdentifier, ProgressListener progressListener) {
-    AudioInputStream audioInputStream = soundHelper.getStreamFromByteArray(soundData);
+  public void generateOutput(FileInputStream audioFileInputStream, long streamLengthInBytes, String path, String filePrefix, String encoderIdentifier, ProgressListener progressListener) {
     AudioFileEncoder encoder = getEncoderFor(encoderIdentifier);
 
     File outputFile = generateOutputFile(encoder, path, filePrefix);
@@ -39,7 +39,8 @@ public class OutputGenerator {
 
     try {
       checkForProgressIndicationCapabilities(encoder, progressListener);
-      encoder.encode(audioInputStream, outputFile);
+      AudioInputStream audioInputStream = soundHelper.getStreamFromInputStream(audioFileInputStream, streamLengthInBytes);
+      encoder.encode(audioInputStream, streamLengthInBytes, outputFile);
     }
     catch (Exception e) {
       addDebugMessage(e.getMessage());

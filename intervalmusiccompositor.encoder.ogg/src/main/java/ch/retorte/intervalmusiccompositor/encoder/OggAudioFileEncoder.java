@@ -1,6 +1,5 @@
 package ch.retorte.intervalmusiccompositor.encoder;
 
-import ch.retorte.intervalmusiccompositor.spi.audio.ByteArrayConverter;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.progress.ProgressListener;
 import ch.retorte.intervalmusiccompositor.spi.progress.ProgressUpdatable;
@@ -20,31 +19,21 @@ public class OggAudioFileEncoder implements AudioFileEncoder, ProgressUpdatable 
 
   private static final String EXTENSION = "ogg";
 
-  private ByteArrayConverter byteArrayConverter;
-
   private VorbisEncoder encoder;
   private ProgressListener progressListener;
 
-  public OggAudioFileEncoder(ByteArrayConverter byteArrayConverter) {
-    this.byteArrayConverter = byteArrayConverter;
-  }
-
   @Override
-  public void encode(AudioInputStream audioInputStream, File outputFile) throws UnsupportedAudioFileException, IOException {
+  public void encode(AudioInputStream audioInputStream, long streamLengthInBytes, File outputFile) throws UnsupportedAudioFileException, IOException {
     createEncoderWithSettings(audioInputStream.getFormat());
-    Files.write(Paths.get(outputFile.getAbsolutePath()), encodeToOgg(convert(audioInputStream)));
+    Files.write(Paths.get(outputFile.getAbsolutePath()), encodeToOgg(audioInputStream, streamLengthInBytes));
   }
 
   private void createEncoderWithSettings(AudioFormat audioFormat) {
     encoder =  new VorbisEncoder(audioFormat, progressListener);
   }
 
-  private byte[] encodeToOgg(byte[] pcmByteArray) throws IOException {
-    return encoder.encodePcmToOgg(pcmByteArray);
-  }
-
-  private byte[] convert(AudioInputStream audioInputStream) throws IOException {
-    return byteArrayConverter.convert(audioInputStream);
+  private byte[] encodeToOgg(AudioInputStream audioInputStream, long streamLengthInBytes) throws IOException {
+    return encoder.encodeToOgg(audioInputStream, streamLengthInBytes);
   }
 
   @Override
