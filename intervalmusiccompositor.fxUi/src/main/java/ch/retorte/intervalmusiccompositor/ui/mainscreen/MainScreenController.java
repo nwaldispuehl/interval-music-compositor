@@ -420,10 +420,17 @@ public class MainScreenController implements Initializable {
 
   public void setActive() {
     container.setDisable(false);
+    setMenusDisabled(false);
   }
 
   public void setInactive() {
     container.setDisable(true);
+    setMenusDisabled(true);
+  }
+
+  private void setMenusDisabled(boolean disabled) {
+    menuLoadMusicFile.setDisable(disabled);
+    menuLoadBreakFile.setDisable(disabled);
   }
 
   private void updateEnvelopeImage() {
@@ -490,6 +497,7 @@ public class MainScreenController implements Initializable {
       @Override
       public void handle(ErrorMessage message) {
         showErrorMessage(message.getMessage());
+        setActive();
       }
     });
 
