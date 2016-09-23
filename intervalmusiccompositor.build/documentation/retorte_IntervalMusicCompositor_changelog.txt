@@ -1,6 +1,14 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2016-09-23  2.6.3
+--------------------------------------------------------------------------------
+IMP         Added more information to the debug log and update browser string.
+IMP         Increased application heap size a bit.
+FIX  #18    Heap space exception for longer compilations under Windows and Linux.
+IMP         Add sound menu entries now also disabled during compilation.
+
+
 2016-08-18  2.6.2
 --------------------------------------------------------------------------------
 FIX  #17    Updated launch4j to 3.9 to fix program execution on some Windows 10 instances.
