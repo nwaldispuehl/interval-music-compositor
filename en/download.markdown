@@ -25,7 +25,7 @@ The following variants are available for download: <br/>
 [Linux](#linux) <br/>
 [Mac OS X (>= 10.7)](#osx) <br/>
 [Microsoft Windows (Vista, 7, 8)](#windows) <br/>
-[Legacy versions (also for Java 5 and 6)](#legacy) <br/>
+[Legacy versions (also for Java 5, 6, and 7)](#legacy) <br/>
 [Source code](#source) 
 
 <a name="linux"></a>
@@ -56,7 +56,7 @@ This is just a simple executable in a ZIP file which can be unpacked and then pl
 ## Legacy versions
 
 ### Java 7
-Previous versions are to be found on the [Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases).
+Previous versions are to be found on the [Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases). The software works with Java 7 up to [version 2.5.2](https://github.com/nwaldispuehl/interval-music-compositor/releases/tag/v2.5.2).
 
 ### Java 6 (Version 1.6)
 ![Interval Music Compositor 2.3.0](/interval-music-compositor/img/imc-2.3.0.jpg)
