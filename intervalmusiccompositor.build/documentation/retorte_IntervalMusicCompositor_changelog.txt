@@ -4,6 +4,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 2017-xx-xx  2.6.4
 --------------------------------------------------------------------------------
 FIX         Adapted version check URL to new server address.
+ADD  #20    Check update dialog contains link to latest software version download.
 
 
 2016-09-23  2.6.3

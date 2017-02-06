@@ -173,11 +173,23 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   }
 
   @Override
-  public void openInDesktopBrowser(URI uri) {
+  public void openInDesktopBrowser(String url) {
+    URI uri = getUriFor(url);
     if (uri != null) {
       messageProducer.send(new DebugMessage(this, "Sending URL to systems Desktop for opening in web browser: " + uri));
       getHostServices().showDocument(uri.toASCIIString());
     }
+  }
+
+  private URI getUriFor(String string) {
+    try {
+      return new URI(string);
+    }
+    catch (Exception e) {
+      messageProducer.send(new ErrorMessage("Not able to convert help website url to URI due to: " + e.getMessage()));
+      messageProducer.send(new DebugMessage(this, e));
+    }
+    return null;
   }
 
   private void initialize(MainScreenController mainScreenController) {

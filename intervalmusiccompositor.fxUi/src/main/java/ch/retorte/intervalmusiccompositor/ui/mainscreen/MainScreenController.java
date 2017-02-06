@@ -246,36 +246,27 @@ public class MainScreenController implements Initializable {
   }
 
   private void openHelpWebsite() {
-    ui.openInDesktopBrowser(getHelpWebsiteUri());
+    ui.openInDesktopBrowser(getHelpWebsiteUrl());
   }
 
-  private URI getHelpWebsiteUri() {
-    return getUriFor(coreBundle.getString("web.website.help.url"));
+  private String getHelpWebsiteUrl() {
+    return coreBundle.getString("web.website.help.url");
   }
 
   private void openAboutWebsite() {
-    ui.openInDesktopBrowser(getAboutWebsiteUri());
+    ui.openInDesktopBrowser(getAboutWebsiteUrl());
   }
 
   private void openUpdateCheckDialog() {
-    UpdateCheckDialog updateCheckDialog = new UpdateCheckDialog(updateAvailabilityChecker, bundle);
+    UpdateCheckDialog updateCheckDialog = new UpdateCheckDialog(updateAvailabilityChecker, ui, bundle, coreBundle);
     updateCheckDialog.open();
   }
 
-  private URI getAboutWebsiteUri() {
-    return getUriFor(coreBundle.getString("web.website.about.url"));
+  private String getAboutWebsiteUrl() {
+    return coreBundle.getString("web.website.about.url");
   }
 
-  private URI getUriFor(String string) {
-    try {
-      return new URI(string);
-    }
-    catch (Exception e) {
-      messageProducer.send(new ErrorMessage("Not able to convert help website url to URI due to: " + e.getMessage()));
-      messageProducer.send(new DebugMessage(this, e));
-    }
-    return null;
-  }
+
 
   private void openDebugLog() {
     DebugLogWindow debugLogWindow = new DebugLogWindow(bundle, programControl, executorService);

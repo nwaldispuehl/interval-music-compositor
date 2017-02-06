@@ -20,5 +20,5 @@ public interface Ui {
 
   void setEnvelopeImage(WritableImage envelopeImage);
 
-  void openInDesktopBrowser(URI uri);
+  void openInDesktopBrowser(String url);
 }
