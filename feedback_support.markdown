@@ -9,7 +9,7 @@ link: feedback_support
 
 Schreib mir wenn du einen Fehler gefunden hast, einen Verbesserungsvorschlag machen möchtest, Hilfe brauchst oder sonst etwas auf dem Herzen hast.
 
-    interval_music_compositor at retorte dot ch
+    interval-music-compositor at retorte dot ch
 
 ### Wie Feedback geben?
 

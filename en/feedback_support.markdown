@@ -8,7 +8,7 @@ link: feedback_support
 
 Write me if you've found a bug, have a suggestion for improvements, need help or just want to drop some lines.
 
-    interval_music_compositor at retorte dot ch
+    interval-music-compositor at retorte dot ch
 
 
 ### How to give feedback?
