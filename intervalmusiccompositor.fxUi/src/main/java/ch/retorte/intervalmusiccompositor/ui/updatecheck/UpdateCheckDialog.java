@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
@@ -74,7 +75,10 @@ public class UpdateCheckDialog {
   }
 
   private void startVersionCheck() {
-    Executors.newSingleThreadExecutor().submit(new VersionCheckTask());
+    // We are creating a thread executor, but shutting it down right away so it gets collected once the task finishes.
+    ExecutorService executorService = Executors.newSingleThreadExecutor();
+    executorService.submit(new VersionCheckTask());
+    executorService.shutdown();
   }
 
   private Hyperlink downloadHyperlink() {
