@@ -27,6 +27,8 @@ import static ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI.UI
  */
 class AudioFileListCell extends ListCell<IAudioFile> {
 
+  //---- Fields
+
   private ResourceBundle resourceBundle = ResourceBundle.getBundle(UI_RESOURCE_BUNDLE_NAME, new Utf8Control());
 
   private AudioFileListCellController listCellController;
@@ -34,7 +36,8 @@ class AudioFileListCell extends ListCell<IAudioFile> {
   private MusicListControl musicListControl;
   private MessageProducer messageProducer;
 
-  private SimpleBooleanProperty isBpmSupported = new SimpleBooleanProperty(false);
+
+  //---- Constructor
 
   AudioFileListCell(MessageFormatBundle messageFormatBundle, MusicListControl musicListControl, MessageProducer messageProducer) {
     this.messageFormatBundle = messageFormatBundle;
@@ -54,62 +57,17 @@ class AudioFileListCell extends ListCell<IAudioFile> {
     emptyProperty().addListener((observable, wasEmpty, isEmpty) -> {
       if (isEmpty) {
         setGraphic(null);
-        setContextMenu(null);
       }
       else {
         setGraphic(listCellController);
-        setContextMenu(createContextMenu());
       }
     });
 
     setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
   }
 
-  private ContextMenu createContextMenu() {
-    ContextMenu contextMenu = new ContextMenu();
 
-    contextMenu.getItems().add(createChangeBpmItem());
-    contextMenu.getItems().add(createWriteBpmItem());
-    contextMenu.getItems().add(separator());
-    contextMenu.getItems().add(createDeleteItem());
-
-    return contextMenu;
-  }
-
-  private MenuItem createChangeBpmItem() {
-    MenuItem changeBpmItem = new MenuItem();
-    changeBpmItem.setText(resourceBundle.getString("ui.list_context.change_bpm"));
-    changeBpmItem.setOnAction(event -> {
-      BpmWindow bpmWindow = createBpmWindowFrom(messageFormatBundle, musicListControl, messageProducer, getItem(), getIndex());
-      bpmWindow.show();
-    });
-    changeBpmItem.disableProperty().bind(isBpmSupported.not());
-    return changeBpmItem;
-  }
-
-  protected BpmWindow createBpmWindowFrom(MessageFormatBundle messageFormatBundle, MusicListControl musicListControl, MessageProducer messageProducer, IAudioFile audioFile, int index) {
-    return new BpmWindow(messageFormatBundle, musicListControl, messageProducer, audioFile, index);
-  }
-
-  private MenuItem createWriteBpmItem() {
-    MenuItem writeBpmItem = new MenuItem();
-    writeBpmItem.setText(resourceBundle.getString("ui.list_context.write_bpm"));
-    writeBpmItem.setOnAction(event -> listView().writeBpmFor(getItem()));
-    writeBpmItem.disableProperty().bind(isBpmSupported.not());
-    return writeBpmItem;
-  }
-
-  private MenuItem separator() {
-    return new SeparatorMenuItem();
-  }
-
-  private MenuItem createDeleteItem() {
-    MenuItem deleteItem = new MenuItem();
-    deleteItem.setText(resourceBundle.getString("ui.list_context.remove_track_sg"));
-    deleteItem.setOnAction(event -> listView().removeTrack(getItem()));
-
-    return deleteItem;
-  }
+  //---- Methods
 
   private DraggableAudioFileListView listView() {
     return (DraggableAudioFileListView) getListView();
@@ -117,16 +75,18 @@ class AudioFileListCell extends ListCell<IAudioFile> {
 
   private void updateWith(IAudioFile audioFile) {
     listCellController.updateWith(getOrdinalNumberFor(audioFile), audioFile);
-    registerBpmStateListenerWith(audioFile);
   }
 
-  private void registerBpmStateListenerWith(IAudioFile audioFile) {
-    audioFile.addChangeListener(updatedAudioFile -> isBpmSupported.setValue(updatedAudioFile.isBpmSupported()));
+  protected BpmWindow createBpmWindowFrom(MessageFormatBundle messageFormatBundle, MusicListControl musicListControl, MessageProducer messageProducer, IAudioFile audioFile, int index) {
+    return new BpmWindow(messageFormatBundle, musicListControl, messageProducer, audioFile, index);
   }
 
   private int getOrdinalNumberFor(IAudioFile audioFile) {
     return getListView().getItems().indexOf(audioFile);
   }
+
+
+  //---- Inner class
 
   private class AudioFileListCellController extends HBox {
 
@@ -140,6 +100,8 @@ class AudioFileListCell extends ListCell<IAudioFile> {
 
 
     //---- Fields
+
+    private SimpleBooleanProperty isBpmSupported = new SimpleBooleanProperty(false);
 
     private Image loading = new Image(getClass().getResource("/images/waiting_icon.gif").toString());
     private Image ok = new Image(getClass().getResource("/images/music_icon.png").toString());
@@ -193,6 +155,7 @@ class AudioFileListCell extends ListCell<IAudioFile> {
       setBpmWith(audioFile);
       setTitleWith(audioFile);
       setStatusWith(audioFile);
+      setContextMenuWith(audioFile);
     }
 
     private void setTrackWith(int ordinalNumber) {
@@ -251,8 +214,64 @@ class AudioFileListCell extends ListCell<IAudioFile> {
       }
     }
 
+    private void setContextMenuWith(IAudioFile audioFile) {
+      setContextMenu(createContextMenu());
+      registerBpmStateListenerWith(audioFile);
+      setBpmStateWith(audioFile);
+    }
+
+    private void registerBpmStateListenerWith(IAudioFile audioFile) {
+      audioFile.addChangeListener(updatedAudioFile -> isBpmSupported.setValue(updatedAudioFile.isBpmSupported()));
+    }
+
+    private void setBpmStateWith(IAudioFile audioFile) {
+      isBpmSupported.set(audioFile.isBpmSupported());
+    }
+
     private String format(long milliSeconds) {
       return new FormatTime().getStrictFormattedTime(milliSeconds / 1000);
+    }
+
+    private ContextMenu createContextMenu() {
+      ContextMenu contextMenu = new ContextMenu();
+
+      contextMenu.getItems().add(createChangeBpmItem());
+      contextMenu.getItems().add(createWriteBpmItem());
+      contextMenu.getItems().add(separator());
+      contextMenu.getItems().add(createDeleteItem());
+
+      return contextMenu;
+    }
+
+    private MenuItem createChangeBpmItem() {
+      MenuItem changeBpmItem = new MenuItem();
+      changeBpmItem.setText(resourceBundle.getString("ui.list_context.change_bpm"));
+      changeBpmItem.setOnAction(event -> {
+        BpmWindow bpmWindow = createBpmWindowFrom(messageFormatBundle, musicListControl, messageProducer, getItem(), getIndex());
+        bpmWindow.show();
+      });
+      changeBpmItem.disableProperty().bind(isBpmSupported.not());
+      return changeBpmItem;
+    }
+
+    private MenuItem createWriteBpmItem() {
+      MenuItem writeBpmItem = new MenuItem();
+      writeBpmItem.setText(resourceBundle.getString("ui.list_context.write_bpm"));
+      writeBpmItem.setOnAction(event -> listView().writeBpmFor(getItem()));
+      writeBpmItem.disableProperty().bind(isBpmSupported.not());
+      return writeBpmItem;
+    }
+
+    private MenuItem separator() {
+      return new SeparatorMenuItem();
+    }
+
+    private MenuItem createDeleteItem() {
+      MenuItem deleteItem = new MenuItem();
+      deleteItem.setText(resourceBundle.getString("ui.list_context.remove_track_sg"));
+      deleteItem.setOnAction(event -> listView().removeTrack(getItem()));
+
+      return deleteItem;
     }
 
   }
