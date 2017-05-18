@@ -22,11 +22,20 @@ Unterstütze die Weiterentwicklung dieses Projekts!
 Ich erkläre hiermit: Die Software enthält keine Mal- oder Spywarekomponenten (vgl. [Datenschutz](et_cetera#privacy)). 
 
 Folgende Varianten stehen zum Download bereit: <br/>
+[Android](#android) <br/>
 [Linux](#linux) <br/>
 [Mac OS X (>= 10.7)](#osx) <br/>
 [Microsoft Windows (7, 8, 10)](#windows) <br/>
 [Ältere Versionen (auch für Java 5, 6 und 7)](#legacy) <br/>
 [Quellcode](#source) 
+
+<a name="android"></a>
+
+## Android app
+
+Es gibt nun eine IntervalMusicCompositor Android App:
+
+<a href='https://play.google.com/store/apps/details?id=ch.retorte.intervalmusiccompositor'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' style='max-width:256px;'/></a>
 
 <a name="linux"></a>
 
