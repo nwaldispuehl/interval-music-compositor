@@ -4,6 +4,10 @@ title: Home
 link: 
 ---
 
+<span style='color:#F44336;'>Neu auch als Android App:</span>
+
+<a href='https://play.google.com/store/apps/details?id=ch.retorte.intervalmusiccompositor'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' style='max-width:256px;'/></a>
+
 _**Schlüsselwörter:** Intervalltraining, Kreistraining, Stationstraining, Zirkeltraining, Circuit, Pyramidentraining, Turnunterricht, Sportunterricht, Sport, Fitness, Musik, Pause, Iteration, Wiederholung, automatisch erzeugen, Zusammenstellung, Mixtape, bpm_
 
 ![Interval Music Compositor Screenshot](/interval-music-compositor/img/imc_screenshot_small.png)
