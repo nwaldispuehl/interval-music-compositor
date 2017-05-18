@@ -31,7 +31,7 @@ Folgende Varianten stehen zum Download bereit: <br/>
 
 <a name="android"></a>
 
-## Android app
+## Android App
 
 Es gibt nun eine IntervalMusicCompositor Android App:
 
