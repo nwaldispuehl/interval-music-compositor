@@ -24,7 +24,7 @@ I hereby declare: The software is free of malicious and snoopy parts in any way 
 The following variants are available for download: <br/>
 [Linux](#linux) <br/>
 [Mac OS X (>= 10.7)](#osx) <br/>
-[Microsoft Windows (Vista, 7, 8)](#windows) <br/>
+[Microsoft Windows (7, 8, 10)](#windows) <br/>
 [Legacy versions (also for Java 5, 6, and 7)](#legacy) <br/>
 [Source code](#source) 
 
@@ -46,7 +46,7 @@ After the download you can unzip it by double clicking on it. You can then drag 
 
 <a name="windows"></a>
 
-## Microsoft Windows (Vista, 7, 8) version
+## Microsoft Windows (7, 8, 10) version
 [Download Windows version on Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
 This is just a simple executable in a ZIP file which can be unpacked and then placed in the folder of your choice and executed directly.
@@ -69,7 +69,7 @@ Microsoft Windows: [IntervalMusicCompositor-2.3.2-win.zip](/interval-music-compo
 
 From version 2.0 until 2.5 a WAV file is created as output unless the LAME software is placed in the same directory as the Interval Music Compositor lies. How to get it:
 
-#### Linux
+#### Linux (Debian, Ubuntu)
 
 Install it as follows:
 
