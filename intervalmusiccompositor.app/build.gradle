@@ -1,8 +1,30 @@
-apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: 'macAppBundle'
-apply plugin: 'launch4j'
-apply plugin: 'gradle-one-jar'
+buildscript {
+  repositories {
+
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+
+    mavenLocal()
+    mavenCentral()
+
+  }
+  dependencies {
+    classpath "gradle.plugin.edu.sc.seis.gradle:launch4j:2.3.0"
+    classpath 'gradle.plugin.edu.sc.seis:macAppBundle:2.1.7'
+    classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+  }
+}
+
+plugins {
+  id 'java'
+  id 'application'
+
+  id "edu.sc.seis.macAppBundle" version "2.1.7"
+  id "edu.sc.seis.launch4j" version "2.3.0"
+  id "com.github.johnrengelman.shadow" version "2.0.1"
+}
+
 
 group = 'ch.retorte.intervalmusiccompositor'
 applicationName = "IntervalMusicCompositor"
@@ -13,7 +35,7 @@ applicationDefaultJvmArgs = ["-Xmx2048m"]
 ext.macosxOutputDir = '/macosxApp'
 ext.windowsOutputDir = '/windowsApp'
 ext.linuxOutputDir = '/linuxApp'
-ext.windowsUberJar = 'uberJar.jar'
+ext.windowsUberJarName = 'uberJar'
 
 tasks.withType(FindBugs) {
     reports {
@@ -46,28 +68,25 @@ task distOsxApp(type: Tar, dependsOn: createApp) {
   description = "Creates an archive from the Mac OS X version." 
   compression = Compression.GZIP
   baseName = project.applicationName + '-macosx'
-  
+
   into (project.applicationName + '-' + version) {
     from buildDir.absolutePath + project.ext.macosxOutputDir
     from project(':intervalmusiccompositor.build').files('documentation/')
   }
 }
 
-task uberJar(type: OneJar) {
-  mainClass = project.mainClassName
-  archiveName = project.ext.windowsUberJar
-
-  /* This is a little hack putting the ui resources right into the root dir of the uber jar.
-      Otherwise the JavaFX application seems to not be able to find them. */
-  additionalDir = project(':intervalmusiccompositor.fxUi').file('src/main/resources/')
+shadowJar {
+  baseName = project.ext.windowsUberJarName
+  classifier = null
+  version = null
 }
 
-task copyUberJar(type: Copy, dependsOn: [copyL4jLib, uberJar]) {
-  from uberJar.outputs.files
+task copyUberJar(type: Copy, dependsOn: [ shadowJar]) {
+  from project.tasks.shadowJar.outputs.files
   into buildDir.absolutePath + project.ext.windowsOutputDir + '/lib'
 }
 
-task distWindowsApp(type: Zip, dependsOn: [uberJar, copyUberJar, createExe]) {
+task distWindowsApp(type: Zip, dependsOn: [shadowJar, copyUberJar, createExe]) {
   description = "Creates an archive from the Microsoft Windows version." 
   baseName = applicationName + '-windows'
   
@@ -94,12 +113,9 @@ task distAll(dependsOn: [distOsxApp, distWindowsApp, distLinuxApp]) {
   description = "Creates archives for all supported operating systems."
 }
 
-
-
-
 launch4j {
     outputDir = project.ext.windowsOutputDir
-    mainClassName = "com.simontuffs.onejar.Boot" // This is the OneJar wrapper.
+    mainClassName = project.mainClassName
     icon = project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.ico')
 
     jreMinVersion = '1.8.0_60'
@@ -108,9 +124,8 @@ launch4j {
     downloadUrl = "http://www.java.com/download/"
     supportUrl = "https://nwaldispuehl.github.io/interval-music-compositor/en/feedback_support"
   
-    launch4jCmd = project(':intervalmusiccompositor.build').file('3rdparty/launch4j-3.9/launch4j')
-
-    jar = "lib/" + project.ext.windowsUberJar
+    copyConfigurable = project.tasks.shadowJar.outputs.files
+    jar = project.tasks.shadowJar.outputs.files.first()
 
     outfile = project.applicationName + '.exe'
     copyright = "retorte.ch"
@@ -137,17 +152,5 @@ dependencies {
   compile project(':intervalmusiccompositor.encoder.ogg')
 }
 
-buildscript {
-    repositories {
-    
-        mavenLocal()
-        mavenCentral()
-        
-    }
-    dependencies {
-        classpath 'edu.sc.seis.gradle:launch4j:1.0.6'
-        classpath 'edu.sc.seis.gradle:macappbundle:2.0.0'
-        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
-    }
-}
+
 
