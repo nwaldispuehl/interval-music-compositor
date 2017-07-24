@@ -1,0 +1,9 @@
+apply plugin: 'java'
+
+group = 'ch.retorte.intervalmusiccompositor'
+version = '2.7.0'
+
+dependencies {
+  compile project(':intervalmusiccompositor.spi')
+  compile project(':intervalmusiccompositor.model')
+}

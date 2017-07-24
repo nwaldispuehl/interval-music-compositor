@@ -139,6 +139,8 @@ dependencies {
 	compile project(':intervalmusiccompositor.core')
 	compile project(':intervalmusiccompositor.fxUi')
 
+  compile project(':intervalmusiccompositor.soundeffects')
+
 	compile project(':intervalmusiccompositor.beatroot')
 	
 	compile project(':intervalmusiccompositor.decoder.wave')
