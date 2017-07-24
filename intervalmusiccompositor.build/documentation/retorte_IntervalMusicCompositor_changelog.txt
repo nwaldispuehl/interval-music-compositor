@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2017-07-xx  2.6.x
+--------------------------------------------------------------------------------
+FIX  #23    Temporary compilation file is not deleted on Windows.
+
+
 2017-02-07  2.6.4
 --------------------------------------------------------------------------------
 IMP         Adapted version check URL to new server address.

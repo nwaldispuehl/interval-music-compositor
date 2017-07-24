@@ -221,10 +221,8 @@ public class CompilationGenerator implements Runnable {
     File reportFile = new File(correctedOutputPath + "/" + playlist_outfile);
     String playlistReport = new PlaylistReport(applicationData).generateReportFor(playlist, badSoundFiles);
 
-    try {
-      OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(reportFile), Charsets.UTF_8);
+    try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(reportFile), Charsets.UTF_8)) {
       outputStreamWriter.write(playlistReport);
-      outputStreamWriter.close();
     }
     catch (IOException e) {
       String message = bundle.getString("ui.error.introduction");
@@ -240,6 +238,7 @@ public class CompilationGenerator implements Runnable {
 
       compilationDataFile = File.createTempFile("compilation", bundle.getString("imc.temporaryFile.suffix"));
       compilationDataSize = compilationBytes.length;
+      addDebugMessage("Created temporary compilation file " + compilationDataFile.getAbsolutePath() + " for size " + compilationDataSize);
 
       writeToCompilationDataFile(compilationBytes);
     }
@@ -258,24 +257,14 @@ public class CompilationGenerator implements Runnable {
   }
 
   private void writeToCompilationDataFile(byte[] compilationBytes) throws IOException {
-    FileOutputStream fos = null;
-    try {
-      fos = new FileOutputStream(compilationDataFile);
+    try (FileOutputStream fos = new FileOutputStream(compilationDataFile)) {
       fos.write(compilationBytes);
-    } finally {
-      try {
-        if (fos != null) {
-          fos.close();
-        }
-      } catch (Exception e) {
-        // nop
-      }
     }
   }
 
   private void writeOutputFile() {
-    try {
-      outputGenerator.generateOutput(readCompilationDataFile(), compilationDataSize, correctedOutputPath, outfile_prefix, compilationParameters.getEncoderIdentifier(), new InertProgressListener() {
+    try (FileInputStream compilationData = new FileInputStream(compilationDataFile)) {
+      outputGenerator.generateOutput(compilationData, compilationDataSize, correctedOutputPath, outfile_prefix, compilationParameters.getEncoderIdentifier(), new InertProgressListener() {
 
         @Override
         protected void onProgressChange(int percent) {
@@ -288,10 +277,6 @@ public class CompilationGenerator implements Runnable {
       message += e.getMessage();
       throw new CompilationException(message);
     }
-  }
-
-  private FileInputStream readCompilationDataFile() throws FileNotFoundException {
-    return new FileInputStream(compilationDataFile);
   }
 
   private byte[] readCompilationDataFileIntoByteArray() throws IOException {
@@ -317,8 +302,11 @@ public class CompilationGenerator implements Runnable {
 
   private void cleanUp() {
     /* We want unused objects to be reclaimed. */
-    if (!compilationDataFile.delete()) {
-      addDebugMessage("Was not able to delete compilation file " + compilationDataFile.getAbsolutePath());
+    if (compilationDataFile.delete()) {
+      addDebugMessage("Cleaned up temporary compilation file " + compilationDataFile.getAbsolutePath());
+    }
+    else {
+      addDebugMessage("Was not able to delete temporary compilation file " + compilationDataFile.getAbsolutePath());
     }
     System.gc();
   }

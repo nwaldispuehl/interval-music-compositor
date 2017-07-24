@@ -37,9 +37,8 @@ public class OutputGenerator {
     File outputFile = generateOutputFile(encoder, path, filePrefix);
     addDebugMessage("Encoding compilation data with: " + encoder.getClass().getSimpleName() + " to: " + outputFile);
 
-    try {
+    try (AudioInputStream audioInputStream = soundHelper.getStreamFromInputStream(audioFileInputStream, streamLengthInBytes)) {
       checkForProgressIndicationCapabilities(encoder, progressListener);
-      AudioInputStream audioInputStream = soundHelper.getStreamFromInputStream(audioFileInputStream, streamLengthInBytes);
       encoder.encode(audioInputStream, streamLengthInBytes, outputFile);
     }
     catch (Exception e) {

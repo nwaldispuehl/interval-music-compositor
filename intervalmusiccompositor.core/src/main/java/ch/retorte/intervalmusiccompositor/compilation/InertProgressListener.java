@@ -3,7 +3,7 @@ package ch.retorte.intervalmusiccompositor.compilation;
 import ch.retorte.intervalmusiccompositor.spi.progress.ProgressListener;
 
 /**
- * This inert progress listener fires only if the value changes.
+ * This inert progress listener fires only if the value changes compared to the last invocation.
  */
 abstract class InertProgressListener implements ProgressListener {
 
