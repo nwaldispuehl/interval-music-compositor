@@ -150,7 +150,7 @@ public class BarChart {
 
 
         if (has(breakPattern)) {
-          p = p + (int) (breakPattern.get(j % breakPattern.size()) * scale);
+          p = p + (breakPattern.get(j % breakPattern.size()) * scale);
         }
       }
     }
