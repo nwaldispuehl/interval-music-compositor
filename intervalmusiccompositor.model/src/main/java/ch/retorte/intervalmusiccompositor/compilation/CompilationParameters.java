@@ -29,6 +29,7 @@ public class CompilationParameters {
 
   private static final String PATTERN_SEPARATOR = ",";
 
+
   //---- Fields
 
   private List<Integer> musicPattern = new ArrayList<>();

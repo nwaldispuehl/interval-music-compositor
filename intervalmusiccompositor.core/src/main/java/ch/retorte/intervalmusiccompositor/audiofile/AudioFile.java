@@ -73,7 +73,7 @@ public class AudioFile extends File implements IAudioFile {
 
   private Collection<ChangeListener<IAudioFile>> changeListeners = newArrayList();
 
-  AudioFile(String pathname, SoundHelper soundHelper, List<AudioFileDecoder> audioFileDecoders, BPMReaderWriter bpmReaderWriter,
+  public AudioFile(String pathname, SoundHelper soundHelper, List<AudioFileDecoder> audioFileDecoders, BPMReaderWriter bpmReaderWriter,
       BPMCalculator bpmCalculator, MessageProducer messageProducer) {
     super(pathname);
     this.soundHelper = soundHelper;
