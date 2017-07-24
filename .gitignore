@@ -1,7 +1,11 @@
+# Build
 build/
 .gradle/
+
+# IDE
 .project
 .settings/
 .idea/
 *.iml
 bin/
+out/
