@@ -1,7 +1,6 @@
 package ch.retorte.intervalmusiccompositor.audiofile;
 
 import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.EMPTY;
-import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.ERROR;
 import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.IN_PROGRESS;
 import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.OK;
 import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.QUEUED;

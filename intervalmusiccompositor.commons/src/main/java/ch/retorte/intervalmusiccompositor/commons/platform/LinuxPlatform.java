@@ -7,7 +7,7 @@ import javax.swing.filechooser.FileSystemView;
  */
 public class LinuxPlatform extends Platform {
 
-  public LinuxPlatform(String osName) {
+  LinuxPlatform(String osName) {
     super(osName);
   }
 

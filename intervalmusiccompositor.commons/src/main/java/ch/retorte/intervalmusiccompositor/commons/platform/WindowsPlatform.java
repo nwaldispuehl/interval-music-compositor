@@ -7,7 +7,7 @@ import static javax.swing.filechooser.FileSystemView.getFileSystemView;
  */
 public class WindowsPlatform extends Platform {
 
-  public WindowsPlatform(String osName) {
+  WindowsPlatform(String osName) {
     super(osName);
   }
 

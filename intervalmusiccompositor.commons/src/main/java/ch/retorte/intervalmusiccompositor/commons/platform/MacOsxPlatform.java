@@ -5,7 +5,7 @@ package ch.retorte.intervalmusiccompositor.commons.platform;
  */
 public class MacOsxPlatform extends Platform {
 
-  public MacOsxPlatform(String osName) {
+  MacOsxPlatform(String osName) {
     super(osName);
   }
 

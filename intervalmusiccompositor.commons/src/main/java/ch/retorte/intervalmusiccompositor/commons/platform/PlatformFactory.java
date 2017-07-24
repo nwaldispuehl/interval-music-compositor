@@ -16,7 +16,7 @@ public class PlatformFactory {
     this.osName = getProperty("os.name");
   }
 
-  public PlatformFactory(String osName) {
+  PlatformFactory(String osName) {
     this.osName = osName;
   }
 
