@@ -22,22 +22,21 @@ import net.sourceforge.jaad.mp4.api.Frame;
 import net.sourceforge.jaad.mp4.api.Movie;
 import net.sourceforge.jaad.mp4.api.Track;
 import net.sourceforge.jaad.spi.javasound.AACAudioFileReader;
-import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 
 import static com.google.common.collect.Lists.newArrayList;
 
 /**
- * @author nw
+ * Decodes AAC files.
  */
 public class AacAudioFileDecoder implements AudioFileDecoder {
 
-  private AacFileProperties aacFile = new AacFileProperties();
-  private final AudioStandardizer audioStandardizer;
+  //---- Fields
 
-  public AacAudioFileDecoder(AudioStandardizer audioStandardizer) {
-    this.audioStandardizer = audioStandardizer;
-  }
+  private AacFileProperties aacFile = new AacFileProperties();
+
+
+  //---- Methods
 
   @Override
   public AudioInputStream decode(File inputFile) throws UnsupportedAudioFileException, IOException {
@@ -60,7 +59,7 @@ public class AacAudioFileDecoder implements AudioFileDecoder {
       }
     }
 
-    return audioStandardizer.standardize(result);
+    return result;
   }
 
   @Override
@@ -75,7 +74,7 @@ public class AacAudioFileDecoder implements AudioFileDecoder {
 
   private AudioInputStream decodeAAC(File inputFile) throws IOException {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    AudioFormat audioFormat = null;
+    AudioFormat audioFormat;
 
     try {
       final ADTSDemultiplexer adts = new ADTSDemultiplexer(new FileInputStream(inputFile));
@@ -109,7 +108,7 @@ public class AacAudioFileDecoder implements AudioFileDecoder {
 
   private AudioInputStream decodeMP4(File inputFile) throws UnsupportedAudioFileException, IOException {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    AudioFormat audioFormat = null;
+    AudioFormat audioFormat;
 
     try {
 

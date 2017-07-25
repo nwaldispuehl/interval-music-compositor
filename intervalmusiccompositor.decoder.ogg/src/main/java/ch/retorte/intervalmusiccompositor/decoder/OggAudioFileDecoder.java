@@ -11,22 +11,21 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import org.tritonus.sampled.convert.jorbis.JorbisFormatConversionProvider;
 import org.tritonus.sampled.file.jorbis.JorbisAudioFileReader;
 
-import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 
 import static com.google.common.collect.Lists.newArrayList;
 
 /**
- * @author nw
+ * Decodes OGG files.
  */
 public class OggAudioFileDecoder implements AudioFileDecoder {
 
-  private OggFileProperties oggFile = new OggFileProperties();
-  private AudioStandardizer audioStandardizer;
+  //---- Fields
 
-  public OggAudioFileDecoder(AudioStandardizer audioStandardizer) {
-    this.audioStandardizer = audioStandardizer;
-  }
+  private OggFileProperties oggFile = new OggFileProperties();
+
+
+  //---- Methods
 
   @Override
   public AudioInputStream decode(File inputFile) throws UnsupportedAudioFileException, IOException {
@@ -43,7 +42,7 @@ public class OggAudioFileDecoder implements AudioFileDecoder {
     JorbisFormatConversionProvider oggReader = new JorbisFormatConversionProvider();
     result = oggReader.getAudioInputStream(decodedFormat, oggAis);
 
-    return audioStandardizer.standardize(result);
+    return result;
   }
 
   @Override

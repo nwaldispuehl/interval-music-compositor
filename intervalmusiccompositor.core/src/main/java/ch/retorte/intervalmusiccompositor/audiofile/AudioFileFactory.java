@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 import ch.retorte.intervalmusiccompositor.spi.bpm.BPMCalculator;
 import ch.retorte.intervalmusiccompositor.spi.bpm.BPMReaderWriter;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
@@ -22,14 +23,15 @@ public class AudioFileFactory {
   private final Collection<BPMReaderWriter> bpmReaderWriters;
   private SoundHelper soundHelper;
   private BPMCalculator bpmCalculator;
+  private AudioStandardizer audioStandardizer;
   private MessageProducer messageProducer;
 
-  public AudioFileFactory(SoundHelper soundHelper, Collection<AudioFileDecoder> decoders, Collection<BPMReaderWriter> bpmReaderWriters, BPMCalculator bpmCalculator,
-      MessageProducer messageProducer) {
+  public AudioFileFactory(SoundHelper soundHelper, Collection<AudioFileDecoder> decoders, Collection<BPMReaderWriter> bpmReaderWriters, BPMCalculator bpmCalculator, AudioStandardizer audioStandardizer, MessageProducer messageProducer) {
     this.soundHelper = soundHelper;
     this.decoders = decoders;
     this.bpmReaderWriters = bpmReaderWriters;
     this.bpmCalculator = bpmCalculator;
+    this.audioStandardizer = audioStandardizer;
     this.messageProducer = messageProducer;
   }
 
@@ -44,7 +46,7 @@ public class AudioFileFactory {
       addDebugMessage("No AudioFileDecoder found for decoding " + file);
     }
 
-    return new AudioFile(file.getAbsolutePath(), soundHelper, audioFileDecoders, bpmReaderWriter, bpmCalculator, messageProducer);
+    return new AudioFile(file.getAbsolutePath(), soundHelper, audioFileDecoders, bpmReaderWriter, bpmCalculator, audioStandardizer, messageProducer);
   }
 
   public boolean hasDecoderFor(File file) {

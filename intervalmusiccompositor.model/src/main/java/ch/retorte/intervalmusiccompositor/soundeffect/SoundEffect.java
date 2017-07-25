@@ -9,24 +9,36 @@ public class SoundEffect {
 
   //---- Fields
 
-  private String title;
+  private String id;
   private AudioInputStream data;
+  private long durationMillis;
+
 
   //---- Constructor
 
-  public SoundEffect(String title, AudioInputStream data) {
-    this.title = title;
+  public SoundEffect(String id, AudioInputStream data) {
+    this.id = id;
     this.data = data;
+    this.durationMillis = getStreamLengthInMilliSecondsOf(data);
   }
+
 
   //---- Methods
 
-
-  public String getTitle() {
-    return title;
+  public String getId() {
+    return id;
   }
 
   public AudioInputStream getData() {
     return data;
   }
+
+  public long getDurationMillis() {
+    return durationMillis;
+  }
+
+  private long getStreamLengthInMilliSecondsOf(AudioInputStream inputStream) {
+    return (long) ((inputStream.getFrameLength() / inputStream.getFormat().getFrameRate()) * 1000);
+  }
+
 }

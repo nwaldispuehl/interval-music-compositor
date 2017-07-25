@@ -14,7 +14,7 @@ public class ArrayHelper {
 
   private static final String ITEM_DELIMITER = "-";
 
-  public static List<Integer> arrayToList(int[] array) {
+  static List<Integer> arrayToList(int[] array) {
     List<Integer> result = Lists.newArrayList();
     for (Integer e : array) {
       result.add(e);
@@ -128,7 +128,7 @@ public class ArrayHelper {
 	 * @param list the list of items to be pretty printed.
 	 * @return String representation of the elements of said list
 	 */
-	public static String prettyPrintList(List<Integer> list) {
+	static String prettyPrintList(List<Integer> list) {
 		String result = "";
 		
 		for(int i = 0; i < list.size(); i++) {

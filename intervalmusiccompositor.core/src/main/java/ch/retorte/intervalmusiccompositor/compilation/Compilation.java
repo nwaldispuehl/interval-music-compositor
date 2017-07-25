@@ -5,6 +5,7 @@ import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.list.BlendMode.CROSS;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.sound.sampled.AudioInputStream;
 
@@ -13,6 +14,7 @@ import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.playlist.Playlist;
 import ch.retorte.intervalmusiccompositor.playlist.PlaylistItem;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
 
@@ -52,6 +54,16 @@ public class Compilation {
 
       if (playlist.getBlendMode() == CROSS) {
         currentPosition -= soundHelper.getSamplesFromSeconds(0.5 * playlist.getBlendTime());
+      }
+    }
+
+    if (playlist.hasSoundEffects()) {
+      for (SoundEffectOccurrence s : playlist.getSoundEffects()) {
+        addDebugMessage("Adding sound effect " + s.getSoundEffect().getId() + " at " + s.getTimeMillis());
+
+        byte[] soundEffect = soundHelper.convert(s.getSoundEffect().getData());
+        int soundEffectStartSamples = soundHelper.getSamplesFromSeconds(s.getTimeMillis() / 1000);
+        arrayMerge16bit(soundEffect, 0, result, soundEffectStartSamples, soundEffect.length);
       }
     }
 

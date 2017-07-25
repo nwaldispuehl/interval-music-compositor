@@ -22,6 +22,8 @@ import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -33,8 +35,12 @@ import com.google.common.collect.Maps;
  */
 public class Playlist implements Iterable<PlaylistItem> {
 
+  //---- Fields
+
   private MessageFormatBundle bundle = getBundle("core_imc");
   private List<PlaylistItem> playlistItems = newArrayList();
+
+  private List<SoundEffectOccurrence> soundEffects = newArrayList();
 
   private Long startCutOffInMilliseconds = Long.parseLong(bundle.getString("imc.audio.cutoff.start"));
   private Long endCutOffInMilliseconds = Long.parseLong(bundle.getString("imc.audio.cutoff.end"));
@@ -48,6 +54,9 @@ public class Playlist implements Iterable<PlaylistItem> {
 
   private Map<IAudioFile, Long> currentProgress = Maps.newConcurrentMap();
   private MessageProducer messageProducer;
+
+
+  //---- Constructor
 
   @VisibleForTesting
   Playlist(MessageProducer messageProducer) {
@@ -67,12 +76,17 @@ public class Playlist implements Iterable<PlaylistItem> {
     this(p.getBlendMode(), p.getBlendDuration(), p.getEnumerationMode(), p.getListSortMode(), messageProducer);
   }
 
+
+  //---- Methods
+
   public void generatePlaylist(List<IAudioFile> musicFiles,
                                List<Integer> musicPattern,
                                List<IAudioFile> breakFiles,
                                List<Integer> breakPattern,
-                               Integer iterations) {
+                               Integer iterations,
+                               List<SoundEffectOccurrence> soundEffectOccurrences) {
     playlistItems = generatePlaylistFrom(musicFiles, musicPattern, breakFiles, breakPattern, iterations);
+    generateSoundEffectListFrom(musicPattern, breakPattern, iterations, soundEffectOccurrences);
   }
 
   @VisibleForTesting
@@ -242,7 +256,43 @@ public class Playlist implements Iterable<PlaylistItem> {
     return createPlaylistItem(audioFile, trackStart, trackStart + extractLengthInMilliseconds);
   }
 
+  private void generateSoundEffectListFrom(List<Integer> musicPattern, List<Integer> breakPattern, Integer iterations, List<SoundEffectOccurrence> soundEffectOccurrences) {
+    for (SoundEffectOccurrence soundEffectOccurrence : soundEffectOccurrences) {
+      generateSoundEffectListFrom(musicPattern, breakPattern, iterations, soundEffectOccurrence);
+    }
+  }
 
+  @VisibleForTesting
+  void generateSoundEffectListFrom(List<Integer> musicPattern, List<Integer> breakPattern, Integer iterations, SoundEffectOccurrence soundEffectOccurrence) {
+    SoundEffect soundEffect = soundEffectOccurrence.getSoundEffect();
+    long instanceTimeMillis = soundEffectOccurrence.getTimeMillis();
+    long totalLengthMillis = getTotalLength();
+
+    long timeSoFar = 0;
+    for (int i = 0; i < iterations; i++) {
+      long musicTime = musicPattern.get(i % musicPattern.size()) * 1000;
+
+      long breakTime = 0;
+      if (!breakPattern.isEmpty()) {
+        breakTime = breakPattern.get(i % breakPattern.size()) * 1000;
+      }
+
+      long timeMillis = timeSoFar + instanceTimeMillis;
+      if (timeMillis + soundEffect.getDurationMillis() <= totalLengthMillis) {
+        soundEffects.add(new SoundEffectOccurrence(soundEffect, timeMillis));
+      }
+
+      timeSoFar = timeSoFar + musicTime + breakTime;
+    }
+  }
+
+  public boolean hasSoundEffects() {
+    return !soundEffects.isEmpty();
+  }
+
+  public List<SoundEffectOccurrence> getSoundEffects() {
+    return soundEffects;
+  }
 
   private PlaylistItem createPlaylistItem(IAudioFile audioFile, Long startInMilliseconds, Long endInMilliseconds) {
     return new PlaylistItem(audioFile, startInMilliseconds, endInMilliseconds);

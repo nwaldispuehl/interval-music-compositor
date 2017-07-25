@@ -7,9 +7,11 @@ import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT;
 import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT_REV;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.Integer.valueOf;
+import static javafx.collections.FXCollections.observableArrayList;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +30,8 @@ import ch.retorte.intervalmusiccompositor.compilation.CompilationGenerator;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.messagebus.*;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.MusicCompilationControl;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
@@ -36,9 +40,9 @@ import ch.retorte.intervalmusiccompositor.spi.Ui;
 import ch.retorte.intervalmusiccompositor.spi.audio.MusicPlayer;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
+import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.util.AudioFilesLoader;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -46,21 +50,22 @@ import javafx.collections.ObservableList;
  * 
  * @author nw
  */
-class MainControl implements MusicListControl, MusicCompilationControl, ProgramControl, ApplicationData {
+class MainControl implements MusicListControl, MusicCompilationControl, ProgramControl, ApplicationData, SoundEffectsProvider {
 
   private static final int ONE_DAY_IN_MILLISECONDS = 86400000;
 
   private ListSortMode musicListSortMode = null;
   private int maxListEntries;
 
-  private ObservableList<IAudioFile> musicList =  FXCollections.observableArrayList();
-  private ObservableList<IAudioFile> breakList =  FXCollections.observableArrayList();
+  private ObservableList<IAudioFile> musicList =  observableArrayList();
+  private ObservableList<IAudioFile> breakList =  observableArrayList();
 
   private CreateCacheJobManager createCacheJobManager;
 
   private CompilationGenerator compilationGenerator;
   private AudioFileFactory audioFileFactory;
   private MusicPlayer musicPlayer;
+  private SoundEffectsProvider soundEffectsProvider;
   private MessageBus messageBus;
   private Ui ui;
 
@@ -70,10 +75,11 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   private String temporaryFileSuffix;
   private int maximumImportWorkerThreads;
 
-  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, MusicPlayer musicPlayer, MessageBus messageBus) {
+  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, MusicPlayer musicPlayer, SoundEffectsProvider soundEffectsProvider, MessageBus messageBus) {
     this.compilationGenerator = compilationGenerator;
     this.audioFileFactory = audioFileFactory;
     this.musicPlayer = musicPlayer;
+    this.soundEffectsProvider = soundEffectsProvider;
     this.messageBus = messageBus;
 
     this.compilationGenerator.setMusicListControl(this);
@@ -121,6 +127,10 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
       addDebugMessage("Not enough usable tracks; aborting.");
       return;
     }
+
+    // TODO: --- Test code; remove again
+    compilationParameters.setSoundEffectOccurrences(new SoundEffectOccurrence(soundEffectsProvider.getSoundEffects().iterator().next(), 5000));
+    // TODO: ---
 
     compilationGenerator.clearListeners();
     compilationGenerator.addListener(() -> {
@@ -308,7 +318,9 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
     }
     finally {
       if (tmpFile != null) {
-        tmpFile.delete();
+        if (!tmpFile.delete()) {
+          tmpFile.deleteOnExit();
+        }
       }
     }
   }
@@ -386,7 +398,7 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   }
 
   public void sortMusicList() {
-    Collections.sort(musicList, new AudioFileComparator());
+    musicList.sort(new AudioFileComparator());
 
     if (musicListSortMode == SORT) {
       musicListSortMode = SORT_REV;
@@ -522,4 +534,8 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
     return programVersion;
   }
 
+  @Override
+  public Collection<SoundEffect> getSoundEffects() {
+    return soundEffectsProvider.getSoundEffects();
+  }
 }

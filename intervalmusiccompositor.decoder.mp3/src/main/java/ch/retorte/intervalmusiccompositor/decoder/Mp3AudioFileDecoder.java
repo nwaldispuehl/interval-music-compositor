@@ -16,23 +16,21 @@ import javazoom.jl.decoder.Bitstream;
 import javazoom.jl.decoder.BitstreamException;
 import javazoom.spi.mpeg.sampled.convert.DecodedMpegAudioInputStream;
 import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
-import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 
 import static com.google.common.collect.Lists.newArrayList;
 
 /**
- * @author nw
+ * Decodes MP3 files.
  */
 public class Mp3AudioFileDecoder implements AudioFileDecoder {
 
+  //---- Fields
+
   private Mp3FileProperties mp3File = new Mp3FileProperties();
 
-  private AudioStandardizer audioStandardizer;
 
-  public Mp3AudioFileDecoder(AudioStandardizer audioStandardizer) {
-    this.audioStandardizer = audioStandardizer;
-  }
+  //---- Methods
 
   @Override
   public AudioInputStream decode(File inputFile) throws UnsupportedAudioFileException, IOException {
@@ -78,7 +76,7 @@ public class Mp3AudioFileDecoder implements AudioFileDecoder {
     // result = new MpegFormatConversionProvider().getAudioInputStream(TARGET_ENCODING, mp3Dmais);
     // result = AudioSystem.getAudioInputStream(TARGET_ENCODING, mp3Dmais);
 
-    return audioStandardizer.standardize(tidyStream(result));
+    return tidyStream(result);
   }
 
   @Override

@@ -8,12 +8,16 @@ import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SHUFFLE;
 import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,26 +29,32 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import com.google.common.collect.Lists;
 
 /**
- * @author nw
+ * Unit test for the {@link Playlist}.
  */
 public class PlaylistTest {
+
+  //---- Statics
 
   private static final String MUSIC = "music";
   private static final String BREAK = "break";
 
-  MessageProducer msgPrd = mock(MessageProducer.class);
-  List<IAudioFile> musicList;
-  List<Integer> musicPattern;
-  List<IAudioFile> breakList;
-  List<Integer> breakPattern;
+  //---- Fields
 
-  IAudioFile musicTrack20s = createAudioFileMockWithLength(sec(20), MUSIC);
-  IAudioFile musicTrack40s = createAudioFileMockWithLength(sec(40), MUSIC);
-  IAudioFile musicTrack60s = createAudioFileMockWithLength(sec(60), MUSIC);
-  IAudioFile breakTrack = createAudioFileMockWithLength(sec(60), BREAK);
+  private MessageProducer msgPrd = mock(MessageProducer.class);
+  private List<IAudioFile> musicList;
+  private List<Integer> musicPattern;
+  private List<IAudioFile> breakList;
+  private List<Integer> breakPattern;
+  private List<SoundEffectOccurrence> soundEffectOccurrences;
 
+  private IAudioFile musicTrack20s = createAudioFileMockWithLength(sec(20), MUSIC);
+  private IAudioFile musicTrack40s = createAudioFileMockWithLength(sec(40), MUSIC);
+  private IAudioFile musicTrack60s = createAudioFileMockWithLength(sec(60), MUSIC);
+  private IAudioFile breakTrack = createAudioFileMockWithLength(sec(60), BREAK);
 
+  private SoundEffect soundEffect1 = mock(SoundEffect.class);
 
+  //---- Methods
 
   @Before
   public void setup() {
@@ -52,6 +62,9 @@ public class PlaylistTest {
     musicPattern = newArrayList();
     breakList = newArrayList();
     breakPattern = newArrayList();
+    soundEffectOccurrences = newArrayList();
+
+    when(soundEffect1.getDurationMillis()).thenReturn(2000L);
   }
 
   @Test
@@ -294,6 +307,67 @@ public class PlaylistTest {
   }
 
   @Test
+  public void shouldPlaceSpecialEffectsWithSimplePattern() {
+    // given
+    Playlist playlist = new Playlist(SEPARATE, 0d, CONTINUOUS, SHUFFLE, msgPrd);
+    musicList.add(musicTrack60s);
+    musicPattern = pattern(10);
+    breakPattern = pattern(10);
+    soundEffectOccurrences.add(new SoundEffectOccurrence(soundEffect1, 15000));
+
+    // when
+    playlist.generatePlaylist(musicList, musicPattern, breakList, breakPattern, 3, soundEffectOccurrences);
+
+    // then
+    assertTrue(playlist.hasSoundEffects());
+    List<SoundEffectOccurrence> soundEffects = playlist.getSoundEffects();
+    assertThat(soundEffects.get(0).getTimeMillis(), is(15000L));
+    assertThat(soundEffects.get(1).getTimeMillis(), is(35000L));
+    assertThat(soundEffects.get(2).getTimeMillis(), is(55000L));
+  }
+
+  @Test
+  public void shouldPlaceSpecialEffectsWithComplexPattern() {
+    // given
+    Playlist playlist = new Playlist(SEPARATE, 0d, CONTINUOUS, SHUFFLE, msgPrd);
+    musicList.add(musicTrack60s);
+    musicPattern = pattern(10, 5);
+    breakPattern = pattern(3, 2);
+    soundEffectOccurrences.add(new SoundEffectOccurrence(soundEffect1, 6000));
+
+    // when
+    playlist.generatePlaylist(musicList, musicPattern, breakList, breakPattern, 5, soundEffectOccurrences);
+
+    // then
+    assertTrue(playlist.hasSoundEffects());
+    List<SoundEffectOccurrence> soundEffects = playlist.getSoundEffects();
+    assertThat(soundEffects.get(0).getTimeMillis(), is(6000L));
+    assertThat(soundEffects.get(1).getTimeMillis(), is(19000L));
+    assertThat(soundEffects.get(2).getTimeMillis(), is(26000L));
+    assertThat(soundEffects.get(3).getTimeMillis(), is(39000L));
+    assertThat(soundEffects.get(4).getTimeMillis(), is(46000L));
+  }
+
+  @Test
+  public void shouldNotPlaceSpecialEffectIfItExceedsTotalLength() {
+    // given
+    Playlist playlist = new Playlist(SEPARATE, 0d, CONTINUOUS, SHUFFLE, msgPrd);
+    musicList.add(musicTrack60s);
+    musicPattern = pattern(10);
+    soundEffectOccurrences.add(new SoundEffectOccurrence(soundEffect1, 9000));
+
+    // when
+    playlist.generatePlaylist(musicList, musicPattern, breakList, breakPattern, 2, soundEffectOccurrences);
+
+    // then
+    assertTrue(playlist.hasSoundEffects());
+    List<SoundEffectOccurrence> soundEffects = playlist.getSoundEffects();
+    assertThat(soundEffects.size(), is(1));
+    assertThat(soundEffects.get(0).getTimeMillis(), is(9000L));
+  }
+
+
+  @Test
   public void shouldNotThrowExceptionInContinuousShuffleMode() {
     // given
     Playlist playlist = new Playlist(SEPARATE, 0d, CONTINUOUS, SHUFFLE, msgPrd);
@@ -313,6 +387,9 @@ public class PlaylistTest {
     assertThat(tracks.get(1).getAudioFile(), is(musicTrack20s));
     assertThat(tracks.get(2).getAudioFile(), is(musicTrack20s));
   }
+
+
+  //---- Helper methods
 
   private long sec(int seconds) {
     return (long) seconds * 1000;
@@ -340,4 +417,6 @@ public class PlaylistTest {
     when(result.toString()).thenReturn(name + " " + durationInMilliseconds/1000 + "s");
     return result;
   }
+
+
 }

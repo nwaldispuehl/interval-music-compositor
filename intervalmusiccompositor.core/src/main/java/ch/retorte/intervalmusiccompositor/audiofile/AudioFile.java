@@ -20,6 +20,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import ch.retorte.intervalmusiccompositor.ChangeListener;
+import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 import org.tritonus.sampled.file.WaveAudioFileReader;
 import org.tritonus.sampled.file.WaveAudioFileWriter;
 
@@ -68,17 +69,19 @@ public class AudioFile extends File implements IAudioFile {
   private List<AudioFileDecoder> audioFileDecoders;
   private BPMReaderWriter bpmReaderWriter;
   private BPMCalculator bpmCalculator;
+  private AudioStandardizer audioStandardizer;
   private MessageProducer messageProducer;
 
   private Collection<ChangeListener<IAudioFile>> changeListeners = newArrayList();
 
   public AudioFile(String pathname, SoundHelper soundHelper, List<AudioFileDecoder> audioFileDecoders, BPMReaderWriter bpmReaderWriter,
-      BPMCalculator bpmCalculator, MessageProducer messageProducer) {
+                   BPMCalculator bpmCalculator, AudioStandardizer audioStandardizer, MessageProducer messageProducer) {
     super(pathname);
     this.soundHelper = soundHelper;
     this.audioFileDecoders = audioFileDecoders;
     this.bpmReaderWriter = bpmReaderWriter;
     this.bpmCalculator = bpmCalculator;
+    this.audioStandardizer = audioStandardizer;
     this.messageProducer = messageProducer;
 
     displayName = super.getName();
@@ -196,6 +199,7 @@ public class AudioFile extends File implements IAudioFile {
     // Now check if the track is long enough
     if (duration < startCutOff + endCutOff) {
       setStatus(AudioFileStatus.ERROR);
+      // FIXME (2017-07-25 nw): Formatted time has wrong format; for 2s it prints '01:00:02'.
       errorMessage = "Track too short! (Duration: " + getFormattedTime(duration) + " s)";
     }
     else {
@@ -207,7 +211,8 @@ public class AudioFile extends File implements IAudioFile {
 
     for (AudioFileDecoder decoder : audioFileDecoders) {
       try {
-        return decoder.decode(this);
+        AudioInputStream sourceFileStream = decoder.decode(this);
+        return audioStandardizer.standardize(sourceFileStream);
       }
       catch (Exception e) {
         addDebugMessage("Audio decoder complained for file '" + getDisplayName() + "': " + e.getMessage());

@@ -6,9 +6,7 @@ import ch.retorte.intervalmusiccompositor.playlist.Playlist;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
 import com.google.common.collect.Lists;
-import org.hamcrest.CoreMatchers;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.tritonus.sampled.file.WaveAudioFileReader;
@@ -21,6 +19,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -36,8 +35,8 @@ public class CompilationTest {
 
   //---- Fields
 
-  private List<IAudioFile> musicFiles = Lists.newArrayList();
-  private List<IAudioFile> breakFiles = Lists.newArrayList();
+  private List<IAudioFile> musicFiles = newArrayList();
+  private List<IAudioFile> breakFiles = newArrayList();
 
   private SoundHelper soundHelper = new SoundHelper(m -> {});
   private Compilation sut = new Compilation(soundHelper, m -> {});
@@ -85,12 +84,12 @@ public class CompilationTest {
   private Playlist playlistWith(int iterations, List<Integer> musicIntervals, List<Integer> breakIntervals) {
     CompilationParameters parameters = new CompilationParameters();
     Playlist playlist = new Playlist(parameters, m -> {});
-    playlist.generatePlaylist(musicFiles, musicIntervals, breakFiles, breakIntervals, iterations);
+    playlist.generatePlaylist(musicFiles, musicIntervals, breakFiles, breakIntervals, iterations, newArrayList());
     return playlist;
   }
 
   private <T> List<T> l(T... items) {
-    return Lists.newArrayList(items);
+    return newArrayList(items);
   }
 
   private byte b(int i) {
@@ -99,7 +98,7 @@ public class CompilationTest {
 
   private IAudioFile audioFileFrom(String resource) throws IOException, UnsupportedAudioFileException {
     URL resourceUrl = getClass().getResource(resource);
-    AudioFile audioFile = new AudioFile(resourceUrl.getFile(), soundHelper, l(new WaveDecoder()), null, null, m -> {});
+    AudioFile audioFile = new AudioFile(resourceUrl.getFile(), soundHelper, l(new WaveDecoder()), null, null, a -> a, m -> {});
     audioFile.createCache();
     return audioFile;
   }

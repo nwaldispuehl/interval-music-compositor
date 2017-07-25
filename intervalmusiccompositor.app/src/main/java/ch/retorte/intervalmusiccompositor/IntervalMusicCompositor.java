@@ -40,6 +40,7 @@ import ch.retorte.intervalmusiccompositor.spi.bpm.BPMCalculator;
 import ch.retorte.intervalmusiccompositor.spi.bpm.BPMReaderWriter;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
+import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
 import ch.retorte.intervalmusiccompositor.util.UpdateChecker;
@@ -129,7 +130,7 @@ class IntervalMusicCompositor {
   }
 
   private MainControl createMainControl() {
-    return new MainControl(createCompilationGenerator(), createAudioFileFactory(), createMusicPlayer(), messageBus);
+    return new MainControl(createCompilationGenerator(), createAudioFileFactory(), createMusicPlayer(), createSoundEffectProvider(), messageBus);
   }
 
   private CompilationGenerator createCompilationGenerator() {
@@ -137,18 +138,18 @@ class IntervalMusicCompositor {
   }
 
   private AudioFileFactory createAudioFileFactory() {
-    return new AudioFileFactory(soundHelper, getAudioFileDecoders(), getBpmReaderWriters(), createBpmCalculator(), messageBus);
+    AudioStandardizer audioStandardizer = new SoundHelper(messageBus);
+    return new AudioFileFactory(soundHelper, getAudioFileDecoders(), getBpmReaderWriters(), createBpmCalculator(), audioStandardizer, messageBus);
   }
 
   private Collection<AudioFileDecoder> getAudioFileDecoders() {
-    AudioStandardizer audioStandardizer = new SoundHelper(messageBus);
     List<AudioFileDecoder> decoders = newArrayList();
 
-    decoders.add(new AacAudioFileDecoder(audioStandardizer));
-    decoders.add(new WaveAudioFileDecoder(audioStandardizer));
-    decoders.add(new FlacAudioFileDecoder(audioStandardizer));
-    decoders.add(new Mp3AudioFileDecoder(audioStandardizer));
-    decoders.add(new OggAudioFileDecoder(audioStandardizer));
+    decoders.add(new AacAudioFileDecoder());
+    decoders.add(new WaveAudioFileDecoder());
+    decoders.add(new FlacAudioFileDecoder());
+    decoders.add(new Mp3AudioFileDecoder());
+    decoders.add(new OggAudioFileDecoder());
 
     return decoders;
   }
@@ -183,6 +184,10 @@ class IntervalMusicCompositor {
 
   private ExtractMusicPlayer createMusicPlayer() {
     return new ExtractMusicPlayer(messageBus);
+  }
+
+  private SoundEffectsProvider createSoundEffectProvider() {
+    return new BuiltInSoundEffectsProvider();
   }
 
   private Ui createUserInterface(MainControl control) {

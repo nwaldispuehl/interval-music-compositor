@@ -11,23 +11,21 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import org.tritonus.sampled.convert.PCM2PCMConversionProvider;
 import org.tritonus.sampled.file.WaveAudioFileReader;
 
-import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 
 import static com.google.common.collect.Lists.newArrayList;
 
 /**
- * @author nw
+ * Decodes WAV files
  */
 public class WaveAudioFileDecoder implements AudioFileDecoder {
 
+  //---- Fields
+
   private final WaveFileProperties waveFile = new WaveFileProperties();
 
-  private final AudioStandardizer audioStandardizer;
 
-  public WaveAudioFileDecoder(AudioStandardizer normalizer) {
-    this.audioStandardizer = normalizer;
-  }
+  //---- Methods
 
   @Override
   public AudioInputStream decode(File inputFile) throws UnsupportedAudioFileException, IOException {
@@ -42,7 +40,7 @@ public class WaveAudioFileDecoder implements AudioFileDecoder {
 
     result = new PCM2PCMConversionProvider().getAudioInputStream(decodedFormat, ais);
 
-    return audioStandardizer.standardize(result);
+    return result;
   }
 
   @Override

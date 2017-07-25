@@ -3,6 +3,7 @@ package ch.retorte.intervalmusiccompositor.compilation;
 import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 
@@ -34,6 +35,7 @@ public class CompilationParameters {
 
   private List<Integer> musicPattern = new ArrayList<>();
   private List<Integer> breakPattern = new ArrayList<>();
+  private List<SoundEffectOccurrence> soundEffectOccurrences = new ArrayList<>();
   private int iterations;
   private BlendMode blendMode = DEFAULT_BLEND_MODE;
   private double blendDuration = DEFAULT_BLEND_DURATION;
@@ -54,6 +56,7 @@ public class CompilationParameters {
     musicPattern.clear();
     musicPattern.add(period);
   }
+
 
   public List<Integer> getMusicPattern() {
     return musicPattern;
@@ -84,6 +87,16 @@ public class CompilationParameters {
       }
     }
     return result;
+  }
+
+
+  public void setSoundEffectOccurrences(SoundEffectOccurrence soundEffectOccurrence) {
+    this.soundEffectOccurrences.clear();
+    this.soundEffectOccurrences.add(soundEffectOccurrence);
+  }
+
+  public List<SoundEffectOccurrence> getSoundEffectOccurrences() {
+    return soundEffectOccurrences;
   }
 
   private void setBlendMode(BlendMode blendMode) {
