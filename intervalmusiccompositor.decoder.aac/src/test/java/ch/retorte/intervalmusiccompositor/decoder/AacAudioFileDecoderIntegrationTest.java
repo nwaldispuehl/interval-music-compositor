@@ -2,7 +2,6 @@ package ch.retorte.intervalmusiccompositor.decoder;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,13 +11,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
-import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 
 /**
  * Integration tests for the {@link AacAudioFileDecoder}.
@@ -27,18 +20,6 @@ import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
  */
 public class AacAudioFileDecoderIntegrationTest {
 
-  AudioStandardizer audioStandardizer = Mockito.mock(AudioStandardizer.class);
-
-  @Before
-  public void setup() {
-    when(audioStandardizer.standardize(Mockito.any(AudioInputStream.class))).then(new Answer<AudioInputStream>() {
-      @Override
-      public AudioInputStream answer(InvocationOnMock invocation) throws Throwable {
-        return (AudioInputStream) invocation.getArguments()[0];
-      }
-    });
-  }
-
   @Test
   public void shouldDecodeAac() throws UnsupportedAudioFileException, IOException {
     // given
@@ -46,7 +27,7 @@ public class AacAudioFileDecoderIntegrationTest {
     File aacFile = new File(resource.getFile());
 
     // when
-    AudioInputStream decodedStream = new AacAudioFileDecoder(audioStandardizer).decode(aacFile);
+    AudioInputStream decodedStream = new AacAudioFileDecoder().decode(aacFile);
 
     // then
     assertThat(decodedStream.getFormat().getEncoding(), is(AudioFormat.Encoding.PCM_SIGNED));
