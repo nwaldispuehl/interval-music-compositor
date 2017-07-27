@@ -7,14 +7,12 @@ import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.list.BlendMode.CROSS;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import ch.retorte.intervalmusiccompositor.audio.AudioStreamUtil;
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
-import ch.retorte.intervalmusiccompositor.commons.ArrayHelper;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.playlist.Playlist;
@@ -31,6 +29,12 @@ import ch.retorte.intervalmusiccompositor.util.SoundHelper;
  * @author nw
  */
 public class Compilation {
+
+  //---- Static
+
+  private static final double SOUND_EFFECT_BOUNDARY_FADE_DURATION_S = 0.2;
+
+  //---- Fields
 
   private MessageFormatBundle bundle = getBundle("core_imc");
 
@@ -74,31 +78,29 @@ public class Compilation {
   }
 
   private void addSoundEffect(byte[] compilation, SoundEffectOccurrence soundEffectOccurrence) throws IOException, UnsupportedAudioFileException {
-
-    // TODO fade 0.2 s before and after sound effect
-
-//    soundHelper.linearBlend(playlistItemByteArray, playlist.getBlendTime());
-
-    int boundarySamples = soundHelper.getSamplesFromSeconds(0.2);
+    int boundarySamples = soundHelper.getSamplesFromSeconds(SOUND_EFFECT_BOUNDARY_FADE_DURATION_S);
 
     byte[] soundEffect = audioFrom(soundEffectOccurrence.getSoundEffect());
     int soundEffectStartSamples = soundHelper.getSamplesFromSeconds(soundEffectOccurrence.getTimeMillis() / 1000);
     int soundEffectLengthSamples = soundHelper.getSamplesFromSeconds(soundEffectOccurrence.getSoundEffect().getDurationMillis() / 1000);
     int soundEffectEndSamples = soundEffectStartSamples + soundEffectLengthSamples;
 
-    // Fade in
-    byte[] beforeBoundary = extract(compilation, soundEffectStartSamples - boundarySamples, soundEffectStartSamples);
-    byte[] fadeOutBeforeBoundary = soundHelper.fadeOut(beforeBoundary);
-    insertAt(compilation, fadeOutBeforeBoundary, soundEffectStartSamples - boundarySamples);
+    // Fade in (We only fade in if there is data before)
+    if (0 <= soundEffectStartSamples - boundarySamples) {
+      byte[] beforeBoundary = extract(compilation, soundEffectStartSamples - boundarySamples, soundEffectStartSamples);
+      byte[] fadeOutBeforeBoundary = soundHelper.fadeOut(beforeBoundary);
+      insertAt(compilation, fadeOutBeforeBoundary, soundEffectStartSamples - boundarySamples);
+    }
 
     // Fade out (We only fade out if there is still compilation left)
     if (soundEffectEndSamples + boundarySamples <= compilation.length) {
       byte[] afterBoundary = extract(compilation, soundEffectEndSamples, soundEffectEndSamples + boundarySamples);
-      byte[] fadeOutAfterBoundary = soundHelper.fadeOut(afterBoundary);
+      byte[] fadeOutAfterBoundary = soundHelper.fadeIn(afterBoundary);
       insertAt(compilation, fadeOutAfterBoundary, soundEffectEndSamples);
     }
 
-    arrayMerge16bit(soundEffect, 0, compilation, soundEffectStartSamples, soundEffect.length);
+    // Plug in sound effect
+    insertAt(compilation, soundEffect, soundEffectStartSamples);
   }
 
   private byte[] audioFrom(SoundEffect soundEffect) throws IOException, UnsupportedAudioFileException {

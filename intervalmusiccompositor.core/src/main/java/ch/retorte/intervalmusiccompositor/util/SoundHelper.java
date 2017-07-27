@@ -290,6 +290,38 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     return sampleByteArray;
   }
 
+
+  public byte[] fadeOut(byte[] sample) {
+    return fade(sample, 1, 0);
+  }
+
+  public byte[] fadeIn(byte[] sample) {
+    return fade(sample, 0, 1);
+  }
+
+  /**
+   * Creates a faded (blended) copy of the provided sample, with linear fading from startFactor at the beginning to endFactor at the end.
+   * The two control arguments startFactor and endFactor are supposed to be in [0, 1].
+   */
+  private byte[] fade(byte[] sample, double startFactor, double endFactor) {
+    byte[] result = new byte[sample.length];
+
+    double delta = (endFactor - startFactor) / sample.length;
+
+    int audioValue;
+    for (int i = 0; i < sample.length; i = i + 2) {
+      audioValue = (sample[i] & 0xFF) | (sample[i + 1] << 8);
+
+      // Perform fading on audio value
+      audioValue = (int) Math.round((audioValue * startFactor) + (i * delta));
+
+      result[i] = (byte) (audioValue & 0xFF);
+      result[i + 1] = (byte) (audioValue >> 8);
+    }
+    return result;
+  }
+
+
   /*
    * The code below is taken from
    * http://www.jsresources.org/examples/AudioConverter.java.html
