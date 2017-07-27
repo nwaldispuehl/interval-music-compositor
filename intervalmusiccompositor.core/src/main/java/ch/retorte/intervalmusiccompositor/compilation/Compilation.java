@@ -8,12 +8,15 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
+import ch.retorte.intervalmusiccompositor.audio.AudioStreamUtil;
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.playlist.Playlist;
 import ch.retorte.intervalmusiccompositor.playlist.PlaylistItem;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
 import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
@@ -36,7 +39,7 @@ public class Compilation {
     this.messageProducer = messageProducer;
   }
 
-  synchronized byte[] generateCompilation(Playlist playlist) throws IOException {
+  synchronized byte[] generateCompilation(Playlist playlist) throws IOException, UnsupportedAudioFileException {
     byte[] result = new byte[soundHelper.getSamplesFromSeconds(playlist.getTotalLengthInSeconds())];
 
     addDebugMessage("Generate compilation of length: " + playlist.getTotalLengthInSeconds() + " s");
@@ -61,13 +64,18 @@ public class Compilation {
       for (SoundEffectOccurrence s : playlist.getSoundEffects()) {
         addDebugMessage("Adding sound effect " + s.getSoundEffect().getId() + " at " + s.getTimeMillis());
 
-        byte[] soundEffect = soundHelper.convert(s.getSoundEffect().getData());
+        byte[] soundEffect = audioFrom(s.getSoundEffect());
         int soundEffectStartSamples = soundHelper.getSamplesFromSeconds(s.getTimeMillis() / 1000);
         arrayMerge16bit(soundEffect, 0, result, soundEffectStartSamples, soundEffect.length);
       }
     }
 
     return result;
+  }
+
+  private byte[] audioFrom(SoundEffect soundEffect) throws IOException, UnsupportedAudioFileException {
+    AudioInputStream audioInputStream = new AudioStreamUtil().audioInputStreamFrom(soundEffect.getResourceStream());
+    return soundHelper.convert(audioInputStream);
   }
 
   private byte[] getByteArrayFrom(PlaylistItem playlistItem) throws IOException {

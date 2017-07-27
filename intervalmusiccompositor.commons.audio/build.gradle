@@ -1,0 +1,9 @@
+apply plugin: 'java'
+
+group = 'ch.retorte.intervalmusiccompositor'
+version = '2.7.0'
+
+dependencies {
+  compile 'com.tritonus:org.tritonus.share:0.3.6'
+  compile 'com.tritonus:org.tritonus.remaining:0.3.6'
+}

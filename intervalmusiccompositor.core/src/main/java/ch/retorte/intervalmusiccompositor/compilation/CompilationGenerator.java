@@ -31,6 +31,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import javafx.scene.image.WritableImage;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 /**
  * @author nw
  */
@@ -250,6 +252,11 @@ public class CompilationGenerator implements Runnable {
     }
     catch (OutOfMemoryError e) {
       String message = bundle.getString("ui.error.memory.introduction");
+      message += e.getMessage();
+
+      throw new CompilationException(message);
+    } catch (UnsupportedAudioFileException e) {
+      String message = bundle.getString("ui.error.soundeffectformat.introduction");
       message += e.getMessage();
 
       throw new CompilationException(message);

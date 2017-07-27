@@ -60,7 +60,7 @@ public class CompilationTest {
   //---- Test methods
 
   @Test
-  public void shouldGenerateCompilation() throws IOException {
+  public void shouldGenerateCompilation() throws IOException, UnsupportedAudioFileException {
     // given
     Playlist playList = playlistWith(1, l(1), l());
 

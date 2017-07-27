@@ -13,6 +13,6 @@ public class GongSoundEffect extends SoundEffect {
   //---- Constructor
 
   public GongSoundEffect() {
-    super(ID, new AudioStreamUtil().streamFromWaveResource(RESOURCE));
+    super(ID, RESOURCE, new AudioStreamUtil().lengthInMillisOf(RESOURCE));
   }
 }

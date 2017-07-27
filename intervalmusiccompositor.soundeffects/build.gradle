@@ -7,7 +7,5 @@ dependencies {
   compile project(':intervalmusiccompositor.spi')
   compile project(':intervalmusiccompositor.model')
   compile project(':intervalmusiccompositor.commons')
-
-  compile 'com.tritonus:org.tritonus.share:0.3.6'
-  compile 'com.tritonus:org.tritonus.remaining:0.3.6'
+  compile project(':intervalmusiccompositor.commons.audio')
 }
