@@ -29,6 +29,6 @@ public class AudioFileEncoderConverter extends StringConverter<AudioFileEncoder>
         return e;
       }
     }
-    throw new IllegalStateException("Identifier " + identifier + " not matches any encoder.");
+    throw new IllegalStateException("Identifier " + identifier + " does not match any encoders.");
   }
 }

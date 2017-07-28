@@ -5,6 +5,7 @@ import java.util.List;
 
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
 import javafx.collections.ObservableList;
 
 /**
@@ -71,6 +72,8 @@ public interface MusicListControl {
   void playMusicTrack(int index);
 
   void playBreakTrack(int index);
+
+  void playSoundEffect(SoundEffect soundEffect);
 
   void stopMusic();
 

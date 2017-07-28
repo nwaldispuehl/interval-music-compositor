@@ -7,4 +7,6 @@ dependencies {
   compile project(':intervalmusiccompositor.model')
   compile project(':intervalmusiccompositor.spi')
   compile project(':intervalmusiccompositor.commons')
+
+  compile 'org.apache.commons:commons-lang3:3.6'
 }

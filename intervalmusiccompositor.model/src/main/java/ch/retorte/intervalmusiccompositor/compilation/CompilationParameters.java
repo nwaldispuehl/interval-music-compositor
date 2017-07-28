@@ -90,7 +90,8 @@ public class CompilationParameters {
   }
 
 
-  public void setSoundEffectOccurrences(SoundEffectOccurrence soundEffectOccurrence) {
+  public void setSoundEffectOccurrence(SoundEffectOccurrence soundEffectOccurrence) {
+    /* Note that even though we technically have capabilities for multiple sound effects, we only allow one for now. */
     this.soundEffectOccurrences.clear();
     this.soundEffectOccurrences.add(soundEffectOccurrence);
   }
@@ -101,6 +102,10 @@ public class CompilationParameters {
 
   public boolean hasSoundEffects() {
     return !soundEffectOccurrences.isEmpty();
+  }
+
+  public void clearSoundEffects() {
+    soundEffectOccurrences.clear();
   }
 
   private void setBlendMode(BlendMode blendMode) {

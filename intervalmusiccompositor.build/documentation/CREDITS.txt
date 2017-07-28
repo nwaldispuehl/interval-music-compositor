@@ -96,3 +96,16 @@ http://lame.sourceforge.net/
 Java port from Ken Händel (http://sourceforge.net/projects/jsidplay2/)
 License: GNU Lesser General Public License V3
 
+
+Sound Effects
+-------------
+
+* Gong
+  "Large gong sound" by justsoundfx (https://www.youtube.com/user/justsoundfx/)
+  Src: https://www.youtube.com/watch?v=4K_B3k9ax8M
+  License: Standard YouTube License
+
+* Whistle / Double whistle
+  "Referee whistle blow, gymnasium.wav" by Julian Evans / SpliceSound (https://freesound.org/people/SpliceSound/)
+  Src: https://freesound.org/people/SpliceSound/sounds/218318/
+  License: Creative Commons 0 License (aka public domain)

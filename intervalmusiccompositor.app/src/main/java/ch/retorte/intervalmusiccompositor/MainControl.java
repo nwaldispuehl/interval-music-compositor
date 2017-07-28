@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ch.retorte.intervalmusiccompositor.audio.AudioStreamUtil;
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFileComparator;
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFileFactory;
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
@@ -31,13 +32,12 @@ import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.messagebus.*;
 import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.MusicCompilationControl;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.ProgramControl;
 import ch.retorte.intervalmusiccompositor.spi.Ui;
-import ch.retorte.intervalmusiccompositor.spi.audio.MusicPlayer;
+import ch.retorte.intervalmusiccompositor.spi.audio.AudioFileMusicPlayer;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
@@ -64,7 +64,7 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
 
   private CompilationGenerator compilationGenerator;
   private AudioFileFactory audioFileFactory;
-  private MusicPlayer musicPlayer;
+  private AudioFileMusicPlayer musicPlayer;
   private SoundEffectsProvider soundEffectsProvider;
   private MessageBus messageBus;
   private Ui ui;
@@ -75,7 +75,7 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   private String temporaryFileSuffix;
   private int maximumImportWorkerThreads;
 
-  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, MusicPlayer musicPlayer, SoundEffectsProvider soundEffectsProvider, MessageBus messageBus) {
+  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, AudioFileMusicPlayer musicPlayer, SoundEffectsProvider soundEffectsProvider, MessageBus messageBus) {
     this.compilationGenerator = compilationGenerator;
     this.audioFileFactory = audioFileFactory;
     this.musicPlayer = musicPlayer;
@@ -416,6 +416,16 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   public void playBreakTrack(int index) {
     if (0 <= index && index < breakList.size()) {
       musicPlayer.play(breakList.get(index));
+    }
+  }
+
+  @Override
+  public void playSoundEffect(SoundEffect soundEffect) {
+    try {
+      musicPlayer.play(new AudioStreamUtil().audioInputStreamFrom(soundEffect.getResourceStream()));
+    } catch (Exception e) {
+      messageBus.send(new ErrorMessage("Not able to play back sound effect: " + e.getMessage()));
+      addDebugMessage(e);
     }
   }
 

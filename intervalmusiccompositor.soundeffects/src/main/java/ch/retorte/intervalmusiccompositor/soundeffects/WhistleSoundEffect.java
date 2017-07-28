@@ -4,18 +4,18 @@ import ch.retorte.intervalmusiccompositor.audio.AudioStreamUtil;
 import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
 
 /**
- * Represents the gong sound effect.
+ * Represents the whistle sound effect.
  */
-public class GongSoundEffect extends SoundEffect {
+public class WhistleSoundEffect extends SoundEffect {
 
   //---- Static
 
-  private final static String ID = "gong";
-  private final static String RESOURCE = "/gong_2s.wav";
+  private final static String ID = "whistle";
+  private final static String RESOURCE = "/whistle_1s.wav";
 
   //---- Constructor
 
-  public GongSoundEffect() {
+  public WhistleSoundEffect() {
     super(ID, RESOURCE, new AudioStreamUtil().lengthInMillisOf(RESOURCE));
   }
 }

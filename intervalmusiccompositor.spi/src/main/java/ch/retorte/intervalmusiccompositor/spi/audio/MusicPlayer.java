@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.spi.audio;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import javax.sound.sampled.AudioInputStream;
 
 /**
  * Implementations know how to play music.
@@ -10,11 +10,11 @@ import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 public interface MusicPlayer {
 
   /**
-   * Starts to play the provided audio file.
+   * Starts to play the provided audio input stream.
    * 
-   * @param audioFile the audio file to play.
+   * @param audioInputStream the audio input stream to play.
    */
-  void play(IAudioFile audioFile);
+  void play(AudioInputStream audioInputStream);
 
   /**
    * Ceases to play audio file.

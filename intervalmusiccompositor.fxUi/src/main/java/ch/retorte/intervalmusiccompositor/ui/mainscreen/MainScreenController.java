@@ -206,6 +206,8 @@ public class MainScreenController implements Initializable {
   private SoundEffectsProvider soundEffectsProvider;
   private List<AudioFileDecoder> audioFileDecoders;
 
+  ChangeListener<Void> musicAndBreakPatternChangeListener;
+
   //---- Methods
 
   @Override
@@ -367,7 +369,10 @@ public class MainScreenController implements Initializable {
 
   private void initializeSoundEffects() {
     // TODO
-    soundEffectsContainer.getChildren().add(new SoundEffectsPane(soundEffectsProvider));
+
+    SoundEffectsPane soundEffectsPane = new SoundEffectsPane(soundEffectsProvider, compilationParameters, musicListControl, messageProducer, (obs,oldVal,newVal) -> updateEnvelopeImage());
+    musicAndBreakPatternChangeListener = soundEffectsPane.getMusicAndBreakPatternChangeListener();
+    soundEffectsContainer.getChildren().add(soundEffectsPane);
   }
 
   private void initializeOutputFileFormat() {
@@ -442,7 +447,7 @@ public class MainScreenController implements Initializable {
   private void updateEnvelopeImage() {
     if (compilationParameters.hasUsableData()) {
       BarChart bar = new BarChart(720, 162);
-      bar.generate(compilationParameters.getMusicPattern(), compilationParameters.getBreakPattern(), compilationParameters.getIterations(), false);
+      bar.generate(compilationParameters.getMusicPattern(), compilationParameters.getBreakPattern(), compilationParameters.getIterations(), compilationParameters.getSoundEffectOccurrences(), false);
       imageView.setImage(bar.getWritableImage());
     }
     else {
@@ -537,7 +542,7 @@ public class MainScreenController implements Initializable {
   }
 
   private DebugMessageEventHandler debugHandlerWith(String id) {
-    return new DebugMessageEventHandler(id, messageProducer);
+    return new DebugMessageEventHandler(MainScreenController.this, id, messageProducer);
   }
 
   private UpdateDependentUiWidgetsHandler updateUiHandler() {
@@ -550,6 +555,11 @@ public class MainScreenController implements Initializable {
     updateEnvelopeImage();
     updateSortModeLabel();
     updateTrackCount();
+    updateSoundEffectPane();
+  }
+
+  private void updateSoundEffectPane() {
+    musicAndBreakPatternChangeListener.changed(null, null, null);
   }
 
   private void updateTrackCount() {
@@ -561,23 +571,8 @@ public class MainScreenController implements Initializable {
     trackCount.setText(labelText);
   }
 
+
   //---- Inner classes
-
-  private class DebugMessageEventHandler implements ChangeListener<Object> {
-
-    private String id;
-    private MessageProducer messageProducer;
-
-    DebugMessageEventHandler(String id, MessageProducer messageProducer) {
-      this.id = id;
-      this.messageProducer = messageProducer;
-    }
-
-    @Override
-    public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
-      messageProducer.send(new DebugMessage(MainScreenController.this, "Changed contents of field '" + id + "' from: '" + oldValue + "' to '" + newValue + "'"));
-    }
-  }
 
   private class UpdateDependentUiWidgetsHandler implements ChangeListener<Object> {
     @Override

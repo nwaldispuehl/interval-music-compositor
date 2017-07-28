@@ -1,5 +1,6 @@
 package ch.retorte.intervalmusiccompositor.ui.graphics;
 
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
 import javafx.scene.canvas.Canvas;
@@ -60,7 +61,7 @@ public class BarChart {
   /**
    * Generates the bar chart.
    */
-  public void generate(List<Integer> soundPattern, List<Integer> breakPattern, Integer iterations, Boolean hasBreakTrack) {
+  public void generate(List<Integer> soundPattern, List<Integer> breakPattern, Integer iterations, List<SoundEffectOccurrence> soundEffectOccurrences, Boolean hasBreakTrack) {
 
     Canvas canvas = new Canvas(image.getWidth(), image.getHeight());
     GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
@@ -91,6 +92,7 @@ public class BarChart {
     Color darkBlue = Color.rgb(55, 119, 248);
     Color lightBlue = Color.rgb(113, 174, 243);
     Color evenLighterBlue = Color.rgb(182, 216, 255);
+    Color soundEffectsColor = Color.rgb(182, 216, 123);
     Color textColor = Color.GRAY;
 
     double top = 0;
@@ -151,6 +153,19 @@ public class BarChart {
 
         if (has(breakPattern)) {
           p = p + (breakPattern.get(j % breakPattern.size()) * scale);
+        }
+
+        // TODO: Sound effects
+        if (!soundEffectOccurrences.isEmpty()) {
+          for (SoundEffectOccurrence s : soundEffectOccurrences) {
+            double soundEffectPosition = s.getTimeMillis() / 1000 * scale;
+            double soundEffectWidth = s.getSoundEffect().getDurationMillis() / 1000 * scale;
+
+            graphicsContext.setFill(soundEffectsColor);
+            graphicsContext.fillRect(soundEffectPosition, top, soundEffectWidth, image.getHeight() - top - bottom);
+            graphicsContext.setFill(lightBlue);
+            graphicsContext.strokeRect(soundEffectPosition, top, soundEffectWidth, image.getHeight() - top - bottom);
+          }
         }
       }
     }
