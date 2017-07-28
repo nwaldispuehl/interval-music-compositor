@@ -12,6 +12,7 @@ import java.util.TimeZone;
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 
 /**
@@ -60,6 +61,7 @@ public class PlaylistReport {
       }
     }
 
+    appendSoundEffectsList(result, playlist);
     appendBadTunesList(result, badTunesList);
 
     return result.toString();
@@ -179,6 +181,40 @@ public class PlaylistReport {
       builder.append(EOL_DELIMITER);
     }
 
+  }
+
+  private void appendSoundEffectsList(StringBuilder builder, Playlist playlist) {
+    if (playlist.hasSoundEffects()) {
+
+      String soundEffectListTitle = bundle.getString("imc.playlist.soundEffectList_header");
+      String durationString = bundle.getString("imc.playlist.duration");
+
+      builder.append(EOL_DELIMITER);
+      builder.append(EOL_DELIMITER);
+
+      builder.append(soundEffectListTitle);
+      builder.append(EOL_DELIMITER);
+
+      builder.append(HORIZONTAL_ROW);
+      builder.append(EOL_DELIMITER);
+
+      for (SoundEffectOccurrence s : playlist.getSoundEffects()) {
+        builder.append(s.getSoundEffect().getId());
+
+        builder.append(" ");
+
+        builder.append("[");
+        builder.append(durationString);
+        builder.append(" ");
+        double extractDurationInSeconds = s.getSoundEffect().getDurationMillis() / 1000;
+        builder.append(formatTime.getStrictFormattedTime(extractDurationInSeconds));
+        builder.append("]");
+
+        builder.append(" ");
+        builder.append(formatTime.getStrictFormattedTime(s.getTimeMillis()));
+      }
+
+    }
   }
 
   private void appendBadTunesList(StringBuilder builder, List<IAudioFile> badTunesList) {
