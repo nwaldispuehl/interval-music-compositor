@@ -18,7 +18,10 @@
     <!--<Insets top="25" right="25" bottom="25" left="25"/>-->
   </padding>
   <center>
-    <HBox fx:id="soundEffectsContainer" spacing="10" alignment="CENTER">
+    <HBox fx:id="soundEffectsContainer" spacing="10" alignment="CENTER" >
+      <padding>
+        <Insets top="10" bottom="10"/>
+      </padding>
       <ComboBox fx:id="soundEffects" />
       <Button fx:id="playSoundEffect" />
       <Slider fx:id="soundEffectStartTine" value="1" maxWidth="200" snapToTicks="true" showTickMarks="true"

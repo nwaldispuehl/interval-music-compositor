@@ -15,6 +15,7 @@ import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageHandler;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageSubscriber;
+import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
 import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileBreakListView;
 import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileListView;
@@ -202,6 +203,7 @@ public class MainScreenController implements Initializable {
   private MessageProducer messageProducer;
   private UpdateAvailabilityChecker updateAvailabilityChecker;
   private ScheduledExecutorService executorService;
+  private SoundEffectsProvider soundEffectsProvider;
   private List<AudioFileDecoder> audioFileDecoders;
 
   //---- Methods
@@ -211,7 +213,7 @@ public class MainScreenController implements Initializable {
 
   }
 
-  public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService) {
+  public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService, SoundEffectsProvider soundEffectsProvider) {
     this.ui = ui;
     this.programControl = programControl;
     this.applicationData = applicationData;
@@ -221,6 +223,7 @@ public class MainScreenController implements Initializable {
     this.messageProducer = messageProducer;
     this.updateAvailabilityChecker = updateAvailabilityChecker;
     this.executorService = executorService;
+    this.soundEffectsProvider = soundEffectsProvider;
 
     initializeMenu();
     initializeMusicTrackList();
@@ -364,7 +367,7 @@ public class MainScreenController implements Initializable {
 
   private void initializeSoundEffects() {
     // TODO
-    soundEffectsContainer.getChildren().add(new SoundEffectsPane());
+    soundEffectsContainer.getChildren().add(new SoundEffectsPane(soundEffectsProvider));
   }
 
   private void initializeOutputFileFormat() {

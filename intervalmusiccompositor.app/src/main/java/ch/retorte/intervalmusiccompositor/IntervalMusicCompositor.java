@@ -191,7 +191,7 @@ class IntervalMusicCompositor {
   }
 
   private Ui createUserInterface(MainControl control) {
-    Ui userInterface = new IntervalMusicCompositorUI(control, control, control, control, createUpdateAvailabilityChecker(control), messageBus, messageBus);
+    Ui userInterface = new IntervalMusicCompositorUI(control, control, control, control, createUpdateAvailabilityChecker(control), control, messageBus, messageBus);
     control.setUi(userInterface);
     return userInterface;
   }

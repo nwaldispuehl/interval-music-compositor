@@ -10,6 +10,7 @@ import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageSubscriber;
+import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
 import ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController;
 import com.sun.javafx.collections.ImmutableObservableList;
@@ -46,6 +47,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   private static ProgramControl programControl;
   private static ApplicationData applicationData;
   private static UpdateAvailabilityChecker updateAvailabilityChecker;
+  private static SoundEffectsProvider soundEffectsProvider;
   private static MessageSubscriber messageSubscriber;
   private static MessageProducer messageProducer;
   private static MainScreenController mainScreenController;
@@ -69,6 +71,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
                                    final ProgramControl programControl,
                                    ApplicationData applicationData,
                                    UpdateAvailabilityChecker updateAvailabilityChecker,
+                                   SoundEffectsProvider soundEffectsProvider,
                                    MessageSubscriber messageSubscriber,
                                    MessageProducer messageProducer) {
     IntervalMusicCompositorUI.musicListControl = musicListControl;
@@ -76,6 +79,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
     IntervalMusicCompositorUI.programControl = programControl;
     IntervalMusicCompositorUI.applicationData = applicationData;
     IntervalMusicCompositorUI.updateAvailabilityChecker = updateAvailabilityChecker;
+    IntervalMusicCompositorUI.soundEffectsProvider = soundEffectsProvider;
     IntervalMusicCompositorUI.messageSubscriber = messageSubscriber;
     IntervalMusicCompositorUI.messageProducer = messageProducer;
 
@@ -193,7 +197,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   }
 
   private void initialize(MainScreenController mainScreenController) {
-    mainScreenController.initializeFieldsWith(this, programControl, applicationData, musicListControl, musicCompilationController, compilationParameters, messageSubscriber, messageProducer, updateAvailabilityChecker, executorService);
+    mainScreenController.initializeFieldsWith(this, programControl, applicationData, musicListControl, musicCompilationController, compilationParameters, messageSubscriber, messageProducer, updateAvailabilityChecker, executorService, soundEffectsProvider);
     mainScreenController.updateOutputFileFormatWith(getAudioFileEncoders());
     mainScreenController.updateAvailableDecodersWith(getAudioFileDecoderExtensions());
   }
