@@ -199,9 +199,10 @@ public class PlaylistReport {
       builder.append(EOL_DELIMITER);
 
       for (SoundEffectOccurrence s : playlist.getSoundEffects()) {
-        builder.append(s.getSoundEffect().getId());
 
-        builder.append(" ");
+        builder.append(formatTime.getStrictFormattedTime(s.getTimeMillis() / 1000));
+
+        builder.append(", ");
 
         builder.append("[");
         builder.append(durationString);
@@ -210,8 +211,11 @@ public class PlaylistReport {
         builder.append(formatTime.getStrictFormattedTime(extractDurationInSeconds));
         builder.append("]");
 
-        builder.append(" ");
-        builder.append(formatTime.getStrictFormattedTime(s.getTimeMillis()));
+        builder.append(", ");
+
+        builder.append(s.getSoundEffect().getId());
+
+        builder.append(EOL_DELIMITER);
       }
 
     }
