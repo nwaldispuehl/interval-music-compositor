@@ -260,6 +260,8 @@
                         </VBox>
                     </HBox>
                     <Separator prefWidth="200.0"/>
+                    <Pane fx:id="soundEffectsContainer"></Pane>
+                    <Separator prefWidth="200.0"/>
                     <HBox spacing="10.0" alignment="BASELINE_RIGHT">
                         <Label text="%ui.form.encoder_label"/>
                         <ChoiceBox fx:id="outputFileFormat" prefWidth="150.0"/>

@@ -99,6 +99,10 @@ public class CompilationParameters {
     return soundEffectOccurrences;
   }
 
+  public boolean hasSoundEffects() {
+    return !soundEffectOccurrences.isEmpty();
+  }
+
   private void setBlendMode(BlendMode blendMode) {
     this.blendMode = blendMode;
   }

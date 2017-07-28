@@ -21,6 +21,7 @@ import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileLis
 import ch.retorte.intervalmusiccompositor.ui.audiofilelist.MusicFileChooser;
 import ch.retorte.intervalmusiccompositor.ui.debuglog.DebugLogWindow;
 import ch.retorte.intervalmusiccompositor.ui.graphics.BarChart;
+import ch.retorte.intervalmusiccompositor.ui.soundeffects.SoundEffectsPane;
 import ch.retorte.intervalmusiccompositor.ui.updatecheck.UpdateCheckDialog;
 import ch.retorte.intervalmusiccompositor.ui.utils.AudioFileEncoderConverter;
 import javafx.application.Platform;
@@ -33,12 +34,12 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 
 import java.io.File;
-import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -163,6 +164,11 @@ public class MainScreenController implements Initializable {
   @FXML
   private Slider blendDuration;
 
+  // Sound effects
+
+  @FXML
+  private Pane soundEffectsContainer;
+
   // File format
 
   @FXML
@@ -222,6 +228,7 @@ public class MainScreenController implements Initializable {
     initializeBreakTrackList();
     initializeDurationControls();
     initializeBlending();
+    initializeSoundEffects();
     initializeOutputFileFormat();
     initializeOutputDirectory();
     initializeControlButtons();
@@ -353,6 +360,11 @@ public class MainScreenController implements Initializable {
     blendDuration.valueProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setBlendDuration(newValue.doubleValue()));
     blendDuration.valueProperty().addListener(debugHandlerWith(blendDuration.getId()));
     blendDuration.valueProperty().addListener(updateUiHandler());
+  }
+
+  private void initializeSoundEffects() {
+    // TODO
+    soundEffectsContainer.getChildren().add(new SoundEffectsPane());
   }
 
   private void initializeOutputFileFormat() {
