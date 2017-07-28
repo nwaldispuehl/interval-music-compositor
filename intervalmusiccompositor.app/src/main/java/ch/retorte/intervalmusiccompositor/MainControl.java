@@ -128,10 +128,6 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
       return;
     }
 
-    // TODO: --- Test code; remove again
-    compilationParameters.setSoundEffectOccurrences(new SoundEffectOccurrence(soundEffectsProvider.getSoundEffects().iterator().next(), 5000));
-    // TODO: ---
-
     compilationGenerator.clearListeners();
     compilationGenerator.addListener(() -> {
       ui.setEnvelopeImage(compilationGenerator.getEnvelope());
