@@ -3,9 +3,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Spinner?>
 <fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
   <top>
     <HBox spacing="10">
@@ -19,8 +19,11 @@
       </padding>
       <ComboBox fx:id="soundEffects" />
       <Button fx:id="playSoundEffect" />
-      <Slider fx:id="soundEffectStartTime" value="1" snapToTicks="true" showTickMarks="true"
-              showTickLabels="true"  max="10" majorTickUnit="5" minorTickCount="4" minWidth="400" maxWidth="800"/>
+      <Spinner fx:id="soundEffectStartTime" >
+        <valueFactory>
+          <SpinnerValueFactory.IntegerSpinnerValueFactory min="0" value="5" amountToStepBy="1" max="10"/>
+        </valueFactory>
+      </Spinner>
     </HBox>
   </center>
 </fx:root>

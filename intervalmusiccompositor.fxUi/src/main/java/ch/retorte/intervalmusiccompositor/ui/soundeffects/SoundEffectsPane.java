@@ -58,7 +58,7 @@ public class SoundEffectsPane extends BorderPane {
   private Button playSoundEffect;
 
   @FXML
-  private Slider soundEffectStartTime;
+  private Spinner<Integer> soundEffectStartTime;
 
   //---- Constructor
 
@@ -91,7 +91,7 @@ public class SoundEffectsPane extends BorderPane {
   public ChangeListener<Void> getMusicAndBreakPatternChangeListener() {
     return (observable, oldValue, newValue) -> {
       activateCheckbox(compilationParameters.hasUsableData());
-      updateSliderSizeWith(getSmallestPatternPairFromCompilationParameters());
+      updateSpinnerSizeWith(getSmallestPatternPairFromCompilationParameters() - 1);
     };
   }
 
@@ -123,7 +123,7 @@ public class SoundEffectsPane extends BorderPane {
     initializeCheckBox();
     initializeComboBox();
     initializePlayButton();
-    initializeSlider();
+    initializeSpinner();
   }
 
   private void initializeContainer() {
@@ -167,17 +167,13 @@ public class SoundEffectsPane extends BorderPane {
     });
   }
 
-  private void initializeSlider() {
+  private void initializeSpinner() {
     soundEffectStartTime.valueProperty().addListener(debugHandlerWith(soundEffectStartTime.getId()));
-    soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> {
-      if (newValue.doubleValue() == newValue.intValue()) {
-        updateSelectedSoundEffect();
-      }
-    });
+    soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
   }
 
-  private void updateSliderSizeWith(int max) {
-    soundEffectStartTime.setMax(max);
+  private void updateSpinnerSizeWith(int max) {
+//    soundEffectStartTime.getValueFactory().
   }
 
   private void updateSelectedSoundEffect() {

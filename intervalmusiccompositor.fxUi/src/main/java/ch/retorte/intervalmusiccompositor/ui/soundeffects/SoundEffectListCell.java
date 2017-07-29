@@ -18,12 +18,7 @@ public class SoundEffectListCell extends ListCell<SoundEffect> {
 
     if (item != null) {
       String itemTitle = item.getId();
-      double itemDurationSeconds = item.getDurationMillis() / 1000;
-
-      // We cheat a bit here to prevent short samples from being listed as of length 0.
-      if (0.2 < itemDurationSeconds && itemDurationSeconds < 1) {
-        itemDurationSeconds = 1;
-      }
+      double itemDurationSeconds = item.getDisplayDurationMillis() / 1000;
 
       setText(StringUtils.capitalize(itemTitle) + " (" + formatTime.getStrictFormattedTime(itemDurationSeconds) + "s)");
     }

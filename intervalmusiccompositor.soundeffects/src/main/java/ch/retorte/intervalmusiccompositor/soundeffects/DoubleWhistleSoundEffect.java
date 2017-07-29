@@ -12,10 +12,12 @@ public class DoubleWhistleSoundEffect extends SoundEffect {
 
   private final static String ID = "double_whistle";
   private final static String RESOURCE = "/double_whistle_1s.wav";
+  private final static long DISPLAY_DURATION = 1000;
+
 
   //---- Constructor
 
   public DoubleWhistleSoundEffect() {
-    super(ID, RESOURCE, new AudioStreamUtil().lengthInMillisOf(RESOURCE));
+    super(ID, RESOURCE, new AudioStreamUtil().lengthInMillisOf(RESOURCE), DISPLAY_DURATION);
   }
 }

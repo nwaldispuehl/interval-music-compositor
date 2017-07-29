@@ -207,7 +207,7 @@ public class PlaylistReport {
         builder.append("[");
         builder.append(durationString);
         builder.append(" ");
-        double extractDurationInSeconds = s.getSoundEffect().getDurationMillis() / 1000;
+        double extractDurationInSeconds = s.getSoundEffect().getDisplayDurationMillis() / 1000;
         builder.append(formatTime.getStrictFormattedTime(extractDurationInSeconds));
         builder.append("]");
 

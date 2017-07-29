@@ -11,15 +11,25 @@ public class SoundEffect {
 
   private String id;
   private String resource;
-  private long durationMillis;
+  private long effectiveDurationMillis;
+  private long displayDurationMillis;
 
 
   //---- Constructor
 
-  public SoundEffect(String id, String resource, long durationMillis) {
+  /**
+   * Creates a new instance of a sound effect.
+   *
+   * @param id human readable identification string
+   * @param resource reference to the WAV file holding the actual sound effect
+   * @param effectiveDurationMillis the length of the sound effect
+   * @param displayDurationMillis a 'nice' length value to be used for display purposes. If the actual length is 1920 ms, this could be set to 2000.
+   */
+  public SoundEffect(String id, String resource, long effectiveDurationMillis, long displayDurationMillis) {
     this.id = id;
     this.resource = resource;
-    this.durationMillis = durationMillis;
+    this.effectiveDurationMillis = effectiveDurationMillis;
+    this.displayDurationMillis = displayDurationMillis;
   }
 
 
@@ -34,9 +44,10 @@ public class SoundEffect {
   }
 
   public long getDurationMillis() {
-    return durationMillis;
+    return effectiveDurationMillis;
   }
 
-
-
+  public long getDisplayDurationMillis() {
+    return displayDurationMillis;
+  }
 }
