@@ -58,6 +58,9 @@ public class ArrayHelper {
   }
 
   public static void insertAt(byte[] array, byte[] insertee, int start) {
+    if (array.length < start + insertee.length) {
+      throw new IllegalArgumentException("If inserted at position " + start + ", the inserted array of length " + insertee.length + " exceeds the length of the host array: " + array.length);
+    }
     System.arraycopy(insertee, 0, array, start, insertee.length);
   }
 
@@ -134,17 +137,17 @@ public class ArrayHelper {
    * @return String representation of the elements of said list
    */
   static String prettyPrintList(List<Integer> list) {
-    String result = "";
+    StringBuilder result = new StringBuilder();
 
     for (int i = 0; i < list.size(); i++) {
-      result += list.get(i).toString();
+      result.append(list.get(i).toString());
 
       if (i < list.size() - 1) {
-        result += ITEM_DELIMITER;
+        result.append(ITEM_DELIMITER);
       }
     }
 
-    return result;
+    return result.toString();
   }
 }
 

@@ -21,7 +21,7 @@ public class SoundEffect {
    * Creates a new instance of a sound effect.
    *
    * @param id human readable identification string
-   * @param resource reference to the WAV file holding the actual sound effect
+   * @param resource reference to the 44100khz stereo WAV file holding the actual sound effect
    * @param effectiveDurationMillis the length of the sound effect
    * @param displayDurationMillis a 'nice' length value to be used for display purposes. If the actual length is 1920 ms, this could be set to 2000.
    */
@@ -49,5 +49,10 @@ public class SoundEffect {
 
   public long getDisplayDurationMillis() {
     return displayDurationMillis;
+  }
+
+  @Override
+  public String toString() {
+    return id + " (" + displayDurationMillis + ")";
   }
 }

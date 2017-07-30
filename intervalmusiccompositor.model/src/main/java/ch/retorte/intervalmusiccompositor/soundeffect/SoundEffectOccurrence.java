@@ -26,7 +26,15 @@ public class SoundEffectOccurrence {
     return soundEffect;
   }
 
+  public void setSoundEffect(SoundEffect soundEffect) {
+    this.soundEffect = soundEffect;
+  }
+
   public long getTimeMillis() {
     return timeMillis;
+  }
+
+  public void setTimeMillis(long timeMillis) {
+    this.timeMillis = timeMillis;
   }
 }

@@ -8,7 +8,7 @@
 <?import javafx.scene.text.TextFlow?>
 <?import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileBreakListView?>
 <?import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileListView?>
-<VBox stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" maxHeight="Infinity" maxWidth="Infinity" minWidth="1024" minHeight="768"
+<VBox stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" maxHeight="Infinity" maxWidth="Infinity" minWidth="1024" minHeight="840"
       xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController">
     <AnchorPane>
@@ -37,7 +37,7 @@
                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                 </padding>
 
-                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" prefHeight="766.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0"
+                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" prefHeight="838.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0"
                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <HBox alignment="BASELINE_CENTER">
                         <padding>
@@ -49,7 +49,12 @@
                             <Label fx:id="trackCount"/>
                         </HBox>
 
-                        <Button mnemonicParsing="false" text="%ui.form.music_list.add_label" fx:id="addMusicTrackButton">
+                        <Button mnemonicParsing="false" fx:id="addMusicTrackButton">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="@/images/add_icon_small.png"/>
+                                </ImageView>
+                            </graphic>
                             <tooltip>
                                 <Tooltip text="%ui.form.music_list.add_tooltip"/>
                             </tooltip>
@@ -114,7 +119,12 @@
                         </padding>
                         <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="%ui.form.break_list.label"
                                HBox.hgrow="ALWAYS"/>
-                        <Button mnemonicParsing="false" text="%ui.form.break_list.add_label" fx:id="addBreakTrackButton">
+                        <Button mnemonicParsing="false" fx:id="addBreakTrackButton">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="@/images/add_icon_small.png"/>
+                                </ImageView>
+                            </graphic>
                             <tooltip>
                                 <Tooltip text="%ui.form.break_list.add_tooltip"/>
                             </tooltip>
@@ -260,7 +270,7 @@
                         </VBox>
                     </HBox>
                     <Separator prefWidth="200.0"/>
-                    <Pane fx:id="soundEffectsContainer"></Pane>
+                    <Pane fx:id="soundEffectsContainer"/>
                     <Separator prefWidth="200.0"/>
                     <HBox spacing="10.0" alignment="BASELINE_RIGHT">
                         <Label text="%ui.form.encoder_label"/>

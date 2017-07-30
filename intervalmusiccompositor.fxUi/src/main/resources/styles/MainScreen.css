@@ -13,4 +13,14 @@
   -fx-border-style: solid;
 }
 
+#addSoundEffects, #addMusicTrackButton, #addBreakTrackButton {
+  -fx-padding: 2;
+}
 
+#playSoundEffect, #removeSoundEffect {
+  -fx-padding: 3;
+}
+
+.legend {
+  -fx-font-style: italic;
+}

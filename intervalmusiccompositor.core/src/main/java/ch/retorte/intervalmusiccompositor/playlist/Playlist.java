@@ -262,8 +262,7 @@ public class Playlist implements Iterable<PlaylistItem> {
     }
   }
 
-  @VisibleForTesting
-  void generateSoundEffectListFrom(List<Integer> musicPattern, List<Integer> breakPattern, Integer iterations, SoundEffectOccurrence soundEffectOccurrence) {
+  private void generateSoundEffectListFrom(List<Integer> musicPattern, List<Integer> breakPattern, Integer iterations, SoundEffectOccurrence soundEffectOccurrence) {
     SoundEffect soundEffect = soundEffectOccurrence.getSoundEffect();
     long instanceTimeMillis = soundEffectOccurrence.getTimeMillis();
     long totalLengthMillis = getTotalLength();
@@ -277,6 +276,7 @@ public class Playlist implements Iterable<PlaylistItem> {
         breakTime = breakPattern.get(i % breakPattern.size()) * 1000;
       }
 
+      // Note: This detection mechanism is a bit shaky. It works for the currently existing samples but makes quite a lot of assumptions which are not necessarily met.
       long timeMillis = timeSoFar + instanceTimeMillis;
       if (timeMillis + soundEffect.getDurationMillis() <= totalLengthMillis) {
         soundEffects.add(new SoundEffectOccurrence(soundEffect, timeMillis));

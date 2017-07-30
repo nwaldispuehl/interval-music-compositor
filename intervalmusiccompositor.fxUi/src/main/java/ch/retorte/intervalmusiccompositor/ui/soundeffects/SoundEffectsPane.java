@@ -3,7 +3,7 @@ package ch.retorte.intervalmusiccompositor.ui.soundeffects;
 
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
+import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
@@ -11,20 +11,19 @@ import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.ui.mainscreen.DebugMessageEventHandler;
 
 import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI.UI_RESOURCE_BUNDLE_NAME;
+import static com.google.common.collect.Lists.newLinkedList;
 
 public class SoundEffectsPane extends BorderPane {
 
@@ -42,23 +41,17 @@ public class SoundEffectsPane extends BorderPane {
   private MessageProducer messageProducer;
   private ChangeListener<SoundEffectOccurrence> soundEffectsUpdateListener;
 
+  private List<SoundEffectEntry> soundEffectEntries = newLinkedList();
+
 
   //---- FX fields
 
   @FXML
-  private CheckBox addSoundEffects;
+  private Button addSoundEffects;
 
   @FXML
-  private HBox soundEffectsContainer;
+  private VBox soundEffectsContainer;
 
-  @FXML
-  private ComboBox<SoundEffect> soundEffects;
-
-  @FXML
-  private Button playSoundEffect;
-
-  @FXML
-  private Spinner<Integer> soundEffectStartTime;
 
   //---- Constructor
 
@@ -70,7 +63,7 @@ public class SoundEffectsPane extends BorderPane {
     this.soundEffectsUpdateListener = soundEffectsUpdateListener;
 
     initialize();
-    initializeFields();
+    initializeAddButton();
   }
 
   private void initialize() {
@@ -90,13 +83,17 @@ public class SoundEffectsPane extends BorderPane {
 
   public ChangeListener<Void> getMusicAndBreakPatternChangeListener() {
     return (observable, oldValue, newValue) -> {
-      activateCheckbox(compilationParameters.hasUsableData());
-      updateSpinnerSizeWith(getSmallestPatternPairFromCompilationParameters() - 1);
+      activateButton(compilationParameters.hasUsableData());
+      adaptSpinnerRangeToMusicAndBreakSize();
     };
   }
 
-  private void activateCheckbox(boolean active) {
+  private void activateButton(boolean active) {
     addSoundEffects.setDisable(!active);
+  }
+
+  private void adaptSpinnerRangeToMusicAndBreakSize() {
+    updateSpinnerSizeWith(getSmallestPatternPairFromCompilationParameters() - 1);
   }
 
   private int getSmallestPatternPairFromCompilationParameters() {
@@ -118,71 +115,45 @@ public class SoundEffectsPane extends BorderPane {
     return smallestPatternPair;
   }
 
-  private void initializeFields() {
-    initializeContainer();
-    initializeCheckBox();
-    initializeComboBox();
-    initializePlayButton();
-    initializeSpinner();
+  private void initializeAddButton() {
+    addSoundEffects.onActionProperty().addListener(debugHandlerWith(addSoundEffects.getId()));
+    addSoundEffects.setOnAction(event -> addNewEntry());
   }
 
-  private void initializeContainer() {
-    soundEffectsContainer.managedProperty().bind(soundEffectsContainer.visibleProperty());
+  private void addNewEntry() {
+    SoundEffectOccurrence soundEffectOccurrence = new SoundEffectOccurrence(soundEffectsProvider.getSoundEffects().iterator().next(), 0);
+    SoundEffectEntry soundEffectEntry = new SoundEffectEntry(this, soundEffectOccurrence, soundEffectsProvider, musicListControl, messageProducer);
+
+    soundEffectEntries.add(soundEffectEntry);
+    soundEffectsContainer.getChildren().add(soundEffectEntry);
+    compilationParameters.addSoundEffectOccurrence(soundEffectOccurrence);
+
+    adaptSpinnerRangeToMusicAndBreakSize();
+
+    messageProducer.send(new DebugMessage(this, "Added sound effect '" + soundEffectOccurrence.getSoundEffect().getId() + "' at '" + soundEffectOccurrence.getTimeMillis() + "'."));
+    fireEffectChangeListener();
   }
 
-  private void initializeCheckBox() {
-    addSoundEffects.selectedProperty().addListener(debugHandlerWith(addSoundEffects.getId()));
-    addSoundEffects.selectedProperty().addListener((observable, previouslyChecked, checked) -> {
-      soundEffectsContainer.setVisible(checked);
-      if (!checked) {
-        compilationParameters.clearSoundEffects();
-      }
-      else {
-        updateSelectedSoundEffect();
-      }
-
-      soundEffectsUpdateListener.changed(null, null, null);
-    });
+  void updateEntry() {
+    fireEffectChangeListener();
   }
 
-  private void initializeComboBox() {
-    Collection<SoundEffect> soundEffects = soundEffectsProvider.getSoundEffects();
+  void removeEntry(SoundEffectEntry soundEffectEntry) {
+    SoundEffectOccurrence soundEffectOccurrence = soundEffectEntry.getSoundEffectOccurrence();
+    compilationParameters.removeSoundEffectOccurrence(soundEffectOccurrence);
+    soundEffectEntries.remove(soundEffectEntry);
+    soundEffectsContainer.getChildren().remove(soundEffectEntry);
 
-    // We provide custom cell factories for label providing.
-    this.soundEffects.setCellFactory(param -> new SoundEffectListCell());
-    this.soundEffects.setButtonCell(new SoundEffectListCell());
-
-    this.soundEffects.valueProperty().addListener(debugHandlerWith(this.soundEffects.getId()));
-    this.soundEffects.setItems(FXCollections.observableArrayList(soundEffects));
-    this.soundEffects.setValue(soundEffects.iterator().next());
-    this.soundEffects.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
+    messageProducer.send(new DebugMessage(this, "Removed sound effect '" + soundEffectOccurrence.getSoundEffect().getId() + "' at '" + soundEffectOccurrence.getTimeMillis() + "'."));
+    fireEffectChangeListener();
   }
 
-  private void initializePlayButton() {
-    playSoundEffect.onActionProperty().addListener(debugHandlerWith(playSoundEffect.getId()));
-    playSoundEffect.setOnAction(event -> {
-        if (soundEffects.getValue() != null) {
-          musicListControl.playSoundEffect(soundEffects.getValue());
-        }
-    });
-  }
-
-  private void initializeSpinner() {
-    soundEffectStartTime.valueProperty().addListener(debugHandlerWith(soundEffectStartTime.getId()));
-    soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
+  private void fireEffectChangeListener() {
+    soundEffectsUpdateListener.changed(null, null, null);
   }
 
   private void updateSpinnerSizeWith(int max) {
-//    soundEffectStartTime.getValueFactory().
-  }
-
-  private void updateSelectedSoundEffect() {
-    SoundEffect soundEffect = soundEffects.getValue();
-    long startTimeMillis = (long) (soundEffectStartTime.getValue() * 1000);
-
-    SoundEffectOccurrence soundEffectOccurrence = new SoundEffectOccurrence(soundEffect, startTimeMillis);
-    compilationParameters.setSoundEffectOccurrence(soundEffectOccurrence);
-    soundEffectsUpdateListener.changed(null, null, soundEffectOccurrence);
+    soundEffectEntries.forEach(e -> e.updateSpinnerSizeWith(max));
   }
 
   private DebugMessageEventHandler debugHandlerWith(String id) {

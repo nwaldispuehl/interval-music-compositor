@@ -1,0 +1,38 @@
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<fx:root type="javafx.scene.layout.HBox" spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+    <padding>
+        <Insets top="2" bottom="2"/>
+    </padding>
+    <ComboBox fx:id="soundEffects" />
+    <Button fx:id="playSoundEffect">
+        <tooltip>
+            <Tooltip text="%ui.form.sound_effects.playback.tooltip"/>
+        </tooltip>
+        <graphic>
+            <ImageView>
+                <Image url="@/images/play_icon_small.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+    <Label text="%ui.form.sound_effects.start_time.label"/>
+    <Spinner fx:id="soundEffectStartTime" prefWidth="100">
+        <valueFactory>
+            <SpinnerValueFactory.IntegerSpinnerValueFactory min="0" initialValue="0" amountToStepBy="1" max="10"/>
+        </valueFactory>
+    </Spinner>
+    <Button fx:id="removeSoundEffect">
+        <tooltip>
+            <Tooltip text="%ui.form.sound_effects.remove.tooltip"/>
+        </tooltip>
+        <graphic>
+            <ImageView>
+                <Image url="@/images/clear_icon_small.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+</fx:root>

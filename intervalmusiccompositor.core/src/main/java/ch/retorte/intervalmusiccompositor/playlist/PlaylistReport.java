@@ -2,12 +2,12 @@ package ch.retorte.intervalmusiccompositor.playlist;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.list.BlendMode.CROSS;
+import static com.google.common.collect.Lists.newArrayList;
+import static java.util.Comparator.comparingLong;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
@@ -198,7 +198,7 @@ public class PlaylistReport {
       builder.append(HORIZONTAL_ROW);
       builder.append(EOL_DELIMITER);
 
-      for (SoundEffectOccurrence s : playlist.getSoundEffects()) {
+      for (SoundEffectOccurrence s : sortByStartTime(playlist.getSoundEffects())) {
 
         builder.append(formatTime.getStrictFormattedTime(s.getTimeMillis() / 1000));
 
@@ -219,6 +219,12 @@ public class PlaylistReport {
       }
 
     }
+  }
+
+  private List<SoundEffectOccurrence> sortByStartTime(List<SoundEffectOccurrence> soundEffectOccurrences) {
+    List<SoundEffectOccurrence> result = newArrayList(soundEffectOccurrences);
+    result.sort(comparingLong(SoundEffectOccurrence::getTimeMillis));
+    return result;
   }
 
   private void appendBadTunesList(StringBuilder builder, List<IAudioFile> badTunesList) {

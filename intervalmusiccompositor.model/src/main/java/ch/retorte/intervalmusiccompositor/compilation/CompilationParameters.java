@@ -16,8 +16,6 @@ import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT;
 
 /**
  * Aggregates all needed compilation parameters.
- * 
- * @author nw
  */
 public class CompilationParameters {
 
@@ -90,22 +88,16 @@ public class CompilationParameters {
   }
 
 
-  public void setSoundEffectOccurrence(SoundEffectOccurrence soundEffectOccurrence) {
-    /* Note that even though we technically have capabilities for multiple sound effects, we only allow one for now. */
-    this.soundEffectOccurrences.clear();
-    this.soundEffectOccurrences.add(soundEffectOccurrence);
+  public void addSoundEffectOccurrence(SoundEffectOccurrence soundEffectOccurrence) {
+    soundEffectOccurrences.add(soundEffectOccurrence);
+  }
+
+  public void removeSoundEffectOccurrence(SoundEffectOccurrence soundEffectOccurrence) {
+    soundEffectOccurrences.remove(soundEffectOccurrence);
   }
 
   public List<SoundEffectOccurrence> getSoundEffectOccurrences() {
     return soundEffectOccurrences;
-  }
-
-  public boolean hasSoundEffects() {
-    return !soundEffectOccurrences.isEmpty();
-  }
-
-  public void clearSoundEffects() {
-    soundEffectOccurrences.clear();
   }
 
   private void setBlendMode(BlendMode blendMode) {

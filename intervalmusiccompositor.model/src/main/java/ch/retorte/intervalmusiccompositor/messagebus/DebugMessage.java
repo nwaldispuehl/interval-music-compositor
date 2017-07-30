@@ -4,24 +4,28 @@ import com.google.common.annotations.VisibleForTesting;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
- * @author nw
+ * Instance of the string message which is designed to be put on a debug log; i.e. formats date in a nice way.
  */
 public class DebugMessage implements StringMessage {
+
+  //---- Static
 
   private static final String DATE_FORMAT = "yyyy-MM-dd--HH:mm:ss.SSS";
   private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
+
+  //---- Fields
+
   private final String callerClassName;
   private final String message;
   private final LocalDateTime date;
+
+
+  //---- Constructors
 
   public DebugMessage(String callerClassName, String message, LocalDateTime date) {
     this.callerClassName = callerClassName;
@@ -40,6 +44,9 @@ public class DebugMessage implements StringMessage {
   public DebugMessage(Object caller, String message, Throwable t) {
     this(caller, message + "\n" + stacktraceFrom(t));
   }
+
+
+  //---- Methods
 
   String getCallerClassName() {
     return callerClassName;

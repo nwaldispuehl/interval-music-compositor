@@ -1,29 +1,29 @@
-<?import javafx.scene.layout.BorderPane?>
-
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Spinner?>
-<fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
-  <top>
-    <HBox spacing="10">
-      <CheckBox fx:id="addSoundEffects" text="%ui.form.sound_effects.add.label" disable="true"/>
-    </HBox>
-  </top>
-  <center>
-    <HBox fx:id="soundEffectsContainer" spacing="10" alignment="CENTER" visible="false" >
-      <padding>
-        <Insets top="10" bottom="10"/>
-      </padding>
-      <ComboBox fx:id="soundEffects" />
-      <Button fx:id="playSoundEffect" />
-      <Spinner fx:id="soundEffectStartTime" >
-        <valueFactory>
-          <SpinnerValueFactory.IntegerSpinnerValueFactory min="0" value="5" amountToStepBy="1" max="10"/>
-        </valueFactory>
-      </Spinner>
-    </HBox>
-  </center>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Button fx:id="addSoundEffects" disable="true">
+                <tooltip>
+                    <Tooltip text="%ui.form.sound_effects.add.label"/>
+                </tooltip>
+                <graphic>
+                    <ImageView>
+                        <Image url="@/images/add_icon_small.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Label text="%ui.form.sound_effects.add.label"/>
+            <Label styleClass="legend" text="%ui.form.sound_effects.legend"/>
+        </HBox>
+    </top>
+    <center>
+        <VBox fx:id="soundEffectsContainer"/>
+    </center>
 </fx:root>

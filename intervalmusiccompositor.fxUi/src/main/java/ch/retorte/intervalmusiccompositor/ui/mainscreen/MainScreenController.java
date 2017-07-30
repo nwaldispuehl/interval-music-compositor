@@ -206,7 +206,7 @@ public class MainScreenController implements Initializable {
   private SoundEffectsProvider soundEffectsProvider;
   private List<AudioFileDecoder> audioFileDecoders;
 
-  ChangeListener<Void> musicAndBreakPatternChangeListener;
+  private ChangeListener<Void> musicAndBreakPatternChangeListener;
 
   //---- Methods
 
@@ -483,7 +483,7 @@ public class MainScreenController implements Initializable {
     List<File> chosenFile = musicFileChooser.chooseFileIn(getWindow());
     chosenFile.forEach(file -> {
       IAudioFile newTrack = listView.addTrack(file);
-      newTrack.addChangeListener(newValue -> Platform.runLater(() -> updateTrackCount()));
+      newTrack.addChangeListener(newValue -> Platform.runLater(this::updateTrackCount));
     });
   }
 
@@ -533,6 +533,7 @@ public class MainScreenController implements Initializable {
 
   private void updateProgressBar(Integer progressInPercent, String currentActivity) {
     progressBar.progressProperty().setValue((double) progressInPercent / 100);
+    progressBar.setTooltip(new Tooltip(currentActivity));
     secondaryProgressBar.setVisible(false);
   }
 

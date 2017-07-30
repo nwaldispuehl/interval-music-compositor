@@ -89,10 +89,10 @@ public class BarChart {
     Font breakFont = Font.font("Sans Serif", FontWeight.NORMAL, 9);
     FontMetrics breakFontMetrics = Toolkit.getToolkit().getFontLoader().getFontMetrics(breakFont);
 
-    Color darkBlue = Color.rgb(55, 119, 248);
-    Color lightBlue = Color.rgb(113, 174, 243);
-    Color evenLighterBlue = Color.rgb(182, 216, 255);
-    Color soundEffectsColor = Color.rgb(182, 216, 123);
+    Color darkBlue = Color.rgb(33, 150, 243);
+    Color lightBlue = Color.rgb(100, 181, 246);
+    Color evenLighterBlue = Color.rgb(187, 222, 251);
+    Color soundEffectsColor = Color.rgb(139, 195, 74);
     Color textColor = Color.GRAY;
 
     double top = 0;
@@ -154,18 +154,36 @@ public class BarChart {
         if (has(breakPattern)) {
           p = p + (breakPattern.get(j % breakPattern.size()) * scale);
         }
+      }
+    }
 
-        // TODO: Sound effects
-        if (!soundEffectOccurrences.isEmpty()) {
+    // Add sound effects
+    // We iterate again over all iterations to keep the sound effects in front
+
+    if (!soundEffectOccurrences.isEmpty()) {
+      double currentLeftBorder = border;
+
+      for (int i = 0; i < iterations; i++) {
+        for (int j = 0; j < soundPattern.size(); j++) {
+
+          double width = soundPattern.get(j) * scale;
+
           for (SoundEffectOccurrence s : soundEffectOccurrences) {
             double soundEffectPosition = s.getTimeMillis() / 1000 * scale;
             double soundEffectWidth = s.getSoundEffect().getDisplayDurationMillis() / 1000 * scale;
 
             graphicsContext.setFill(soundEffectsColor);
-            graphicsContext.fillRect(soundEffectPosition, top, soundEffectWidth, image.getHeight() - top - bottom);
+            graphicsContext.fillRect(currentLeftBorder + soundEffectPosition, top, soundEffectWidth, image.getHeight() - top - bottom);
             graphicsContext.setFill(lightBlue);
-            graphicsContext.strokeRect(soundEffectPosition, top, soundEffectWidth, image.getHeight() - top - bottom);
+            graphicsContext.strokeRect(currentLeftBorder + soundEffectPosition, top, soundEffectWidth, image.getHeight() - top - bottom);
           }
+
+          currentLeftBorder = currentLeftBorder + width;
+
+          if (has(breakPattern)) {
+            currentLeftBorder = currentLeftBorder + (breakPattern.get(j % breakPattern.size()) * scale);
+          }
+
         }
       }
     }

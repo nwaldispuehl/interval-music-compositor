@@ -3,6 +3,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 
 2017-07-xx  2.6.x
 --------------------------------------------------------------------------------
+ADD  #6     Add possibility to include sound effects.
 FIX  #22    Preview scales badly.
 FIX  #23    Temporary compilation file is not deleted on Windows.
 
