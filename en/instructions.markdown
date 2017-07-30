@@ -20,6 +20,7 @@ Otherwise, download and install Java from [java.com](http://java.com/). If possi
 1. Determine the extract enumeration method by either choosing 'single extract per track' which selects a random extract in each track, or 'continuous' which takes a number of extracts in a row from the same track before stepping to the next track.
 1. Choose a target directory for the audio compilation by clicking the according button and choosing one in the dialog
 1. Enter the desired values for the the length of the sound samples (in seconds, e.g. 30 seconds), the fade-in/out mode and period (e.g. 1 second), the length of the breaks (in seconds, e.g. 10 seconds) and the number of sound samples you'd like to have in the end (e.g. 12 samples). Or switch to the 'advanced' tab and enter patterns of music and breaks (e.g. 10,20,30,20).
+1. If desired add one or more sound effects with the respective button and set their start time.
 1. Press the 'Process' button
 1. Wait some time ...
 1. If it says 'Finished' in the progress bar, the output sound file (in this example '30s_10b-x12.imc_out.wav' (resp. '30s_10b-x12.imc_out.mp3'), the numbers match the entered values) and the according tracklist ('30s_10b-x12.playlist.txt') have been generated (this is, unless there were some serious problems). You can check the audio envelope to determine if the output file is ok.

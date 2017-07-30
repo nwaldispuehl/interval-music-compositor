@@ -18,6 +18,7 @@ Der retorte.ch **Interval Music Compositor** hat die folgenden Eigenschaften.
 * Normalisiert die Lautstärke der Ausschnitte
 * Fügt die Ausschnitte zu einer einzigen grossen Zusammenstellung zusammen wobei Intervalle und Pausen der Zusammenstellung gewählt werden können.
 * Unterstützt Intervallmuster
+* Soundeffekte (Gong, Pfiff) können hinzugefügt werden.
 * Falls nicht genügend Tracks vorhanden sind um die gewünschte Anzahl Wiederholungen zu erreichen wird einfach wieder von vorne begonnen
 * Die Liste der gewählten Tracks wird in einer Textdatei gespeichert
 * Die Hüllkurve der erzeugten Zusammenstellung wird zur Kontrolle angezeigt

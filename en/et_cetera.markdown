@@ -41,25 +41,27 @@ The following entities contributed to the project:
 
 * Martin Lutz (AT): Patterns ('Advanced' tab) and interval preview
 
+### Libraries
+
 This project uses the following libraries:
 
-### Tritonus
+#### Tritonus
 For OGG Vorbis decoding and signal processing. <br/>
 [www.tritonus.org](http://www.tritonus.org/) <br/>
 License: [GNU Lesser General Public License](http://www.gnu.org/copyleft/lesser.html)
 
-### JCraft Jorbis
+#### JCraft Jorbis
 For OGG Vorbis decoding. <br/>
 [www.jcraft.com/jorbis/](http://www.jcraft.com/jorbis/) <br/>
 License: [GNU Lesser General Public License](http://www.gnu.org/copyleft/lesser.html)
 
-### JavaZoom JLayer and MP3SPI
+#### JavaZoom JLayer and MP3SPI
 For MP3 decoding. <br/>
 [www.javazoom.net/javalayer/javalayer.html](http://www.javazoom.net/javalayer/javalayer.html) <br/>
 [www.javazoom.net/mp3spi/mp3spi.html](http://www.javazoom.net/mp3spi/mp3spi.html) <br/>
 License: [GNU Lesser General Public License](http://www.gnu.org/copyleft/lesser.html)
 
-### JFLAC
+#### JFLAC
 For FLAC decoding. <br/>
 [jflac.sourceforge.net](http://jflac.sourceforge.net/) <br/>
 License:
@@ -93,28 +95,29 @@ License:
     NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-### Parts of Dr. Simon Dixons BeatRoot
+#### Parts of Dr. Simon Dixons BeatRoot
 For determination of the BPM values. <br/>
 [www.eecs.qmul.ac.uk/~simond/beatroot/](http://www.eecs.qmul.ac.uk/~simond/beatroot/) <br/>
 License: [GNU Public License](http://www.gnu.org/licenses/gpl.txt)
 
-### JAudioTagger
+#### JAudioTagger
 For reading and writing of the TBPM tags in in MP3, FLAC and OGG files. <br/>
 [www.jthink.net/jaudiotagger/](http://www.jthink.net/jaudiotagger/) <br/>
 License: [GNU Lesser General Public License](http://www.gnu.org/copyleft/lesser.html)
 
-### JAAD – Java Advanced Audio Decoder
+#### JAAD – Java Advanced Audio Decoder
 For AAC decoding. <br/>
 [jaadec.sourceforge.net/](http://jaadec.sourceforge.net/) <br/>
 License: [GNU Lesser General Public License V3](http://www.gnu.org/licenses/lgpl-3.0.html)
 
-### LAME Project
+#### LAME Project
 For MP3 encoding. <br/>
 [lame.sourceforge.net/](http://lame.sourceforge.net/) <br/>
 Java port from Ken Händel [sourceforge.net/projects/jsidplay2/](http://sourceforge.net/projects/jsidplay2/) <br/>
+Also see: https://github.com/nwaldispuehl/java-lame <br/>
 License: [GNU Lesser General Public License V3](http://www.gnu.org/licenses/lgpl-3.0.html)
 
-### Vorbis-Java
+#### Vorbis-Java
 For OGG encoding. <br/>
 [xiph.org](http://xiph.org/), library from: [downloads.xiph.org/releases/vorbis-java/](http://downloads.xiph.org/releases/vorbis-java/) <br/>
 License: 
@@ -149,3 +152,14 @@ License:
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+### Sound effects
+
+#### Gong
+"Large gong sound" by justsoundfx (https://www.youtube.com/user/justsoundfx/) <br/>
+Src: https://www.youtube.com/watch?v=4K_B3k9ax8M <br/>
+License: Standard YouTube License
+
+#### Whistle / Double whistle
+  "Referee whistle blow, gymnasium.wav" by Julian Evans / SpliceSound (https://freesound.org/people/SpliceSound/) <br/>
+  Src: https://freesound.org/people/SpliceSound/sounds/218318/ <br/>
+  License: Creative Commons 0 License (aka public domain)

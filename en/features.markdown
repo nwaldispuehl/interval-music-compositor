@@ -18,6 +18,7 @@ The retorte.ch **Interval Music Compositor** has the following properties.
 * Normalizes the volume of the extract
 * Composes them together to one big output file (compilation) whereas the length of the extracts and the breaks can be freely chosen
 * Supports patterns of intervals
+* Sound effects (gong, whistle) can be added.
 * If there are not enough tracks to fill the compilation, it starts from anew
 * Stores the playlist data in a textfile
 * Displays the audio envelope of the compilation for test purposes
