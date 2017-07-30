@@ -20,7 +20,7 @@
         </graphic>
     </Button>
     <Label text="%ui.form.sound_effects.start_time.label"/>
-    <Spinner fx:id="soundEffectStartTime" prefWidth="100">
+    <Spinner fx:id="soundEffectStartTime" prefWidth="100" editable="true">
         <valueFactory>
             <SpinnerValueFactory.IntegerSpinnerValueFactory min="0" initialValue="0" amountToStepBy="1" max="10"/>
         </valueFactory>
