@@ -68,9 +68,9 @@ public class StreamMusicPlayer implements Runnable, MusicPlayer {
         }
       }
 
-      // To give the line time to run the fed music, we wait a bit before cleaning up.
-      while (play && 0 < line.available() ) {
-        sleep();
+      if (play) {
+        // If we're still playing we wait until all data has been played back before proceeding and cutting off the line.
+        line.drain();
       }
 
       line.stop();
@@ -85,18 +85,6 @@ public class StreamMusicPlayer implements Runnable, MusicPlayer {
     }
 
     addDebugMessage("Stopped playing audio stream.");
-  }
-
-  private void cleanup() {
-
-  }
-
-  private void sleep() {
-    try {
-      Thread.sleep(20);
-    } catch (InterruptedException e) {
-      // nop
-    }
   }
 
   private void clearStream() {

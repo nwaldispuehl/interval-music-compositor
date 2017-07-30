@@ -20,8 +20,6 @@ public class ExtractMusicPlayer extends StreamMusicPlayer implements AudioFileMu
 
   private MessageFormatBundle bundle = getBundle("core_imc");
 
-  private AudioInputStream inputStream;
-
   private MessageProducer messageProducer;
   private SoundHelper soundHelper;
 
@@ -50,6 +48,7 @@ public class ExtractMusicPlayer extends StreamMusicPlayer implements AudioFileMu
 
     int extractStart = (audioFileDurationInSeconds - extractLength) / 2;
 
+    AudioInputStream inputStream = null;
     try {
       inputStream = soundHelper.getLeveledStream(soundHelper.getStreamExtract(audioFile.getAudioInputStream(), extractStart, extractLength),
           audioFile.getVolumeRatio());
