@@ -7,8 +7,8 @@ import ch.retorte.intervalmusiccompositor.Version;
  */
 public interface ApplicationData {
 
-  public String getProgramName();
+  String getProgramName();
 
-  public Version getProgramVersion();
+  Version getProgramVersion();
 
 }

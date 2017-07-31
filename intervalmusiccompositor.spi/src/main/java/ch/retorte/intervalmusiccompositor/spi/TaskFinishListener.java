@@ -5,6 +5,6 @@ package ch.retorte.intervalmusiccompositor.spi;
  */
 public interface TaskFinishListener {
 
-	public void onTaskFinished();
-	
+  void onTaskFinished();
+
 }
