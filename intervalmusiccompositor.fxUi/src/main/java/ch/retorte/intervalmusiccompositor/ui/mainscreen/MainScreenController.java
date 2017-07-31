@@ -368,9 +368,7 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializeSoundEffects() {
-    // TODO
-
-    SoundEffectsPane soundEffectsPane = new SoundEffectsPane(soundEffectsProvider, compilationParameters, musicListControl, messageProducer, (obs,oldVal,newVal) -> updateEnvelopeImage());
+    SoundEffectsPane soundEffectsPane = new SoundEffectsPane(soundEffectsProvider, compilationParameters, musicListControl, messageProducer, (obs, oldVal, newVal) -> updateEnvelopeImage());
     musicAndBreakPatternChangeListener = soundEffectsPane.getMusicAndBreakPatternChangeListener();
     soundEffectsContainer.getChildren().add(soundEffectsPane);
   }

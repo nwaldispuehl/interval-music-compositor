@@ -1,9 +1,10 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
-2017-xx-xx  2.7.x
+2017-xx-xx  2.7.x (not released)
 --------------------------------------------------------------------------------
 IMP         Made sound effect start time spinner editable.
+IMP         Improved directions in error dialog.
 
 
 2017-07-30  2.7.1

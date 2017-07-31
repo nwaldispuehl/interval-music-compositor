@@ -74,7 +74,6 @@ public class SoundEffectsPane extends BorderPane {
     try {
       fxmlLoader.load();
     } catch (IOException exception) {
-      exception.printStackTrace();
       throw new RuntimeException(exception);
     }
   }

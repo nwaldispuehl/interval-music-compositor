@@ -76,7 +76,6 @@ class SoundEffectEntry extends HBox {
     try {
       fxmlLoader.load();
     } catch (IOException exception) {
-      exception.printStackTrace();
       throw new RuntimeException(exception);
     }
   }
