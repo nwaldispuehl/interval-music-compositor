@@ -31,6 +31,7 @@ In case it is not possible to start the program, first of all download and insta
 ### Linux
 
 * On Linux, the pre-listen function only plays music if there is no other audio source active on the system.
+* If you're using the OpenJDK Java and the program can't be started due to an error like `NoClassDefFoundError: javafx/collections/FXCollections` you need to install the `openjfx` package. Do it for example by entering `sudo apt-get install openjfx` on the command line.
 
 ### Mac OS X
 
@@ -41,3 +42,4 @@ In case it is not possible to start the program, first of all download and insta
 ### Microsoft Windows
 
 * On Windows (64 bit), if it is not possible to generate long compilations even there is enough RAM, most likely the 32 bit version of Java is currently active. Use the 64 bit version of Java to start the program.
+* On the first start of the program a security warning might occur due to missing digital signature. If the program has been downloaded from the official website it can be ignored. To start the program anyway click on 'Run anyway', or 'More Information' and then the 'Run' button, depending on your Windows version.

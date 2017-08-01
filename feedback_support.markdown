@@ -30,6 +30,7 @@ Ist das Starten des Programms nicht möglich, solltest du zuerst die neuste Java
 ### Linux
 
 * Unter Linux spielt die Vorhörfunktion lediglich Musik, wenn auf dem System keine andere Musikquelle aktiv ist.
+* Ist OpenJDK installiert und das Programm kann wegen eines Fehlers wie `NoClassDefFoundError: javafx/collections/FXCollections` nicht gestartet werden muss das `openjfx` Paket (z.B. via `sudo apt-get install openjfx` im Terminal) installiert werden.
 
 ### Mac OS X
 
@@ -40,3 +41,4 @@ Ist das Starten des Programms nicht möglich, solltest du zuerst die neuste Java
 ### Microsoft Windows
 
 * Ist es unter Windows (64-bit) nicht möglich, sehr lange Stücke zu erzeugen, obwohl genügend Hauptspeicher vorhanden ist, ist möglicherweise die 32-bit Version von Java aktiv. Benutze die 64-bit Version von Java um das Programm zu starten.
+* Beim ersten Start des Programms kann aufgrund fehlender Signierung eine Sicherheitswarnung erscheinen. Wurde das Programm von der offiziellen Seite heruntergeladen kann diese grundsätzlich ignoriert werden. Dazu je nach Windows-Version auf 'Ausführen' oder 'Weitere Infos' klicken und bestätigen.
