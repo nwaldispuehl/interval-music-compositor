@@ -3,6 +3,7 @@ package ch.retorte.intervalmusiccompositor.ui.mainscreen;
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
@@ -204,6 +205,7 @@ public class MainScreenController implements Initializable {
   private UpdateAvailabilityChecker updateAvailabilityChecker;
   private ScheduledExecutorService executorService;
   private SoundEffectsProvider soundEffectsProvider;
+  private UserPreferences userPreferences;
   private List<AudioFileDecoder> audioFileDecoders;
 
   private ChangeListener<Void> musicAndBreakPatternChangeListener;
@@ -215,7 +217,7 @@ public class MainScreenController implements Initializable {
 
   }
 
-  public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService, SoundEffectsProvider soundEffectsProvider) {
+  public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService, SoundEffectsProvider soundEffectsProvider, UserPreferences userPreferences) {
     this.ui = ui;
     this.programControl = programControl;
     this.applicationData = applicationData;
@@ -226,6 +228,7 @@ public class MainScreenController implements Initializable {
     this.updateAvailabilityChecker = updateAvailabilityChecker;
     this.executorService = executorService;
     this.soundEffectsProvider = soundEffectsProvider;
+    this.userPreferences = userPreferences;
 
     initializeMenu();
     initializeMusicTrackList();
@@ -343,6 +346,7 @@ public class MainScreenController implements Initializable {
 
     soundPeriod.valueProperty().addListener(debugHandlerWith(soundPeriod.getId()));
     soundPeriod.valueProperty().addListener(updateUiHandler());
+    soundPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPeriod(newValue));
 
     breakPeriod.valueProperty().addListener(debugHandlerWith(breakPeriod.getId()));
     breakPeriod.valueProperty().addListener(updateUiHandler());
@@ -355,6 +359,9 @@ public class MainScreenController implements Initializable {
 
     iterations.valueProperty().addListener(debugHandlerWith(iterations.getId()));
     iterations.valueProperty().addListener(updateUiHandler());
+
+    // TODO: Load stored data -> Causes trouble. Maybe move to the very end?
+    soundPeriod.getValueFactory().setValue(userPreferences.loadSoundPeriodWithDefault(0));
   }
 
   private void initializeBlending() {

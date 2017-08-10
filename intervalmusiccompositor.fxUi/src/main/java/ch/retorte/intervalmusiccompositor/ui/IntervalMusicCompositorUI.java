@@ -2,6 +2,7 @@ package ch.retorte.intervalmusiccompositor.ui;
 
 import ch.retorte.intervalmusiccompositor.commons.Utf8Control;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
+import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
@@ -48,9 +49,11 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   private static ApplicationData applicationData;
   private static UpdateAvailabilityChecker updateAvailabilityChecker;
   private static SoundEffectsProvider soundEffectsProvider;
+  private static UserPreferences userPreferences;
   private static MessageSubscriber messageSubscriber;
   private static MessageProducer messageProducer;
   private static MainScreenController mainScreenController;
+
 
   //---- Fields
 
@@ -72,6 +75,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
                                    ApplicationData applicationData,
                                    UpdateAvailabilityChecker updateAvailabilityChecker,
                                    SoundEffectsProvider soundEffectsProvider,
+                                   UserPreferences userPreferences,
                                    MessageSubscriber messageSubscriber,
                                    MessageProducer messageProducer) {
     IntervalMusicCompositorUI.musicListControl = musicListControl;
@@ -80,6 +84,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
     IntervalMusicCompositorUI.applicationData = applicationData;
     IntervalMusicCompositorUI.updateAvailabilityChecker = updateAvailabilityChecker;
     IntervalMusicCompositorUI.soundEffectsProvider = soundEffectsProvider;
+    IntervalMusicCompositorUI.userPreferences = userPreferences;
     IntervalMusicCompositorUI.messageSubscriber = messageSubscriber;
     IntervalMusicCompositorUI.messageProducer = messageProducer;
 
@@ -197,7 +202,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   }
 
   private void initialize(MainScreenController mainScreenController) {
-    mainScreenController.initializeFieldsWith(this, programControl, applicationData, musicListControl, musicCompilationController, compilationParameters, messageSubscriber, messageProducer, updateAvailabilityChecker, executorService, soundEffectsProvider);
+    mainScreenController.initializeFieldsWith(this, programControl, applicationData, musicListControl, musicCompilationController, compilationParameters, messageSubscriber, messageProducer, updateAvailabilityChecker, executorService, soundEffectsProvider, userPreferences);
     mainScreenController.updateOutputFileFormatWith(getAudioFileEncoders());
     mainScreenController.updateAvailableDecodersWith(getAudioFileDecoderExtensions());
   }

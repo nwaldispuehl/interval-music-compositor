@@ -26,6 +26,7 @@ import ch.retorte.intervalmusiccompositor.commons.ArrayHelper;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.platform.Platform;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
+import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationException;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationGenerator;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
@@ -66,6 +67,7 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   private AudioFileFactory audioFileFactory;
   private AudioFileMusicPlayer musicPlayer;
   private SoundEffectsProvider soundEffectsProvider;
+  private UserPreferences userPreferences;
   private MessageBus messageBus;
   private Ui ui;
 
@@ -75,11 +77,12 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   private String temporaryFileSuffix;
   private int maximumImportWorkerThreads;
 
-  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, AudioFileMusicPlayer musicPlayer, SoundEffectsProvider soundEffectsProvider, MessageBus messageBus) {
+  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, AudioFileMusicPlayer musicPlayer, SoundEffectsProvider soundEffectsProvider, UserPreferences userPreferences, MessageBus messageBus) {
     this.compilationGenerator = compilationGenerator;
     this.audioFileFactory = audioFileFactory;
     this.musicPlayer = musicPlayer;
     this.soundEffectsProvider = soundEffectsProvider;
+    this.userPreferences = userPreferences;
     this.messageBus = messageBus;
 
     this.compilationGenerator.setMusicListControl(this);

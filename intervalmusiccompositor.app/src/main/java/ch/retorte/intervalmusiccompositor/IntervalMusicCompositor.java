@@ -14,6 +14,7 @@ import ch.retorte.intervalmusiccompositor.audiofile.AudioFileFactory;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.platform.Platform;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
+import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.compilation.Compilation;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationGenerator;
 import ch.retorte.intervalmusiccompositor.decoder.AacAudioFileDecoder;
@@ -60,6 +61,8 @@ class IntervalMusicCompositor {
   private MessageBus messageBus = createMessageBus();
   private SoundHelper soundHelper = createSoundHelper();
 
+  private UserPreferences userPreferences = createUserPreferences();
+
   private MessageBus createMessageBus() {
     MessageBus result = new MessageBus(true);
     result.addHandler(new ConsoleMessageHandler());
@@ -68,6 +71,10 @@ class IntervalMusicCompositor {
 
   private SoundHelper createSoundHelper() {
     return new SoundHelper(messageBus);
+  }
+
+  private UserPreferences createUserPreferences() {
+    return new UserPreferences(messageBus);
   }
 
   /**
@@ -130,7 +137,7 @@ class IntervalMusicCompositor {
   }
 
   private MainControl createMainControl() {
-    return new MainControl(createCompilationGenerator(), createAudioFileFactory(), createMusicPlayer(), createSoundEffectProvider(), messageBus);
+    return new MainControl(createCompilationGenerator(), createAudioFileFactory(), createMusicPlayer(), createSoundEffectProvider(), userPreferences, messageBus);
   }
 
   private CompilationGenerator createCompilationGenerator() {
@@ -191,7 +198,7 @@ class IntervalMusicCompositor {
   }
 
   private Ui createUserInterface(MainControl control) {
-    Ui userInterface = new IntervalMusicCompositorUI(control, control, control, control, createUpdateAvailabilityChecker(control), control, messageBus, messageBus);
+    Ui userInterface = new IntervalMusicCompositorUI(control, control, control, control, createUpdateAvailabilityChecker(control), control, userPreferences, messageBus, messageBus);
     control.setUi(userInterface);
     return userInterface;
   }
