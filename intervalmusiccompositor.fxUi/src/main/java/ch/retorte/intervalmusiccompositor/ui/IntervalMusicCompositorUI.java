@@ -2,7 +2,6 @@ package ch.retorte.intervalmusiccompositor.ui;
 
 import ch.retorte.intervalmusiccompositor.commons.Utf8Control;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
-import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
@@ -15,10 +14,8 @@ import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
 import ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController;
 import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
-import com.sun.javafx.collections.ImmutableObservableList;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -203,13 +200,11 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   }
 
   private void initialize(MainScreenController mainScreenController) {
-    mainScreenController.initializeFieldsWith(this, programControl, applicationData, musicListControl, musicCompilationController, compilationParameters, messageSubscriber, messageProducer, updateAvailabilityChecker, executorService, soundEffectsProvider, userPreferences);
-    mainScreenController.updateOutputFileFormatWith(getAudioFileEncoders());
-    mainScreenController.updateAvailableDecodersWith(getAudioFileDecoderExtensions());
+    mainScreenController.initializeFieldsWith(this, programControl, applicationData, musicListControl, musicCompilationController, compilationParameters, messageSubscriber, messageProducer, updateAvailabilityChecker, executorService, soundEffectsProvider, getAudioFileDecoderExtensions(), getAudioFileEncoders(), userPreferences);
   }
 
-  private ObservableList<AudioFileEncoder> getAudioFileEncoders() {
-    return new ImmutableObservableList<>(musicCompilationController.getAvailableEncoders().toArray(new AudioFileEncoder[0]));
+  private List<AudioFileEncoder> getAudioFileEncoders() {
+    return musicCompilationController.getAvailableEncoders();
   }
 
   private List<AudioFileDecoder> getAudioFileDecoderExtensions() {

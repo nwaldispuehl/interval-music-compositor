@@ -59,6 +59,10 @@ public class UserPreferences {
     return result;
   }
 
+  protected boolean has(String key) {
+    return preferences.get(key, null) != null;
+  }
+
   private void addSaveDebugMessageFor(String key, Object value) {
     addDebugMessage("Storing user preference '" + key + "' value: " + value);
   }

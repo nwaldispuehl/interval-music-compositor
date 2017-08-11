@@ -3,8 +3,8 @@ package ch.retorte.intervalmusiccompositor.ui.mainscreen;
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
@@ -30,6 +30,7 @@ import ch.retorte.intervalmusiccompositor.ui.utils.AudioFileEncoderConverter;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -207,7 +208,8 @@ public class MainScreenController implements Initializable {
   private ScheduledExecutorService executorService;
   private SoundEffectsProvider soundEffectsProvider;
   private UiUserPreferences userPreferences;
-  private List<AudioFileDecoder> audioFileDecoders;
+  private ObservableList<AudioFileDecoder> audioFileDecoders;
+  private ObservableList<AudioFileEncoder> audioFileEncoders;
 
   private ChangeListener<Void> musicAndBreakPatternChangeListener;
 
@@ -218,7 +220,7 @@ public class MainScreenController implements Initializable {
 
   }
 
-  public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService, SoundEffectsProvider soundEffectsProvider, UiUserPreferences userPreferences) {
+  public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService, SoundEffectsProvider soundEffectsProvider, List<AudioFileDecoder> audioFileDecoders, List<AudioFileEncoder> audioFileEncoders, UiUserPreferences userPreferences) {
     this.ui = ui;
     this.programControl = programControl;
     this.applicationData = applicationData;
@@ -229,6 +231,8 @@ public class MainScreenController implements Initializable {
     this.updateAvailabilityChecker = updateAvailabilityChecker;
     this.executorService = executorService;
     this.soundEffectsProvider = soundEffectsProvider;
+    this.audioFileDecoders = FXCollections.observableArrayList(audioFileDecoders);
+    this.audioFileEncoders = FXCollections.observableArrayList(audioFileEncoders);
     this.userPreferences = userPreferences;
 
     initializeMenu();
@@ -323,6 +327,8 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializeDurationControls() {
+
+    // FIXME: This does not fire on preferences load
     periodTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
       if (isSimpleTab(newValue)) {
         compilationParameters.setMusicPattern(soundPeriod.getValue());
@@ -383,6 +389,10 @@ public class MainScreenController implements Initializable {
   private void initializeOutputFileFormat() {
     outputFileFormat.valueProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setEncoderIdentifier(newValue.getIdentificator()));
     outputFileFormat.valueProperty().addListener(debugHandlerWith(outputFileFormat.getId()));
+
+    outputFileFormat.setConverter(new AudioFileEncoderConverter(audioFileEncoders));
+    outputFileFormat.setItems(audioFileEncoders);
+    outputFileFormat.getSelectionModel().selectFirst();
   }
 
   private void initializeOutputDirectory() {
@@ -396,11 +406,6 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializePreferenceStorage() {
-
-    // TODO: Add listeners and setter for all input fields
-    periodTabPane.getSelectionModel().select(userPreferences.loadPeriodTab(0));
-    periodTabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> userPreferences.savePeriodTab(newValue.intValue()));
-
     soundPeriod.getValueFactory().setValue(userPreferences.loadSoundPeriod(0));
     soundPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPeriod(newValue));
 
@@ -413,8 +418,15 @@ public class MainScreenController implements Initializable {
     breakPattern.textProperty().setValue(userPreferences.loadBreakPattern(""));
     breakPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPattern(newValue));
 
-//    blendModeToggleGroup.
-//    blendModeToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBlendMode(newValue.getUserData()));
+    // FIXME: Loading does not work; even though the simple pane is selected, the complex pattern is shown.
+    periodTabPane.getSelectionModel().select(getPeriodTabFor(userPreferences.loadPeriodTab("simpleTab")));
+    periodTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> userPreferences.savePeriodTab(newValue.getId()));
+
+    blendModeToggleGroup.selectToggle(getBlendModeToggleFor(userPreferences.loadBlendMode(BlendMode.SEPARATE.name())));
+    blendModeToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBlendMode((String) newValue.getUserData()));
+
+    iterations.getValueFactory().setValue(userPreferences.loadIterations(0));
+    iterations.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveIterations(newValue));
 
     blendDuration.valueProperty().setValue(userPreferences.loadBlendDuration(1));
     blendDuration.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -423,6 +435,43 @@ public class MainScreenController implements Initializable {
         userPreferences.saveBlendDuration((int) duration);
       }
     });
+
+    outputFileFormat.valueProperty().setValue(getOutputFileFormatFor(userPreferences.loadOutputFileFormat("mp3")));
+    outputFileFormat.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveOutputFileFormat(newValue.getIdentificator()));
+
+    if (userPreferences.hasOutputDirectory()) {
+      outputDirectory.textProperty().setValue(userPreferences.loadOutputDirectory(null));
+    }
+    outputDirectory.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveOutputDirectory(newValue));
+
+    // TODO: Add listeners and setter for all input fields
+  }
+
+  private Tab getPeriodTabFor(String tabId) {
+    for (Tab t : periodTabPane.getTabs()) {
+      if (t.getId().equals(tabId)) {
+        return t;
+      }
+    }
+    return null;
+  }
+
+  private Toggle getBlendModeToggleFor(String toggleIdentifier) {
+    for (Toggle t : blendModeToggleGroup.getToggles()) {
+      if (t.getUserData().equals(toggleIdentifier)) {
+        return t;
+      }
+    }
+    return null;
+  }
+
+  private AudioFileEncoder getOutputFileFormatFor(String outputFileFormatIdentifier) {
+    for (AudioFileEncoder e : audioFileEncoders) {
+      if (e.getIdentificator().equals(outputFileFormatIdentifier)) {
+        return e;
+      }
+    }
+    return null;
   }
 
   private void openDirectoryChooser() {
@@ -437,12 +486,6 @@ public class MainScreenController implements Initializable {
 
   private boolean isSimpleTab(Tab tab) {
     return tab.equals(simpleTab);
-  }
-
-  public void updateOutputFileFormatWith(ObservableList<AudioFileEncoder> audioFileEncoders) {
-    outputFileFormat.setConverter(new AudioFileEncoderConverter(audioFileEncoders));
-    outputFileFormat.setItems(audioFileEncoders);
-    outputFileFormat.getSelectionModel().select(0);
   }
 
   private void prepareSpinnerForListening(Spinner<Integer> spinner) {
@@ -524,10 +567,6 @@ public class MainScreenController implements Initializable {
 
   private Window getWindow() {
     return container.getScene().getWindow();
-  }
-
-  public void updateAvailableDecodersWith(List<AudioFileDecoder> audioFileDecoders) {
-    this.audioFileDecoders = audioFileDecoders;
   }
 
   private void addMessageSubscribers(MessageSubscriber messageSubscriber) {

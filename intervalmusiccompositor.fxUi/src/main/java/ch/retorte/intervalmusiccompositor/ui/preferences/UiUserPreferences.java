@@ -1,7 +1,6 @@
 package ch.retorte.intervalmusiccompositor.ui.preferences;
 
 import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
-import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 public class UiUserPreferences extends UserPreferences {
@@ -10,6 +9,7 @@ public class UiUserPreferences extends UserPreferences {
 
   private static final String MUSIC_TRACK_LIST_KEY = "musicTrackList";
   private static final String BREAK_TRACK_LIST_KEY = "breakTrackList";
+  private static final String ENUMERATION_MODE_KEY = "enumerationMode";
 
   private static final String SOUND_PERIOD_KEY = "soundPeriod";
   private static final String BREAK_PERIOD_KEY = "breakPeriod";
@@ -62,12 +62,12 @@ public class UiUserPreferences extends UserPreferences {
     return loadString(BREAK_PATTERN_KEY, defaultBreakPatternValue);
   }
 
-  public void savePeriodTab(int periodTabId) {
-    saveInt(PERIOD_TAB_KEY, periodTabId);
+  public void savePeriodTab(String periodTabId) {
+    saveString(PERIOD_TAB_KEY, periodTabId);
   }
 
-  public int loadPeriodTab(int defaultPeriodTabId) {
-    return loadInt(PERIOD_TAB_KEY, defaultPeriodTabId);
+  public String loadPeriodTab(String defaultPeriodTabId) {
+    return loadString(PERIOD_TAB_KEY, defaultPeriodTabId);
   }
 
   public void saveIterations(int iterations) {
@@ -78,13 +78,12 @@ public class UiUserPreferences extends UserPreferences {
     return loadInt(ITERATIONS_KEY, defaultIterations);
   }
 
-  public void saveBlendMode(BlendMode blendMode) {
-    saveString(BLEND_MODE_KEY, blendMode.name());
+  public void saveBlendMode(String blendMode) {
+    saveString(BLEND_MODE_KEY, blendMode);
   }
 
-  public BlendMode loadBlendMode(BlendMode defaultBlendMode) {
-    String loadedBlendModeString = loadString(BLEND_MODE_KEY, defaultBlendMode.name());
-    return BlendMode.valueOf(loadedBlendModeString);
+  public String loadBlendMode(String defaultBlendMode) {
+   return loadString(BLEND_MODE_KEY, defaultBlendMode);
   }
 
   public void saveBlendDuration(int blendDuration) {
@@ -95,5 +94,24 @@ public class UiUserPreferences extends UserPreferences {
     return loadInt(BLEND_DURATION_KEY, defaultBlendDuration);
   }
 
+  public void saveOutputFileFormat(String outputFileFormat) {
+    saveString(OUTPUT_FILE_FORMAT_KEY, outputFileFormat);
+  }
+
+  public String loadOutputFileFormat(String defaultOutputFileFormat) {
+    return loadString(OUTPUT_FILE_FORMAT_KEY, defaultOutputFileFormat);
+  }
+
+  public void saveOutputDirectory(String outputDirectory) {
+    saveString(OUTPUT_DIRECTORY_KEY, outputDirectory);
+  }
+
+  public boolean hasOutputDirectory() {
+    return has(OUTPUT_DIRECTORY_KEY);
+  }
+
+  public String loadOutputDirectory(String defaultOutputDirectory) {
+    return loadString(OUTPUT_DIRECTORY_KEY, defaultOutputDirectory);
+  }
 
 }
