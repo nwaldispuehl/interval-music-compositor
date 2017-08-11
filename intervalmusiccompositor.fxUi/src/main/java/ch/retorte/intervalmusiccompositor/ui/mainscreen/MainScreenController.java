@@ -23,6 +23,7 @@ import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileLis
 import ch.retorte.intervalmusiccompositor.ui.audiofilelist.MusicFileChooser;
 import ch.retorte.intervalmusiccompositor.ui.debuglog.DebugLogWindow;
 import ch.retorte.intervalmusiccompositor.ui.graphics.BarChart;
+import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import ch.retorte.intervalmusiccompositor.ui.soundeffects.SoundEffectsPane;
 import ch.retorte.intervalmusiccompositor.ui.updatecheck.UpdateCheckDialog;
 import ch.retorte.intervalmusiccompositor.ui.utils.AudioFileEncoderConverter;
@@ -205,7 +206,7 @@ public class MainScreenController implements Initializable {
   private UpdateAvailabilityChecker updateAvailabilityChecker;
   private ScheduledExecutorService executorService;
   private SoundEffectsProvider soundEffectsProvider;
-  private UserPreferences userPreferences;
+  private UiUserPreferences userPreferences;
   private List<AudioFileDecoder> audioFileDecoders;
 
   private ChangeListener<Void> musicAndBreakPatternChangeListener;
@@ -217,7 +218,7 @@ public class MainScreenController implements Initializable {
 
   }
 
-  public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService, SoundEffectsProvider soundEffectsProvider, UserPreferences userPreferences) {
+  public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService, SoundEffectsProvider soundEffectsProvider, UiUserPreferences userPreferences) {
     this.ui = ui;
     this.programControl = programControl;
     this.applicationData = applicationData;
@@ -240,6 +241,8 @@ public class MainScreenController implements Initializable {
     initializeOutputFileFormat();
     initializeOutputDirectory();
     initializeControlButtons();
+
+    initializePreferenceStorage();
 
     addMessageSubscribers(messageSubscriber);
   }
@@ -346,7 +349,7 @@ public class MainScreenController implements Initializable {
 
     soundPeriod.valueProperty().addListener(debugHandlerWith(soundPeriod.getId()));
     soundPeriod.valueProperty().addListener(updateUiHandler());
-    soundPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPeriod(newValue));
+
 
     breakPeriod.valueProperty().addListener(debugHandlerWith(breakPeriod.getId()));
     breakPeriod.valueProperty().addListener(updateUiHandler());
@@ -359,9 +362,6 @@ public class MainScreenController implements Initializable {
 
     iterations.valueProperty().addListener(debugHandlerWith(iterations.getId()));
     iterations.valueProperty().addListener(updateUiHandler());
-
-    // TODO: Load stored data -> Causes trouble. Maybe move to the very end?
-    soundPeriod.getValueFactory().setValue(userPreferences.loadSoundPeriodWithDefault(0));
   }
 
   private void initializeBlending() {
@@ -393,6 +393,23 @@ public class MainScreenController implements Initializable {
 
   private void initializeControlButtons() {
     process.setOnAction(event -> musicCompilationControl.startCompilation(compilationParameters));
+  }
+
+  private void initializePreferenceStorage() {
+
+    // TODO: Add listeners and setter for all input fields
+
+    soundPeriod.getValueFactory().setValue(userPreferences.loadSoundPeriod(0));
+    soundPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPeriod(newValue));
+
+    breakPeriod.getValueFactory().setValue(userPreferences.loadBreakPeriod(0));
+    breakPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPeriod(newValue));
+
+    soundPattern.textProperty().setValue(userPreferences.loadSoundPattern(""));
+    soundPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPattern(newValue));
+
+    breakPattern.textProperty().setValue(userPreferences.loadBreakPattern(""));
+    breakPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPattern(newValue));
   }
 
   private void openDirectoryChooser() {

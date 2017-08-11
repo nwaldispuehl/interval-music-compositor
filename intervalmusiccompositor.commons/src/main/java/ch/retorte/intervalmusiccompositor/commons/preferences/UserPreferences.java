@@ -10,23 +10,7 @@ import java.util.prefs.Preferences;
  */
 public class UserPreferences {
 
-  //---- Static
 
-  private static final String IMC_PREFIX = "imcUserPreferences-";
-
-  private static final String MUSIC_TRACK_LIST_KEY = IMC_PREFIX + "musicTrackList";
-  private static final String BREAK_TRACK_LIST_KEY = IMC_PREFIX + "breakTrackList";
-
-  private static final String SOUND_PERIOD_KEY = IMC_PREFIX + "soundPeriod";
-  private static final String BREAK_PERIOD_KEY = IMC_PREFIX + "breakPeriod";
-  private static final String SOUND_PATTERN_KEY = IMC_PREFIX + "soundPattern";
-  private static final String BREAK_PATTERN_KEY = IMC_PREFIX + "breakPattern";
-
-  private static final String ITERATIONS_KEY = IMC_PREFIX + "iterations";
-  private static final String FADE_MODE_KEY = IMC_PREFIX + "fadeMode";
-  private static final String FADE_DURATION_KEY = IMC_PREFIX + "fadeDuration";
-  private static final String OUTPUT_FILE_FORMAT_KEY = IMC_PREFIX + "outputFileFormat";
-  private static final String OUTPUT_DIRECTORY_KEY = IMC_PREFIX + "outputDirectory";
 
 
   //---- Fields
@@ -46,26 +30,41 @@ public class UserPreferences {
 
   //---- Methods
 
-  public void saveSoundPeriod(int soundPeriod) {
-    saveInt(SOUND_PERIOD_KEY, soundPeriod);
-  }
 
-  public int loadSoundPeriodWithDefault(int defaultValue) {
-    return loadInt(SOUND_PERIOD_KEY, defaultValue);
-  }
+
+
 
 
   //---- Helper methods
 
-  private void saveInt(String key, int value) {
-    addDebugMessage("Storing user preference '" + key + "' value: " + value);
+  protected void saveInt(String key, int value) {
+    addSaveDebugMessageFor(key, value);
     preferences.putInt(key, value);
   }
 
-  private int loadInt(String key, int defaultValue) {
-    int result = preferences.getInt(SOUND_PERIOD_KEY, defaultValue);
-    addDebugMessage("Loading user preference '" + key + "' value: " + result);
+  protected int loadInt(String key, int defaultValue) {
+    int result = preferences.getInt(key, defaultValue);
+    addLoadDebugMessageFor(key, result);
     return result;
+  }
+
+  protected void saveString(String key, String value) {
+    addSaveDebugMessageFor(key, value);
+    preferences.put(key, value);
+  }
+
+  protected String loadString(String key, String defaultValue) {
+    String result = preferences.get(key, defaultValue);
+    addLoadDebugMessageFor(key, result);
+    return result;
+  }
+
+  private void addSaveDebugMessageFor(String key, Object value) {
+    addDebugMessage("Storing user preference '" + key + "' value: " + value);
+  }
+
+  private void addLoadDebugMessageFor(String key, Object value) {
+    addDebugMessage("Loading user preference '" + key + "' value: " + value);
   }
 
   private void addDebugMessage(String message) {

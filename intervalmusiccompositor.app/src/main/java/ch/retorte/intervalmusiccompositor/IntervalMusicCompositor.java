@@ -43,6 +43,7 @@ import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI;
+import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
 import ch.retorte.intervalmusiccompositor.util.UpdateChecker;
 
@@ -61,7 +62,7 @@ class IntervalMusicCompositor {
   private MessageBus messageBus = createMessageBus();
   private SoundHelper soundHelper = createSoundHelper();
 
-  private UserPreferences userPreferences = createUserPreferences();
+  private UiUserPreferences userPreferences = createUserPreferences();
 
   private MessageBus createMessageBus() {
     MessageBus result = new MessageBus(true);
@@ -73,8 +74,8 @@ class IntervalMusicCompositor {
     return new SoundHelper(messageBus);
   }
 
-  private UserPreferences createUserPreferences() {
-    return new UserPreferences(messageBus);
+  private UiUserPreferences createUserPreferences() {
+    return new UiUserPreferences(messageBus);
   }
 
   /**
