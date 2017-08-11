@@ -14,6 +14,7 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageSubscriber;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
 import ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController;
+import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import com.sun.javafx.collections.ImmutableObservableList;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -49,7 +50,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   private static ApplicationData applicationData;
   private static UpdateAvailabilityChecker updateAvailabilityChecker;
   private static SoundEffectsProvider soundEffectsProvider;
-  private static UserPreferences userPreferences;
+  private static UiUserPreferences userPreferences;
   private static MessageSubscriber messageSubscriber;
   private static MessageProducer messageProducer;
   private static MainScreenController mainScreenController;
@@ -75,7 +76,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
                                    ApplicationData applicationData,
                                    UpdateAvailabilityChecker updateAvailabilityChecker,
                                    SoundEffectsProvider soundEffectsProvider,
-                                   UserPreferences userPreferences,
+                                   UiUserPreferences userPreferences,
                                    MessageSubscriber messageSubscriber,
                                    MessageProducer messageProducer) {
     IntervalMusicCompositorUI.musicListControl = musicListControl;

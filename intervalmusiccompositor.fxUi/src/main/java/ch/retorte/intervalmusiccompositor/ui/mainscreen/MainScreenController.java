@@ -398,6 +398,8 @@ public class MainScreenController implements Initializable {
   private void initializePreferenceStorage() {
 
     // TODO: Add listeners and setter for all input fields
+    periodTabPane.getSelectionModel().select(userPreferences.loadPeriodTab(0));
+    periodTabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> userPreferences.savePeriodTab(newValue.intValue()));
 
     soundPeriod.getValueFactory().setValue(userPreferences.loadSoundPeriod(0));
     soundPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPeriod(newValue));
@@ -410,6 +412,17 @@ public class MainScreenController implements Initializable {
 
     breakPattern.textProperty().setValue(userPreferences.loadBreakPattern(""));
     breakPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPattern(newValue));
+
+//    blendModeToggleGroup.
+//    blendModeToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBlendMode(newValue.getUserData()));
+
+    blendDuration.valueProperty().setValue(userPreferences.loadBlendDuration(1));
+    blendDuration.valueProperty().addListener((observable, oldValue, newValue) -> {
+      double duration = newValue.doubleValue();
+      if ((int) duration == duration) {
+        userPreferences.saveBlendDuration((int) duration);
+      }
+    });
   }
 
   private void openDirectoryChooser() {
