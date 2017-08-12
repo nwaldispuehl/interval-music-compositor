@@ -327,18 +327,7 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializeDurationControls() {
-
-    // FIXME: This does not fire on preferences load
-    periodTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-      if (isSimpleTab(newValue)) {
-        compilationParameters.setMusicPattern(soundPeriod.getValue());
-        compilationParameters.setBreakPattern(breakPeriod.getValue());
-      }
-      else {
-        compilationParameters.setMusicPattern(soundPattern.getText());
-        compilationParameters.setBreakPattern(breakPattern.getText());
-      }
-    });
+    periodTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updatePeriodSelectionWith(newValue));
 
     soundPeriod.valueProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setMusicPattern(newValue));
     breakPeriod.valueProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setBreakPattern(newValue));
@@ -419,7 +408,9 @@ public class MainScreenController implements Initializable {
     breakPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPattern(newValue));
 
     // FIXME: Loading does not work; even though the simple pane is selected, the complex pattern is shown.
-    periodTabPane.getSelectionModel().select(getPeriodTabFor(userPreferences.loadPeriodTab("simpleTab")));
+    Tab selectedTab = getPeriodTabFor(userPreferences.loadPeriodTab("simpleTab"));
+    periodTabPane.getSelectionModel().select(selectedTab);
+    updatePeriodSelectionWith(selectedTab);
     periodTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> userPreferences.savePeriodTab(newValue.getId()));
 
     blendModeToggleGroup.selectToggle(getBlendModeToggleFor(userPreferences.loadBlendMode(BlendMode.SEPARATE.name())));
@@ -481,6 +472,17 @@ public class MainScreenController implements Initializable {
     File file = directoryChooser.showDialog(getWindow());
     if (file != null && file.exists()) {
       outputDirectory.setText(file.getAbsolutePath());
+    }
+  }
+
+  private void updatePeriodSelectionWith(Tab tab) {
+    if (isSimpleTab(tab)) {
+      compilationParameters.setMusicPattern(soundPeriod.getValue());
+      compilationParameters.setBreakPattern(breakPeriod.getValue());
+    }
+    else {
+      compilationParameters.setMusicPattern(soundPattern.getText());
+      compilationParameters.setBreakPattern(breakPattern.getText());
     }
   }
 
