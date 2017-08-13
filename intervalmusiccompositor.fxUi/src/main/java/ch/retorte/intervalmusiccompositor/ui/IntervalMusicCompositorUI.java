@@ -122,7 +122,8 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   }
 
   private void initializeCompilationParameters() {
-    compilationParameters.setOutputPath(platform.getDesktopPath());
+    compilationParameters.setDefaultOutputPath(platform.getDesktopPath());
+    compilationParameters.resetOutputPath();
   }
 
   @Override

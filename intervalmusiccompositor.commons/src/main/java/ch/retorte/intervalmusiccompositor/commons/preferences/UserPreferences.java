@@ -49,8 +49,15 @@ public class UserPreferences {
   }
 
   protected void saveString(String key, String value) {
-    addSaveDebugMessageFor(key, value);
-    preferences.put(key, value);
+
+    if (value != null) {
+      addSaveDebugMessageFor(key, value);
+      preferences.put(key, value);
+    }
+    else {
+      addClearDebugMessageFor(key);
+      preferences.remove(key);
+    }
   }
 
   protected String loadString(String key, String defaultValue) {
@@ -65,6 +72,10 @@ public class UserPreferences {
 
   private void addSaveDebugMessageFor(String key, Object value) {
     addDebugMessage("Storing user preference '" + key + "' value: " + value);
+  }
+
+  private void addClearDebugMessageFor(String key) {
+    addDebugMessage("Removing user preference '" + key + "'");
   }
 
   private void addLoadDebugMessageFor(String key, Object value) {

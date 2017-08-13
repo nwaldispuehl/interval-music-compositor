@@ -13,7 +13,7 @@
   -fx-border-style: solid;
 }
 
-#addSoundEffects, #addMusicTrackButton, #addBreakTrackButton {
+#addSoundEffects, #addMusicTrackButton, #addBreakTrackButton, #clearOutputDirectory {
   -fx-padding: 2;
 }
 

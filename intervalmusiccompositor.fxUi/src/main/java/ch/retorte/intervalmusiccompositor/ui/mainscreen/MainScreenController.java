@@ -184,6 +184,9 @@ public class MainScreenController implements Initializable {
   private Button chooseOutputDirectory;
 
   @FXML
+  private Button clearOutputDirectory;
+
+  @FXML
   private Label outputDirectory;
 
   // Actions
@@ -388,6 +391,13 @@ public class MainScreenController implements Initializable {
     outputDirectory.textProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setOutputPath(newValue));
     outputDirectory.textProperty().addListener(debugHandlerWith(outputDirectory.getId()));
     chooseOutputDirectory.setOnAction(event -> openDirectoryChooser());
+    clearOutputDirectory.setOnAction(event -> resetOutputDirectory());
+  }
+
+  private void resetOutputDirectory() {
+    outputDirectory.textProperty().setValue(bundle.getString("ui.form.outfile_label"));
+    compilationParameters.resetOutputPath();
+    userPreferences.saveOutputDirectory(null);
   }
 
   private void initializeControlButtons() {
@@ -407,7 +417,6 @@ public class MainScreenController implements Initializable {
     breakPattern.textProperty().setValue(userPreferences.loadBreakPattern(""));
     breakPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPattern(newValue));
 
-    // FIXME: Loading does not work; even though the simple pane is selected, the complex pattern is shown.
     Tab selectedTab = getPeriodTabFor(userPreferences.loadPeriodTab("simpleTab"));
     periodTabPane.getSelectionModel().select(selectedTab);
     updatePeriodSelectionWith(selectedTab);

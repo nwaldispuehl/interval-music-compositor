@@ -279,6 +279,16 @@
                     <Separator prefWidth="200.0"/>
                     <HBox spacing="10.0" alignment="BASELINE_LEFT">
                         <Button fx:id="chooseOutputDirectory" mnemonicParsing="false" text="%ui.form.outfile_button_text"/>
+                        <Button fx:id="clearOutputDirectory">
+                            <tooltip>
+                                <Tooltip text="%ui.form.outfile.clear.tooltip"/>
+                            </tooltip>
+                            <graphic>
+                                <ImageView>
+                                    <Image url="@/images/clear_icon_small.png"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
                         <Label fx:id="outputDirectory" text="%ui.form.outfile_label"/>
                     </HBox>
                     <Separator prefWidth="200.0"/>
