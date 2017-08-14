@@ -31,6 +31,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -420,6 +421,18 @@ public class MainScreenController implements Initializable {
   }
 
   private void loadStoredPreferenceValues() {
+
+    List<File> musicTrackInputList = userPreferences.loadMusicTrackList();
+    for (File f : musicTrackInputList) {
+      musicListControl.appendMusicTrack(f);
+    }
+
+    List<File> breakTrackInputList = userPreferences.loadBreakTrackList();
+    for (File f : breakTrackInputList) {
+      musicListControl.appendBreakTrack(f);
+    }
+
+
     soundPeriod.getValueFactory().setValue(userPreferences.loadSoundPeriod(0));
     breakPeriod.getValueFactory().setValue(userPreferences.loadBreakPeriod(0));
     soundPattern.textProperty().setValue(userPreferences.loadSoundPattern(""));
@@ -440,6 +453,10 @@ public class MainScreenController implements Initializable {
   }
 
   private void registerPreferenceSaveListeners() {
+    // TODO
+    musicListControl.getMusicList().addListener((ListChangeListener<? super IAudioFile>) c -> userPreferences.saveMusicTrackList(c.getList()));
+    musicListControl.getBreakList().addListener((ListChangeListener<? super IAudioFile>) c -> userPreferences.saveBreakTrackList(c.getList()));
+
     soundPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPeriod(newValue));
     breakPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPeriod(newValue));
     soundPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPattern(newValue));

@@ -1,7 +1,18 @@
 package ch.retorte.intervalmusiccompositor.ui.preferences;
 
+import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
+import javafx.collections.ObservableList;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class UiUserPreferences extends UserPreferences {
 
@@ -29,6 +40,24 @@ public class UiUserPreferences extends UserPreferences {
   }
 
   //---- Methods
+
+  public void saveMusicTrackList(List<? extends IAudioFile> musicTrackList) {
+    saveString(MUSIC_TRACK_LIST_KEY, serialize(musicTrackList.stream().map(a -> a.getSource()).collect(toList())));
+  }
+
+  public List<File> loadMusicTrackList() {
+    String s = loadString(MUSIC_TRACK_LIST_KEY, "");
+    return deserialize(s);
+  }
+
+  public void saveBreakTrackList(List<? extends IAudioFile> breakTrackList) {
+    saveString(BREAK_TRACK_LIST_KEY, serialize(breakTrackList.stream().map(a -> a.getSource()).collect(toList())));
+  }
+
+  public List<File> loadBreakTrackList() {
+    String s = loadString(BREAK_TRACK_LIST_KEY, "");
+    return deserialize(s);
+  }
 
   public void saveSoundPeriod(int soundPeriod) {
     saveInt(SOUND_PERIOD_KEY, soundPeriod);
@@ -112,6 +141,16 @@ public class UiUserPreferences extends UserPreferences {
 
   public String loadOutputDirectory(String defaultOutputDirectory) {
     return loadString(OUTPUT_DIRECTORY_KEY, defaultOutputDirectory);
+  }
+
+  //---- Helper methods
+
+  private String serialize(List<File> fileList) {
+    return fileList.stream().map(f -> f.getAbsolutePath()).filter(p -> !isBlank(p)).collect(Collectors.joining(File.pathSeparator));
+  }
+
+  private List<File> deserialize(String fileListString) {
+    return Arrays.stream(fileListString.split(File.pathSeparator)).map(File::new).collect(toList());
   }
 
 }
