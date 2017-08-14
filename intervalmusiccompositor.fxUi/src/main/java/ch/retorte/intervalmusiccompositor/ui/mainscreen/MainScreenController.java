@@ -306,13 +306,13 @@ public class MainScreenController implements Initializable {
 
   private void initializeTrackEnumeration() {
     sortTrackList.setOnAction(event -> {
-      messageProducer.send(new DebugMessage(MainScreenController.this, "Pressed 'sort' button."));
+      addDebugMessage("Pressed 'sort' button.");
       musicListControl.sortMusicList();
       updateUiDataWidgets();
     });
 
     shuffleTrackList.setOnAction(event -> {
-      messageProducer.send(new DebugMessage(MainScreenController.this, "Pressed 'shuffle' button."));
+      addDebugMessage("Pressed 'shuffle' button.");
       musicListControl.shuffleMusicList();
       updateUiDataWidgets();
     });
@@ -405,46 +405,57 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializePreferenceStorage() {
+
+    try {
+      loadStoredPreferenceValues();
+    }
+    catch (Exception e) {
+      addDebugMessage("Failed to load preference values: " + e.getLocalizedMessage());
+    }
+
+    registerPreferenceSaveListeners();
+
+    // TODO: Add listeners and setter for all input fields
+    // TODO: Only load data if respective setting is set
+  }
+
+  private void loadStoredPreferenceValues() {
     soundPeriod.getValueFactory().setValue(userPreferences.loadSoundPeriod(0));
-    soundPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPeriod(newValue));
-
     breakPeriod.getValueFactory().setValue(userPreferences.loadBreakPeriod(0));
-    breakPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPeriod(newValue));
-
     soundPattern.textProperty().setValue(userPreferences.loadSoundPattern(""));
-    soundPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPattern(newValue));
-
     breakPattern.textProperty().setValue(userPreferences.loadBreakPattern(""));
-    breakPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPattern(newValue));
 
     Tab selectedTab = getPeriodTabFor(userPreferences.loadPeriodTab("simpleTab"));
     periodTabPane.getSelectionModel().select(selectedTab);
     updatePeriodSelectionWith(selectedTab);
-    periodTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> userPreferences.savePeriodTab(newValue.getId()));
 
     blendModeToggleGroup.selectToggle(getBlendModeToggleFor(userPreferences.loadBlendMode(BlendMode.SEPARATE.name())));
-    blendModeToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBlendMode((String) newValue.getUserData()));
-
     iterations.getValueFactory().setValue(userPreferences.loadIterations(0));
-    iterations.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveIterations(newValue));
-
     blendDuration.valueProperty().setValue(userPreferences.loadBlendDuration(1));
+    outputFileFormat.valueProperty().setValue(getOutputFileFormatFor(userPreferences.loadOutputFileFormat("mp3")));
+    if (userPreferences.hasOutputDirectory()) {
+      /* Since we misuse the label as information store and display for the default value ('<Desktop>') we should not change it if there is no data. */
+      outputDirectory.textProperty().setValue(userPreferences.loadOutputDirectory(null));
+    }
+  }
+
+  private void registerPreferenceSaveListeners() {
+    soundPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPeriod(newValue));
+    breakPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPeriod(newValue));
+    soundPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPattern(newValue));
+    breakPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPattern(newValue));
+    periodTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> userPreferences.savePeriodTab(newValue.getId()));
+    blendModeToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBlendMode((String) newValue.getUserData()));
+    iterations.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveIterations(newValue));
     blendDuration.valueProperty().addListener((observable, oldValue, newValue) -> {
       double duration = newValue.doubleValue();
       if ((int) duration == duration) {
+        /* The slider fires not only for the configured integer positions, but also in between (e.g. for 1.023323). We skip such data. */
         userPreferences.saveBlendDuration((int) duration);
       }
     });
-
-    outputFileFormat.valueProperty().setValue(getOutputFileFormatFor(userPreferences.loadOutputFileFormat("mp3")));
     outputFileFormat.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveOutputFileFormat(newValue.getIdentificator()));
-
-    if (userPreferences.hasOutputDirectory()) {
-      outputDirectory.textProperty().setValue(userPreferences.loadOutputDirectory(null));
-    }
     outputDirectory.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveOutputDirectory(newValue));
-
-    // TODO: Add listeners and setter for all input fields
   }
 
   private Tab getPeriodTabFor(String tabId) {
@@ -657,6 +668,9 @@ public class MainScreenController implements Initializable {
     trackCount.setText(labelText);
   }
 
+  private void addDebugMessage(String message) {
+    messageProducer.send(new DebugMessage(MainScreenController.this, message));
+  }
 
   //---- Inner classes
 
