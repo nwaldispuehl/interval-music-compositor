@@ -301,7 +301,7 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializeMusicTrackList() {
-    musicTrackListView.initializeWith(musicListControl.getMusicList(), bundle, messageProducer, musicListControl);
+    musicTrackListView.initializeWith(musicListControl.getMusicList(), bundle, messageProducer, musicListControl, e -> Platform.runLater(this::updateTrackCount));
     musicTrackListView.addListChangeListener(newValue -> updateUiDataWidgets());
     addMusicTrackButton.setOnAction(event -> openFileChooserFor(musicTrackListView));
   }
@@ -327,7 +327,7 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializeBreakTrackList() {
-    breakTrackListView.initializeWith(musicListControl.getBreakList(), bundle, messageProducer, musicListControl);
+    breakTrackListView.initializeWith(musicListControl.getBreakList(), bundle, messageProducer, musicListControl, e -> Platform.runLater(this::updateTrackCount));
     addBreakTrackButton.setOnAction(event -> openFileChooserFor(breakTrackListView));
   }
 
@@ -613,10 +613,7 @@ public class MainScreenController implements Initializable {
   private void openFileChooserFor(DraggableAudioFileListView listView) {
     MusicFileChooser musicFileChooser = new MusicFileChooser(messageProducer, bundle, audioFileDecoders);
     List<File> chosenFile = musicFileChooser.chooseFileIn(getWindow());
-    chosenFile.forEach(file -> {
-      IAudioFile newTrack = listView.addTrack(file);
-      newTrack.addChangeListener(newValue -> Platform.runLater(this::updateTrackCount));
-    });
+    chosenFile.forEach(listView::addTrack);
   }
 
   private Window getWindow() {
