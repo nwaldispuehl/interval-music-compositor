@@ -5,6 +5,7 @@ import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.list.BlendMode;
+import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
@@ -411,17 +412,16 @@ public class MainScreenController implements Initializable {
       loadStoredPreferenceValues();
     }
     catch (Exception e) {
+      // An error when loading preferences can easily happen due to the change of field identifiers etc.
       addDebugMessage("Failed to load preference values: " + e.getLocalizedMessage());
     }
 
     registerPreferenceSaveListeners();
 
-    // TODO: Add listeners and setter for all input fields
     // TODO: Only load data if respective setting is set
   }
 
   private void loadStoredPreferenceValues() {
-
     List<File> musicTrackInputList = userPreferences.loadMusicTrackList();
     for (File f : musicTrackInputList) {
       musicListControl.appendMusicTrack(f);
@@ -432,6 +432,7 @@ public class MainScreenController implements Initializable {
       musicListControl.appendBreakTrack(f);
     }
 
+    enumerationToggleGroup.selectToggle(getEnumerationToggleFor(userPreferences.loadEnumerationMode(EnumerationMode.SINGLE_EXTRACT)));
 
     soundPeriod.getValueFactory().setValue(userPreferences.loadSoundPeriod(0));
     breakPeriod.getValueFactory().setValue(userPreferences.loadBreakPeriod(0));
@@ -442,7 +443,7 @@ public class MainScreenController implements Initializable {
     periodTabPane.getSelectionModel().select(selectedTab);
     updatePeriodSelectionWith(selectedTab);
 
-    blendModeToggleGroup.selectToggle(getBlendModeToggleFor(userPreferences.loadBlendMode(BlendMode.SEPARATE.name())));
+    blendModeToggleGroup.selectToggle(getBlendModeToggleFor(userPreferences.loadBlendMode(BlendMode.SEPARATE)));
     iterations.getValueFactory().setValue(userPreferences.loadIterations(0));
     blendDuration.valueProperty().setValue(userPreferences.loadBlendDuration(1));
     outputFileFormat.valueProperty().setValue(getOutputFileFormatFor(userPreferences.loadOutputFileFormat("mp3")));
@@ -457,13 +458,18 @@ public class MainScreenController implements Initializable {
     musicListControl.getMusicList().addListener((ListChangeListener<? super IAudioFile>) c -> userPreferences.saveMusicTrackList(c.getList()));
     musicListControl.getBreakList().addListener((ListChangeListener<? super IAudioFile>) c -> userPreferences.saveBreakTrackList(c.getList()));
 
+    enumerationToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveEnumerationMode(EnumerationMode.valueOf((String) newValue.getUserData())));
+
     soundPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPeriod(newValue));
     breakPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPeriod(newValue));
     soundPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPattern(newValue));
     breakPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPattern(newValue));
     periodTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> userPreferences.savePeriodTab(newValue.getId()));
-    blendModeToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBlendMode((String) newValue.getUserData()));
+
     iterations.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveIterations(newValue));
+
+    blendModeToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBlendMode(BlendMode.valueOf((String) newValue.getUserData())));
+
     blendDuration.valueProperty().addListener((observable, oldValue, newValue) -> {
       double duration = newValue.doubleValue();
       if ((int) duration == duration) {
@@ -484,9 +490,18 @@ public class MainScreenController implements Initializable {
     return null;
   }
 
-  private Toggle getBlendModeToggleFor(String toggleIdentifier) {
+  private Toggle getEnumerationToggleFor(EnumerationMode enumerationMode) {
+    for (Toggle t : enumerationToggleGroup.getToggles()) {
+      if (t.getUserData().equals(enumerationMode.name())) {
+        return t;
+      }
+    }
+    return null;
+  }
+
+  private Toggle getBlendModeToggleFor(BlendMode blendMode) {
     for (Toggle t : blendModeToggleGroup.getToggles()) {
-      if (t.getUserData().equals(toggleIdentifier)) {
+      if (t.getUserData().equals(blendMode.name())) {
         return t;
       }
     }

@@ -2,9 +2,9 @@ package ch.retorte.intervalmusiccompositor.ui.preferences;
 
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
+import ch.retorte.intervalmusiccompositor.list.BlendMode;
+import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
-import javafx.collections.ObservableList;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.Arrays;
@@ -42,53 +42,59 @@ public class UiUserPreferences extends UserPreferences {
   //---- Methods
 
   public void saveMusicTrackList(List<? extends IAudioFile> musicTrackList) {
-    saveString(MUSIC_TRACK_LIST_KEY, serialize(musicTrackList.stream().map(a -> a.getSource()).collect(toList())));
+    saveString(MUSIC_TRACK_LIST_KEY, serialize(musicTrackList.stream().map(IAudioFile::getSource).collect(toList())));
   }
 
   public List<File> loadMusicTrackList() {
-    String s = loadString(MUSIC_TRACK_LIST_KEY, "");
-    return deserialize(s);
+    return deserialize(loadString(MUSIC_TRACK_LIST_KEY, ""));
   }
 
   public void saveBreakTrackList(List<? extends IAudioFile> breakTrackList) {
-    saveString(BREAK_TRACK_LIST_KEY, serialize(breakTrackList.stream().map(a -> a.getSource()).collect(toList())));
+    saveString(BREAK_TRACK_LIST_KEY, serialize(breakTrackList.stream().map(IAudioFile::getSource).collect(toList())));
   }
 
   public List<File> loadBreakTrackList() {
-    String s = loadString(BREAK_TRACK_LIST_KEY, "");
-    return deserialize(s);
+    return deserialize(loadString(BREAK_TRACK_LIST_KEY, ""));
+  }
+
+  public void saveEnumerationMode(EnumerationMode enumerationMode) {
+    saveString(ENUMERATION_MODE_KEY, enumerationMode.name());
+  }
+
+  public EnumerationMode loadEnumerationMode(EnumerationMode defaultEnumerationModeValue) {
+    return EnumerationMode.valueOf(loadString(ENUMERATION_MODE_KEY, defaultEnumerationModeValue.name()));
   }
 
   public void saveSoundPeriod(int soundPeriod) {
     saveInt(SOUND_PERIOD_KEY, soundPeriod);
   }
 
-  public int loadSoundPeriod(int defaultSoundPeriodValue) {
-    return loadInt(SOUND_PERIOD_KEY, defaultSoundPeriodValue);
+  public int loadSoundPeriod(int defaultSoundPeriod) {
+    return loadInt(SOUND_PERIOD_KEY, defaultSoundPeriod);
   }
 
   public void saveBreakPeriod(int breakPeriod) {
     saveInt(BREAK_PERIOD_KEY, breakPeriod);
   }
 
-  public int loadBreakPeriod(int defaultBreakPeriodValue) {
-    return loadInt(BREAK_PERIOD_KEY, defaultBreakPeriodValue);
+  public int loadBreakPeriod(int defaultBreakPeriod) {
+    return loadInt(BREAK_PERIOD_KEY, defaultBreakPeriod);
   }
 
   public void saveSoundPattern(String soundPattern) {
     saveString(SOUND_PATTERN_KEY, soundPattern);
   }
 
-  public String loadSoundPattern(String defaultSoundPatternValue) {
-    return loadString(SOUND_PATTERN_KEY, defaultSoundPatternValue);
+  public String loadSoundPattern(String defaultSoundPattern) {
+    return loadString(SOUND_PATTERN_KEY, defaultSoundPattern);
   }
 
   public void saveBreakPattern(String breakPattern) {
     saveString(BREAK_PATTERN_KEY, breakPattern);
   }
 
-  public String loadBreakPattern(String defaultBreakPatternValue) {
-    return loadString(BREAK_PATTERN_KEY, defaultBreakPatternValue);
+  public String loadBreakPattern(String defaultBreakPattern) {
+    return loadString(BREAK_PATTERN_KEY, defaultBreakPattern);
   }
 
   public void savePeriodTab(String periodTabId) {
@@ -107,12 +113,12 @@ public class UiUserPreferences extends UserPreferences {
     return loadInt(ITERATIONS_KEY, defaultIterations);
   }
 
-  public void saveBlendMode(String blendMode) {
-    saveString(BLEND_MODE_KEY, blendMode);
+  public void saveBlendMode(BlendMode blendMode) {
+    saveString(BLEND_MODE_KEY, blendMode.name());
   }
 
-  public String loadBlendMode(String defaultBlendMode) {
-   return loadString(BLEND_MODE_KEY, defaultBlendMode);
+  public BlendMode loadBlendMode(BlendMode defaultBlendMode) {
+   return BlendMode.valueOf(loadString(BLEND_MODE_KEY, defaultBlendMode.name()));
   }
 
   public void saveBlendDuration(int blendDuration) {
@@ -146,11 +152,11 @@ public class UiUserPreferences extends UserPreferences {
   //---- Helper methods
 
   private String serialize(List<File> fileList) {
-    return fileList.stream().map(f -> f.getAbsolutePath()).filter(p -> !isBlank(p)).collect(Collectors.joining(File.pathSeparator));
+    return fileList.stream().map(File::getAbsolutePath).filter(p -> !isBlank(p)).collect(Collectors.joining(File.pathSeparator));
   }
 
   private List<File> deserialize(String fileListString) {
-    return Arrays.stream(fileListString.split(File.pathSeparator)).map(File::new).collect(toList());
+    return Arrays.stream(fileListString.split(File.pathSeparator)).filter(p -> !isBlank(p)).map(File::new).filter(File::exists).collect(toList());
   }
 
 }

@@ -257,8 +257,13 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   }
 
   public void quit() {
+    removeTrackListListeners();
     removeCachedFiles();
     messageBus.send(new InfoMessage("Gracefully shutting down ..."));
+  }
+
+  private void removeTrackListListeners() {
+    // TODO
   }
 
   @Override
