@@ -10,6 +10,7 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.ui.mainscreen.DebugMessageEventHandler;
 
+import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,6 +41,7 @@ public class SoundEffectsPane extends BorderPane {
   private MusicListControl musicListControl;
   private MessageProducer messageProducer;
   private ChangeListener<SoundEffectOccurrence> soundEffectsUpdateListener;
+  private UiUserPreferences userPreferences;
 
   private List<SoundEffectEntry> soundEffectEntries = newLinkedList();
 
@@ -55,15 +57,17 @@ public class SoundEffectsPane extends BorderPane {
 
   //---- Constructor
 
-  public SoundEffectsPane(SoundEffectsProvider soundEffectsProvider, CompilationParameters compilationParameters, MusicListControl musicListControl, MessageProducer messageProducer, ChangeListener<SoundEffectOccurrence> soundEffectsUpdateListener) {
+  public SoundEffectsPane(SoundEffectsProvider soundEffectsProvider, CompilationParameters compilationParameters, MusicListControl musicListControl, MessageProducer messageProducer, ChangeListener<SoundEffectOccurrence> soundEffectsUpdateListener, UiUserPreferences userPreferences) {
     this.soundEffectsProvider = soundEffectsProvider;
     this.compilationParameters = compilationParameters;
     this.musicListControl = musicListControl;
     this.messageProducer = messageProducer;
     this.soundEffectsUpdateListener = soundEffectsUpdateListener;
+    this.userPreferences = userPreferences;
 
     initialize();
     initializeAddButton();
+    loadStoredPreferenceValue();
   }
 
   private void initialize() {
@@ -119,8 +123,23 @@ public class SoundEffectsPane extends BorderPane {
     addSoundEffects.setOnAction(event -> addNewEntry());
   }
 
+  private void loadStoredPreferenceValue() {
+    for (SoundEffectOccurrence s : userPreferences.loadSoundEffectOccurrencesWith(soundEffectsProvider)) {
+      addNewEntryWith(s);
+    }
+  }
+
+  public void updatePreferences() {
+    userPreferences.saveSoundEffectOccurrences(compilationParameters.getSoundEffectOccurrences());
+  }
+
   private void addNewEntry() {
     SoundEffectOccurrence soundEffectOccurrence = new SoundEffectOccurrence(soundEffectsProvider.getSoundEffects().iterator().next(), 0);
+    addNewEntryWith(soundEffectOccurrence);
+    updatePreferences();
+  }
+
+  private void addNewEntryWith(SoundEffectOccurrence soundEffectOccurrence) {
     SoundEffectEntry soundEffectEntry = new SoundEffectEntry(this, soundEffectOccurrence, soundEffectsProvider, musicListControl, messageProducer);
 
     soundEffectEntries.add(soundEffectEntry);

@@ -375,7 +375,7 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializeSoundEffects() {
-    SoundEffectsPane soundEffectsPane = new SoundEffectsPane(soundEffectsProvider, compilationParameters, musicListControl, messageProducer, (obs, oldVal, newVal) -> updateEnvelopeImage());
+    SoundEffectsPane soundEffectsPane = new SoundEffectsPane(soundEffectsProvider, compilationParameters, musicListControl, messageProducer, (obs, oldVal, newVal) -> updateEnvelopeImage(), userPreferences);
     musicAndBreakPatternChangeListener = soundEffectsPane.getMusicAndBreakPatternChangeListener();
     soundEffectsContainer.getChildren().add(soundEffectsPane);
   }
@@ -454,7 +454,6 @@ public class MainScreenController implements Initializable {
   }
 
   private void registerPreferenceSaveListeners() {
-    // TODO
     musicListControl.getMusicList().addListener((ListChangeListener<? super IAudioFile>) c -> userPreferences.saveMusicTrackList(c.getList()));
     musicListControl.getBreakList().addListener((ListChangeListener<? super IAudioFile>) c -> userPreferences.saveBreakTrackList(c.getList()));
 
@@ -477,6 +476,7 @@ public class MainScreenController implements Initializable {
         userPreferences.saveBlendDuration((int) duration);
       }
     });
+
     outputFileFormat.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveOutputFileFormat(newValue.getIdentificator()));
     outputDirectory.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveOutputDirectory(newValue));
   }

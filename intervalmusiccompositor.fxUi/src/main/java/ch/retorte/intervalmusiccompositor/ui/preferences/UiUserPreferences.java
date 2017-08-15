@@ -4,13 +4,16 @@ import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
+import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -31,6 +34,9 @@ public class UiUserPreferences extends UserPreferences {
   private static final String ITERATIONS_KEY = "iterations";
   private static final String BLEND_MODE_KEY = "blendMode";
   private static final String BLEND_DURATION_KEY = "blendDuration";
+
+  private static final String SOUND_EFFECTS_KEY = "soundEffects";
+
   private static final String OUTPUT_FILE_FORMAT_KEY = "outputFileFormat";
   private static final String OUTPUT_DIRECTORY_KEY = "outputDirectory";
 
@@ -42,19 +48,19 @@ public class UiUserPreferences extends UserPreferences {
   //---- Methods
 
   public void saveMusicTrackList(List<? extends IAudioFile> musicTrackList) {
-    saveString(MUSIC_TRACK_LIST_KEY, serialize(musicTrackList.stream().map(IAudioFile::getSource).collect(toList())));
+    saveString(MUSIC_TRACK_LIST_KEY, serializeFiles(musicTrackList.stream().map(IAudioFile::getSource).collect(toList())));
   }
 
   public List<File> loadMusicTrackList() {
-    return deserialize(loadString(MUSIC_TRACK_LIST_KEY, ""));
+    return deserializeFiles(loadString(MUSIC_TRACK_LIST_KEY, ""));
   }
 
   public void saveBreakTrackList(List<? extends IAudioFile> breakTrackList) {
-    saveString(BREAK_TRACK_LIST_KEY, serialize(breakTrackList.stream().map(IAudioFile::getSource).collect(toList())));
+    saveString(BREAK_TRACK_LIST_KEY, serializeFiles(breakTrackList.stream().map(IAudioFile::getSource).collect(toList())));
   }
 
   public List<File> loadBreakTrackList() {
-    return deserialize(loadString(BREAK_TRACK_LIST_KEY, ""));
+    return deserializeFiles(loadString(BREAK_TRACK_LIST_KEY, ""));
   }
 
   public void saveEnumerationMode(EnumerationMode enumerationMode) {
@@ -129,6 +135,14 @@ public class UiUserPreferences extends UserPreferences {
     return loadInt(BLEND_DURATION_KEY, defaultBlendDuration);
   }
 
+  public void saveSoundEffectOccurrences(List<SoundEffectOccurrence> soundEffectOccurrences) {
+    saveString(SOUND_EFFECTS_KEY, serializeSoundEffects(soundEffectOccurrences));
+  }
+
+  public List<SoundEffectOccurrence> loadSoundEffectOccurrencesWith(SoundEffectsProvider soundEffectsProvider) {
+
+  }
+
   public void saveOutputFileFormat(String outputFileFormat) {
     saveString(OUTPUT_FILE_FORMAT_KEY, outputFileFormat);
   }
@@ -151,12 +165,20 @@ public class UiUserPreferences extends UserPreferences {
 
   //---- Helper methods
 
-  private String serialize(List<File> fileList) {
-    return fileList.stream().map(File::getAbsolutePath).filter(p -> !isBlank(p)).collect(Collectors.joining(File.pathSeparator));
+  private String serializeFiles(List<File> fileList) {
+    return fileList.stream().map(File::getAbsolutePath).filter(p -> !isBlank(p)).collect(joining(File.pathSeparator));
   }
 
-  private List<File> deserialize(String fileListString) {
+  private List<File> deserializeFiles(String fileListString) {
     return Arrays.stream(fileListString.split(File.pathSeparator)).filter(p -> !isBlank(p)).map(File::new).filter(File::exists).collect(toList());
+  }
+
+  private String serializeSoundEffects(List<SoundEffectOccurrence> soundEffectOccurrences) {
+    return soundEffectOccurrences.stream().map(s -> s.getSoundEffect().getId() + ":" + s.getTimeMillis()).collect(joining(";"));
+  }
+
+  private List<SoundEffectOccurrence> deserializeSoundEffects(String soundEffectsString, SoundEffectsProvider soundEffectsProvider) {
+    Arrays.stream(soundEffectsString.split(";")).
   }
 
 }
