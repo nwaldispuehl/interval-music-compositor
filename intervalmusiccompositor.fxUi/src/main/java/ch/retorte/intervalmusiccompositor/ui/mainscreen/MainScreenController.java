@@ -424,12 +424,12 @@ public class MainScreenController implements Initializable {
   private void loadStoredPreferenceValues() {
     List<File> musicTrackInputList = userPreferences.loadMusicTrackList();
     for (File f : musicTrackInputList) {
-      musicListControl.appendMusicTrack(f);
+      musicTrackListView.addTrack(f);
     }
 
     List<File> breakTrackInputList = userPreferences.loadBreakTrackList();
     for (File f : breakTrackInputList) {
-      musicListControl.appendBreakTrack(f);
+      breakTrackListView.addTrack(f);
     }
 
     enumerationToggleGroup.selectToggle(getEnumerationToggleFor(userPreferences.loadEnumerationMode(EnumerationMode.SINGLE_EXTRACT)));
