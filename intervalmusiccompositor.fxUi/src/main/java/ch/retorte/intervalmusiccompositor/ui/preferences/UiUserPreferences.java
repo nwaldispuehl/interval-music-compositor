@@ -4,6 +4,7 @@ import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
 import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
@@ -11,7 +12,6 @@ import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
@@ -140,7 +140,7 @@ public class UiUserPreferences extends UserPreferences {
   }
 
   public List<SoundEffectOccurrence> loadSoundEffectOccurrencesWith(SoundEffectsProvider soundEffectsProvider) {
-
+    return deserializeSoundEffects(loadString(SOUND_EFFECTS_KEY, ""), soundEffectsProvider);
   }
 
   public void saveOutputFileFormat(String outputFileFormat) {
@@ -174,11 +174,26 @@ public class UiUserPreferences extends UserPreferences {
   }
 
   private String serializeSoundEffects(List<SoundEffectOccurrence> soundEffectOccurrences) {
-    return soundEffectOccurrences.stream().map(s -> s.getSoundEffect().getId() + ":" + s.getTimeMillis()).collect(joining(";"));
+    return soundEffectOccurrences.stream().map(this::serializeSoundEffectOccurrence).collect(joining(";"));
   }
 
   private List<SoundEffectOccurrence> deserializeSoundEffects(String soundEffectsString, SoundEffectsProvider soundEffectsProvider) {
-    Arrays.stream(soundEffectsString.split(";")).
+    return Arrays.stream(soundEffectsString.split(";")).filter(s -> !isBlank(s)).map(s -> deserializeSoundEffectOccurrence(s, soundEffectsProvider)).collect(toList());
   }
 
+  private String serializeSoundEffectOccurrence(SoundEffectOccurrence soundEffectOccurrence) {
+    return soundEffectOccurrence.getSoundEffect().getId() + ":" + soundEffectOccurrence.getTimeMillis();
+  }
+
+  private SoundEffectOccurrence deserializeSoundEffectOccurrence(String soundEffectOccurrenceString, SoundEffectsProvider soundEffectsProvider) {
+    if (soundEffectOccurrenceString.contains(":")) {
+      String[] parts = soundEffectOccurrenceString.split(":");
+      return new SoundEffectOccurrence(soundEffectFor(parts[0], soundEffectsProvider), Long.valueOf(parts[1]));
+    }
+    return null;
+  }
+
+  private SoundEffect soundEffectFor(String soundEffectId, SoundEffectsProvider soundEffectsProvider) {
+    return soundEffectsProvider.getSoundEffects().stream().filter(s -> s.getId().equals(soundEffectId)).findFirst().orElse(null);
+  }
 }

@@ -129,7 +129,7 @@ public class SoundEffectsPane extends BorderPane {
     }
   }
 
-  public void updatePreferences() {
+  void updatePreferences() {
     userPreferences.saveSoundEffectOccurrences(compilationParameters.getSoundEffectOccurrences());
   }
 
