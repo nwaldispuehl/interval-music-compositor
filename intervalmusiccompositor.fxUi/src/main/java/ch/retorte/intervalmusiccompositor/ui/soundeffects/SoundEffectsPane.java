@@ -67,7 +67,6 @@ public class SoundEffectsPane extends BorderPane {
 
     initialize();
     initializeAddButton();
-    loadStoredPreferenceValue();
   }
 
   private void initialize() {
@@ -123,7 +122,7 @@ public class SoundEffectsPane extends BorderPane {
     addSoundEffects.setOnAction(event -> addNewEntry());
   }
 
-  private void loadStoredPreferenceValue() {
+  public void loadStoredPreferenceValues() {
     for (SoundEffectOccurrence s : userPreferences.loadSoundEffectOccurrencesWith(soundEffectsProvider)) {
       addNewEntryWith(s);
     }

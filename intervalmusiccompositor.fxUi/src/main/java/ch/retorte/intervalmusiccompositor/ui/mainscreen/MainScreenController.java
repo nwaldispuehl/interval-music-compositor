@@ -198,9 +198,10 @@ public class MainScreenController implements Initializable {
 
   // Fields
 
+  private SoundEffectsPane soundEffectsPane;
+
   private MessageFormatBundle coreBundle = getBundle(CORE_RESOURCE_BUNDLE_NAME);
   private MessageFormatBundle bundle = getBundle(UI_RESOURCE_BUNDLE_NAME);
-
 
   private Ui ui;
   private ProgramControl programControl;
@@ -375,7 +376,7 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializeSoundEffects() {
-    SoundEffectsPane soundEffectsPane = new SoundEffectsPane(soundEffectsProvider, compilationParameters, musicListControl, messageProducer, (obs, oldVal, newVal) -> updateEnvelopeImage(), userPreferences);
+    soundEffectsPane = new SoundEffectsPane(soundEffectsProvider, compilationParameters, musicListControl, messageProducer, (obs, oldVal, newVal) -> updateEnvelopeImage(), userPreferences);
     musicAndBreakPatternChangeListener = soundEffectsPane.getMusicAndBreakPatternChangeListener();
     soundEffectsContainer.getChildren().add(soundEffectsPane);
   }
@@ -410,6 +411,8 @@ public class MainScreenController implements Initializable {
 
     try {
       loadStoredPreferenceValues();
+      /* Sound effect start times can not be larger than the length of music and break times. We thus need to first load those values. */
+      soundEffectsPane.loadStoredPreferenceValues();
     }
     catch (Exception e) {
       // An error when loading preferences can easily happen due to the change of field identifiers etc.
