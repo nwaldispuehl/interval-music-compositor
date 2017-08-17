@@ -1,6 +1,8 @@
 * {
-  -fx-font-family: 'Roboto', sans-serif;
+  -fx-font-family: 'Roboto';
   -fx-font-smoothing-type: gray;
+  -fx-font-weight: normal;
+  -fx-font-style: normal;
 
   /*-fx-border-color: dodgerblue;*/
   /*-fx-border-width: 1;*/
@@ -23,4 +25,9 @@
 
 .legend {
   -fx-font-style: italic;
+}
+
+.debugLog {
+  -fx-font-family: monospace;
+  -fx-font-weight: normal;
 }
