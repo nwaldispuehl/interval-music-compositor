@@ -16,6 +16,7 @@
             <Menu mnemonicParsing="false" text="%ui.menu.file">
                 <MenuItem mnemonicParsing="false" fx:id="menuLoadMusicFile" text="%ui.menu.file.load_music_file"/>
                 <MenuItem mnemonicParsing="false" fx:id="menuLoadBreakFile" text="%ui.menu.file.load_break_file"/>
+                <MenuItem mnemonicParsing="false" fx:id="menuPreferences" text="%ui.menu.file.preferences"/>
                 <MenuItem mnemonicParsing="false" fx:id="menuQuit" text="%ui.menu.file.quit"/>
             </Menu>
             <Menu mnemonicParsing="false" text="%ui.menu.help">

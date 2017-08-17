@@ -71,6 +71,9 @@ public class MainScreenController implements Initializable {
   private MenuItem menuLoadBreakFile;
 
   @FXML
+  private MenuItem menuPreferences;
+
+  @FXML
   private MenuItem menuQuit;
 
   @FXML

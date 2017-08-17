@@ -10,7 +10,10 @@ import java.util.prefs.Preferences;
  */
 public class UserPreferences {
 
+  //---- Static
 
+  private static final String SAVE_FIELD_STATE_KEY = "keepFieldState";
+  private static final String SEARCH_UPDATE_AT_STARTUP_KEY = "searchUpdateAtStartup";
 
 
   //---- Fields
@@ -31,8 +34,21 @@ public class UserPreferences {
   //---- Methods
 
 
+  public void saveSaveFieldState(boolean saveFieldState) {
+    saveBoolean(SAVE_FIELD_STATE_KEY, saveFieldState);
+  }
 
+  public boolean loadSaveFieldState() {
+    return loadBoolean(SAVE_FIELD_STATE_KEY, true);
+  }
 
+  public void saveSearchUpdateAtStartup(boolean searchUpdateAtStartup) {
+    saveBoolean(SEARCH_UPDATE_AT_STARTUP_KEY, searchUpdateAtStartup);
+  }
+
+  public boolean loadSearchUpdateAtStartup() {
+    return loadBoolean(SEARCH_UPDATE_AT_STARTUP_KEY, true);
+  }
 
 
   //---- Helper methods
@@ -62,6 +78,17 @@ public class UserPreferences {
 
   protected String loadString(String key, String defaultValue) {
     String result = preferences.get(key, defaultValue);
+    addLoadDebugMessageFor(key, result);
+    return result;
+  }
+
+  protected void saveBoolean(String key, boolean value) {
+    addSaveDebugMessageFor(key, value);
+    preferences.putBoolean(key, value);
+  }
+
+  protected boolean loadBoolean(String key, boolean defaultValue) {
+    boolean result = preferences.getBoolean(key, defaultValue);
     addLoadDebugMessageFor(key, result);
     return result;
   }
