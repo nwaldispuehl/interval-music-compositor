@@ -163,6 +163,7 @@ public class SoundEffectsPane extends BorderPane {
 
     messageProducer.send(new DebugMessage(this, "Removed sound effect '" + soundEffectOccurrence.getSoundEffect().getId() + "' at '" + soundEffectOccurrence.getTimeMillis() + "'."));
     fireEffectChangeListener();
+    updatePreferences();
   }
 
   private void fireEffectChangeListener() {
