@@ -1,12 +1,18 @@
 * {
   -fx-font-family: 'Roboto';
   -fx-font-smoothing-type: gray;
-  -fx-font-weight: normal;
-  -fx-font-style: normal;
+  /*-fx-font-weight: 300;*/
+  /*-fx-font-style: normal;*/
+  /*-fx-font-size: 10.5pt;*/
 
   /*-fx-border-color: dodgerblue;*/
   /*-fx-border-width: 1;*/
   /*-fx-border-style: solid;*/
+}
+
+#container {
+  /*-fx-font-weight: 300;*/
+  -fx-font-size: 10pt;
 }
 
 .layout-borders {
@@ -31,3 +37,21 @@
   -fx-font-family: monospace;
   -fx-font-weight: normal;
 }
+
+.preferences {
+
+}
+
+.preferencesParagraphTitle {
+  -fx-font-size: 120%;
+  -fx-font-weight: 700;
+}
+
+.preferencesTitle {
+  -fx-font-weight: 700;
+}
+
+.narrow {
+  -fx-font-weight: 300;
+}
+

@@ -24,6 +24,7 @@ import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileLis
 import ch.retorte.intervalmusiccompositor.ui.audiofilelist.MusicFileChooser;
 import ch.retorte.intervalmusiccompositor.ui.debuglog.DebugLogWindow;
 import ch.retorte.intervalmusiccompositor.ui.graphics.BarChart;
+import ch.retorte.intervalmusiccompositor.ui.preferences.PreferencesWindow;
 import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import ch.retorte.intervalmusiccompositor.ui.soundeffects.SoundEffectsPane;
 import ch.retorte.intervalmusiccompositor.ui.updatecheck.UpdateCheckDialog;
@@ -263,6 +264,7 @@ public class MainScreenController implements Initializable {
   private void initializeMenu() {
     menuLoadMusicFile.setOnAction(event -> openFileChooserFor(musicTrackListView));
     menuLoadBreakFile.setOnAction(event -> openFileChooserFor(breakTrackListView));
+    menuPreferences.setOnAction(event -> openPreferencesWindow());
     menuQuit.setOnAction(event -> ui.quit());
 
     menuVersion.setText(getVersionText());
@@ -624,6 +626,12 @@ public class MainScreenController implements Initializable {
 
   private Window getWindow() {
     return container.getScene().getWindow();
+  }
+
+  private void openPreferencesWindow() {
+    new PreferencesWindow(bundle, userPreferences).show();
+    // TODO
+
   }
 
   private void addMessageSubscribers(MessageSubscriber messageSubscriber) {
