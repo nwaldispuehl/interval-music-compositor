@@ -10,18 +10,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.Locale;
 
 /**
  * Window holding the program preferences.
- *
- * Currently:
- * - save properties
- * - look for update on startup
- * - language
- *
  */
 public class PreferencesWindow {
 
@@ -86,12 +79,17 @@ public class PreferencesWindow {
 
     // TODO
 
+    propertyStoragePreference.selectedProperty().setValue(userPreferences.loadSaveFieldState());
+    propertyStoragePreference.selectedProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSaveFieldState(newValue));
+
+    startupUpdateSearchPreference.selectedProperty().setValue(userPreferences.loadSearchUpdateAtStartup());
+    startupUpdateSearchPreference.selectedProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSearchUpdateAtStartup(newValue));
   }
 
   public void show() {
     Stage stage = new Stage();
     stage.setTitle(bundle.getString("ui.preferences.title"));
-    stage.setScene(new Scene(parent, 800, 400));
+    stage.setScene(new Scene(parent, 800, 300));
     stage.setResizable(true);
     stage.show();
   }

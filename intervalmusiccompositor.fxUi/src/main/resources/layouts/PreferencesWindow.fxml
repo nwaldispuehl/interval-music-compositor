@@ -16,7 +16,7 @@
         </padding>
         <BorderPane maxWidth="Infinity">
             <left>
-                <Label text="%ui.preferences.title">
+                <Label text="%ui.preferences.legend">
                     <padding>
                         <Insets top="5" bottom="5" right="5" left="5"/>
                     </padding>
@@ -29,29 +29,35 @@
 
         <Text text="%ui.preferences.pref.general.title" styleClass="preferencesParagraphTitle" />
 
-        <HBox alignment="BOTTOM_LEFT">
-            <VBox prefWidth="600" maxWidth="Infinity">
-                <Text text="%ui.preferences.pref.language.title" styleClass="preferencesTitle" />
-                <Text text="%ui.preferences.pref.language.text" styleClass="narrow"/>
+        <AnchorPane>
+            <HBox alignment="BOTTOM_LEFT" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+                <VBox prefWidth="800" maxWidth="Infinity">
+                    <Text text="%ui.preferences.pref.language.title" styleClass="preferencesTitle" />
+                    <Text text="%ui.preferences.pref.language.text" styleClass="narrow"/>
 
-            </VBox>
-            <ChoiceBox fx:id="languagePreference"/>
-        </HBox>
+                </VBox>
+                <ChoiceBox fx:id="languagePreference"/>
+            </HBox>
+        </AnchorPane>
 
-        <HBox alignment="BOTTOM_LEFT">
-            <VBox prefWidth="600" maxWidth="Infinity">
-                <Text text="%ui.preferences.pref.propertyStorage.title" styleClass="preferencesTitle"  />
-                <Text text="%ui.preferences.pref.propertyStorage.text" styleClass="narrow"/>
-            </VBox>
-            <CheckBox fx:id="propertyStoragePreference"/>
-        </HBox>
+        <AnchorPane>
+            <HBox alignment="BOTTOM_LEFT" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+                <VBox prefWidth="800" maxWidth="Infinity">
+                    <Text text="%ui.preferences.pref.propertyStorage.title" styleClass="preferencesTitle"  />
+                    <Text text="%ui.preferences.pref.propertyStorage.text" styleClass="narrow"/>
+                </VBox>
+                <CheckBox fx:id="propertyStoragePreference"/>
+            </HBox>
+        </AnchorPane>
 
-        <HBox alignment="BOTTOM_LEFT">
-            <VBox prefWidth="600" maxWidth="Infinity">
-                <Text text="%ui.preferences.pref.startupUpdateSearch.title" styleClass="preferencesTitle" />
-                <Text text="%ui.preferences.pref.startupUpdateSearch.text" styleClass="narrow"/>
-            </VBox>
-            <CheckBox fx:id="startupUpdateSearchPreference"/>
-        </HBox>
+        <AnchorPane>
+            <HBox alignment="BOTTOM_LEFT" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+                <VBox prefWidth="800" maxWidth="Infinity">
+                    <Text text="%ui.preferences.pref.startupUpdateSearch.title" styleClass="preferencesTitle" />
+                    <Text text="%ui.preferences.pref.startupUpdateSearch.text" styleClass="narrow"/>
+                </VBox>
+                <CheckBox fx:id="startupUpdateSearchPreference"/>
+            </HBox>
+        </AnchorPane>
     </VBox>
 </AnchorPane>

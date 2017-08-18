@@ -1,6 +1,7 @@
 * {
   -fx-font-family: 'Roboto';
   -fx-font-smoothing-type: gray;
+  -fx-text-fill: #333333;
   /*-fx-font-weight: 300;*/
   /*-fx-font-style: normal;*/
   /*-fx-font-size: 10.5pt;*/
@@ -53,5 +54,6 @@
 
 .narrow {
   -fx-font-weight: 300;
+  -fx-text-fill: #666666;
 }
 

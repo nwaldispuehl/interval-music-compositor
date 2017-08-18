@@ -415,9 +415,11 @@ public class MainScreenController implements Initializable {
   private void initializePreferenceStorage() {
 
     try {
-      loadStoredPreferenceValues();
+      if (settingsShouldBeLoaded()) {
+        loadStoredPreferenceValues();
       /* Sound effect start times can not be larger than the length of music and break times. We thus need to first load those values. */
-      soundEffectsPane.loadStoredPreferenceValues();
+        soundEffectsPane.loadStoredPreferenceValues();
+      }
     }
     catch (Exception e) {
       // An error when loading preferences can easily happen due to the change of field identifiers etc.
@@ -427,6 +429,10 @@ public class MainScreenController implements Initializable {
     registerPreferenceSaveListeners();
 
     // TODO: Only load data if respective setting is set
+  }
+
+  private boolean settingsShouldBeLoaded() {
+    return userPreferences.loadSaveFieldState();
   }
 
   private void loadStoredPreferenceValues() {
