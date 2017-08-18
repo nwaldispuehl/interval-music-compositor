@@ -416,13 +416,17 @@ public class MainScreenController implements Initializable {
 
     try {
       if (settingsShouldBeLoaded()) {
+        addDebugMessage("Loading stored compilation parameters from the last session.");
         loadStoredPreferenceValues();
-      /* Sound effect start times can not be larger than the length of music and break times. We thus need to first load those values. */
+        /* Sound effect start times can not be larger than the length of music and break times. We thus need to first load those values. */
         soundEffectsPane.loadStoredPreferenceValues();
+      }
+      else {
+        addDebugMessage("Skipping loading stored compilation parameters from the last session.");
       }
     }
     catch (Exception e) {
-      // An error when loading preferences can easily happen due to the change of field identifiers etc.
+      // An error when loading preferences can easily happen due to the change of field identifiers etc. We just ignore it.
       addDebugMessage("Failed to load preference values: " + e.getLocalizedMessage());
     }
 
