@@ -92,6 +92,9 @@ public class PreferencesWindow {
     stage.setScene(new Scene(parent, 800, 300));
     stage.setResizable(true);
     stage.show();
+
+    stage.setMinWidth(stage.getWidth());
+    stage.setMinHeight(stage.getHeight());
   }
 
 

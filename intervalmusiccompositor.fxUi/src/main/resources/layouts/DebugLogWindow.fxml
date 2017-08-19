@@ -14,7 +14,7 @@
             <left>
                 <Label text="%ui.debugLog.description">
                     <padding>
-                        <Insets top="5" bottom="5" right="5" left="5"/>
+                        <Insets top="5" bottom="5"/>
                     </padding>
                 </Label>
             </left>
@@ -23,6 +23,6 @@
             </right>
         </BorderPane>
 
-        <TextArea styleClass="debugLog" editable="false" fx:id="logField" prefWidth="800" maxWidth="Infinity" prefHeight="4096" maxHeight="Infinity" />
+        <TextArea styleClass="console" editable="false" fx:id="logField" prefWidth="800" maxWidth="Infinity" prefHeight="4096" maxHeight="Infinity" />
     </VBox>
 </AnchorPane>

@@ -7,57 +7,74 @@
 
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.layout.HBox?>
-<AnchorPane stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" maxWidth="Infinity" maxHeight="Infinity" xmlns:fx="http://javafx.com/fxml/1">
-    <VBox styleClass="preferences" spacing="10" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+<VBox xmlns:fx="http://javafx.com/fxml/1" stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" styleClass="preferences" spacing="10" maxWidth="800">
+    <padding>
+        <Insets top="5" bottom="5" right="5" left="5"/>
+    </padding>
+    <BorderPane maxWidth="Infinity">
+        <left>
+            <Label text="%ui.preferences.legend" styleClass="legend">
+                <padding>
+                    <Insets top="5" bottom="5"/>
+                </padding>
+            </Label>
+        </left>
+        <right>
+            <Button fx:id="closeButton" text="%ui.preferences.closeButton.label"/>
+        </right>
+    </BorderPane>
+
+    <Label text="%ui.preferences.pref.general.title" styleClass="preferencesParagraphTitle">
         <padding>
-            <Insets top="5" bottom="5" right="5" left="5"/>
+            <Insets top="15"/>
         </padding>
-        <BorderPane maxWidth="Infinity">
+    </Label>
+
+    <AnchorPane>
+        <BorderPane AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
             <left>
-                <Label text="%ui.preferences.legend">
-                    <padding>
-                        <Insets top="5" bottom="5" right="5" left="5"/>
-                    </padding>
-                </Label>
+                <VBox>
+                    <Label text="%ui.preferences.pref.language.title" styleClass="preferencesTitle" />
+                    <Label text="%ui.preferences.pref.language.text" styleClass="narrow" maxWidth="600" wrapText="true"  />
+                </VBox>
             </left>
             <right>
-                <Button fx:id="closeButton" text="%ui.preferences.closeButton.label"/>
+                <VBox alignment="BOTTOM_RIGHT">
+                    <ChoiceBox fx:id="languagePreference"/>
+                </VBox>
             </right>
         </BorderPane>
+    </AnchorPane>
 
-        <Text text="%ui.preferences.pref.general.title" styleClass="preferencesParagraphTitle" />
-
-        <AnchorPane>
-            <HBox alignment="BOTTOM_LEFT" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
-                <VBox prefWidth="800" maxWidth="Infinity">
-                    <Text text="%ui.preferences.pref.language.title" styleClass="preferencesTitle" />
-                    <Text text="%ui.preferences.pref.language.text" styleClass="narrow"/>
-
+    <AnchorPane>
+        <BorderPane AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+            <left>
+                <VBox>
+                    <Label text="%ui.preferences.pref.propertyStorage.title" styleClass="preferencesTitle" />
+                    <Label text="%ui.preferences.pref.propertyStorage.text" styleClass="narrow" maxWidth="600" wrapText="true" />
                 </VBox>
-                <ChoiceBox fx:id="languagePreference"/>
-            </HBox>
-        </AnchorPane>
-
-        <AnchorPane>
-            <HBox alignment="BOTTOM_LEFT" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
-                <VBox prefWidth="800" maxWidth="Infinity">
-                    <Text text="%ui.preferences.pref.propertyStorage.title" styleClass="preferencesTitle"  />
-                    <Text text="%ui.preferences.pref.propertyStorage.text" styleClass="narrow"/>
+            </left>
+            <right>
+                <VBox alignment="BOTTOM_RIGHT">
+                    <CheckBox fx:id="propertyStoragePreference"/>
                 </VBox>
-                <CheckBox fx:id="propertyStoragePreference"/>
-            </HBox>
-        </AnchorPane>
+            </right>
+        </BorderPane>
+    </AnchorPane>
 
-        <AnchorPane>
-            <HBox alignment="BOTTOM_LEFT" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
-                <VBox prefWidth="800" maxWidth="Infinity">
-                    <Text text="%ui.preferences.pref.startupUpdateSearch.title" styleClass="preferencesTitle" />
-                    <Text text="%ui.preferences.pref.startupUpdateSearch.text" styleClass="narrow"/>
+    <AnchorPane>
+        <BorderPane AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+            <left>
+                <VBox>
+                    <Label text="%ui.preferences.pref.startupUpdateSearch.title" styleClass="preferencesTitle" />
+                    <Label text="%ui.preferences.pref.startupUpdateSearch.text" styleClass="narrow" maxWidth="600" wrapText="true" />
                 </VBox>
-                <CheckBox fx:id="startupUpdateSearchPreference"/>
-            </HBox>
-        </AnchorPane>
-    </VBox>
-</AnchorPane>
+            </left>
+            <right>
+                <VBox alignment="BOTTOM_RIGHT">
+                    <CheckBox fx:id="startupUpdateSearchPreference"/>
+                </VBox>
+            </right>
+        </BorderPane>
+    </AnchorPane>
+</VBox>
