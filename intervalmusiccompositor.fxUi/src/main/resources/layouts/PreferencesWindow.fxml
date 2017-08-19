@@ -9,7 +9,7 @@
 <?import javafx.scene.control.CheckBox?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" styleClass="preferences" spacing="10" maxWidth="800">
     <padding>
-        <Insets top="5" bottom="5" right="5" left="5"/>
+        <Insets top="10" bottom="10" right="10" left="10"/>
     </padding>
     <BorderPane maxWidth="Infinity">
         <left>
@@ -24,7 +24,7 @@
         </right>
     </BorderPane>
 
-    <Label text="%ui.preferences.pref.general.title" styleClass="preferencesParagraphTitle">
+    <Label text="%ui.preferences.pref.general.title" styleClass="dialogParagraphTitle">
         <padding>
             <Insets top="15"/>
         </padding>

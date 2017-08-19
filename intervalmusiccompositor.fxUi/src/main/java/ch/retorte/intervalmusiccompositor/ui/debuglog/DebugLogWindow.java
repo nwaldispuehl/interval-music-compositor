@@ -51,6 +51,8 @@ public class DebugLogWindow {
     loadFXML();
     bindLogData();
     bindButton();
+
+    updateLogContent();
   }
 
   private void loadFXML() {

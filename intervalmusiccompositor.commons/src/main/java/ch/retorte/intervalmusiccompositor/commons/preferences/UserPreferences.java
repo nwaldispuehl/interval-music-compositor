@@ -3,7 +3,9 @@ package ch.retorte.intervalmusiccompositor.commons.preferences;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 /**
@@ -13,6 +15,7 @@ public class UserPreferences {
 
   //---- Static
 
+  private static final String LAST_START_KEY = "lastStart";
   private static final String LOCALE_KEY = "locale";
   private static final String SAVE_FIELD_STATE_KEY = "keepFieldState";
   private static final String SEARCH_UPDATE_AT_STARTUP_KEY = "searchUpdateAtStartup";
@@ -34,6 +37,14 @@ public class UserPreferences {
 
 
   //---- Methods
+
+  public void saveLastStart() {
+    saveString(LAST_START_KEY, LocalDateTime.now().toString());
+  }
+
+  public boolean hasLastStart() {
+    return has(LAST_START_KEY);
+  }
 
   public void saveLocale(Locale locale) {
     saveString(LOCALE_KEY, locale.getLanguage());
@@ -83,10 +94,12 @@ public class UserPreferences {
     if (value != null) {
       addSaveDebugMessageFor(key, value);
       preferences.put(key, value);
+      flush();
     }
     else {
       addClearDebugMessageFor(key);
       preferences.remove(key);
+      flush();
     }
   }
 
@@ -99,6 +112,7 @@ public class UserPreferences {
   protected void saveBoolean(String key, boolean value) {
     addSaveDebugMessageFor(key, value);
     preferences.putBoolean(key, value);
+    flush();
   }
 
   protected boolean loadBoolean(String key, boolean defaultValue) {
@@ -109,6 +123,17 @@ public class UserPreferences {
 
   protected boolean has(String key) {
     return preferences.get(key, null) != null;
+  }
+
+  /**
+   * Causes the changes to be written to the persistent backend instantly.
+  */
+  private void flush() {
+    try {
+      preferences.flush();
+    } catch (BackingStoreException e) {
+      addDebugMessage("Not able to store preferences: " + e.getMessage(), e);
+    }
   }
 
   private void addSaveDebugMessageFor(String key, Object value) {
@@ -127,8 +152,8 @@ public class UserPreferences {
     messageProducer.send(new DebugMessage(this, message));
   }
 
-  private void addDebugMessage(Throwable throwable) {
-    messageProducer.send(new DebugMessage(this, throwable));
+  private void addDebugMessage(String message, Throwable throwable) {
+    messageProducer.send(new DebugMessage(this, message, throwable));
   }
 
 }

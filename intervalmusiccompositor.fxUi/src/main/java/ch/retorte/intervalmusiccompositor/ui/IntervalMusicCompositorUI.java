@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.ui;
 
-import ch.retorte.intervalmusiccompositor.commons.Utf8Control;
+import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
@@ -12,6 +12,7 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageSubscriber;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
+import ch.retorte.intervalmusiccompositor.ui.firststart.BlockingFirstStartWindow;
 import ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController;
 import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import javafx.application.Application;
@@ -25,9 +26,10 @@ import javafx.stage.Stage;
 
 import java.net.URI;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+
+import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 
 
 /**
@@ -57,7 +59,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
 
   private CompilationParameters compilationParameters = new CompilationParameters();
 
-  private ResourceBundle resourceBundle = ResourceBundle.getBundle(UI_RESOURCE_BUNDLE_NAME, new Utf8Control());
+  private MessageFormatBundle bundle = getBundle(UI_RESOURCE_BUNDLE_NAME);
 
   private ch.retorte.intervalmusiccompositor.commons.platform.Platform platform = new PlatformFactory().getPlatform();
 
@@ -102,23 +104,44 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   public void start(Stage primaryStage) throws Exception {
     Platform.setImplicitExit(true);
     try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_SCREEN_LAYOUT_FILE), resourceBundle);
-      Parent root = fxmlLoader.load();
-      primaryStage.setTitle(applicationData.getProgramName());
-      primaryStage.setScene(new Scene(root));
-      primaryStage.show();
-      addProgramIconsTo(primaryStage);
+      if (isFirstStart()) {
+        addDebugMessage("Showing first start window.");
+        startBlockingFirstStartWindow();
+      }
 
-      mainScreenController = fxmlLoader.getController();
-
-      initialize(mainScreenController);
-      initializeCompilationParameters();
+      // TODO: Check for update if setting is set
+      startMainProgramIn(primaryStage);
     }
     catch (Exception e) {
       messageProducer.send(new ErrorMessage("UI failed to load due to: " + e.getMessage() + " Quitting."));
       messageProducer.send(new DebugMessage(this, e));
       quit();
     }
+  }
+
+  private boolean isFirstStart() {
+    boolean firstStart = !userPreferences.hasLastStart();
+    addDebugMessage("Determining first start: " + firstStart);
+    return firstStart;
+  }
+
+  private void startBlockingFirstStartWindow() {
+    new BlockingFirstStartWindow(bundle, userPreferences).show();
+  }
+
+  private void startMainProgramIn(Stage primaryStage) throws Exception {
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_SCREEN_LAYOUT_FILE), bundle.getBundle());
+    Parent root = fxmlLoader.load();
+    primaryStage.setTitle(applicationData.getProgramName());
+    primaryStage.setScene(new Scene(root));
+    primaryStage.show();
+    addProgramIconsTo(primaryStage);
+
+    mainScreenController = fxmlLoader.getController();
+
+    initialize(mainScreenController);
+    initializeCompilationParameters();
+    userPreferences.saveLastStart();
   }
 
   private void initializeCompilationParameters() {
@@ -150,14 +173,11 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
 
   @Override
   public void launch() {
-    Application.launch();
-    Platform.runLater(() -> {
       try {
-        start(new Stage());
+        Application.launch();
       } catch (Exception e) {
-        e.printStackTrace();
+        messageProducer.send(new DebugMessage(getClass().getSimpleName(), "Failed to launch JavaFX application.", e));
       }
-    });
   }
 
   private void addProgramIconsTo(Stage stage) {
@@ -184,7 +204,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   public void openInDesktopBrowser(String url) {
     URI uri = getUriFor(url);
     if (uri != null) {
-      messageProducer.send(new DebugMessage(this, "Sending URL to systems Desktop for opening in web browser: " + uri));
+      addDebugMessage("Sending URL to systems Desktop for opening in web browser: " + uri);
       getHostServices().showDocument(uri.toASCIIString());
     }
   }
@@ -211,4 +231,10 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   private List<AudioFileDecoder> getAudioFileDecoderExtensions() {
     return musicCompilationController.getAvailableDecoders();
   }
+
+  private void addDebugMessage(String message) {
+    messageProducer.send(new DebugMessage(getClass().getSimpleName(), message));
+  }
+
+
 }
