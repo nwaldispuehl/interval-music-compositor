@@ -7,6 +7,7 @@ import java.io.ByteArrayInputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.logging.LogManager;
 
 import at.ofai.music.beatroot.BeatRoot;
@@ -14,7 +15,6 @@ import ch.retorte.intervalmusiccompositor.audiofile.AudioFileFactory;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.platform.Platform;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
-import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.compilation.Compilation;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationGenerator;
 import ch.retorte.intervalmusiccompositor.decoder.AacAudioFileDecoder;
@@ -72,7 +72,7 @@ class IntervalMusicCompositor {
   private UiUserPreferences userPreferences = createUserPreferences();
 
   private List<Locale> createKnownLocales() {
-    return newArrayList(Locale.ENGLISH, Locale.GERMAN);
+    return newArrayList(DEFAULT_LOCALE, Locale.GERMAN);
   }
 
   private MessageBus createMessageBus() {
@@ -137,16 +137,20 @@ class IntervalMusicCompositor {
       currentLocale = userPreferences.loadLocale();
     }
 
-    if (!isKnownLanguage(currentLocale)) {
-      currentLocale = DEFAULT_LOCALE;
+    Optional<Locale> knownLocale = getKnownLocaleFor(currentLocale);
+
+    if (knownLocale.isPresent()) {
+      Locale.setDefault(knownLocale.get());
+    }
+    else {
+      Locale.setDefault(DEFAULT_LOCALE);
     }
 
-    Locale.setDefault(currentLocale);
     addDebugMessage("Selected locale: " + Locale.getDefault());
   }
 
-  private boolean isKnownLanguage(Locale locale) {
-    return knownLocales.stream().map(Locale::getLanguage).anyMatch(l -> l.equalsIgnoreCase(locale.getLanguage()));
+  private Optional<Locale> getKnownLocaleFor(Locale currentLocale) {
+    return knownLocales.stream().filter(l -> l.getLanguage().equals(currentLocale.getLanguage())).findFirst();
   }
 
   private MainControl createMainControl() {
