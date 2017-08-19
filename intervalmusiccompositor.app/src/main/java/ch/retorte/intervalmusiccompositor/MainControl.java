@@ -288,11 +288,15 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
     }
   }
 
+  /**
+   * Removes all files with the temporary file suffix (usually '.imc_wav') found in the systems temporary directory which are older than one day. We use this waiting period of a day as a poor mans way to prevent multiple instances of the software conflicting with each other.
+   */
   void tidyOldTemporaryFiles() {
     File tmpFile = null;
     try {
       tmpFile = File.createTempFile("imc", ".imc");
       File directory = new File(tmpFile.getParent());
+      addDebugMessage("Looking for old temporary files to delete in: " + directory);
 
       File[] fileList = directory.listFiles((dir, name) -> name.toLowerCase().endsWith(temporaryFileSuffix));
 
