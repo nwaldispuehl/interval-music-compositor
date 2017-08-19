@@ -47,14 +47,21 @@ import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
 import ch.retorte.intervalmusiccompositor.util.UpdateChecker;
 
-import com.google.common.collect.Lists;
-
 /**
  * The {@link IntervalMusicCompositor} is the main program file of the software.
  * 
  * @author nw
  */
 class IntervalMusicCompositor {
+
+  //---- Static
+
+  private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
+
+
+  //---- Fields
+
+  private List<Locale> knownLocales = createKnownLocales();
 
   private Platform platform = new PlatformFactory().getPlatform();
   private MessageFormatBundle bundle = getBundle("imc");
@@ -63,6 +70,10 @@ class IntervalMusicCompositor {
   private SoundHelper soundHelper = createSoundHelper();
 
   private UiUserPreferences userPreferences = createUserPreferences();
+
+  private List<Locale> createKnownLocales() {
+    return newArrayList(Locale.ENGLISH, Locale.GERMAN);
+  }
 
   private MessageBus createMessageBus() {
     MessageBus result = new MessageBus(true);
@@ -120,25 +131,26 @@ class IntervalMusicCompositor {
   }
 
   private void setLocale() {
-    Locale defaultLocale = Locale.getDefault();
+    Locale currentLocale = Locale.getDefault();
 
-    if (!isKnownLanguage(defaultLocale)) {
-      defaultLocale = Locale.ENGLISH;
+    if (userPreferences.hasLocale()) {
+      currentLocale = userPreferences.loadLocale();
     }
 
-    Locale.setDefault(defaultLocale);
+    if (!isKnownLanguage(currentLocale)) {
+      currentLocale = DEFAULT_LOCALE;
+    }
+
+    Locale.setDefault(currentLocale);
     addDebugMessage("Selected locale: " + Locale.getDefault());
   }
 
   private boolean isKnownLanguage(Locale locale) {
-    List<String> knownLanguages = Lists.newArrayList();
-    knownLanguages.add(Locale.ENGLISH.getLanguage());
-    knownLanguages.add(Locale.GERMAN.getLanguage());
-    return knownLanguages.contains(locale.getLanguage());
+    return knownLocales.stream().map(Locale::getLanguage).anyMatch(l -> l.equalsIgnoreCase(locale.getLanguage()));
   }
 
   private MainControl createMainControl() {
-    return new MainControl(createCompilationGenerator(), createAudioFileFactory(), createMusicPlayer(), createSoundEffectProvider(), userPreferences, messageBus);
+    return new MainControl(createCompilationGenerator(), createAudioFileFactory(), createMusicPlayer(), createSoundEffectProvider(), userPreferences, messageBus, knownLocales);
   }
 
   private CompilationGenerator createCompilationGenerator() {

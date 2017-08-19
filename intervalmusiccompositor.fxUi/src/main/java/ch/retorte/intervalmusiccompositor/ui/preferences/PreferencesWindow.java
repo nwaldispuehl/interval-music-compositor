@@ -1,6 +1,7 @@
 package ch.retorte.intervalmusiccompositor.ui.preferences;
 
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +13,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Locale;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * Window holding the program preferences.
@@ -40,13 +43,15 @@ public class PreferencesWindow {
   private Parent parent;
   private final MessageFormatBundle bundle;
   private UiUserPreferences userPreferences;
+  private ApplicationData applicationData;
 
 
   //---- Constructor
 
-  public PreferencesWindow(MessageFormatBundle bundle, UiUserPreferences userPreferences) {
+  public PreferencesWindow(MessageFormatBundle bundle, UiUserPreferences userPreferences, ApplicationData applicationData) {
     this.bundle = bundle;
     this.userPreferences = userPreferences;
+    this.applicationData = applicationData;
 
     loadFXML();
     bindButton();
@@ -76,8 +81,9 @@ public class PreferencesWindow {
   }
 
   private void initializePreferenceFields() {
-
-    // TODO
+    languagePreference.setItems(observableArrayList(applicationData.getKnownLocales()));
+    languagePreference.setValue(applicationData.getLocale());
+    languagePreference.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveLocale(newValue));
 
     propertyStoragePreference.selectedProperty().setValue(userPreferences.loadSaveFieldState());
     propertyStoragePreference.selectedProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSaveFieldState(newValue));

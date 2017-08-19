@@ -639,9 +639,7 @@ public class MainScreenController implements Initializable {
   }
 
   private void openPreferencesWindow() {
-    new PreferencesWindow(bundle, userPreferences).show();
-    // TODO
-
+    new PreferencesWindow(bundle, userPreferences, applicationData).show();
   }
 
   private void addMessageSubscribers(MessageSubscriber messageSubscriber) {

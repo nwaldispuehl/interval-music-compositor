@@ -3,6 +3,7 @@ package ch.retorte.intervalmusiccompositor.commons.preferences;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
+import java.util.Locale;
 import java.util.prefs.Preferences;
 
 /**
@@ -12,6 +13,7 @@ public class UserPreferences {
 
   //---- Static
 
+  private static final String LOCALE_KEY = "locale";
   private static final String SAVE_FIELD_STATE_KEY = "keepFieldState";
   private static final String SEARCH_UPDATE_AT_STARTUP_KEY = "searchUpdateAtStartup";
 
@@ -33,6 +35,18 @@ public class UserPreferences {
 
   //---- Methods
 
+  public void saveLocale(Locale locale) {
+    saveString(LOCALE_KEY, locale.getLanguage());
+  }
+
+  public boolean hasLocale() {
+    return has(LOCALE_KEY);
+  }
+
+  public Locale loadLocale() {
+    String loadedLocaleString = loadString(LOCALE_KEY, null);
+    return Locale.forLanguageTag(loadedLocaleString);
+  }
 
   public void saveSaveFieldState(boolean saveFieldState) {
     saveBoolean(SAVE_FIELD_STATE_KEY, saveFieldState);

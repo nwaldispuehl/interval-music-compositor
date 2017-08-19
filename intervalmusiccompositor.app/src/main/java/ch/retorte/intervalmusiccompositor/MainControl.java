@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import ch.retorte.intervalmusiccompositor.audio.AudioStreamUtil;
@@ -69,6 +70,7 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   private SoundEffectsProvider soundEffectsProvider;
   private UserPreferences userPreferences;
   private MessageBus messageBus;
+  private List<Locale> knownLocales;
   private Ui ui;
 
   private Platform platform = new PlatformFactory().getPlatform();
@@ -77,13 +79,14 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   private String temporaryFileSuffix;
   private int maximumImportWorkerThreads;
 
-  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, AudioFileMusicPlayer musicPlayer, SoundEffectsProvider soundEffectsProvider, UserPreferences userPreferences, MessageBus messageBus) {
+  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, AudioFileMusicPlayer musicPlayer, SoundEffectsProvider soundEffectsProvider, UserPreferences userPreferences, MessageBus messageBus, List<Locale> knownLocales) {
     this.compilationGenerator = compilationGenerator;
     this.audioFileFactory = audioFileFactory;
     this.musicPlayer = musicPlayer;
     this.soundEffectsProvider = soundEffectsProvider;
     this.userPreferences = userPreferences;
     this.messageBus = messageBus;
+    this.knownLocales = knownLocales;
 
     this.compilationGenerator.setMusicListControl(this);
     this.compilationGenerator.setApplicationData(this);
@@ -543,6 +546,16 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   @Override
   public Version getProgramVersion() {
     return programVersion;
+  }
+
+  @Override
+  public List<Locale> getKnownLocales() {
+    return knownLocales;
+  }
+
+  @Override
+  public Locale getLocale() {
+    return Locale.getDefault();
   }
 
   @Override
