@@ -1,5 +1,6 @@
 package ch.retorte.intervalmusiccompositor.commons.preferences;
 
+import ch.retorte.intervalmusiccompositor.Version;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
@@ -15,6 +16,7 @@ public class UserPreferences {
 
   //---- Static
 
+  private static final String LAST_PROGRAM_VERSION_KEY = "lastProgramVersion";
   private static final String LAST_START_KEY = "lastStart";
   private static final String LOCALE_KEY = "locale";
   private static final String SAVE_FIELD_STATE_KEY = "keepFieldState";
@@ -38,12 +40,17 @@ public class UserPreferences {
 
   //---- Methods
 
-  public void saveLastStart() {
-    saveString(LAST_START_KEY, LocalDateTime.now().toString());
+  public void saveLastProgramVersion(Version version) {
+    saveString(LAST_PROGRAM_VERSION_KEY, version.toString());
   }
 
-  public boolean hasLastStart() {
-    return has(LAST_START_KEY);
+  public Version loadLastProgramVersion() {
+    String loadedVersionString = loadString(LAST_PROGRAM_VERSION_KEY, "");
+    return new Version(loadedVersionString);
+  }
+
+  public void saveLastStart() {
+    saveString(LAST_START_KEY, LocalDateTime.now().toString());
   }
 
   public void saveLocale(Locale locale) {

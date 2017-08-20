@@ -7,33 +7,34 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.CheckBox?>
 <AnchorPane prefWidth="600" xmlns:fx="http://javafx.com/fxml/1">
-    <VBox stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" spacing="10" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
-        <padding>
-            <Insets top="10" bottom="10" right="10" left="10"/>
-        </padding>
+    <BorderPane AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+    <padding>
+        <Insets top="10" bottom="10" right="10" left="10"/>
+    </padding>
+    <center>
+        <VBox stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" spacing="10" >
 
-        <Label text="%ui.firstStartWindow.welcome.title" styleClass="dialogParagraphTitle" />
-        <Label text="%ui.firstStartWindow.welcome.text" styleClass="narrow"  wrapText="true"  />
 
-        <Label text="%ui.firstStartWindow.updateSetting.title" styleClass="dialogParagraphTitle">
-            <padding>
-                <Insets top="15"/>
-            </padding>
-        </Label>
+            <Label text="%ui.firstStartWindow.welcome.title" styleClass="dialogParagraphTitle" />
+            <Label text="%ui.firstStartWindow.welcome.text" styleClass="narrow"  wrapText="true"  />
 
-        <HBox>
-            <CheckBox fx:id="checkForUpgradesOnStartupPreference">
+            <Label text="%ui.firstStartWindow.updateSetting.title" styleClass="dialogParagraphTitle">
                 <padding>
-                    <Insets right="15"/>
+                    <Insets top="15"/>
                 </padding>
-            </CheckBox>
-            <Label text="%ui.firstStartWindow.updateSetting.text" styleClass="narrow" wrapText="true"  />
-        </HBox>
+            </Label>
 
-
-
-
-
+            <HBox>
+                <CheckBox fx:id="checkForUpgradesOnStartupPreference">
+                    <padding>
+                        <Insets right="15"/>
+                    </padding>
+                </CheckBox>
+                <Label text="%ui.firstStartWindow.updateSetting.text" styleClass="narrow" wrapText="true"  />
+            </HBox>
+        </VBox>
+    </center>
+    <bottom>
         <BorderPane maxWidth="Infinity">
             <padding>
                 <Insets top="10"/>
@@ -42,5 +43,8 @@
                 <Button fx:id="dismissButton" text="%ui.firstStartWindow.dismissButton"/>
             </right>
         </BorderPane>
-    </VBox>
+    </bottom>
+
+    </BorderPane>
+
 </AnchorPane>

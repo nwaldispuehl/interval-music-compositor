@@ -1,5 +1,6 @@
 package ch.retorte.intervalmusiccompositor.ui;
 
+import ch.retorte.intervalmusiccompositor.Version;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
@@ -119,10 +120,17 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
     }
   }
 
+  /**
+   * We show the first start window when there is no stored version or there is one but it is not equal to the current program version.
+   */
   private boolean isFirstStart() {
-    boolean firstStart = !userPreferences.hasLastStart();
-    addDebugMessage("Determining first start: " + firstStart);
-    return firstStart;
+    Version currentProgramVersion = applicationData.getProgramVersion();
+    Version lastProgramVersion = userPreferences.loadLastProgramVersion();
+
+    boolean isFirstStart = !currentProgramVersion.equals(lastProgramVersion);
+
+    addDebugMessage("Is this a new version? Current version: " + currentProgramVersion + ", version of previous start: " + lastProgramVersion + ", verdict: " + isFirstStart);
+    return isFirstStart;
   }
 
   private void startBlockingFirstStartWindow() {
@@ -141,6 +149,8 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
 
     initialize(mainScreenController);
     initializeCompilationParameters();
+
+    userPreferences.saveLastProgramVersion(applicationData.getProgramVersion());
     userPreferences.saveLastStart();
   }
 

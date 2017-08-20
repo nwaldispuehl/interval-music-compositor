@@ -69,7 +69,7 @@ public class BlockingFirstStartWindow {
   public void show() {
     stage = new Stage();
     stage.setTitle(bundle.getString("ui.firstStartWindow.title"));
-    stage.setScene(new Scene(parent, 600, 400));
+    stage.setScene(new Scene(parent, 600, 300));
     stage.setResizable(true);
 
     // We want this window to block until it is closed.
