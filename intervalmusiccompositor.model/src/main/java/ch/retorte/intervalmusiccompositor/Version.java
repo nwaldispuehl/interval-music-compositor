@@ -94,6 +94,26 @@ public class Version implements Comparable<Version> {
   }
 
   @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Version) {
+      return this == obj || this.compareTo((Version) obj) == 0;
+    }
+    else {
+      return super.equals(obj);
+    }
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 17;
+    hash = hash * 31 + major;
+    hash = hash * 31 + minor;
+    hash = hash * 31 + revision;
+    hash = hash * 31 + build;
+    return hash;
+  }
+
+  @Override
   public String toString() {
     return major + "." + minor + "." + revision;
   }

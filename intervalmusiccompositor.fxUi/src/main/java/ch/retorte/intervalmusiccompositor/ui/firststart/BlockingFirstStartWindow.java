@@ -8,7 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -32,7 +32,7 @@ public class BlockingFirstStartWindow {
   private Text recentChanges;
   
   @FXML
-  private Pane updateSettingsContainer;
+  private VBox updateSettingsContainer;
   
   @FXML
   private Button dismissButton;
@@ -89,7 +89,7 @@ public class BlockingFirstStartWindow {
   public void show() {
     stage = new Stage();
     stage.setTitle(bundle.getString("ui.firstStartWindow.title"));
-    stage.setScene(new Scene(parent, 600, 300));
+    stage.setScene(new Scene(parent));
     stage.setResizable(true);
 
     // We want this window to block until it is closed.

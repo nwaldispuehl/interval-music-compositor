@@ -105,7 +105,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   public void start(Stage primaryStage) throws Exception {
     Platform.setImplicitExit(true);
     try {
-      if (isFirstStart()) {
+      if (shouldShowFirstStartWindow()) {
         addDebugMessage("Showing first start window.");
         startBlockingFirstStartWindow();
       }
@@ -123,14 +123,16 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   /**
    * We show the first start window when there is no stored version or there is one but it is not equal to the current program version.
    */
-  private boolean isFirstStart() {
+  private boolean shouldShowFirstStartWindow() {
+    boolean hasUnrevisedSettings = !userPreferences.didReviseUpdateAtStartup();
+
     Version currentProgramVersion = applicationData.getProgramVersion();
     Version lastProgramVersion = userPreferences.loadLastProgramVersion();
 
-    boolean isFirstStart = !currentProgramVersion.equals(lastProgramVersion);
+    boolean shouldShowFirstStartWindow = !currentProgramVersion.equals(lastProgramVersion) || hasUnrevisedSettings;
 
-    addDebugMessage("Is this a new version? Current version: " + currentProgramVersion + ", version of previous start: " + lastProgramVersion + ", verdict: " + isFirstStart);
-    return isFirstStart;
+    addDebugMessage("Should we show the first start window? Current version: " + currentProgramVersion + ", version of previous start: " + lastProgramVersion + ", unrevised settings: " + hasUnrevisedSettings + ", verdict: " + shouldShowFirstStartWindow);
+    return shouldShowFirstStartWindow;
   }
 
   private void startBlockingFirstStartWindow() {
@@ -149,6 +151,8 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
 
     initialize(mainScreenController);
     initializeCompilationParameters();
+
+    root.requestLayout();
 
     userPreferences.saveLastProgramVersion(applicationData.getProgramVersion());
     userPreferences.saveLastStart();
