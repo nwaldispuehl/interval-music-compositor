@@ -5,7 +5,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.BorderPane?><?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.CheckBox?><?import javafx.scene.text.Text?><?import javafx.scene.layout.Pane?>
 <AnchorPane prefWidth="600" xmlns:fx="http://javafx.com/fxml/1">
     <BorderPane AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
     <padding>
@@ -14,24 +14,30 @@
     <center>
         <VBox stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" spacing="10" >
 
-
             <Label text="%ui.firstStartWindow.welcome.title" styleClass="dialogParagraphTitle" />
             <Label text="%ui.firstStartWindow.welcome.text" styleClass="narrow"  wrapText="true"  />
 
-            <Label text="%ui.firstStartWindow.updateSetting.title" styleClass="dialogParagraphTitle">
-                <padding>
-                    <Insets top="15"/>
-                </padding>
-            </Label>
+            <Label text="%ui.firstStartWindow.recentChanges.title" styleClass="dialogParagraphTitle" />
+            <Label text="%ui.firstStartWindow.recentChanges.text" styleClass="narrow"  wrapText="true"  />
+            <Text fx:id="recentChanges" />
 
-            <HBox>
-                <CheckBox fx:id="checkForUpgradesOnStartupPreference">
+            <Pane fx:id="updateSettingsContainer">
+                <Label text="%ui.firstStartWindow.reviseSettings.text" styleClass="narrow"  wrapText="true"  />
+                <Label text="%ui.firstStartWindow.updateSetting.title" styleClass="dialogParagraphTitle">
                     <padding>
-                        <Insets right="15"/>
+                        <Insets top="15"/>
                     </padding>
-                </CheckBox>
-                <Label text="%ui.firstStartWindow.updateSetting.text" styleClass="narrow" wrapText="true"  />
-            </HBox>
+                </Label>
+
+                <HBox>
+                    <CheckBox fx:id="checkForUpgradesOnStartupPreference">
+                        <padding>
+                            <Insets right="15"/>
+                        </padding>
+                    </CheckBox>
+                    <Label text="%ui.firstStartWindow.updateSetting.text" styleClass="narrow" wrapText="true"  />
+                </HBox>
+            </Pane>
         </VBox>
     </center>
     <bottom>

@@ -16,6 +16,7 @@ public class UserPreferences {
 
   //---- Static
 
+  private static final String DID_REVISE_UPDATE_AT_STARTUP_KEY = "didReviseUpdateAtStartup";
   private static final String LAST_PROGRAM_VERSION_KEY = "lastProgramVersion";
   private static final String LAST_START_KEY = "lastStart";
   private static final String LOCALE_KEY = "locale";
@@ -39,6 +40,14 @@ public class UserPreferences {
 
 
   //---- Methods
+
+  public void setDidReviseUpdateAtStartup() {
+    saveBoolean(DID_REVISE_UPDATE_AT_STARTUP_KEY, true);
+  }
+
+  public boolean didReviseUpdateAtStartup() {
+    return has(DID_REVISE_UPDATE_AT_STARTUP_KEY);
+  }
 
   public void saveLastProgramVersion(Version version) {
     saveString(LAST_PROGRAM_VERSION_KEY, version.toString());

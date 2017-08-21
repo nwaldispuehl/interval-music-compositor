@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,6 +28,12 @@ public class BlockingFirstStartWindow {
   @FXML
   private CheckBox checkForUpgradesOnStartupPreference;
 
+  @FXML
+  private Text recentChanges;
+  
+  @FXML
+  private Pane updateSettingsContainer;
+  
   @FXML
   private Button dismissButton;
 
@@ -60,10 +68,22 @@ public class BlockingFirstStartWindow {
   }
 
   private void initializeControls() {
+    recentChanges.setText("Test");
+    
+    updateSettingsContainer.setVisible(hasUnrevisedPreferences());
+    
     checkForUpgradesOnStartupPreference.selectedProperty().setValue(userPreferences.loadSearchUpdateAtStartup());
     checkForUpgradesOnStartupPreference.selectedProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSearchUpdateAtStartup(newValue));
 
-    dismissButton.setOnAction(e -> stage.close());
+    dismissButton.setOnAction(e -> {
+      userPreferences.setDidReviseUpdateAtStartup();
+      stage.close();
+    });
+  }
+
+  private boolean hasUnrevisedPreferences() {
+    return !userPreferences.didReviseUpdateAtStartup();
+    
   }
 
   public void show() {
