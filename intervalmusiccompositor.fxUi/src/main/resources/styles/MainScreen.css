@@ -43,6 +43,7 @@
 .dialogParagraphTitle {
   -fx-font-size: 140%;
   -fx-font-weight: bolder;
+  -fx-padding: 20 0 0 0;
 }
 
 .preferencesTitle {
