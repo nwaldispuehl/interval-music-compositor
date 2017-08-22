@@ -3,9 +3,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.BorderPane?><?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.CheckBox?><?import javafx.scene.text.Text?><?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.text.Text?>
 <AnchorPane prefWidth="600" xmlns:fx="http://javafx.com/fxml/1">
     <BorderPane AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
     <padding>
@@ -19,7 +21,8 @@
 
             <Label text="%ui.firstStartWindow.recentChanges.title" styleClass="dialogParagraphTitle" />
             <Label text="%ui.firstStartWindow.recentChanges.text" styleClass="narrow"  wrapText="true"  />
-            <Text fx:id="recentChanges" />
+
+            <Text fx:id="recentChanges" styleClass="recentChanges" />
 
             <VBox fx:id="updateSettingsContainer" spacing="10">
                 <Label text="%ui.firstStartWindow.reviseSettings.text" styleClass="narrow"  wrapText="true"  />

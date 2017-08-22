@@ -2,6 +2,7 @@ package ch.retorte.intervalmusiccompositor.ui.firststart;
 
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
+import com.sun.javafx.tk.Toolkit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -78,6 +79,7 @@ public class BlockingFirstStartWindow {
     dismissButton.setOnAction(e -> {
       userPreferences.setDidReviseUpdateAtStartup();
       stage.close();
+      releaseStage();
     });
   }
 
@@ -89,11 +91,29 @@ public class BlockingFirstStartWindow {
   public void show() {
     stage = new Stage();
     stage.setTitle(bundle.getString("ui.firstStartWindow.title"));
-    stage.setScene(new Scene(parent));
+    stage.setScene(new Scene(parent, 600, 600));
     stage.setResizable(true);
 
-    // We want this window to block until it is closed.
-    stage.showAndWait();
+    stage.show();
+
+    parent.layout();
+
+    stage.setMinWidth(stage.getWidth());
+    stage.setMinHeight(stage.getHeight());
+
+    stage.setOnCloseRequest(event -> {
+      releaseStage();
+    });
+
+    blockStage();
+  }
+
+  private void blockStage() {
+    Toolkit.getToolkit().enterNestedEventLoop(stage);
+  }
+
+  private void releaseStage() {
+    Toolkit.getToolkit().exitNestedEventLoop(stage, null);
   }
 
 }

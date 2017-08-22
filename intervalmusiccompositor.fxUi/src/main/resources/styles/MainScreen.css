@@ -54,3 +54,8 @@
   -fx-font-weight: lighter;
   -fx-text-fill: #666666;
 }
+
+.recentChanges {
+  -fx-padding: 10;
+  -fx-background-color: #C5E1A5;
+}
