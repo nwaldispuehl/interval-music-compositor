@@ -153,6 +153,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
     initializeCompilationParameters();
 
     root.requestLayout();
+    root.layout();
 
     userPreferences.saveLastProgramVersion(applicationData.getProgramVersion());
     userPreferences.saveLastStart();
