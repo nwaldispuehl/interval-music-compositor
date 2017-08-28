@@ -20,7 +20,7 @@
 
         <Label text="%ui.firstStartWindow.recentChanges.title" styleClass="dialogParagraphTitle" />
         <Label text="%ui.firstStartWindow.recentChanges.text" styleClass="narrow"  wrapText="true" />
-        <Text fx:id="recentChanges" styleClass="recentChanges" />
+        <Label fx:id="recentChanges" styleClass="recentChanges" prefWidth="Infinity"/>
 
         <VBox fx:id="updateSettingsContainer" spacing="10">
             <Label text="%ui.firstStartWindow.reviseSettings.title" styleClass="dialogParagraphTitle" />
