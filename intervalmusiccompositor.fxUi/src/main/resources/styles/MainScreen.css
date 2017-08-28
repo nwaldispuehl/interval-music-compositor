@@ -46,6 +46,12 @@
   -fx-padding: 20 0 0 0;
 }
 
+.dialogParagraphSubTitle {
+  -fx-font-size: 110%;
+  -fx-font-weight: bolder;
+  -fx-padding: 15 0 0 0;
+}
+
 .preferencesTitle {
   -fx-font-size: 110%;
   -fx-font-weight: bold;

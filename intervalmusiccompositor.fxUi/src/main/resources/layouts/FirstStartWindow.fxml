@@ -25,7 +25,7 @@
         <VBox fx:id="updateSettingsContainer" spacing="10">
             <Label text="%ui.firstStartWindow.reviseSettings.title" styleClass="dialogParagraphTitle" />
             <Label text="%ui.firstStartWindow.reviseSettings.text" styleClass="narrow"  wrapText="true"  />
-            <Label text="%ui.firstStartWindow.updateSetting.title" styleClass="dialogParagraphTitle">
+            <Label text="%ui.firstStartWindow.updateSetting.title" styleClass="dialogParagraphSubTitle">
                 <padding>
                     <Insets top="15"/>
                 </padding>
