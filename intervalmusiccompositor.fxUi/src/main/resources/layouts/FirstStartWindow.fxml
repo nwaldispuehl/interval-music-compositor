@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.control.ScrollPane?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefWidth="600" prefHeight="600">
 <padding>
     <Insets top="10" bottom="10" right="10" left="10"/>
 </padding>
@@ -20,7 +20,9 @@
 
         <Label text="%ui.firstStartWindow.recentChanges.title" styleClass="dialogParagraphTitle" />
         <Label text="%ui.firstStartWindow.recentChanges.text" styleClass="narrow"  wrapText="true" />
-        <Label fx:id="recentChanges" styleClass="recentChanges" prefWidth="Infinity"/>
+        <ScrollPane maxHeight="400" hbarPolicy="NEVER" style="-fx-background-color: red">
+            <Label fx:id="recentChanges" styleClass="recentChanges" prefWidth="600"/>
+        </ScrollPane>
 
         <VBox fx:id="updateSettingsContainer" spacing="10">
             <Label text="%ui.firstStartWindow.reviseSettings.title" styleClass="dialogParagraphTitle" />

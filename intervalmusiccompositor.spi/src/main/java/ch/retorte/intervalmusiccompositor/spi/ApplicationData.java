@@ -14,6 +14,8 @@ public interface ApplicationData {
 
   Version getProgramVersion();
 
+  String getRecentChangeLog();
+
   List<Locale> getKnownLocales();
 
   Locale getLocale();

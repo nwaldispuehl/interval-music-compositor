@@ -136,7 +136,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   }
 
   private void startBlockingFirstStartWindow() {
-    new BlockingFirstStartWindow(bundle, userPreferences).show();
+    new BlockingFirstStartWindow(bundle, userPreferences, applicationData).show();
   }
 
   private void startMainProgramIn(Stage primaryStage) throws Exception {

@@ -2,6 +2,7 @@ package ch.retorte.intervalmusiccompositor.ui.firststart;
 
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
+import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import com.sun.javafx.tk.Toolkit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,13 +43,15 @@ public class BlockingFirstStartWindow {
   private Stage stage;
   private MessageFormatBundle bundle;
   private UserPreferences userPreferences;
+  private ApplicationData applicationData;
 
 
   //---- Constructor
 
-  public BlockingFirstStartWindow(MessageFormatBundle bundle, UserPreferences userPreferences) {
+  public BlockingFirstStartWindow(MessageFormatBundle bundle, UserPreferences userPreferences, ApplicationData applicationData) {
     this.bundle = bundle;
     this.userPreferences = userPreferences;
+    this.applicationData = applicationData;
 
     loadFXML();
     initializeControls();
@@ -69,7 +72,7 @@ public class BlockingFirstStartWindow {
   }
 
   private void initializeControls() {
-    recentChanges.setText("Recent changes here.");
+    recentChanges.setText(applicationData.getRecentChangeLog());
     
     updateSettingsContainer.setVisible(hasUnrevisedPreferences());
     
@@ -91,7 +94,7 @@ public class BlockingFirstStartWindow {
   public void show() {
     stage = new Stage();
     stage.setTitle(bundle.getString("ui.firstStartWindow.title"));
-    stage.setScene(new Scene(parent, 600, 600));
+    stage.setScene(new Scene(parent));
     stage.setResizable(true);
 
     stage.show();

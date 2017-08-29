@@ -49,12 +49,15 @@ import javafx.collections.ObservableList;
 
 /**
  * Main controller of the software; collects data and reacts to ui events. Implements a lot of control interfaces.
- * 
- * @author nw
  */
 class MainControl implements MusicListControl, MusicCompilationControl, ProgramControl, ApplicationData, SoundEffectsProvider {
 
+  //---- Static
+
   private static final int ONE_DAY_IN_MILLISECONDS = 86400000;
+
+
+  //---- Fields
 
   private ListSortMode musicListSortMode = null;
   private int maxListEntries;
@@ -76,8 +79,12 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   private Platform platform = new PlatformFactory().getPlatform();
   private String programName;
   private Version programVersion;
+  private String recentChangeLog;
   private String temporaryFileSuffix;
   private int maximumImportWorkerThreads;
+
+
+  //---- Constructor
 
   MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, AudioFileMusicPlayer musicPlayer, SoundEffectsProvider soundEffectsProvider, UserPreferences userPreferences, MessageBus messageBus, List<Locale> knownLocales) {
     this.compilationGenerator = compilationGenerator;
@@ -95,10 +102,16 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
     createCreateCacheJobManager();
   }
 
+
+  //---- Methods
+
   private void setConfigurationProperties() {
     MessageFormatBundle bundle = getBundle("imc");
     programName = bundle.getString("imc.name");
     programVersion = new Version(bundle.getString("imc.version"));
+
+    // TODO: Load from changelog (-> to be moved into app module)
+    recentChangeLog = "TODO\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx";
 
     MessageFormatBundle coreBundle = getBundle("core_imc");
     temporaryFileSuffix = coreBundle.getString("imc.temporaryFile.suffix");
@@ -546,6 +559,11 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   @Override
   public Version getProgramVersion() {
     return programVersion;
+  }
+
+  @Override
+  public String getRecentChangeLog() {
+    return recentChangeLog;
   }
 
   @Override
