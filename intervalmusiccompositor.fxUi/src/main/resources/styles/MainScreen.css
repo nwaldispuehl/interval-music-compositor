@@ -1,15 +1,14 @@
 * {
-  -fx-font-family: 'Roboto';
-  -fx-font-smoothing-type: gray;
-  -fx-text-fill: #333333;
-
   /* For layout debugging. */
   /*-fx-border-color: dodgerblue;*/
   /*-fx-border-width: 1;*/
   /*-fx-border-style: solid;*/
 }
 
-#container {
+.topLevelNode {
+  -fx-font-family: 'Roboto';
+  -fx-font-smoothing-type: gray;
+  -fx-text-fill: #333333;
   -fx-font-size: 13;
 }
 
@@ -43,13 +42,13 @@
 .dialogParagraphTitle {
   -fx-font-size: 140%;
   -fx-font-weight: bolder;
-  -fx-padding: 20 0 0 0;
+  -fx-padding: 15 0 0 0;
 }
 
 .dialogParagraphSubTitle {
   -fx-font-size: 110%;
   -fx-font-weight: bolder;
-  -fx-padding: 15 0 0 0;
+  -fx-padding: 10 0 0 0;
 }
 
 .preferencesTitle {
@@ -62,7 +61,11 @@
   -fx-text-fill: #666666;
 }
 
+.recentChangesBack {
+}
+
 .recentChanges {
+  -fx-background-color: #c5e1a5;
+  -fx-font-family: monospace;
   -fx-padding: 10;
-  -fx-background-color: rgba(0, 100, 100, 0.5);;
 }

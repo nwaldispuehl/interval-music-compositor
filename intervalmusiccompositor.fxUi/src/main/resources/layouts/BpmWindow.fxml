@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 
 <?import javafx.scene.layout.AnchorPane?>
-<VBox stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" maxWidth="480" xmlns:fx="http://javafx.com/fxml/1">
+<VBox stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" styleClass="topLevelNode" maxWidth="480" xmlns:fx="http://javafx.com/fxml/1">
     <padding>
         <Insets top="10" bottom="10" right="10" left="10"/>
     </padding>

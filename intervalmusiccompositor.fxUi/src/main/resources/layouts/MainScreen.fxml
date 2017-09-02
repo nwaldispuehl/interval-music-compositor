@@ -10,6 +10,7 @@
 <?import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileListView?>
 <VBox stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" maxHeight="Infinity" maxWidth="Infinity" minWidth="1024" minHeight="840"
       xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+      styleClass="topLevelNode"
       fx:controller="ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController">
     <AnchorPane>
         <MenuBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

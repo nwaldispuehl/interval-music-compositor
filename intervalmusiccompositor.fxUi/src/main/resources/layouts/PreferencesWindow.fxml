@@ -7,7 +7,7 @@
 
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.CheckBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" styleClass="preferences" spacing="10" maxWidth="800">
+<VBox xmlns:fx="http://javafx.com/fxml/1" stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" styleClass="preferences,topLevelNode" spacing="10" maxWidth="800">
     <padding>
         <Insets top="10" bottom="10" right="10" left="10"/>
     </padding>

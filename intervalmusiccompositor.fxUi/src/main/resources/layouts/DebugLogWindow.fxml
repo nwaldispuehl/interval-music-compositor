@@ -4,9 +4,10 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.BorderPane?><?import javafx.scene.layout.AnchorPane?>
-<AnchorPane  prefWidth="800" maxWidth="Infinity" prefHeight="600" maxHeight="Infinity" xmlns:fx="http://javafx.com/fxml/1">
-    <VBox stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" spacing="10" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane  prefWidth="800" maxWidth="Infinity" prefHeight="600" maxHeight="Infinity" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" styleClass="topLevelNode" >
+    <VBox spacing="10" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
         <padding>
             <Insets top="5" bottom="5" right="5" left="5"/>
         </padding>
