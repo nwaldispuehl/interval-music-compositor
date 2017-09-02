@@ -7,6 +7,7 @@ IMP         Made sound effect start time spinner editable.
 IMP         Improved directions in error dialog.
 ADD  #27    Introduced persistent user settings.
 FIX         Fixed resizing issue in debug log.
+ADD         Introduced welcome dialog to be shown after upgrades.
 
 
 2017-07-30  2.7.1
