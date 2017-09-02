@@ -1,7 +1,7 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
-2017-xx-xx  2.7.x (not released)
+2017-09-xx  2.8.0 (not released)
 --------------------------------------------------------------------------------
 IMP         Made sound effect start time spinner editable.
 IMP         Improved directions in error dialog.
@@ -130,99 +130,99 @@ ADD   Added graphical preview of intervals
 ADD   Improved readability of report file a bit
 
 
-2011-11-06 	2.1.5
+2011-11-06  2.1.5
 --------------------------------------------------------------------------------
 FIX   Added sample rate conversion
 FIX   Fixed uncaught exception in the beat detection
 
 
-2011-05-20 	2.1.4
+2011-05-20  2.1.4
 --------------------------------------------------------------------------------
-FIX		About dialog was too small for complete text after performing update
-ADD		Added manual to the archives (PDF of the website content)		 		
+FIX   About dialog was too small for complete text after performing update
+ADD   Added manual to the archives (PDF of the website content)
 
 
-2011-03-11 	2.1.3
+2011-03-11  2.1.3
 --------------------------------------------------------------------------------
-FIX		Bpm information in playlist added for break tracks as well 
-FIX		Bpm determination now uses the same extract which is presented for tapping
-FIX		Bpm tapping only transfers result into field if convergent
+FIX   Bpm information in playlist added for break tracks as well 
+FIX   Bpm determination now uses the same extract which is presented for tapping
+FIX   Bpm tapping only transfers result into field if convergent
 
 
-2011-03-05 	2.1.2
+2011-03-05  2.1.2
 --------------------------------------------------------------------------------
-ADD		Added support for Bpm tags in Ogg and Flac files
-FIX		Fixed Bpm tag writing in MP3 files
+ADD   Added support for Bpm tags in Ogg and Flac files
+FIX   Fixed Bpm tag writing in MP3 files
 
 
-2011-03-04 	2.1.1
+2011-03-04  2.1.1
 --------------------------------------------------------------------------------
-ADD		Bpm value is written into playlist
-FIX		Deactivate bpm context menu on erroneous tracks
+ADD   Bpm value is written into playlist
+FIX   Deactivate bpm context menu on erroneous tracks
 
 
-2011-03-03 	2.1.0
+2011-03-03  2.1.0
 --------------------------------------------------------------------------------
-ADD		Bpm (TBPM) tag of MP3 tracks is displayed, if available
-ADD		Bpm (TBPM) tag of MP3 tracks can be stored in the original file
-ADD		If a track has no Bpm information, it is calculated
-ADD		Bpm information of a track can be added or determined by tapping
-ADD		There is now a pre-listen function for Bpm determination
-ADD		Added context menu for new functions
-FIX		Files with the wrong extensions can't be dragged into the list anymore
-FIX		The number of threads used to process files is now limited to the number 
+ADD   Bpm (TBPM) tag of MP3 tracks is displayed, if available
+ADD   Bpm (TBPM) tag of MP3 tracks can be stored in the original file
+ADD   If a track has no Bpm information, it is calculated
+ADD   Bpm information of a track can be added or determined by tapping
+ADD   There is now a pre-listen function for Bpm determination
+ADD   Added context menu for new functions
+FIX   Files with the wrong extensions can't be dragged into the list anymore
+FIX   The number of threads used to process files is now limited to the number 
       of available cores
 
 
-2011-02-18 	2.0.1
+2011-02-18  2.0.1
 --------------------------------------------------------------------------------
-FIX		Changed icons for unusable/too short tracks 
-FIX		Added carriage return in playlist file
-FIX		Cleaned memory of last compilation data after a run
-FIX		Adapted length warnings to cross fading
-FIX		Fixed calculation anomaly within random track part extraction 
-FIX		Fixed 0 s duration bug which occurred on some MP3 files
-FIX		Choosing a break track and using 0 s breaks caused sound artefacts
+FIX   Changed icons for unusable/too short tracks 
+FIX   Added carriage return in playlist file
+FIX   Cleaned memory of last compilation data after a run
+FIX   Adapted length warnings to cross fading
+FIX   Fixed calculation anomaly within random track part extraction 
+FIX   Fixed 0 s duration bug which occurred on some MP3 files
+FIX   Choosing a break track and using 0 s breaks caused sound artifacts
 
 
-2011-02-10 	2.0.0
+2011-02-10  2.0.0
 --------------------------------------------------------------------------------
-ADD		Improved graphical user interface
-ADD		Sound tracks now organized in draggable tracklist
-ADD		Possibility to define break track
-ADD		Cross fade mode
-ADD		Ability to freely choose output directory
-ADD		Compilation duration preview
-ADD		Update checker
+ADD   Improved graphical user interface
+ADD   Sound tracks now organized in draggable tracklist
+ADD   Possibility to define break track
+ADD   Cross fade mode
+ADD   Ability to freely choose output directory
+ADD   Compilation duration preview
+ADD   Update checker
 
 
-2010-10-05	1.1.1
+2010-10-05  1.1.1
 --------------------------------------------------------------------------------
-FIX		Corrected directory for lame binary position
+FIX   Corrected directory for lame binary position
 
 
-2010-10-03	1.1.0
+2010-10-03  1.1.0
 --------------------------------------------------------------------------------
-ADD		Create MP3 output file if there is a lame binary in the same directory
+ADD   Create MP3 output file if there is a lame binary in the same directory
 
 
-2010-08-05	1.0.0
+2010-08-05  1.0.0
 --------------------------------------------------------------------------------
-ADD		Added break period after last sound sample (for looping)
-ADD		Added possibility to fade in and out into sound samples
-FIX		Removed blocking alert window for minor problems
-FIX		Added missing error text for wrong format errors
+ADD   Added break period after last sound sample (for looping)
+ADD   Added possibility to fade in and out into sound samples
+FIX   Removed blocking alert window for minor problems
+FIX   Added missing error text for wrong format errors
 
 
-2010-05-03	0.0.9
+2010-05-03  0.0.9
 --------------------------------------------------------------------------------
-ADD		Output filenames now contain the respective compilation parameters
-ADD		Visualizing envelope of output file for fast control of quality
-FIX		Improved some more error messages
+ADD   Output filenames now contain the respective compilation parameters
+ADD   Visualizing envelope of output file for fast control of quality
+FIX   Improved some more error messages
 
 
-2010-02-12	0.0.8
+2010-02-12  0.0.8
 --------------------------------------------------------------------------------
-FIX		Mp3 files with images in the header caused the software to skip the file.
-FIX		Improved some error messages
-ADD		Faulty sound files are now also listed in the playlist file
+FIX   Mp3 files with images in the header caused the software to skip the file.
+FIX   Improved some error messages
+ADD   Faulty sound files are now also listed in the playlist file

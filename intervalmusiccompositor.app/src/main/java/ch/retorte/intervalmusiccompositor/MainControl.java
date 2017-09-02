@@ -11,6 +11,8 @@ import static javafx.collections.FXCollections.observableArrayList;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -56,6 +58,7 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
 
   private static final int ONE_DAY_IN_MILLISECONDS = 86400000;
 
+  private static final String CHANGE_LOG_FILE = "/CHANGELOG.txt";
 
   //---- Fields
 
@@ -79,7 +82,7 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   private Platform platform = new PlatformFactory().getPlatform();
   private String programName;
   private Version programVersion;
-  private String recentChangeLog;
+  private String changeLog;
   private String temporaryFileSuffix;
   private int maximumImportWorkerThreads;
 
@@ -110,13 +113,21 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
     programName = bundle.getString("imc.name");
     programVersion = new Version(bundle.getString("imc.version"));
 
-    // TODO: Load from changelog (-> to be moved into app module)
-    recentChangeLog = "TODO\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx";
+    changeLog = loadChangeLog();
 
     MessageFormatBundle coreBundle = getBundle("core_imc");
     temporaryFileSuffix = coreBundle.getString("imc.temporaryFile.suffix");
     maxListEntries = valueOf(coreBundle.getString("imc.musicList.max_entries"));
     maximumImportWorkerThreads = valueOf(coreBundle.getString("imc.import.maximumWorkerThreads"));
+  }
+
+  private String loadChangeLog() {
+    try {
+      return new String(Files.readAllBytes(Paths.get(getClass().getResource(CHANGE_LOG_FILE).toURI())));
+    } catch (Exception e) {
+      addDebugMessage(e);
+    }
+    return "";
   }
 
   void setUi(Ui ui) {
@@ -562,8 +573,8 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   }
 
   @Override
-  public String getRecentChangeLog() {
-    return recentChangeLog;
+  public String getChangeLog() {
+    return changeLog;
   }
 
   @Override

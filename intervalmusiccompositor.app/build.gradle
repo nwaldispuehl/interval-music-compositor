@@ -71,6 +71,7 @@ task distOsxApp(type: Tar, dependsOn: createApp) {
 
   into (project.applicationName + '-' + version) {
     from buildDir.absolutePath + project.ext.macosxOutputDir
+    from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
     from project(':intervalmusiccompositor.build').files('documentation/')
   }
 }
@@ -92,6 +93,7 @@ task distWindowsApp(type: Zip, dependsOn: [shadowJar, copyUberJar, createExe]) {
   
   into (applicationName + '-' + version) {
     from buildDir.absolutePath + project.ext.windowsOutputDir + '/' + applicationName + '.exe'
+    from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
     from project(':intervalmusiccompositor.build').files('documentation/')
   }
 }
@@ -105,6 +107,7 @@ task distLinuxApp(type: Tar, dependsOn: installDist) {
   into (applicationName + '-' + version) {
     from installDist.outputs
     from project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.svg')
+    from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
     from project(':intervalmusiccompositor.build').files('documentation/')
   }
 }

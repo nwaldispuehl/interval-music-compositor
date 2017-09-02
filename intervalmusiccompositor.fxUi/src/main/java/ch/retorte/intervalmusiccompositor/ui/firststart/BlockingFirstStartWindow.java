@@ -72,7 +72,7 @@ public class BlockingFirstStartWindow {
   }
 
   private void initializeControls() {
-    recentChanges.setText(applicationData.getRecentChangeLog());
+    recentChanges.setText(applicationData.getChangeLog());
     
     updateSettingsContainer.setVisible(hasUnrevisedPreferences());
     

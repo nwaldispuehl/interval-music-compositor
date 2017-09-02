@@ -97,6 +97,7 @@ public class UserPreferences {
   protected void saveInt(String key, int value) {
     addSaveDebugMessageFor(key, value);
     preferences.putInt(key, value);
+    flush();
   }
 
   protected int loadInt(String key, int defaultValue) {
