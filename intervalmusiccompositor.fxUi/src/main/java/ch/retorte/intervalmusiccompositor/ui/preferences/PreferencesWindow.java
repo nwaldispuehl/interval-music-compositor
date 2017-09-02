@@ -88,8 +88,8 @@ public class PreferencesWindow {
     propertyStoragePreference.selectedProperty().setValue(userPreferences.loadSaveFieldState());
     propertyStoragePreference.selectedProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSaveFieldState(newValue));
 
-    startupUpdateSearchPreference.selectedProperty().setValue(userPreferences.loadSearchUpdateAtStartup());
-    startupUpdateSearchPreference.selectedProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSearchUpdateAtStartup(newValue));
+    // Since this property can be edited in multiple places we model it as property.
+    startupUpdateSearchPreference.selectedProperty().bindBidirectional(userPreferences.searchUpdateAtStartupProperty());
   }
 
   public void show() {

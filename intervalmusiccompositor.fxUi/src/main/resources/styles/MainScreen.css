@@ -5,6 +5,10 @@
   /*-fx-border-style: solid;*/
 }
 
+.hyperlink {
+  -fx-padding: 0;
+}
+
 .topLevelNode {
   -fx-font-family: 'Roboto';
   -fx-font-smoothing-type: gray;

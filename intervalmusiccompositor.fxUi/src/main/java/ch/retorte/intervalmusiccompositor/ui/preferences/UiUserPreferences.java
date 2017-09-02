@@ -8,6 +8,8 @@ import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
 import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleBooleanProperty;
 
 import java.io.File;
 import java.util.Arrays;
@@ -41,11 +43,26 @@ public class UiUserPreferences extends UserPreferences {
   private static final String OUTPUT_DIRECTORY_KEY = "outputDirectory";
 
 
+  //---- Fields
+
+  private SimpleBooleanProperty searchUpdateAtStartupProperty = new SimpleBooleanProperty();
+
+
+  //---- Constructor
+
   public UiUserPreferences(MessageProducer messageProducer) {
     super(messageProducer);
+
+    searchUpdateAtStartupProperty.setValue(loadSearchUpdateAtStartup());
+    searchUpdateAtStartupProperty.addListener((observable, oldValue, newValue) -> saveSearchUpdateAtStartup(newValue));
   }
 
+
   //---- Methods
+
+  public Property<Boolean> searchUpdateAtStartupProperty() {
+    return searchUpdateAtStartupProperty;
+  }
 
   public void saveMusicTrackList(List<? extends IAudioFile> musicTrackList) {
     saveString(MUSIC_TRACK_LIST_KEY, serializeFiles(musicTrackList.stream().map(IAudioFile::getSource).collect(toList())));

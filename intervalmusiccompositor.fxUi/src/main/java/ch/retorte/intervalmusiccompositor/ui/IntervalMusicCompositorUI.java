@@ -157,7 +157,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   private void checkForNewProgramVersion() {
     addDebugMessage("Starting version check.");
     new VersionChecker(updateAvailabilityChecker).startVersionCheckWith(
-        newVersion -> Platform.runLater(() -> new UpdateCheckDialog(updateAvailabilityChecker, this, bundle, coreBundle).foundNewVersion(newVersion)),
+        newVersion -> Platform.runLater(() -> new UpdateCheckDialog(updateAvailabilityChecker, this, bundle, coreBundle, userPreferences, applicationData).foundNewVersion(newVersion)),
         nothing -> {},
         exception -> messageProducer.send(new DebugMessage(this, "Not able to check version due to: " + exception.getMessage(), exception)));
   }
