@@ -154,7 +154,7 @@ class IntervalMusicCompositor {
   }
 
   private MainControl createMainControl() {
-    return new MainControl(createCompilationGenerator(), createAudioFileFactory(), createMusicPlayer(), createSoundEffectProvider(), userPreferences, messageBus, knownLocales);
+    return new MainControl(createCompilationGenerator(), createAudioFileFactory(), createMusicPlayer(), createSoundEffectProvider(), messageBus, knownLocales);
   }
 
   private CompilationGenerator createCompilationGenerator() {

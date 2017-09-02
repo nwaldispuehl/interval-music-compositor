@@ -29,7 +29,6 @@ import ch.retorte.intervalmusiccompositor.commons.ArrayHelper;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.platform.Platform;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
-import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationException;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationGenerator;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
@@ -74,7 +73,6 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   private AudioFileFactory audioFileFactory;
   private AudioFileMusicPlayer musicPlayer;
   private SoundEffectsProvider soundEffectsProvider;
-  private UserPreferences userPreferences;
   private MessageBus messageBus;
   private List<Locale> knownLocales;
   private Ui ui;
@@ -89,12 +87,11 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
 
   //---- Constructor
 
-  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, AudioFileMusicPlayer musicPlayer, SoundEffectsProvider soundEffectsProvider, UserPreferences userPreferences, MessageBus messageBus, List<Locale> knownLocales) {
+  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, AudioFileMusicPlayer musicPlayer, SoundEffectsProvider soundEffectsProvider, MessageBus messageBus, List<Locale> knownLocales) {
     this.compilationGenerator = compilationGenerator;
     this.audioFileFactory = audioFileFactory;
     this.musicPlayer = musicPlayer;
     this.soundEffectsProvider = soundEffectsProvider;
-    this.userPreferences = userPreferences;
     this.messageBus = messageBus;
     this.knownLocales = knownLocales;
 
@@ -127,7 +124,7 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
     } catch (Exception e) {
       addDebugMessage(e);
     }
-    return "";
+    return null;
   }
 
   void setUi(Ui ui) {

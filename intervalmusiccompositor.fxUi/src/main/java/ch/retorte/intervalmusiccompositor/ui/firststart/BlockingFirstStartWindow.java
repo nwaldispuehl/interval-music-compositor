@@ -3,6 +3,7 @@ package ch.retorte.intervalmusiccompositor.ui.firststart;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
+import com.google.common.base.Joiner;
 import com.sun.javafx.tk.Toolkit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,8 +14,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Window shown on the first start of the program; contains welcome message, recent updates and important preferences.
@@ -72,7 +75,7 @@ public class BlockingFirstStartWindow {
   }
 
   private void initializeControls() {
-    recentChanges.setText(applicationData.getChangeLog());
+    recentChanges.setText(removeFirstNLinesOf(3, applicationData.getChangeLog()));
     
     updateSettingsContainer.setVisible(hasUnrevisedPreferences());
     
@@ -84,6 +87,23 @@ public class BlockingFirstStartWindow {
       stage.close();
       releaseStage();
     });
+  }
+
+  /**
+   * The first lines of the change log are taken by the title. We thus cut them away.
+   */
+  private String removeFirstNLinesOf(int n, String changeLog) {
+    if (StringUtils.isBlank(changeLog)) {
+      return "?";
+    }
+    String[] lines = changeLog.split(System.lineSeparator());
+
+    if (3 < lines.length) {
+      return Joiner.on(System.lineSeparator()).join(Arrays.copyOfRange(lines, n, lines.length - 1));
+    }
+    else {
+      return changeLog;
+    }
   }
 
   private boolean hasUnrevisedPreferences() {
@@ -104,9 +124,7 @@ public class BlockingFirstStartWindow {
     stage.setMinWidth(stage.getWidth());
     stage.setMinHeight(stage.getHeight());
 
-    stage.setOnCloseRequest(event -> {
-      releaseStage();
-    });
+    stage.setOnCloseRequest(event -> releaseStage());
 
     blockStage();
   }
