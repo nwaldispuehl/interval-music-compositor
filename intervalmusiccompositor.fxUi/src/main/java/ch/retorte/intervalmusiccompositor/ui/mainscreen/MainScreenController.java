@@ -291,8 +291,7 @@ public class MainScreenController implements Initializable {
   }
 
   private void openUpdateCheckDialog() {
-    UpdateCheckDialog updateCheckDialog = new UpdateCheckDialog(updateAvailabilityChecker, ui, bundle, coreBundle);
-    updateCheckDialog.open();
+    new UpdateCheckDialog(updateAvailabilityChecker, ui, bundle, coreBundle).startVersionCheck();
   }
 
   private String getAboutWebsiteUrl() {

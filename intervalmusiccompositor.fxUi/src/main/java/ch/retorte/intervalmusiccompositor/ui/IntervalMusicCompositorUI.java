@@ -2,6 +2,7 @@ package ch.retorte.intervalmusiccompositor.ui;
 
 import ch.retorte.intervalmusiccompositor.Version;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.VersionChecker;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
@@ -16,6 +17,7 @@ import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
 import ch.retorte.intervalmusiccompositor.ui.firststart.BlockingFirstStartWindow;
 import ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController;
 import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
+import ch.retorte.intervalmusiccompositor.ui.updatecheck.UpdateCheckDialog;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -61,6 +63,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   private CompilationParameters compilationParameters = new CompilationParameters();
 
   private MessageFormatBundle bundle = getBundle(UI_RESOURCE_BUNDLE_NAME);
+  private MessageFormatBundle coreBundle = getBundle(CORE_RESOURCE_BUNDLE_NAME);
 
   private ch.retorte.intervalmusiccompositor.commons.platform.Platform platform = new PlatformFactory().getPlatform();
 
@@ -110,7 +113,10 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
         startBlockingFirstStartWindow();
       }
 
-      // TODO: Check for update if setting is set
+      if (shouldCheckForNewProgramVersion()) {
+        checkForNewProgramVersion();
+      }
+
       startMainProgramIn(primaryStage);
     }
     catch (Exception e) {
@@ -137,6 +143,23 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
 
   private void startBlockingFirstStartWindow() {
     new BlockingFirstStartWindow(bundle, userPreferences, applicationData).show();
+  }
+
+  private boolean shouldCheckForNewProgramVersion() {
+    boolean didReviseUpdateAtStartup = userPreferences.didReviseUpdateAtStartup();
+    boolean searchUpdateAtStartup = userPreferences.loadSearchUpdateAtStartup();
+    boolean shouldCheckForNewProgramVersion = didReviseUpdateAtStartup && searchUpdateAtStartup;
+
+    addDebugMessage("Should we check for a new version? User revised setting: " + didReviseUpdateAtStartup + ", search update at startup setting: " + searchUpdateAtStartup + ", verdict: " + shouldCheckForNewProgramVersion);
+    return shouldCheckForNewProgramVersion;
+  }
+
+  private void checkForNewProgramVersion() {
+    addDebugMessage("Starting version check.");
+    new VersionChecker(updateAvailabilityChecker).startVersionCheckWith(
+        newVersion -> Platform.runLater(() -> new UpdateCheckDialog(updateAvailabilityChecker, this, bundle, coreBundle).foundNewVersion(newVersion)),
+        nothing -> {},
+        exception -> messageProducer.send(new DebugMessage(this, "Not able to check version due to: " + exception.getMessage(), exception)));
   }
 
   private void startMainProgramIn(Stage primaryStage) throws Exception {
@@ -248,7 +271,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   }
 
   private void addDebugMessage(String message) {
-    messageProducer.send(new DebugMessage(getClass().getSimpleName(), message));
+    messageProducer.send(new DebugMessage(this, message));
   }
 
 
