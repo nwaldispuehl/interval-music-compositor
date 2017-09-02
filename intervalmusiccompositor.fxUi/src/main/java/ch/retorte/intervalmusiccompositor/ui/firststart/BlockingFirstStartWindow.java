@@ -76,9 +76,11 @@ public class BlockingFirstStartWindow {
 
   private void initializeControls() {
     recentChanges.setText(removeFirstNLinesOf(3, applicationData.getChangeLog()));
-    
+
+    /* For the node to be completely removed from the layout if hidden, we need to adapt its managed property accordingly. */
+    updateSettingsContainer.managedProperty().bind(updateSettingsContainer.visibleProperty());
     updateSettingsContainer.setVisible(hasUnrevisedPreferences());
-    
+
     checkForUpgradesOnStartupPreference.selectedProperty().setValue(userPreferences.loadSearchUpdateAtStartup());
     checkForUpgradesOnStartupPreference.selectedProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSearchUpdateAtStartup(newValue));
 
@@ -125,7 +127,6 @@ public class BlockingFirstStartWindow {
     stage.setMinHeight(stage.getHeight());
 
     stage.setOnCloseRequest(event -> releaseStage());
-
     blockStage();
   }
 
