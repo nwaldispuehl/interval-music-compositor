@@ -223,11 +223,12 @@ public class MainScreenController implements Initializable {
 
   private ChangeListener<Void> musicAndBreakPatternChangeListener;
 
+
   //---- Methods
 
   @Override
   public void initialize(URL location, ResourceBundle resourceBundle) {
-
+    // Method is needed to satisfy interface definition. We don't need to initialize anything here, though.
   }
 
   public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService, SoundEffectsProvider soundEffectsProvider, List<AudioFileDecoder> audioFileDecoders, List<AudioFileEncoder> audioFileEncoders, UiUserPreferences userPreferences) {
@@ -297,8 +298,6 @@ public class MainScreenController implements Initializable {
   private String getAboutWebsiteUrl() {
     return coreBundle.getString("web.website.about.url");
   }
-
-
 
   private void openDebugLog() {
     DebugLogWindow debugLogWindow = new DebugLogWindow(bundle, programControl, executorService);
@@ -430,8 +429,6 @@ public class MainScreenController implements Initializable {
     }
 
     registerPreferenceSaveListeners();
-
-    // TODO: Only load data if respective setting is set
   }
 
   private boolean settingsShouldBeLoaded() {
