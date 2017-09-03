@@ -36,7 +36,7 @@ Second, build the actual release distribution and release it on github.
   - A hint towards the instruction (http://nwaldispuehl.github.io/interval-music-compositor/en/instructions) and download (http://nwaldispuehl.github.io/interval-music-compositor/en/download) pages.
   - The uploaded distribution archives for the three operating systems Linux, Mac, and Windows.
   - The source code is added automatically by github.
-  
+
 ## Download pages update
 
 Then, update references pointing to the download.
@@ -62,3 +62,13 @@ Then, update references pointing to the download.
 We have a product entry in the download page of the german it and software website heise online (https://www.heise.de/): https://www.heise.de/download/product/interval-music-compositor-78824
 
 It just links the github pages download page, but the version (and occasionally the screenshot) has to be updated. 
+
+## Update mechanism update
+
+Finally update the version in the resource consulted by the program when checking for new versions. It is located at:
+
+https://interval-music-compositor.retorte.ch/current_version.txt
+
+The legacy version is located at:
+
+http://interval_music_compositor.retorte.ch/current_version.txt
