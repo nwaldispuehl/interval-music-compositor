@@ -10,10 +10,12 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
@@ -45,6 +47,8 @@ public class UiUserPreferences extends UserPreferences {
 
   //---- Fields
 
+  private SimpleObjectProperty<Locale> localeProperty = new SimpleObjectProperty<>();
+  private SimpleBooleanProperty saveFieldStateProperty = new SimpleBooleanProperty();
   private SimpleBooleanProperty searchUpdateAtStartupProperty = new SimpleBooleanProperty();
 
 
@@ -53,12 +57,26 @@ public class UiUserPreferences extends UserPreferences {
   public UiUserPreferences(MessageProducer messageProducer) {
     super(messageProducer);
 
+    localeProperty.setValue(loadLocale());
+    localeProperty.addListener((observable, oldValue, newValue) -> saveLocale(newValue));
+
+    saveFieldStateProperty.setValue(loadSaveFieldState());
+    saveFieldStateProperty.addListener((observable, oldValue, newValue) -> saveSaveFieldState(newValue));
+
     searchUpdateAtStartupProperty.setValue(loadSearchUpdateAtStartup());
     searchUpdateAtStartupProperty.addListener((observable, oldValue, newValue) -> saveSearchUpdateAtStartup(newValue));
   }
 
 
   //---- Methods
+
+  public Property<Locale> localeProperty() {
+    return localeProperty;
+  }
+
+  public Property<Boolean> saveFieldStateProperty() {
+    return saveFieldStateProperty;
+  }
 
   public Property<Boolean> searchUpdateAtStartupProperty() {
     return searchUpdateAtStartupProperty;
@@ -179,6 +197,7 @@ public class UiUserPreferences extends UserPreferences {
   public String loadOutputDirectory(String defaultOutputDirectory) {
     return loadString(OUTPUT_DIRECTORY_KEY, defaultOutputDirectory);
   }
+
 
   //---- Helper methods
 

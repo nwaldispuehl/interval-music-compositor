@@ -82,13 +82,8 @@ public class PreferencesWindow {
 
   private void initializePreferenceFields() {
     languagePreference.setItems(observableArrayList(applicationData.getKnownLocales()));
-    languagePreference.setValue(applicationData.getLocale());
-    languagePreference.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveLocale(newValue));
-
-    propertyStoragePreference.selectedProperty().setValue(userPreferences.loadSaveFieldState());
-    propertyStoragePreference.selectedProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSaveFieldState(newValue));
-
-    // Since this property can be edited in multiple places we model it as property.
+    languagePreference.valueProperty().bindBidirectional(userPreferences.localeProperty());
+    propertyStoragePreference.selectedProperty().bindBidirectional(userPreferences.saveFieldStateProperty());
     startupUpdateSearchPreference.selectedProperty().bindBidirectional(userPreferences.searchUpdateAtStartupProperty());
   }
 
@@ -102,7 +97,5 @@ public class PreferencesWindow {
     stage.setMinWidth(stage.getWidth());
     stage.setMinHeight(stage.getHeight());
   }
-
-
 
 }
