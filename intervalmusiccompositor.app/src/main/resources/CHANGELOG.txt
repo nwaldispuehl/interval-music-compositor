@@ -8,6 +8,7 @@ IMP         Improved directions in error dialog.
 ADD  #27    Introduced persistent user settings.
 FIX         Fixed resizing issue in debug log.
 ADD         Introduced welcome dialog to be shown after upgrades.
+ADD  #26    Introduce new version check on application startup.
 
 
 2017-07-30  2.7.1

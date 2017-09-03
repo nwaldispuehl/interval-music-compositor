@@ -6,12 +6,12 @@ This is a little guide how to perform a new **Interval Music Compositor** releas
 
 First, prepare the source code for the upcoming release.
 
-- Check that all changes have been written to the change log file in `intervalmusiccompositor.build/documentation/retorte_IntervalMusicCompositor_changelog.txt`
+- Check that all changes have been written to the change log file in `intervalmusiccompositor.app/src/main/resources/CHANGELOG.txt`
 - Decide about the new version according to the semantic versioning scheme (http://semver.org/), e.g. `1.2.3`.
 - Upgrade the version by changing it in the following files:
   - For the build: `intervalmusiccompositor.app/gradle.properties`
   - For inside the application: `intervalmusiccompositor.app/src/main/resources/imc.properties`
-  - For the documentation: `intervalmusiccompositor.build/documentation/retorte_IntervalMusicCompositor_changelog.txt`
+  - For the documentation: `intervalmusiccompositor.app/src/main/resources/CHANGELOG.txt`
 - Commit the change to the `master` branch and tag the version with `v` prefix:
 
       $ git add .
