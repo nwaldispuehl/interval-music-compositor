@@ -54,10 +54,15 @@ public class UiUserPreferences extends UserPreferences {
 
   //---- Constructor
 
-  public UiUserPreferences(MessageProducer messageProducer) {
+  public UiUserPreferences(Locale defaultLocale, MessageProducer messageProducer) {
     super(messageProducer);
 
-    localeProperty.setValue(loadLocale());
+    Locale currentLocale = loadLocale();
+    if (currentLocale == null) {
+      currentLocale = defaultLocale;
+    }
+
+    localeProperty.setValue(currentLocale);
     localeProperty.addListener((observable, oldValue, newValue) -> saveLocale(newValue));
 
     saveFieldStateProperty.setValue(loadSaveFieldState());

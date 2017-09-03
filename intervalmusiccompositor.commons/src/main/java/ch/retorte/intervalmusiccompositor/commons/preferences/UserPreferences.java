@@ -71,6 +71,10 @@ public class UserPreferences {
   }
 
   public Locale loadLocale() {
+    if (!hasLocale()) {
+      return null;
+    }
+
     String loadedLocaleString = loadString(LOCALE_KEY, null);
     return Locale.forLanguageTag(loadedLocaleString);
   }

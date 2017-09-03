@@ -18,6 +18,4 @@ public interface ApplicationData {
 
   List<Locale> getKnownLocales();
 
-  Locale getLocale();
-
 }

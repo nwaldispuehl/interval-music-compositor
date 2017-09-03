@@ -49,14 +49,12 @@ import ch.retorte.intervalmusiccompositor.util.UpdateChecker;
 
 /**
  * The {@link IntervalMusicCompositor} is the main program file of the software.
- * 
- * @author nw
  */
 class IntervalMusicCompositor {
 
   //---- Static
 
-  private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
+  static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
 
   //---- Fields
@@ -70,6 +68,9 @@ class IntervalMusicCompositor {
   private SoundHelper soundHelper = createSoundHelper();
 
   private UiUserPreferences userPreferences = createUserPreferences();
+
+
+  //---- Methods
 
   private List<Locale> createKnownLocales() {
     return newArrayList(DEFAULT_LOCALE, Locale.GERMAN);
@@ -86,8 +87,9 @@ class IntervalMusicCompositor {
   }
 
   private UiUserPreferences createUserPreferences() {
-    return new UiUserPreferences(messageBus);
+    return new UiUserPreferences(DEFAULT_LOCALE, messageBus);
   }
+
 
   /**
    * Starts the software.
@@ -150,6 +152,10 @@ class IntervalMusicCompositor {
   }
 
   private Optional<Locale> getKnownLocaleFor(Locale currentLocale) {
+    if (currentLocale == null) {
+      return Optional.empty();
+    }
+
     return knownLocales.stream().filter(l -> l.getLanguage().equals(currentLocale.getLanguage())).findFirst();
   }
 

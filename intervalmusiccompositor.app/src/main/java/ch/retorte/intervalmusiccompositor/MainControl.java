@@ -580,11 +580,6 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   }
 
   @Override
-  public Locale getLocale() {
-    return Locale.getDefault();
-  }
-
-  @Override
   public Collection<SoundEffect> getSoundEffects() {
     return soundEffectsProvider.getSoundEffects();
   }
