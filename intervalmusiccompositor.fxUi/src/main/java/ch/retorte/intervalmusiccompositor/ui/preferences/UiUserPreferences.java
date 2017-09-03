@@ -54,12 +54,12 @@ public class UiUserPreferences extends UserPreferences {
 
   //---- Constructor
 
-  public UiUserPreferences(Locale defaultLocale, MessageProducer messageProducer) {
+  public UiUserPreferences(MessageProducer messageProducer) {
     super(messageProducer);
 
     Locale currentLocale = loadLocale();
     if (currentLocale == null) {
-      currentLocale = defaultLocale;
+      currentLocale = Locale.forLanguageTag(Locale.getDefault().getLanguage());
     }
 
     localeProperty.setValue(currentLocale);

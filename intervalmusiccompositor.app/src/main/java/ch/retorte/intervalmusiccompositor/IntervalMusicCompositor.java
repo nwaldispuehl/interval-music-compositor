@@ -54,7 +54,7 @@ class IntervalMusicCompositor {
 
   //---- Static
 
-  static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
+  private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
 
   //---- Fields
@@ -87,7 +87,7 @@ class IntervalMusicCompositor {
   }
 
   private UiUserPreferences createUserPreferences() {
-    return new UiUserPreferences(DEFAULT_LOCALE, messageBus);
+    return new UiUserPreferences(messageBus);
   }
 
 
