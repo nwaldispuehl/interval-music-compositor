@@ -1,7 +1,7 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
-2017-09-xx  2.8.0 (not released)
+2017-09-03  2.8.0
 --------------------------------------------------------------------------------
 ADD  #27    Introduced persistent user settings.
 ADD  #26    Introduced new version check on application startup.
