@@ -75,7 +75,7 @@ public class CreateCacheJobManager {
 
   private void addDebugMessagesWith(String text) {
     messageProducer.send(new DebugMessage(this, text));
-    messageProducer.send(new DebugMessage(this, "Current jobs: " + threadCount));
+    messageProducer.send(new DebugMessage(this, "Current jobs: " + threadCount + " (maximum: " + threadLimit + ")"));
   }
 
 }

@@ -7,13 +7,14 @@ import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT;
 import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT_REV;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.Integer.valueOf;
+import static java.util.stream.Collectors.joining;
 import static javafx.collections.FXCollections.observableArrayList;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import ch.retorte.intervalmusiccompositor.audio.AudioStreamUtil;
@@ -47,12 +48,16 @@ import javafx.collections.ObservableList;
 
 /**
  * Main controller of the software; collects data and reacts to ui events. Implements a lot of control interfaces.
- * 
- * @author nw
  */
 class MainControl implements MusicListControl, MusicCompilationControl, ProgramControl, ApplicationData, SoundEffectsProvider {
 
+  //---- Static
+
   private static final int ONE_DAY_IN_MILLISECONDS = 86400000;
+
+  private static final String CHANGE_LOG_FILE = "/CHANGELOG.txt";
+
+  //---- Fields
 
   private ListSortMode musicListSortMode = null;
   private int maxListEntries;
@@ -67,20 +72,26 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   private AudioFileMusicPlayer musicPlayer;
   private SoundEffectsProvider soundEffectsProvider;
   private MessageBus messageBus;
+  private List<Locale> knownLocales;
   private Ui ui;
 
   private Platform platform = new PlatformFactory().getPlatform();
   private String programName;
   private Version programVersion;
+  private String changeLog;
   private String temporaryFileSuffix;
   private int maximumImportWorkerThreads;
 
-  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, AudioFileMusicPlayer musicPlayer, SoundEffectsProvider soundEffectsProvider, MessageBus messageBus) {
+
+  //---- Constructor
+
+  MainControl(CompilationGenerator compilationGenerator, AudioFileFactory audioFileFactory, AudioFileMusicPlayer musicPlayer, SoundEffectsProvider soundEffectsProvider, MessageBus messageBus, List<Locale> knownLocales) {
     this.compilationGenerator = compilationGenerator;
     this.audioFileFactory = audioFileFactory;
     this.musicPlayer = musicPlayer;
     this.soundEffectsProvider = soundEffectsProvider;
     this.messageBus = messageBus;
+    this.knownLocales = knownLocales;
 
     this.compilationGenerator.setMusicListControl(this);
     this.compilationGenerator.setApplicationData(this);
@@ -89,15 +100,29 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
     createCreateCacheJobManager();
   }
 
+
+  //---- Methods
+
   private void setConfigurationProperties() {
     MessageFormatBundle bundle = getBundle("imc");
     programName = bundle.getString("imc.name");
     programVersion = new Version(bundle.getString("imc.version"));
 
+    changeLog = loadChangeLog();
+
     MessageFormatBundle coreBundle = getBundle("core_imc");
     temporaryFileSuffix = coreBundle.getString("imc.temporaryFile.suffix");
     maxListEntries = valueOf(coreBundle.getString("imc.musicList.max_entries"));
     maximumImportWorkerThreads = valueOf(coreBundle.getString("imc.import.maximumWorkerThreads"));
+  }
+
+  private String loadChangeLog() {
+    try (InputStream changeLogInputStream = getClass().getResourceAsStream(CHANGE_LOG_FILE)) {
+      return new BufferedReader(new InputStreamReader(changeLogInputStream)).lines().collect(joining(System.lineSeparator()));
+    } catch (Exception e) {
+      addDebugMessage(e);
+    }
+    return null;
   }
 
   void setUi(Ui ui) {
@@ -274,7 +299,6 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
         addDebugMessage(e.getMessage());
       }
     }
-    musicList.clear();
 
     for (IAudioFile audioFile : breakList) {
       try {
@@ -284,14 +308,17 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
         addDebugMessage(e.getMessage());
       }
     }
-    breakList.clear();
   }
 
+  /**
+   * Removes all files with the temporary file suffix (usually '.imc_wav') found in the systems temporary directory which are older than one day. We use this waiting period of a day as a poor mans way to prevent multiple instances of the software conflicting with each other.
+   */
   void tidyOldTemporaryFiles() {
     File tmpFile = null;
     try {
       tmpFile = File.createTempFile("imc", ".imc");
       File directory = new File(tmpFile.getParent());
+      addDebugMessage("Looking for old temporary files to delete in: " + directory);
 
       File[] fileList = directory.listFiles((dir, name) -> name.toLowerCase().endsWith(temporaryFileSuffix));
 
@@ -538,6 +565,16 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   @Override
   public Version getProgramVersion() {
     return programVersion;
+  }
+
+  @Override
+  public String getChangeLog() {
+    return changeLog;
+  }
+
+  @Override
+  public List<Locale> getKnownLocales() {
+    return knownLocales;
   }
 
   @Override

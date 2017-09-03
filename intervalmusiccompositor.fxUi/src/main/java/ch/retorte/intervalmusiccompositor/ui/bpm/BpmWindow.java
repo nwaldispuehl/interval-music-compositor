@@ -5,7 +5,6 @@ import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
-import ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -18,7 +17,6 @@ import javafx.scene.control.Spinner;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 
 /**
  * Allows to pre-hear a track and determine its BPM (beats per minute) via tapping.
@@ -100,6 +98,9 @@ public class BpmWindow {
     stage.setScene(new Scene(parent));
     stage.setResizable(true);
     stage.show();
+
+    stage.setMinWidth(stage.getWidth());
+    stage.setMinHeight(stage.getHeight());
   }
 
   private void initialize() {

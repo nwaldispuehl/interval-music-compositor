@@ -4,6 +4,8 @@ import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.list.BlendMode;
+import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
 import ch.retorte.intervalmusiccompositor.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
@@ -22,12 +24,16 @@ import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileLis
 import ch.retorte.intervalmusiccompositor.ui.audiofilelist.MusicFileChooser;
 import ch.retorte.intervalmusiccompositor.ui.debuglog.DebugLogWindow;
 import ch.retorte.intervalmusiccompositor.ui.graphics.BarChart;
+import ch.retorte.intervalmusiccompositor.ui.preferences.PreferencesWindow;
+import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import ch.retorte.intervalmusiccompositor.ui.soundeffects.SoundEffectsPane;
 import ch.retorte.intervalmusiccompositor.ui.updatecheck.UpdateCheckDialog;
 import ch.retorte.intervalmusiccompositor.ui.utils.AudioFileEncoderConverter;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -64,6 +70,9 @@ public class MainScreenController implements Initializable {
 
   @FXML
   private MenuItem menuLoadBreakFile;
+
+  @FXML
+  private MenuItem menuPreferences;
 
   @FXML
   private MenuItem menuQuit;
@@ -181,6 +190,9 @@ public class MainScreenController implements Initializable {
   private Button chooseOutputDirectory;
 
   @FXML
+  private Button clearOutputDirectory;
+
+  @FXML
   private Label outputDirectory;
 
   // Actions
@@ -190,9 +202,10 @@ public class MainScreenController implements Initializable {
 
   // Fields
 
+  private SoundEffectsPane soundEffectsPane;
+
   private MessageFormatBundle coreBundle = getBundle(CORE_RESOURCE_BUNDLE_NAME);
   private MessageFormatBundle bundle = getBundle(UI_RESOURCE_BUNDLE_NAME);
-
 
   private Ui ui;
   private ProgramControl programControl;
@@ -204,18 +217,21 @@ public class MainScreenController implements Initializable {
   private UpdateAvailabilityChecker updateAvailabilityChecker;
   private ScheduledExecutorService executorService;
   private SoundEffectsProvider soundEffectsProvider;
-  private List<AudioFileDecoder> audioFileDecoders;
+  private UiUserPreferences userPreferences;
+  private ObservableList<AudioFileDecoder> audioFileDecoders;
+  private ObservableList<AudioFileEncoder> audioFileEncoders;
 
   private ChangeListener<Void> musicAndBreakPatternChangeListener;
+
 
   //---- Methods
 
   @Override
   public void initialize(URL location, ResourceBundle resourceBundle) {
-
+    // Method is needed to satisfy interface definition. We don't need to initialize anything here, though.
   }
 
-  public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService, SoundEffectsProvider soundEffectsProvider) {
+  public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService, SoundEffectsProvider soundEffectsProvider, List<AudioFileDecoder> audioFileDecoders, List<AudioFileEncoder> audioFileEncoders, UiUserPreferences userPreferences) {
     this.ui = ui;
     this.programControl = programControl;
     this.applicationData = applicationData;
@@ -226,6 +242,9 @@ public class MainScreenController implements Initializable {
     this.updateAvailabilityChecker = updateAvailabilityChecker;
     this.executorService = executorService;
     this.soundEffectsProvider = soundEffectsProvider;
+    this.audioFileDecoders = FXCollections.observableArrayList(audioFileDecoders);
+    this.audioFileEncoders = FXCollections.observableArrayList(audioFileEncoders);
+    this.userPreferences = userPreferences;
 
     initializeMenu();
     initializeMusicTrackList();
@@ -238,12 +257,15 @@ public class MainScreenController implements Initializable {
     initializeOutputDirectory();
     initializeControlButtons();
 
+    initializePreferenceStorage();
+
     addMessageSubscribers(messageSubscriber);
   }
 
   private void initializeMenu() {
     menuLoadMusicFile.setOnAction(event -> openFileChooserFor(musicTrackListView));
     menuLoadBreakFile.setOnAction(event -> openFileChooserFor(breakTrackListView));
+    menuPreferences.setOnAction(event -> openPreferencesWindow());
     menuQuit.setOnAction(event -> ui.quit());
 
     menuVersion.setText(getVersionText());
@@ -270,15 +292,12 @@ public class MainScreenController implements Initializable {
   }
 
   private void openUpdateCheckDialog() {
-    UpdateCheckDialog updateCheckDialog = new UpdateCheckDialog(updateAvailabilityChecker, ui, bundle, coreBundle);
-    updateCheckDialog.open();
+    new UpdateCheckDialog(updateAvailabilityChecker, ui, bundle, coreBundle, userPreferences, applicationData).startVersionCheck();
   }
 
   private String getAboutWebsiteUrl() {
     return coreBundle.getString("web.website.about.url");
   }
-
-
 
   private void openDebugLog() {
     DebugLogWindow debugLogWindow = new DebugLogWindow(bundle, programControl, executorService);
@@ -286,20 +305,20 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializeMusicTrackList() {
-    musicTrackListView.initializeWith(musicListControl.getMusicList(), bundle, messageProducer, musicListControl);
+    musicTrackListView.initializeWith(musicListControl.getMusicList(), bundle, messageProducer, musicListControl, e -> Platform.runLater(this::updateTrackCount));
     musicTrackListView.addListChangeListener(newValue -> updateUiDataWidgets());
     addMusicTrackButton.setOnAction(event -> openFileChooserFor(musicTrackListView));
   }
 
   private void initializeTrackEnumeration() {
     sortTrackList.setOnAction(event -> {
-      messageProducer.send(new DebugMessage(MainScreenController.this, "Pressed 'sort' button."));
+      addDebugMessage("Pressed 'sort' button.");
       musicListControl.sortMusicList();
       updateUiDataWidgets();
     });
 
     shuffleTrackList.setOnAction(event -> {
-      messageProducer.send(new DebugMessage(MainScreenController.this, "Pressed 'shuffle' button."));
+      addDebugMessage("Pressed 'shuffle' button.");
       musicListControl.shuffleMusicList();
       updateUiDataWidgets();
     });
@@ -312,21 +331,12 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializeBreakTrackList() {
-    breakTrackListView.initializeWith(musicListControl.getBreakList(), bundle, messageProducer, musicListControl);
+    breakTrackListView.initializeWith(musicListControl.getBreakList(), bundle, messageProducer, musicListControl, e -> Platform.runLater(this::updateTrackCount));
     addBreakTrackButton.setOnAction(event -> openFileChooserFor(breakTrackListView));
   }
 
   private void initializeDurationControls() {
-    periodTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-      if (isSimpleTab(newValue)) {
-        compilationParameters.setMusicPattern(soundPeriod.getValue());
-        compilationParameters.setBreakPattern(breakPeriod.getValue());
-      }
-      else {
-        compilationParameters.setMusicPattern(soundPattern.getText());
-        compilationParameters.setBreakPattern(breakPattern.getText());
-      }
-    });
+    periodTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updatePeriodSelectionWith(newValue));
 
     soundPeriod.valueProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setMusicPattern(newValue));
     breakPeriod.valueProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setBreakPattern(newValue));
@@ -343,6 +353,7 @@ public class MainScreenController implements Initializable {
 
     soundPeriod.valueProperty().addListener(debugHandlerWith(soundPeriod.getId()));
     soundPeriod.valueProperty().addListener(updateUiHandler());
+
 
     breakPeriod.valueProperty().addListener(debugHandlerWith(breakPeriod.getId()));
     breakPeriod.valueProperty().addListener(updateUiHandler());
@@ -368,7 +379,7 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializeSoundEffects() {
-    SoundEffectsPane soundEffectsPane = new SoundEffectsPane(soundEffectsProvider, compilationParameters, musicListControl, messageProducer, (obs, oldVal, newVal) -> updateEnvelopeImage());
+    soundEffectsPane = new SoundEffectsPane(soundEffectsProvider, compilationParameters, musicListControl, messageProducer, (obs, oldVal, newVal) -> updateEnvelopeImage(), userPreferences);
     musicAndBreakPatternChangeListener = soundEffectsPane.getMusicAndBreakPatternChangeListener();
     soundEffectsContainer.getChildren().add(soundEffectsPane);
   }
@@ -376,16 +387,148 @@ public class MainScreenController implements Initializable {
   private void initializeOutputFileFormat() {
     outputFileFormat.valueProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setEncoderIdentifier(newValue.getIdentificator()));
     outputFileFormat.valueProperty().addListener(debugHandlerWith(outputFileFormat.getId()));
+
+    outputFileFormat.setConverter(new AudioFileEncoderConverter(audioFileEncoders));
+    outputFileFormat.setItems(audioFileEncoders);
+    outputFileFormat.getSelectionModel().selectFirst();
   }
 
   private void initializeOutputDirectory() {
     outputDirectory.textProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setOutputPath(newValue));
     outputDirectory.textProperty().addListener(debugHandlerWith(outputDirectory.getId()));
     chooseOutputDirectory.setOnAction(event -> openDirectoryChooser());
+    clearOutputDirectory.setOnAction(event -> resetOutputDirectory());
+  }
+
+  private void resetOutputDirectory() {
+    outputDirectory.textProperty().setValue(bundle.getString("ui.form.outfile_label"));
+    compilationParameters.resetOutputPath();
+    userPreferences.saveOutputDirectory(null);
   }
 
   private void initializeControlButtons() {
     process.setOnAction(event -> musicCompilationControl.startCompilation(compilationParameters));
+  }
+
+  private void initializePreferenceStorage() {
+
+    try {
+      if (settingsShouldBeLoaded()) {
+        addDebugMessage("Loading stored compilation parameters from the last session.");
+        loadStoredPreferenceValues();
+        /* Sound effect start times can not be larger than the length of music and break times. We thus need to first load those values. */
+        soundEffectsPane.loadStoredPreferenceValues();
+      }
+      else {
+        addDebugMessage("Skipping loading stored compilation parameters from the last session.");
+      }
+    }
+    catch (Exception e) {
+      // An error when loading preferences can easily happen due to the change of field identifiers etc. We just ignore it.
+      addDebugMessage("Failed to load preference values: " + e.getLocalizedMessage());
+    }
+
+    registerPreferenceSaveListeners();
+  }
+
+  private boolean settingsShouldBeLoaded() {
+    return userPreferences.loadSaveFieldState();
+  }
+
+  private void loadStoredPreferenceValues() {
+    List<File> musicTrackInputList = userPreferences.loadMusicTrackList();
+    for (File f : musicTrackInputList) {
+      musicTrackListView.addTrack(f);
+    }
+
+    List<File> breakTrackInputList = userPreferences.loadBreakTrackList();
+    for (File f : breakTrackInputList) {
+      breakTrackListView.addTrack(f);
+    }
+
+    enumerationToggleGroup.selectToggle(getEnumerationToggleFor(userPreferences.loadEnumerationMode(EnumerationMode.SINGLE_EXTRACT)));
+
+    soundPeriod.getValueFactory().setValue(userPreferences.loadSoundPeriod(0));
+    breakPeriod.getValueFactory().setValue(userPreferences.loadBreakPeriod(0));
+    soundPattern.textProperty().setValue(userPreferences.loadSoundPattern(""));
+    breakPattern.textProperty().setValue(userPreferences.loadBreakPattern(""));
+
+    Tab selectedTab = getPeriodTabFor(userPreferences.loadPeriodTab("simpleTab"));
+    periodTabPane.getSelectionModel().select(selectedTab);
+    updatePeriodSelectionWith(selectedTab);
+
+    blendModeToggleGroup.selectToggle(getBlendModeToggleFor(userPreferences.loadBlendMode(BlendMode.SEPARATE)));
+    iterations.getValueFactory().setValue(userPreferences.loadIterations(0));
+    blendDuration.valueProperty().setValue(userPreferences.loadBlendDuration(1));
+    outputFileFormat.valueProperty().setValue(getOutputFileFormatFor(userPreferences.loadOutputFileFormat("mp3")));
+    if (userPreferences.hasOutputDirectory()) {
+      /* Since we misuse the label as information store and display for the default value ('<Desktop>') we should not change it if there is no data. */
+      outputDirectory.textProperty().setValue(userPreferences.loadOutputDirectory(null));
+    }
+  }
+
+  private void registerPreferenceSaveListeners() {
+    musicListControl.getMusicList().addListener((ListChangeListener<? super IAudioFile>) c -> userPreferences.saveMusicTrackList(c.getList()));
+    musicListControl.getBreakList().addListener((ListChangeListener<? super IAudioFile>) c -> userPreferences.saveBreakTrackList(c.getList()));
+
+    enumerationToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveEnumerationMode(EnumerationMode.valueOf((String) newValue.getUserData())));
+
+    soundPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPeriod(newValue));
+    breakPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPeriod(newValue));
+    soundPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPattern(newValue));
+    breakPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPattern(newValue));
+    periodTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> userPreferences.savePeriodTab(newValue.getId()));
+
+    iterations.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveIterations(newValue));
+
+    blendModeToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBlendMode(BlendMode.valueOf((String) newValue.getUserData())));
+
+    blendDuration.valueProperty().addListener((observable, oldValue, newValue) -> {
+      double duration = newValue.doubleValue();
+      if ((int) duration == duration) {
+        /* The slider fires not only for the configured integer positions, but also in between (e.g. for 1.023323). We skip such data. */
+        userPreferences.saveBlendDuration((int) duration);
+      }
+    });
+
+    outputFileFormat.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveOutputFileFormat(newValue.getIdentificator()));
+    outputDirectory.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveOutputDirectory(newValue));
+  }
+
+  private Tab getPeriodTabFor(String tabId) {
+    for (Tab t : periodTabPane.getTabs()) {
+      if (t.getId().equals(tabId)) {
+        return t;
+      }
+    }
+    return null;
+  }
+
+  private Toggle getEnumerationToggleFor(EnumerationMode enumerationMode) {
+    for (Toggle t : enumerationToggleGroup.getToggles()) {
+      if (t.getUserData().equals(enumerationMode.name())) {
+        return t;
+      }
+    }
+    return null;
+  }
+
+  private Toggle getBlendModeToggleFor(BlendMode blendMode) {
+    for (Toggle t : blendModeToggleGroup.getToggles()) {
+      if (t.getUserData().equals(blendMode.name())) {
+        return t;
+      }
+    }
+    return null;
+  }
+
+  private AudioFileEncoder getOutputFileFormatFor(String outputFileFormatIdentifier) {
+    for (AudioFileEncoder e : audioFileEncoders) {
+      if (e.getIdentificator().equals(outputFileFormatIdentifier)) {
+        return e;
+      }
+    }
+    return null;
   }
 
   private void openDirectoryChooser() {
@@ -398,14 +541,19 @@ public class MainScreenController implements Initializable {
     }
   }
 
-  private boolean isSimpleTab(Tab tab) {
-    return tab.equals(simpleTab);
+  private void updatePeriodSelectionWith(Tab tab) {
+    if (isSimpleTab(tab)) {
+      compilationParameters.setMusicPattern(soundPeriod.getValue());
+      compilationParameters.setBreakPattern(breakPeriod.getValue());
+    }
+    else {
+      compilationParameters.setMusicPattern(soundPattern.getText());
+      compilationParameters.setBreakPattern(breakPattern.getText());
+    }
   }
 
-  public void updateOutputFileFormatWith(ObservableList<AudioFileEncoder> audioFileEncoders) {
-    outputFileFormat.setConverter(new AudioFileEncoderConverter(audioFileEncoders));
-    outputFileFormat.setItems(audioFileEncoders);
-    outputFileFormat.getSelectionModel().select(0);
+  private boolean isSimpleTab(Tab tab) {
+    return tab.equals(simpleTab);
   }
 
   private void prepareSpinnerForListening(Spinner<Integer> spinner) {
@@ -479,18 +627,15 @@ public class MainScreenController implements Initializable {
   private void openFileChooserFor(DraggableAudioFileListView listView) {
     MusicFileChooser musicFileChooser = new MusicFileChooser(messageProducer, bundle, audioFileDecoders);
     List<File> chosenFile = musicFileChooser.chooseFileIn(getWindow());
-    chosenFile.forEach(file -> {
-      IAudioFile newTrack = listView.addTrack(file);
-      newTrack.addChangeListener(newValue -> Platform.runLater(this::updateTrackCount));
-    });
+    chosenFile.forEach(listView::addTrack);
   }
 
   private Window getWindow() {
     return container.getScene().getWindow();
   }
 
-  public void updateAvailableDecodersWith(List<AudioFileDecoder> audioFileDecoders) {
-    this.audioFileDecoders = audioFileDecoders;
+  private void openPreferencesWindow() {
+    new PreferencesWindow(bundle, userPreferences, applicationData).show();
   }
 
   private void addMessageSubscribers(MessageSubscriber messageSubscriber) {
@@ -570,6 +715,9 @@ public class MainScreenController implements Initializable {
     trackCount.setText(labelText);
   }
 
+  private void addDebugMessage(String message) {
+    messageProducer.send(new DebugMessage(MainScreenController.this, message));
+  }
 
   //---- Inner classes
 

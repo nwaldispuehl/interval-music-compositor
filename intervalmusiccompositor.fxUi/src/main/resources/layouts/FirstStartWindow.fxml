@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.CheckBox?>
+
+<?import javafx.scene.control.ScrollPane?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" minWidth="600" prefWidth="800" styleClass="topLevelNode" stylesheets="@/styles/fonts.css, @/styles/MainScreen.css">
+<padding>
+    <Insets top="10" bottom="10" right="10" left="10"/>
+</padding>
+
+    <Label text="%ui.firstStartWindow.welcome.title" styleClass="dialogParagraphTitle" />
+    <Label text="%ui.firstStartWindow.welcome.text" styleClass="narrow"  wrapText="true"  />
+
+    <Label text="%ui.firstStartWindow.recentChanges.title" styleClass="dialogParagraphTitle" />
+    <Label text="%ui.firstStartWindow.recentChanges.text" styleClass="narrow"  wrapText="true" />
+    <ScrollPane maxHeight="200" prefHeight="200" hbarPolicy="NEVER" styleClass="recentChangesBack">
+        <Label fx:id="recentChanges" styleClass="recentChanges"/>
+    </ScrollPane>
+
+    <VBox fx:id="updateSettingsContainer" spacing="10">
+        <Label text="%ui.firstStartWindow.reviseSettings.title" styleClass="dialogParagraphTitle" />
+        <Label text="%ui.firstStartWindow.reviseSettings.text" styleClass="narrow"  wrapText="true"  />
+        <Label text="%ui.firstStartWindow.updateSetting.title" styleClass="dialogParagraphSubTitle">
+            <padding>
+                <Insets top="15"/>
+            </padding>
+        </Label>
+
+        <HBox>
+            <CheckBox fx:id="checkForUpgradesOnStartupPreference">
+                <padding>
+                    <Insets right="15"/>
+                </padding>
+            </CheckBox>
+            <Label text="%ui.firstStartWindow.updateSetting.text" styleClass="narrow" wrapText="true"  />
+        </HBox>
+    </VBox>
+
+    <BorderPane maxWidth="Infinity">
+        <padding>
+            <Insets top="10"/>
+        </padding>
+        <right>
+            <Button fx:id="dismissButton" text="%ui.firstStartWindow.dismissButton"/>
+        </right>
+    </BorderPane>
+
+</VBox>
+
+

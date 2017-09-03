@@ -98,6 +98,7 @@ class SoundEffectEntry extends HBox {
     this.soundEffects.setItems(FXCollections.observableArrayList(soundEffects));
     this.soundEffects.setValue(soundEffectOccurrence.getSoundEffect());
     this.soundEffects.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
+    this.soundEffects.valueProperty().addListener((observable, oldValue, newValue) -> parent.updatePreferences());
   }
 
   private void initializePlayButton() {
@@ -113,6 +114,7 @@ class SoundEffectEntry extends HBox {
     soundEffectStartTime.getValueFactory().setValue((int) (soundEffectOccurrence.getTimeMillis() / 1000));
     soundEffectStartTime.valueProperty().addListener(debugHandlerWith(soundEffectStartTime.getId()));
     soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
+    soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> parent.updatePreferences());
   }
 
   private void initializeRemoveButton() {

@@ -41,6 +41,7 @@ public class CompilationParameters {
   private ListSortMode listSortMode = DEFAULT_LIST_SORT_MODE;
   private String outputPath;
   private String encoderIdentifier;
+  private String defaultOutputPath;
 
 
   //---- Methods
@@ -148,6 +149,14 @@ public class CompilationParameters {
 
   public void setOutputPath(String outputPath) {
     this.outputPath = outputPath;
+  }
+
+  public void setDefaultOutputPath(String defaultOutputPath) {
+    this.defaultOutputPath = defaultOutputPath;
+  }
+
+  public void resetOutputPath() {
+    outputPath = defaultOutputPath;
   }
 
   String getEncoderIdentifier() {

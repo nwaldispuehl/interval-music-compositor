@@ -2,51 +2,66 @@ package ch.retorte.intervalmusiccompositor.ui.updatecheck;
 
 import ch.retorte.intervalmusiccompositor.Version;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.VersionChecker;
+import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.Ui;
 import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
+import ch.retorte.intervalmusiccompositor.ui.preferences.PreferencesWindow;
+import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 
 /**
- * Dialog which immediately starts a version check.
+ * Dialog which can start a version check and show version check results.
  */
 public class UpdateCheckDialog {
 
   //---- Fields
 
-  private UpdateAvailabilityChecker updateAvailabilityChecker;
   private Ui ui;
   private MessageFormatBundle bundle;
   private MessageFormatBundle coreBundle;
+
+  private VersionChecker versionChecker;
+  private final UiUserPreferences userPreferences;
+  private final ApplicationData applicationData;
+
   private Alert alert;
 
 
   //---- Constructor
 
-  public UpdateCheckDialog(UpdateAvailabilityChecker updateAvailabilityChecker, Ui ui, MessageFormatBundle bundle, MessageFormatBundle coreBundle) {
-    this.updateAvailabilityChecker = updateAvailabilityChecker;
+  public UpdateCheckDialog(UpdateAvailabilityChecker updateAvailabilityChecker, Ui ui, MessageFormatBundle bundle, MessageFormatBundle coreBundle, UiUserPreferences userPreferences, ApplicationData applicationData) {
     this.ui = ui;
     this.bundle = bundle;
     this.coreBundle = coreBundle;
+    this.userPreferences = userPreferences;
+    this.applicationData = applicationData;
+
+    versionChecker = new VersionChecker(updateAvailabilityChecker);
+
     createAlert();
+    openAlert();
   }
 
 
   //---- Methods
 
-  public void open() {
-    alert.show();
-    startVersionCheck();
+  public void startVersionCheck() {
+    versionChecker.startVersionCheckWith(
+        this::foundNewVersion,
+        nothing -> updateAlertTextWith(bundle.getString("ui.about.update.message.latest")),
+        exception -> updateAlertTextWith(bundle.getString("ui.about.update.message.problem")));
   }
 
   private void createAlert() {
@@ -58,11 +73,28 @@ public class UpdateCheckDialog {
     alert.setHeight(600);
     alert.setResizable(true);
 
+    alert.getDialogPane().getStylesheets().add(getClass().getResource("/styles/MainScreen.css").toExternalForm());
+
     updateAlertTextWith(bundle.getString("ui.about.update.message.pending"));
   }
 
   private void updateAlertTextWith(String text) {
     Platform.runLater(() -> alert.setContentText(text));
+  }
+
+  private void openAlert() {
+    alert.show();
+  }
+
+  public void foundNewVersion(Version newVersion) {
+    String latestVersionText = bundle.getString("ui.about.update.message.new", newVersion);
+
+    VBox vBox = new VBox(20);
+    vBox.getChildren().add(new Text(latestVersionText));
+    vBox.getChildren().add(downloadHyperlink());
+    vBox.getChildren().add(checkForUpdateOnStartupCheckbox());
+
+    updateAlertPaneWith(vBox);
   }
 
   private void updateAlertPaneWith(Node node) {
@@ -74,50 +106,34 @@ public class UpdateCheckDialog {
     });
   }
 
-  private void startVersionCheck() {
-    // We are creating a thread executor, but shutting it down right away so it gets collected once the task finishes.
-    ExecutorService executorService = Executors.newSingleThreadExecutor();
-    executorService.submit(new VersionCheckTask());
-    executorService.shutdown();
-  }
-
   private Hyperlink downloadHyperlink() {
     String downloadText = bundle.getString("ui.about.update.message.download");
     String downloadUrl = coreBundle.getString("web.download.url");
 
-    Hyperlink hyperlink = new Hyperlink(downloadText);
-    hyperlink.setOnAction((actionEvent) -> ui.openInDesktopBrowser(downloadUrl));
+    Hyperlink downloadLink = new Hyperlink(downloadText);
+    downloadLink.setOnAction((actionEvent) -> ui.openInDesktopBrowser(downloadUrl));
 
-    return hyperlink;
+    return downloadLink;
   }
 
-  //---- Inner classes
+  private Node checkForUpdateOnStartupCheckbox() {
+    HBox result = new HBox(15);
+    result.paddingProperty().setValue(new Insets(10, 0, 0, 0));
 
-  private class VersionCheckTask extends Task<String> {
+    CheckBox checkBox = new CheckBox();
+    checkBox.selectedProperty().bindBidirectional(userPreferences.searchUpdateAtStartupProperty());
+    result.getChildren().add(checkBox);
 
-    @Override
-    protected String call() throws Exception {
-      try {
-        boolean updateAvailable = updateAvailabilityChecker.isUpdateAvailable();
-        if (updateAvailable) {
-          Version latestVersion = updateAvailabilityChecker.getLatestVersion();
-          String latestVersionText = bundle.getString("ui.about.update.message.new", latestVersion);
+    Label label = new Label(bundle.getString("ui.about.update.message.checkOnStartup"));
+    label.getStyleClass().add("legend");
+    result.getChildren().add(label);
 
-          VBox vBox = new VBox(20);
-          vBox.getChildren().add(new Text(latestVersionText));
-          vBox.getChildren().add(downloadHyperlink());
+    Hyperlink preferencesLink = new Hyperlink(bundle.getString("ui.menu.file.preferences"));
+    preferencesLink.setOnAction((actionEvent) -> new PreferencesWindow(bundle, userPreferences, applicationData).show());
+    preferencesLink.getStyleClass().add("legend");
+    result.getChildren().add(preferencesLink);
 
-          updateAlertPaneWith(vBox);
-
-        } else {
-          updateAlertTextWith(bundle.getString("ui.about.update.message.latest"));
-        }
-      }
-      catch (Exception e) {
-        updateAlertTextWith(bundle.getString("ui.about.update.message.problem"));
-      }
-      return null;
-    }
+    return result;
   }
 
 }

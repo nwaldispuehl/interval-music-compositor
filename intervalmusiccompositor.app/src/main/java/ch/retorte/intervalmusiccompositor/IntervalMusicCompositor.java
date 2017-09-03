@@ -7,6 +7,7 @@ import java.io.ByteArrayInputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.logging.LogManager;
 
 import at.ofai.music.beatroot.BeatRoot;
@@ -42,23 +43,38 @@ import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI;
+import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
 import ch.retorte.intervalmusiccompositor.util.UpdateChecker;
 
-import com.google.common.collect.Lists;
-
 /**
  * The {@link IntervalMusicCompositor} is the main program file of the software.
- * 
- * @author nw
  */
 class IntervalMusicCompositor {
+
+  //---- Static
+
+  static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
+
+
+  //---- Fields
+
+  private List<Locale> knownLocales = createKnownLocales();
 
   private Platform platform = new PlatformFactory().getPlatform();
   private MessageFormatBundle bundle = getBundle("imc");
 
   private MessageBus messageBus = createMessageBus();
   private SoundHelper soundHelper = createSoundHelper();
+
+  private UiUserPreferences userPreferences = createUserPreferences();
+
+
+  //---- Methods
+
+  private List<Locale> createKnownLocales() {
+    return newArrayList(DEFAULT_LOCALE, Locale.GERMAN);
+  }
 
   private MessageBus createMessageBus() {
     MessageBus result = new MessageBus(true);
@@ -69,6 +85,11 @@ class IntervalMusicCompositor {
   private SoundHelper createSoundHelper() {
     return new SoundHelper(messageBus);
   }
+
+  private UiUserPreferences createUserPreferences() {
+    return new UiUserPreferences(DEFAULT_LOCALE, messageBus);
+  }
+
 
   /**
    * Starts the software.
@@ -112,25 +133,34 @@ class IntervalMusicCompositor {
   }
 
   private void setLocale() {
-    Locale defaultLocale = Locale.getDefault();
+    Locale currentLocale = Locale.getDefault();
 
-    if (!isKnownLanguage(defaultLocale)) {
-      defaultLocale = Locale.ENGLISH;
+    if (userPreferences.hasLocale()) {
+      currentLocale = userPreferences.loadLocale();
     }
 
-    Locale.setDefault(defaultLocale);
+    Optional<Locale> knownLocale = getKnownLocaleFor(currentLocale);
+
+    if (knownLocale.isPresent()) {
+      Locale.setDefault(knownLocale.get());
+    }
+    else {
+      Locale.setDefault(DEFAULT_LOCALE);
+    }
+
     addDebugMessage("Selected locale: " + Locale.getDefault());
   }
 
-  private boolean isKnownLanguage(Locale locale) {
-    List<String> knownLanguages = Lists.newArrayList();
-    knownLanguages.add(Locale.ENGLISH.getLanguage());
-    knownLanguages.add(Locale.GERMAN.getLanguage());
-    return knownLanguages.contains(locale.getLanguage());
+  private Optional<Locale> getKnownLocaleFor(Locale currentLocale) {
+    if (currentLocale == null) {
+      return Optional.empty();
+    }
+
+    return knownLocales.stream().filter(l -> l.getLanguage().equals(currentLocale.getLanguage())).findFirst();
   }
 
   private MainControl createMainControl() {
-    return new MainControl(createCompilationGenerator(), createAudioFileFactory(), createMusicPlayer(), createSoundEffectProvider(), messageBus);
+    return new MainControl(createCompilationGenerator(), createAudioFileFactory(), createMusicPlayer(), createSoundEffectProvider(), messageBus, knownLocales);
   }
 
   private CompilationGenerator createCompilationGenerator() {
@@ -191,7 +221,7 @@ class IntervalMusicCompositor {
   }
 
   private Ui createUserInterface(MainControl control) {
-    Ui userInterface = new IntervalMusicCompositorUI(control, control, control, control, createUpdateAvailabilityChecker(control), control, messageBus, messageBus);
+    Ui userInterface = new IntervalMusicCompositorUI(control, control, control, control, createUpdateAvailabilityChecker(control), control, userPreferences, messageBus, messageBus);
     control.setUi(userInterface);
     return userInterface;
   }

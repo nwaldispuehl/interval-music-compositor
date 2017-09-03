@@ -1,5 +1,6 @@
 package ch.retorte.intervalmusiccompositor.ui.audiofilelist;
 
+import ch.retorte.intervalmusiccompositor.ChangeListener;
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
@@ -16,8 +17,8 @@ import java.util.List;
 public class DraggableAudioFileBreakListView extends DraggableAudioFileListView {
 
   @Override
-  public void initializeWith(ObservableList<IAudioFile> items, MessageFormatBundle bundle, MessageProducer messageProducer, MusicListControl musicListControl) {
-    super.initializeWith(items, bundle, messageProducer, musicListControl);
+  public void initializeWith(ObservableList<IAudioFile> items, MessageFormatBundle bundle, MessageProducer messageProducer, MusicListControl musicListControl, ChangeListener<IAudioFile> audioFileStateChangeListener) {
+    super.initializeWith(items, bundle, messageProducer, musicListControl, audioFileStateChangeListener);
   }
 
   @Override
@@ -27,7 +28,7 @@ public class DraggableAudioFileBreakListView extends DraggableAudioFileListView 
     }
 
     IAudioFile newTrack = getMusicListControl().appendBreakTrack(file);
-    addChangeListenerTo(newTrack);
+    addChangeListenersTo(newTrack);
     notifyListChangeListeners();
     return newTrack;
   }

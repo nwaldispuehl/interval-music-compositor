@@ -1,114 +1,137 @@
 package ch.retorte.intervalmusiccompositor;
 
 /**
- * @author nw
+ * Models a semantic version.
  */
 public class Version implements Comparable<Version> {
+
+  //---- Fields
 
   private Integer major = 0;
   private Integer minor = 0;
   private Integer revision = 0;
   private Integer build = 0;
-	
-	public Version(String version) {
-		
-		String[] parts = version.trim().split("\\.");
-		
-		try {
-			major = Integer.valueOf(parts[0].trim());
-		} 
-		catch (NumberFormatException e) {
-			// ignore, value is already set as zero
-		}
-		
-		if(2 <= parts.length) {
-			try {
-				minor = Integer.valueOf(parts[1].trim());
-			} 
-			catch (NumberFormatException e) {
-				// ignore, value is already set as zero
-			}
-		} 
-		
-		if(3 <= parts.length) {
-			try {
-				revision = Integer.valueOf(parts[2].trim());
-			} 
-			catch (NumberFormatException e) {
-				// ignore, value is already set as zero
-			}
-		}
-		
-		if(4 <= parts.length) {
-			try {
-				build = Integer.valueOf(parts[3].trim());
-			} 
-			catch (NumberFormatException e) {
-				// ignore, value is already set as zero
-			}
-		}
-	}
-	
-	public Version(int major) {
-		this.major = major;
-	}
-	
-	public Version(int major, int minor) {
-		this.major = major;
-		this.minor = minor;
-	}
-	
-	public Version(int major, int minor, int revision) {
-		this.major = major;
-		this.minor = minor;
-		this.revision = revision;
-	}
-	
-	public Version(int major, int minor, int revision, int build) {
-		this.major = major;
-		this.minor = minor;
-		this.revision = revision;
-		this.build = build;
-	}
 
-	@Override
-	public int compareTo(Version o) {
-		if(major != o.getMajor()) {
+
+  //---- Constructors
+
+  public Version(String version) {
+    String[] parts = version.trim().split("\\.");
+
+    try {
+      major = Integer.valueOf(parts[0].trim());
+    } catch (NumberFormatException e) {
+      // ignore, value is already set as zero
+    }
+
+    if (2 <= parts.length) {
+      try {
+        minor = Integer.valueOf(parts[1].trim());
+      } catch (NumberFormatException e) {
+        // ignore, value is already set as zero
+      }
+    }
+
+    if (3 <= parts.length) {
+      try {
+        revision = Integer.valueOf(parts[2].trim());
+      } catch (NumberFormatException e) {
+        // ignore, value is already set as zero
+      }
+    }
+
+    if (4 <= parts.length) {
+      try {
+        build = Integer.valueOf(parts[3].trim());
+      } catch (NumberFormatException e) {
+        // ignore, value is already set as zero
+      }
+    }
+  }
+
+  public Version(int major) {
+    this.major = major;
+  }
+
+  public Version(int major, int minor) {
+    this.major = major;
+    this.minor = minor;
+  }
+
+  public Version(int major, int minor, int revision) {
+    this.major = major;
+    this.minor = minor;
+    this.revision = revision;
+  }
+
+  public Version(int major, int minor, int revision, int build) {
+    this.major = major;
+    this.minor = minor;
+    this.revision = revision;
+    this.build = build;
+  }
+
+
+  //---- Methods
+
+  @Override
+  public int compareTo(Version o) {
+    if (major != o.getMajor()) {
       return major.compareTo(o.getMajor());
-			
-		} else if(minor != o.getMinor()) {
+
+    } else if (minor != o.getMinor()) {
       return minor.compareTo(o.getMinor());
-			
-		} else if(revision != o.getRevision()) {
+
+    } else if (revision != o.getRevision()) {
       return revision.compareTo(o.getRevision());
-			
-		} else if(build != o.getBuild()) {
+
+    } else if (build != o.getBuild()) {
       return build.compareTo(o.getBuild());
-			
-		} else {
-			return 0;
-		}
-	}
-	
-	@Override
-	public String toString() {
-		return major + "." + minor + "." + revision;
-	}
-	
-	public int getMajor() {
-		return major;
-	}
-	
-	public int getMinor() {
-		return minor;
-	}
-	
-	public int getRevision() {
-		return revision;
-	}
-	
-	public int getBuild() {
-		return build;
-	}
-	
+
+    } else {
+      return 0;
+    }
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Version) {
+      return this == obj || this.compareTo((Version) obj) == 0;
+    }
+    else {
+      return super.equals(obj);
+    }
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 17;
+    hash = hash * 31 + major;
+    hash = hash * 31 + minor;
+    hash = hash * 31 + revision;
+    hash = hash * 31 + build;
+    return hash;
+  }
+
+  @Override
+  public String toString() {
+    return major + "." + minor + "." + revision;
+  }
+
+  public int getMajor() {
+    return major;
+  }
+
+  public int getMinor() {
+    return minor;
+  }
+
+  public int getRevision() {
+    return revision;
+  }
+
+  public int getBuild() {
+    return build;
+  }
+
 }

@@ -34,12 +34,17 @@ public class DraggableAudioFileListView extends ListView<IAudioFile> {
 
   private Collection<ChangeListener<ObservableList<IAudioFile>>> listChangeListeners = newArrayList();
 
-  public void initializeWith(ObservableList<IAudioFile> items, MessageFormatBundle messageFormatBundle, MessageProducer messageProducer, MusicListControl musicListControl) {
+  private ChangeListener<IAudioFile> audioFileStateChangeListener;
+
+  public void initializeWith(ObservableList<IAudioFile> items, MessageFormatBundle messageFormatBundle, MessageProducer messageProducer, MusicListControl musicListControl, ChangeListener<IAudioFile> audioFileStateChangeListener) {
+
     setItems(items);
 
     this.messageFormatBundle = messageFormatBundle;
     this.messageProducer = messageProducer;
     this.musicListControl = musicListControl;
+
+    this.audioFileStateChangeListener = audioFileStateChangeListener;
 
     initializeSelection();
     initializeDragNDrop();
@@ -114,7 +119,7 @@ public class DraggableAudioFileListView extends ListView<IAudioFile> {
         EventTarget target = event.getTarget();
         if (target instanceof DraggableAudioFileListView) {
           DraggableAudioFileListView listView = (DraggableAudioFileListView) target;
-          removeTracks(toList(listView.getSelectionModel().getSelectedIndices()));
+          removeTracks(newArrayList(listView.getSelectionModel().getSelectedIndices()));
         }
       }
     });
@@ -124,15 +129,9 @@ public class DraggableAudioFileListView extends ListView<IAudioFile> {
     return keyCode == KeyCode.DELETE || keyCode == KeyCode.BACK_SPACE;
   }
 
-  private <M> List<M> toList(ObservableList<M> list) {
-    List<M> result = newArrayList();
-    list.forEach(result::add);
-    return result;
-  }
-
   public IAudioFile addTrack(File file) {
     IAudioFile newTrack = musicListControl.appendMusicTrack(file);
-    addChangeListenerTo(newTrack);
+    addChangeListenersTo(newTrack);
     notifyListChangeListeners();
     return newTrack;
   }
@@ -155,9 +154,13 @@ public class DraggableAudioFileListView extends ListView<IAudioFile> {
     notifyListChangeListeners();
   }
 
-  void addChangeListenerTo(IAudioFile newTrack) {
+  void addChangeListenersTo(IAudioFile newTrack) {
     if (newTrack != null) {
       newTrack.addChangeListener(newStatus -> refresh());
+
+      if (audioFileStateChangeListener != null) {
+        newTrack.addChangeListener(audioFileStateChangeListener);
+      }
     }
   }
 

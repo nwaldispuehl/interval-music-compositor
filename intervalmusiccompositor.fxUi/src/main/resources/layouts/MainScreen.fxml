@@ -10,12 +10,14 @@
 <?import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileListView?>
 <VBox stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" maxHeight="Infinity" maxWidth="Infinity" minWidth="1024" minHeight="840"
       xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+      styleClass="topLevelNode"
       fx:controller="ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController">
     <AnchorPane>
         <MenuBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Menu mnemonicParsing="false" text="%ui.menu.file">
                 <MenuItem mnemonicParsing="false" fx:id="menuLoadMusicFile" text="%ui.menu.file.load_music_file"/>
                 <MenuItem mnemonicParsing="false" fx:id="menuLoadBreakFile" text="%ui.menu.file.load_break_file"/>
+                <MenuItem mnemonicParsing="false" fx:id="menuPreferences" text="%ui.menu.file.preferences"/>
                 <MenuItem mnemonicParsing="false" fx:id="menuQuit" text="%ui.menu.file.quit"/>
             </Menu>
             <Menu mnemonicParsing="false" text="%ui.menu.help">
@@ -192,7 +194,7 @@
                                     </VBox>
                                 </AnchorPane>
                             </Tab>
-                            <Tab text="%ui.form.advanced_pane.title">
+                            <Tab fx:id="complexTab" text="%ui.form.advanced_pane.title">
                                 <AnchorPane>
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
@@ -279,6 +281,16 @@
                     <Separator prefWidth="200.0"/>
                     <HBox spacing="10.0" alignment="BASELINE_LEFT">
                         <Button fx:id="chooseOutputDirectory" mnemonicParsing="false" text="%ui.form.outfile_button_text"/>
+                        <Button fx:id="clearOutputDirectory">
+                            <tooltip>
+                                <Tooltip text="%ui.form.outfile.clear.tooltip"/>
+                            </tooltip>
+                            <graphic>
+                                <ImageView>
+                                    <Image url="@/images/clear_icon_small.png"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
                         <Label fx:id="outputDirectory" text="%ui.form.outfile_label"/>
                     </HBox>
                     <Separator prefWidth="200.0"/>
