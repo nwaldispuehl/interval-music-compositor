@@ -7,12 +7,10 @@ import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT;
 import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT_REV;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.Integer.valueOf;
+import static java.util.stream.Collectors.joining;
 import static javafx.collections.FXCollections.observableArrayList;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -119,8 +117,8 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   }
 
   private String loadChangeLog() {
-    try {
-      return new String(Files.readAllBytes(Paths.get(getClass().getResource(CHANGE_LOG_FILE).toURI())));
+    try (InputStream changeLogInputStream = getClass().getResourceAsStream(CHANGE_LOG_FILE)) {
+      return new BufferedReader(new InputStreamReader(changeLogInputStream)).lines().collect(joining(System.lineSeparator()));
     } catch (Exception e) {
       addDebugMessage(e);
     }
