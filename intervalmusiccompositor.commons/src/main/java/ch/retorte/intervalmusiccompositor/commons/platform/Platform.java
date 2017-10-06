@@ -1,6 +1,9 @@
 package ch.retorte.intervalmusiccompositor.commons.platform;
 
 
+import java.io.File;
+import java.lang.management.ManagementFactory;
+
 /**
  * Central access point for information about the underlying platform.
  */
@@ -55,16 +58,40 @@ public abstract class Platform {
     return System.getProperty("sun.arch.data.model");
   }
 
-  private String getMaximalHeapSize() {
-    return Runtime.getRuntime().maxMemory() / (1024 * 1024) + " MB";
+  private String getCurrentHeapSize() {
+    return asMegaBytes(Runtime.getRuntime().totalMemory());
   }
 
-  public String getSystemIdentificationString() {
+  private String getFreeMemory() {
+    return asMegaBytes(Runtime.getRuntime().freeMemory());
+  }
+
+  private String getMaximalHeapSize() {
+    return asMegaBytes(Runtime.getRuntime().maxMemory());
+  }
+
+  private String getSystemMemory() {
+    return asMegaBytes(((com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean()).getTotalPhysicalMemorySize());
+  }
+
+  private String getTotalHddSize() {
+    return asMegaBytes(new File(".").getTotalSpace());
+  }
+
+  private String asMegaBytes(long bytes) {
+    return bytes / (1024 * 1024) + " MB";
+  }
+
+  public String getSystemDiagnosisString() {
     return "os: " + getOsName() + ", " //
         + "os arch: " + getOsArchitecture() + ", " //
         + "jvm: " + getJvmName() + ", " //
         + "jvm arch: " + getJvmArchitecture() + ", " //
-        + "max heap size: " + getMaximalHeapSize();
+        + "current heap: " + getCurrentHeapSize() + ", " //
+        + "max heap: " + getMaximalHeapSize() + ", " //
+        + "free mem: " + getFreeMemory() + ", " //
+        + "total mem: " + getSystemMemory() + ", " //
+        + "free hdd: " + getTotalHddSize();
   }
 
 

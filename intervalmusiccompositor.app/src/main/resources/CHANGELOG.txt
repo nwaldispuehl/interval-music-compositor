@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2017-xx-xx  2.8.1
+--------------------------------------------------------------------------------
+IMP         Added more information to system diagnosis string.
+
+
 2017-09-03  2.8.0
 --------------------------------------------------------------------------------
 ADD  #27    Introduced persistent user settings.

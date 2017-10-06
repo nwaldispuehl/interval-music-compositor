@@ -247,18 +247,16 @@ public class CompilationGenerator implements Runnable {
     catch (IOException e) {
       String message = bundle.getString("ui.error.sound.introduction");
       message += e.getMessage();
-
       throw new CompilationException(message);
     }
     catch (OutOfMemoryError e) {
       String message = bundle.getString("ui.error.memory.introduction");
       message += e.getMessage();
-
       throw new CompilationException(message);
-    } catch (UnsupportedAudioFileException e) {
+    }
+    catch (UnsupportedAudioFileException e) {
       String message = bundle.getString("ui.error.soundeffectformat.introduction");
       message += e.getMessage();
-
       throw new CompilationException(message);
     }
   }

@@ -119,7 +119,7 @@ class IntervalMusicCompositor {
       addDebugMessage("Debug mode");
     }
     addDebugMessage(bundle.getString("imc.name") + ", V " + bundle.getString("imc.version"));
-    addDebugMessage("System properties: " + platform.getSystemIdentificationString());
+    addDebugMessage("System properties: " + platform.getSystemDiagnosisString());
   }
 
   private void setLoggingProperties() {
