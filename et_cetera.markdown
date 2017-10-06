@@ -30,7 +30,7 @@ Du benutzt es auf eigenes Risiko! :)
 
 Die Software sammelt grundsätzlich keine Daten. Beim Gebrauch des UpdateCheckers ('Über' -> 'Auf Update prüfen!') wird eine Anfrage an diesen Server gestartet. Dabei wird nebst der IP-Adresse auch eine kleine Auswahl von Systemeigenschaften übertragen. Diese umfassen die verwendete Version der Software, das Betriebssystem, dessen Architektur sowie die Sprache. Diese werden lediglich zur Verbesserung des Angebots eingesetzt und fallen in dieser Form an:
 
-    Interval Music Compositor [Update Checker] (v: 1.2.3, os: Windows 7, os arch: x86, jvm: 1.8.0_60, jvm arch: 32, max heap size: 1154 MB, locale: en)
+    Interval Music Compositor [Update Checker] (v: 1.2.3, os: Windows 7, os arch: x86, jvm: 1.8.0_60, jvm arch: 32, current heap: 481 MB, max heap: 1823 MB, free mem: 458 MB, total mem: 8096 MB, free hdd: 140793 MB, locale: en)
 
 ### Website
 
