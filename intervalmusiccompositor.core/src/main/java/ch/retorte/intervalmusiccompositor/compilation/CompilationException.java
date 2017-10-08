@@ -1,14 +1,14 @@
 package ch.retorte.intervalmusiccompositor.compilation;
 
 /**
- * @author nw
+ * Indicates that a compilation was not properly created.
  */
 public class CompilationException extends IllegalStateException {
 
   private static final long serialVersionUID = 1L;
 
-  CompilationException(String message) {
-    super(message);
+  CompilationException(String message, Throwable cause) {
+    super(message, cause);
   }
 
 }

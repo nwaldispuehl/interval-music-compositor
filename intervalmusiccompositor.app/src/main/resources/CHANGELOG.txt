@@ -4,6 +4,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 2017-xx-xx  2.8.1
 --------------------------------------------------------------------------------
 IMP         Added more information to system diagnosis string.
+IMP         Improved error tracking during compilation generation.
 
 
 2017-09-03  2.8.0

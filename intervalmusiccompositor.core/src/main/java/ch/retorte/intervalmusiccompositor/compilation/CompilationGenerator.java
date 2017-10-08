@@ -1,5 +1,6 @@
 package ch.retorte.intervalmusiccompositor.compilation;
 
+import static ch.retorte.intervalmusiccompositor.commons.ExceptionMessageExtractor.messageOrNameOf;
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.list.BlendMode.SEPARATE;
 import static com.google.common.collect.Lists.newArrayList;
@@ -227,10 +228,9 @@ public class CompilationGenerator implements Runnable {
       outputStreamWriter.write(playlistReport);
     }
     catch (IOException e) {
-      String message = bundle.getString("ui.error.introduction");
-      message += e.getMessage();
-
-      throw new CompilationException(message);
+      String message = bundle.getString("ui.error.general.introduction");
+      message += messageOrNameOf(e);
+      throw new CompilationException(message, e);
     }
   }
 
@@ -246,18 +246,23 @@ public class CompilationGenerator implements Runnable {
     }
     catch (IOException e) {
       String message = bundle.getString("ui.error.sound.introduction");
-      message += e.getMessage();
-      throw new CompilationException(message);
+      message += messageOrNameOf(e);
+      throw new CompilationException(message, e);
     }
     catch (OutOfMemoryError e) {
       String message = bundle.getString("ui.error.memory.introduction");
-      message += e.getMessage();
-      throw new CompilationException(message);
+      message += messageOrNameOf(e);
+      throw new CompilationException(message, e);
     }
     catch (UnsupportedAudioFileException e) {
       String message = bundle.getString("ui.error.soundeffectformat.introduction");
-      message += e.getMessage();
-      throw new CompilationException(message);
+      message += messageOrNameOf(e);
+      throw new CompilationException(message, e);
+    }
+    catch (Exception e) {
+      String message = bundle.getString("ui.error.general.introduction");
+      message += messageOrNameOf(e);
+      throw new CompilationException(message, e);
     }
   }
 
@@ -278,9 +283,9 @@ public class CompilationGenerator implements Runnable {
       });
 
     } catch (Exception e) {
-      String message = bundle.getString("ui.error.introduction");
-      message += e.getMessage();
-      throw new CompilationException(message);
+      String message = bundle.getString("ui.error.general.introduction");
+      message += messageOrNameOf(e);
+      throw new CompilationException(message, e);
     }
   }
 
@@ -298,9 +303,9 @@ public class CompilationGenerator implements Runnable {
       envelopeImage.generateEnvelope(readCompilationDataFileIntoByteArray(), compilationParameters.getMusicPattern(), compilationParameters.getBreakPattern(), compilationParameters.getIterations());
     }
     catch (IOException e) {
-      String message = bundle.getString("ui.error.introduction");
-      message += e.getMessage();
-      throw new CompilationException(message);
+      String message = bundle.getString("ui.error.general.introduction");
+      message += messageOrNameOf(e);
+      throw new CompilationException(message, e);
     }
     envelope = envelopeImage.getBufferedImage();
   }

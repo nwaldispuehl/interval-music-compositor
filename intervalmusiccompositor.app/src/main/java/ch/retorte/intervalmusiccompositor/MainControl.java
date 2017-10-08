@@ -163,7 +163,7 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
     try {
       compilationGenerator.createCompilationWith(compilationParameters);
     }
-    catch (CompilationException e) {
+    catch (Exception e) {
       messageBus.send(new ErrorMessage(e.getMessage()));
       addDebugMessage(e);
       ui.setActive();

@@ -46,7 +46,7 @@ public abstract class Platform {
     return Runtime.getRuntime().availableProcessors();
   }
 
-  private String getOsArchitecture() {
+  protected String getOsArchitecture() {
     return System.getProperty("os.arch");
   }
 
