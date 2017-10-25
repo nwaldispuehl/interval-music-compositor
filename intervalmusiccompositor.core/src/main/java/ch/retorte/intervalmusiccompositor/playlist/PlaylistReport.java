@@ -45,20 +45,36 @@ public class PlaylistReport {
     int i = 0;
     for (PlaylistItem playlistItem : playlist) {
 
+      PlaylistItemFragment musicFragment = playlistItem.getMusicFragment();
+
       int currentPositionsSeconds = totalPositionSeconds;
-      if (playlist.getBlendMode() == CROSS) {
-        currentPositionsSeconds += (int) (playlist.getBlendTime() / 2);
+      if (playlist.isCrossFadingMode()) {
+        currentPositionsSeconds += playlist.getHalfBlendTimeS();
       }
-      appendMusicLine(result, playlist, i, currentPositionsSeconds, playlistItem);
+      appendMusicLine(result, playlist, i, currentPositionsSeconds, musicFragment);
+      totalPositionSeconds += musicFragment.getExtractDurationInSeconds();
 
-      totalPositionSeconds += playlistItem.getExtractDurationInSeconds();
-      if (playlist.getBlendMode() == CROSS && !playlistItem.isSilentBreak()) {
-        totalPositionSeconds -= playlist.getBlendTime();
+      if (playlist.isCrossFadingMode()) {
+        totalPositionSeconds -= playlist.getBlendTimeS();
       }
 
-      if (!(playlistItem instanceof BreakPlaylistItem)) {
-        i++;
+      if (playlistItem.hasBreakFragment()) {
+        PlaylistItemFragment breakFragment = playlistItem.getBreakFragment();
+
+        currentPositionsSeconds = totalPositionSeconds;
+        if (playlist.isCrossFadingMode()) {
+          currentPositionsSeconds += playlist.getHalfBlendTimeS();
+        }
+
+        appendMusicLine(result, playlist, i, currentPositionsSeconds, breakFragment);
+        totalPositionSeconds += breakFragment.getExtractDurationInSeconds();
+
+        if (playlist.isCrossFadingMode()) {
+          totalPositionSeconds -= playlist.getBlendTimeS();
+        }
       }
+
+      i++;
     }
 
     appendSoundEffectsList(result, playlist);
@@ -103,14 +119,14 @@ public class PlaylistReport {
     return dateFormat.format(new Date());
   }
 
-  private void appendMusicLine(StringBuilder builder, Playlist playlist, int listPosition, int totalDurationSoFar, PlaylistItem playlistItem) {
+  private void appendMusicLine(StringBuilder builder, Playlist playlist, int listPosition, int totalDurationSoFar, PlaylistItemFragment playlistItemFragment) {
 
     String durationString = bundle.getString("imc.playlist.duration");
     String extractString = bundle.getString("imc.playlist.extract");
     String bpmNotReliableString = bundle.getString("imc.playlist.bpm_not_reliable");
 
-    if (playlistItem.isSilentBreak()) {
-      if (0 < playlistItem.getExtractDurationInMilliseconds()) {
+    if (playlistItemFragment.isSilentBreak()) {
+      if (0 < playlistItemFragment.getExtractDurationInMilliseconds()) {
         builder.append("    ");
         builder.append(formatTime.getStrictFormattedTime(totalDurationSoFar));
         builder.append(ITEM_DELIMITER);
@@ -119,9 +135,9 @@ public class PlaylistReport {
         builder.append(durationString);
         builder.append(" ");
 
-        double extractDurationInSeconds = playlistItem.getExtractDurationInSeconds();
+        double extractDurationInSeconds = playlistItemFragment.getExtractDurationInSeconds();
         if (playlist.getBlendMode() == CROSS) {
-          extractDurationInSeconds -= playlist.getBlendTime();
+          extractDurationInSeconds -= playlist.getBlendTimeS();
         }
         builder.append(formatTime.getStrictFormattedTime(extractDurationInSeconds));
 
@@ -131,9 +147,9 @@ public class PlaylistReport {
       }
     }
     else {
-      IAudioFile audioFile = playlistItem.getAudioFile();
+      IAudioFile audioFile = playlistItemFragment.getAudioFile();
 
-      if (playlistItem instanceof BreakPlaylistItem) {
+      if (playlistItemFragment instanceof BreakPlaylistItemFragment) {
         builder.append("    ");
       }
       else {
@@ -153,9 +169,9 @@ public class PlaylistReport {
       builder.append(durationString);
       builder.append(" ");
 
-      double extractDurationInSeconds = playlistItem.getExtractDurationInSeconds();
+      double extractDurationInSeconds = playlistItemFragment.getExtractDurationInSeconds();
       if (playlist.getBlendMode() == CROSS) {
-        extractDurationInSeconds -= playlist.getBlendTime();
+        extractDurationInSeconds -= playlist.getBlendTimeS();
       }
 
       builder.append(formatTime.getStrictFormattedTime(extractDurationInSeconds));
@@ -174,9 +190,9 @@ public class PlaylistReport {
 
       builder.append(extractString);
       builder.append(" ");
-      builder.append(formatTime.getStrictFormattedTime(playlistItem.getExtractStartInSeconds()));
+      builder.append(formatTime.getStrictFormattedTime(playlistItemFragment.getExtractStartInSeconds()));
       builder.append(RANGE_DELIMITER);
-      builder.append(formatTime.getStrictFormattedTime(playlistItem.getExtractEndInSeconds()));
+      builder.append(formatTime.getStrictFormattedTime(playlistItemFragment.getExtractEndInSeconds()));
 
       builder.append(EOL_DELIMITER);
     }
@@ -198,24 +214,34 @@ public class PlaylistReport {
       builder.append(HORIZONTAL_ROW);
       builder.append(EOL_DELIMITER);
 
-      for (SoundEffectOccurrence s : sortByStartTime(playlist.getSoundEffects())) {
+      long totalTimeMs = 0;
+      if (playlist.isCrossFadingMode()) {
+        totalTimeMs += playlist.getHalfBlendTimeMs();
+      }
+      for (PlaylistItem p : playlist) {
 
-        builder.append(formatTime.getStrictFormattedTime(s.getTimeMillis() / 1000));
+        for (SoundEffectOccurrence s : sortByStartTime(p.getSoundEffects())) {
 
-        builder.append(", ");
+          builder.append(formatTime.getStrictFormattedTime((totalTimeMs + s.getTimeMillis()) / 1000));
 
-        builder.append("[");
-        builder.append(durationString);
-        builder.append(" ");
-        double extractDurationInSeconds = s.getSoundEffect().getDisplayDurationMillis() / 1000;
-        builder.append(formatTime.getStrictFormattedTime(extractDurationInSeconds));
-        builder.append("]");
+          builder.append(", ");
 
-        builder.append(", ");
+          builder.append("[");
+          builder.append(durationString);
+          builder.append(" ");
+          double extractDurationInSeconds = s.getSoundEffect().getDisplayDurationMillis() / 1000;
+          builder.append(formatTime.getStrictFormattedTime(extractDurationInSeconds));
+          builder.append("]");
 
-        builder.append(s.getSoundEffect().getId());
+          builder.append(", ");
 
-        builder.append(EOL_DELIMITER);
+          builder.append(s.getSoundEffect().getId());
+
+          builder.append(EOL_DELIMITER);
+
+        }
+
+        totalTimeMs += p.getStrictItemLengthMs();
       }
 
     }

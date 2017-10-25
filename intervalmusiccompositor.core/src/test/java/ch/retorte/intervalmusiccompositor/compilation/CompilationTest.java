@@ -5,7 +5,6 @@ import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.playlist.Playlist;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
-import com.google.common.collect.Lists;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +12,7 @@ import org.tritonus.sampled.file.WaveAudioFileReader;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -63,19 +63,36 @@ public class CompilationTest {
   public void shouldGenerateCompilation() throws IOException, UnsupportedAudioFileException {
     // given
     Playlist playList = playlistWith(1, l(1), l());
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
     // when
-    byte[] compilation = sut.generateCompilation(playList);
+    sut.generateCompilation(playList, baos);
 
     // then
     // Somehow check byte array...
+    byte[] compilation = baos.toByteArray();
     assertThat(compilation.length, is(44100 * 2 * 2));
     assertThat(compilation[0], is(b(0)));
     assertThat(compilation[1], is(b(0)));
-    assertThat(compilation[88198], is(b(101)));
-    assertThat(compilation[88199], is(b(-103)));
+    assertThat(compilation[88198], is(b(-20)));
+    assertThat(compilation[88199], is(b(-63)));
     assertThat(compilation[176398], is(b(0)));
     assertThat(compilation[176399], is(b(0)));
+  }
+
+  @Test
+  public void shouldGenerateLongerCompilation() throws IOException, UnsupportedAudioFileException {
+    // given
+    Playlist playList = playlistWith(6, l(1), l());
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+    // when
+    sut.generateCompilation(playList, baos);
+
+    // then
+    // Somehow check byte array...
+    byte[] compilation = baos.toByteArray();
+    assertThat(compilation.length, is(44100 * 2 * 12));
   }
 
 

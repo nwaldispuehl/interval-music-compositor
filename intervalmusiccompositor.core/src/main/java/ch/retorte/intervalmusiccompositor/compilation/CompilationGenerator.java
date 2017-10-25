@@ -2,18 +2,17 @@ package ch.retorte.intervalmusiccompositor.compilation;
 
 import static ch.retorte.intervalmusiccompositor.commons.ExceptionMessageExtractor.messageOrNameOf;
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
+import static ch.retorte.intervalmusiccompositor.list.BlendMode.CROSS;
 import static ch.retorte.intervalmusiccompositor.list.BlendMode.SEPARATE;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.String.valueOf;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.ProgressMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.SubProcessProgressMessage;
@@ -39,7 +38,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class CompilationGenerator implements Runnable {
 
-  private static final int MAXIMUM_BLEND_TIME = 20;
+  private static final int MAXIMUM_BLEND_TIME = 10;
   private static final String FILENAME_PART_DELIMITER = ".";
   private static final String FILENAME_PREFIX_SOUND_MARKER = "s";
   private static final String FILENAME_PREFIX_BREAK_MARKER = "b";
@@ -142,11 +141,17 @@ public class CompilationGenerator implements Runnable {
       shortestSoundPattern = Math.min(shortestSoundPattern, s);
     }
 
-    if (compilationParameters.getBlendMode().equals(SEPARATE) && shortestSoundPattern / 2 < compilationParameters.getBlendDuration()) {
+    if (compilationParameters.hasBreakPattern()) {
+      for (int b : compilationParameters.getBreakPattern()) {
+        shortestSoundPattern = Math.min(shortestSoundPattern, b);
+      }
+    }
+
+    if (compilationParameters.getBlendMode() == SEPARATE && shortestSoundPattern / 2.0 < compilationParameters.getBlendDuration()) {
       compilationParameters.setBlendDuration(Math.floor(shortestSoundPattern / 2.0));
 
     }
-    else if (compilationParameters.getBlendMode().equals(BlendMode.CROSS) && shortestSoundPattern < compilationParameters.getBlendDuration()) {
+    else if (compilationParameters.getBlendMode() == CROSS && shortestSoundPattern < compilationParameters.getBlendDuration()) {
       compilationParameters.setBlendDuration((double) Math.min(shortestSoundPattern, 10));
     }
   }
@@ -236,13 +241,15 @@ public class CompilationGenerator implements Runnable {
 
   private void createCompilation() {
     try {
-      byte[] compilationBytes = compilation.generateCompilation(playlist);
-
       compilationDataFile = File.createTempFile("compilation", bundle.getString("imc.temporaryFile.suffix"));
-      compilationDataSize = compilationBytes.length;
-      addDebugMessage("Created temporary compilation file " + compilationDataFile.getAbsolutePath() + " for size " + compilationDataSize);
+      addDebugMessage("Created temporary compilation file " + compilationDataFile.getAbsolutePath());
 
-      writeToCompilationDataFile(compilationBytes);
+      FileOutputStream fileOutputStream = new FileOutputStream(compilationDataFile);
+      compilation.generateCompilation(playlist, fileOutputStream);
+      fileOutputStream.close();
+
+      compilationDataSize = compilationDataFile.length();
+      addDebugMessage("Wrote " + compilationDataSize + " bytes into temporary compilation file at " + compilationDataFile.getAbsolutePath());
     }
     catch (IOException e) {
       String message = bundle.getString("ui.error.sound.introduction");
@@ -266,12 +273,6 @@ public class CompilationGenerator implements Runnable {
     }
   }
 
-  private void writeToCompilationDataFile(byte[] compilationBytes) throws IOException {
-    try (FileOutputStream fos = new FileOutputStream(compilationDataFile)) {
-      fos.write(compilationBytes);
-    }
-  }
-
   private void writeOutputFile() {
     try (FileInputStream compilationData = new FileInputStream(compilationDataFile)) {
       outputGenerator.generateOutput(compilationData, compilationDataSize, correctedOutputPath, outfile_prefix, compilationParameters.getEncoderIdentifier(), new InertProgressListener() {
@@ -289,18 +290,13 @@ public class CompilationGenerator implements Runnable {
     }
   }
 
-  private byte[] readCompilationDataFileIntoByteArray() throws IOException {
-    return Files.readAllBytes(compilationDataFile.toPath());
-  }
-
-
   private void createEnvelope() {
     Integer width = Integer.valueOf(bundle.getString("ui.envelope.width"));
     Integer height = Integer.valueOf(bundle.getString("ui.envelope.height"));
 
     EnvelopeImage envelopeImage = new EnvelopeImage(width, height);
-    try {
-      envelopeImage.generateEnvelope(readCompilationDataFileIntoByteArray(), compilationParameters.getMusicPattern(), compilationParameters.getBreakPattern(), compilationParameters.getIterations());
+    try (FileInputStream compilationData = new FileInputStream(compilationDataFile)) {
+      envelopeImage.generateEnvelope(compilationData, compilationDataSize, compilationParameters.getMusicPattern(), compilationParameters.getBreakPattern(), compilationParameters.getIterations());
     }
     catch (IOException e) {
       String message = bundle.getString("ui.error.general.introduction");
