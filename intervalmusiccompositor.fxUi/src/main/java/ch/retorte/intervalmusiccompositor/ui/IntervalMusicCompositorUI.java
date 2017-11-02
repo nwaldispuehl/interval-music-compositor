@@ -172,8 +172,8 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
 
     mainScreenController = fxmlLoader.getController();
 
-    initialize(mainScreenController);
     initializeCompilationParameters();
+    initialize(mainScreenController);
 
     root.requestLayout();
     root.layout();
