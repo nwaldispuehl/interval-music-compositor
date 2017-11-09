@@ -1,64 +1,74 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
+import com.google.common.collect.Lists;
 
-/**
- * @author nw
- */
+import java.util.List;
+
+import static com.google.common.collect.Lists.newLinkedList;
+
 public class PlaylistItem {
 
-  private final IAudioFile audioFile;
-  private final long extractStartInMilliseconds;
-  private final long extractEndInMilliseconds;
+  private Playlist playlist;
+  private final PlaylistItemFragment musicFragment;
+  private final PlaylistItemFragment breakFragment;
+  private final List<SoundEffectOccurrence> soundEffects = newLinkedList();
 
-  public PlaylistItem(IAudioFile audioFile, long extractStartInMilliseconds, long extractEndInMilliseconds) {
-    this.audioFile = audioFile;
-    this.extractStartInMilliseconds = extractStartInMilliseconds;
-    this.extractEndInMilliseconds = extractEndInMilliseconds;
-
-    if (audioFile != null && audioFile.getDuration() < extractEndInMilliseconds) {
-      throw new IllegalStateException("Extract exceeds track length.");
-    }
+  PlaylistItem(Playlist playlist, PlaylistItemFragment musicFragment, PlaylistItemFragment breakFragment, List<SoundEffectOccurrence> soundEffects) {
+    this.playlist = playlist;
+    this.musicFragment = musicFragment;
+    this.breakFragment = breakFragment;
+    this.soundEffects.addAll(soundEffects);
   }
 
-  public boolean isSilentBreak() {
-    return audioFile == null;
+  public PlaylistItemFragment getMusicFragment() {
+    return musicFragment;
   }
 
-  public long getExtractDurationInMilliseconds() {
-    return extractEndInMilliseconds - extractStartInMilliseconds;
+  public boolean hasBreakFragment() {
+    return breakFragment != null;
   }
 
-  public double getExtractDurationInSeconds() {
-    return getExtractDurationInMilliseconds() / 1000;
+  public PlaylistItemFragment getBreakFragment() {
+    return breakFragment;
   }
 
-  public IAudioFile getAudioFile() {
-    return audioFile;
+  public PlaylistItem getPrevious() {
+    return playlist.getPreviousOf(this);
   }
 
-  public long getExtractStartInMilliseconds() {
-    return extractStartInMilliseconds;
+  public boolean hasPrevious() {
+    return getPrevious() != null;
   }
 
-  public double getExtractStartInSeconds() {
-    return getExtractStartInMilliseconds() / 1000;
+  public PlaylistItem getNext() {
+    return playlist.getNextOf(this);
   }
 
-  public long getExtractEndInMilliseconds() {
-    return extractEndInMilliseconds;
+  public boolean hasNext() {
+    return getNext() != null;
   }
 
-  public double getExtractEndInSeconds() {
-    return getExtractEndInMilliseconds() / 1000;
+  public boolean hasSoundEffects() {
+    return !soundEffects.isEmpty();
   }
 
-  @Override
-  public String toString() {
-    String fileName = "Break";
-    if (!isSilentBreak()) {
-      fileName = getAudioFile().getDisplayName();
-    }
-    return fileName + " [" + extractStartInMilliseconds + " - " + extractEndInMilliseconds + "]";
+  public List<SoundEffectOccurrence> getSoundEffects() {
+    return soundEffects;
+  }
+
+  /**
+   * Returns the length of the single segment, that is, the length without overlapping parts.
+   */
+  public long getStrictItemLengthMs() {
+      long musicLengthMs = getMusicFragment().getExtractDurationInMilliseconds();
+      long breakLengthMs = hasBreakFragment() ? getBreakFragment().getExtractDurationInMilliseconds() : 0;
+
+      if (playlist.isCrossFadingMode()) {
+        return musicLengthMs - playlist.getBlendTimeMs() + breakLengthMs - (hasBreakFragment() ? playlist.getBlendTimeMs() : 0);
+      }
+      else {
+        return musicLengthMs + breakLengthMs;
+      }
   }
 }

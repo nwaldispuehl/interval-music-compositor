@@ -1,43 +1,72 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import com.google.common.collect.Lists;
+import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Tests if the PlaylistItem works as expected.
- *
- * @author nw
+ * Unit test for the {@link PlaylistItem}.
  */
 public class PlaylistItemTest {
 
-  @Test
-  public void shouldConsiderItselfSilentBreakIfAudioFileIsNull() {
-    // when
-    PlaylistItem playlistItem = new PlaylistItem(null, 1, 2);
+  //---- Fields
 
-    // then
-    assertTrue(playlistItem.isSilentBreak());
+  private Playlist playlist = mock(Playlist.class);
+
+  //---- Test methods
+
+  @Before
+  public void setup() {
+
   }
 
   @Test
-  public void shouldReturnCorrectExtractDuration() {
+  public void shouldGetItemLengthWithoutCrossFading() {
     // given
-    IAudioFile audioFile = mock(IAudioFile.class);
-    when(audioFile.getDuration()).thenReturn(10000L);
-    PlaylistItem playlistItem = new PlaylistItem(audioFile, 500L, 1500L);
+    when(playlist.isCrossFadingMode()).thenReturn(false);
+    PlaylistItem sut = itemWith(fragmentWith(8000), fragmentWith(4000));
 
     // when
-    long duration = playlistItem.getExtractDurationInMilliseconds();
+    long itemLengthMs = sut.getStrictItemLengthMs();
 
     // then
-    assertThat(duration, is(1000L));
+    assertThat(itemLengthMs, is(12000L));
+  }
 
+  @Test
+  public void shouldGetItemLengthWithCrossFading() {
+    // given
+    when(playlist.getBlendTimeMs()).thenReturn(2000L);
+    when(playlist.isCrossFadingMode()).thenReturn(true);
+    PlaylistItem sut = itemWith( fragmentWith(8000), fragmentWith(4000));
+
+    // when
+    long itemLengthMs = sut.getStrictItemLengthMs();
+
+    // then
+    assertThat(itemLengthMs, is(8000L));
+  }
+
+  //---- Helper methods
+
+  private PlaylistItem itemWith(PlaylistItemFragment musicFragment, PlaylistItemFragment breakFragment) {
+    return new PlaylistItem(playlist, musicFragment, breakFragment, newArrayList());
+  }
+
+  private PlaylistItemFragment fragmentWith(long durationMs) {
+    PlaylistItemFragment fragment = Mockito.mock(PlaylistItemFragment.class);
+    when(fragment.getExtractDurationInMilliseconds()).thenReturn(durationMs);
+    return fragment;
   }
 
 }

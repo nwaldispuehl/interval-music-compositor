@@ -214,4 +214,7 @@ public class CompilationParameters {
     return durationEstimationValue;
   }
 
+  public boolean hasBreakPattern() {
+    return breakPattern.stream().anyMatch(i -> 0 < i);
+  }
 }

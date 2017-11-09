@@ -30,6 +30,7 @@ import ch.retorte.intervalmusiccompositor.ui.soundeffects.SoundEffectsPane;
 import ch.retorte.intervalmusiccompositor.ui.updatecheck.UpdateCheckDialog;
 import ch.retorte.intervalmusiccompositor.ui.utils.AudioFileEncoderConverter;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -194,6 +195,7 @@ public class MainScreenController implements Initializable {
 
   @FXML
   private Label outputDirectory;
+  private ObservableValue<String> outputDirectoryData = new SimpleStringProperty();
 
   // Actions
 

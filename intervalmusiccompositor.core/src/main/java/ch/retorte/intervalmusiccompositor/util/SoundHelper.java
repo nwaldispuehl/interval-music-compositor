@@ -152,6 +152,16 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     return result;
   }
 
+  public byte[] getExtract(byte[] data, long startMs, long durationMs) {
+    long startBytes = getSamplesFromSeconds(startMs / 1000.0);
+    long durationBytes = getSamplesFromSeconds(durationMs / 1000.0);
+    byte[] result = new byte[(int) durationBytes];
+
+    System.arraycopy(data, (int) startBytes, result, 0, result.length);
+
+    return result;
+  }
+
   private byte[] getByteArray(AudioInputStream inputStream) throws IOException {
 
     byte[] result = new byte[(int) getStreamSizeInBytes(inputStream)];
@@ -206,10 +216,6 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     return (int) (seconds * SAMPLE_RATE * TARGET_AUDIO_FORMAT.getFrameSize());
   }
 
-  public double getSecondsFromSamples(int samples) {
-    return samples / SAMPLE_RATE / TARGET_AUDIO_FORMAT.getFrameSize();
-  }
-
   public AudioInputStream getStreamExtract(AudioInputStream ais, int start, int length) {
 
     long startMs = start * 1000;
@@ -243,52 +249,42 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     return result;
   }
 
-  public byte[] linearBlend(byte[] sampleByteArray, double blendTime) {
+  /**
+   * Fades the provided sample array in at the start and out at the end. The respective fading part length is determined
+   * by the blendTime argument. Additionally a blend factor can be specified which denots how the blending should be scaled.
+   */
+  public byte[] doubleSidedLinearBlend(byte[] sampleByteArray, double blendTime, double startFactor, double endFactor) {
 
-    // Since the fading caused clicking noises in the beginning and the end
-    // of the fading process (where the sound intensity exceeded the limit)
-    // we enlarge the fade duration by 0.05 seconds.
-    int clickPreventDuration = 8820;
+    int sampleLength = sampleByteArray.length;
+    int blendSamples = getSamplesFromSeconds(blendTime);
+    double factorPerSample = (endFactor - startFactor) / blendSamples;
 
-    // Determine how many samples there are to alter
-    // There are 176400 bytes per second
-    int corrLength = sampleByteArray.length - 1;
-
-    int samples = (int) ((TARGET_AUDIO_FORMAT.getSampleRate() * TARGET_AUDIO_FORMAT.getFrameSize() * blendTime) + clickPreventDuration);
-
-    if (((double) sampleByteArray.length / 2) < samples) {
-
-      if (clickPreventDuration <= ((double) sampleByteArray.length / 2)) {
-        samples = (int) ((double) sampleByteArray.length / 2) + clickPreventDuration;
-
-      }
-      else {
-        samples = (int) ((double) sampleByteArray.length / 2);
-      }
+    if (((double) sampleByteArray.length / 2) < blendSamples) {
+      blendSamples = (int) ((double) sampleByteArray.length / 2);
     }
 
     int valueFront;
     int valueEnd;
 
-    for (int i = 0; i < samples; i = i + 2) {
-
+    for (int i = 0; i < blendSamples; i = i + 2) {
       // Determine effective value of each two bytes
       valueFront = (sampleByteArray[i] & 0xFF) | (sampleByteArray[i + 1] << 8);
-      valueEnd = (sampleByteArray[corrLength - i - 1] & 0xFF) | (sampleByteArray[corrLength - i] << 8);
+      valueEnd = (sampleByteArray[sampleLength - 1 - i - 1] & 0xFF) | (sampleByteArray[sampleLength - 1 - i] << 8);
 
       // Adapt value
-      valueFront = (int) (valueFront * ((double) i / (double) samples));
-      valueEnd = (int) (valueEnd * ((double) i / (double) samples));
+      valueFront = (int) Math.round((startFactor + (i * factorPerSample)) * valueFront);
+      valueEnd = (int) Math.round((startFactor + (i * factorPerSample)) * valueEnd);
 
       // Write it back into array
       sampleByteArray[i] = (byte) (valueFront & 0xFF);
       sampleByteArray[i + 1] = (byte) (valueFront >> 8);
-      sampleByteArray[corrLength - i - 1] = (byte) (valueEnd & 0xFF);
-      sampleByteArray[corrLength - i] = (byte) (valueEnd >> 8);
+      sampleByteArray[sampleLength - 1 - i - 1] = (byte) (valueEnd & 0xFF);
+      sampleByteArray[sampleLength - 1 - i] = (byte) (valueEnd >> 8);
     }
 
     return sampleByteArray;
   }
+
 
 
   public byte[] fadeOut(byte[] sample) {
@@ -303,17 +299,17 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
    * Creates a faded (blended) copy of the provided sample, with linear fading from startFactor at the beginning to endFactor at the end.
    * The two control arguments startFactor and endFactor are supposed to be in [0, 1].
    */
-  private byte[] fade(byte[] sample, double startFactor, double endFactor) {
+  public byte[] fade(byte[] sample, double startFactor, double endFactor) {
     byte[] result = new byte[sample.length];
 
-    double delta = (endFactor - startFactor) / sample.length;
+    double factorPerSample = (endFactor - startFactor) / sample.length;
 
     int audioValue;
     for (int i = 0; i < sample.length; i = i + 2) {
       audioValue = (sample[i] & 0xFF) | (sample[i + 1] << 8);
 
       // Perform fading on audio value
-      audioValue = (int) Math.round((audioValue * startFactor) + (i * delta));
+      audioValue = (int) Math.round((startFactor + (i * factorPerSample)) * audioValue);
 
       result[i] = (byte) (audioValue & 0xFF);
       result[i + 1] = (byte) (audioValue >> 8);

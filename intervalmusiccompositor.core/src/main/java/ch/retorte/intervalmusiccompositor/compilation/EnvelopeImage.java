@@ -3,6 +3,8 @@ package ch.retorte.intervalmusiccompositor.compilation;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -10,20 +12,22 @@ import java.util.List;
  */
 class EnvelopeImage {
 
-  private WritableImage writableImage;
-
-  private int width = 0;
-  private int height = 0;
-
-  private int background_red = 245;
-  private int background_green = 245;
-  private int background_blue = 245;
+  private static int BACKGROUND_RED = 245;
+  private static int BACKGROUND_GREEN = 245;
+  private static int BACKGROUND_BLUE = 245;
   private int env_red = 55;
   private int env_green = 119;
   private int env_blue = 248;
   private int env_mean_red = 113;
   private int env_mean_green = 174;
   private int env_mean_blue = 243;
+
+  private WritableImage writableImage;
+
+  private int width = 0;
+  private int height = 0;
+
+
 
   EnvelopeImage(Integer width, Integer height) {
     writableImage = new WritableImage(width, height);
@@ -32,20 +36,19 @@ class EnvelopeImage {
     this.height = height;
 
     // Initialize image with color
-    fill(background_red, background_green, background_blue);
+    fill(BACKGROUND_RED, BACKGROUND_GREEN, BACKGROUND_BLUE);
   }
 
-  void generateEnvelope(byte[] audioByteArray, List<Integer> soundPattern, List<Integer> breakPattern, int iterations) {
-    if (audioByteArray == null || audioByteArray.length == 0) {
+  void generateEnvelope(InputStream inputStream, long compilationDataSize, List<Integer> soundPattern, List<Integer> breakPattern, int iterations) throws IOException {
+    if (compilationDataSize == 0) {
       return;
     }
 
-    int samples = audioByteArray.length / 4;
-    int samplesPerPixel = (samples / width);
+    int bytesPerPixel = (int) (compilationDataSize / width);
 
     // Adjust samplesPerPixel to something dividable by 4 by rounding
-    if (samplesPerPixel % 4 != 0) {
-      samplesPerPixel = samplesPerPixel - (samplesPerPixel % 4);
+    if (bytesPerPixel % 4 != 0) {
+      bytesPerPixel = bytesPerPixel + (4 - (bytesPerPixel % 4));
     }
 
     int[] aggregatedAudioIntArrayLeft = new int[width];
@@ -57,16 +60,21 @@ class EnvelopeImage {
     int leftSample = 0;
     int rightSample = 0;
 
-    for (int i = 0; i < width; i++) {
+    int i = 0;
+
+    byte[] buffer = new byte[bytesPerPixel];
+    int bytesRead;
+    while ((bytesRead = inputStream.read(buffer)) != -1) {
+      int currentSamples = Math.min(bytesPerPixel, bytesRead);
 
       aggregatedAudioIntArrayLeftMean[i] = 0;
       aggregatedAudioIntArrayRightMean[i] = 0;
 
       // Go through audio byte array and make an aggregated int array out of it
-      for (int j = (i * samplesPerPixel); j < ((i + 1) * samplesPerPixel); j++) {
+      for (int j = 0; j < currentSamples; j = j + 4) {
 
-        leftSample = Math.abs(bytesToInt16(audioByteArray, (4 * j), false));
-        rightSample = Math.abs(bytesToInt16(audioByteArray, (4 * j) + 2, false));
+        leftSample = Math.abs(bytesToInt16(buffer, j, false));
+        rightSample = Math.abs(bytesToInt16(buffer, j + 2, false));
 
         aggregatedAudioIntArrayLeft[i] = Math.max(aggregatedAudioIntArrayLeft[i], leftSample);
         aggregatedAudioIntArrayRight[i] = Math.max(aggregatedAudioIntArrayRight[i], rightSample);
@@ -75,11 +83,13 @@ class EnvelopeImage {
         aggregatedAudioIntArrayRightMean[i] += rightSample;
       }
 
-      aggregatedAudioIntArrayLeftMean[i] = aggregatedAudioIntArrayLeftMean[i] / samplesPerPixel;
-      aggregatedAudioIntArrayRightMean[i] = aggregatedAudioIntArrayRightMean[i] / samplesPerPixel;
+      aggregatedAudioIntArrayLeftMean[i] = aggregatedAudioIntArrayLeftMean[i] / currentSamples * 4;
+      aggregatedAudioIntArrayRightMean[i] = aggregatedAudioIntArrayRightMean[i] / currentSamples * 4;
 
       drawEnvelopeAmplitude(i, (double) aggregatedAudioIntArrayLeft[i] / 32767, (double) aggregatedAudioIntArrayRight[i] / 32767, env_red, env_green, env_blue);
       drawEnvelopeAmplitude(i, (double) aggregatedAudioIntArrayLeftMean[i] / 32767, (double) aggregatedAudioIntArrayRightMean[i] / 32767, env_mean_red, env_mean_green, env_mean_blue);
+
+      i++;
     }
 
   }
