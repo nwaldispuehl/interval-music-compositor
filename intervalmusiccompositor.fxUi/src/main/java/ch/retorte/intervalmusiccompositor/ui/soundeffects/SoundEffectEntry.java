@@ -99,6 +99,7 @@ class SoundEffectEntry extends HBox {
     this.soundEffects.setValue(soundEffectOccurrence.getSoundEffect());
     this.soundEffects.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
     this.soundEffects.valueProperty().addListener((observable, oldValue, newValue) -> parent.updatePreferences());
+    this.soundEffects.valueProperty().addListener((observable, oldValue, newValue) -> parent.adaptSpinnerRangeToMusicAndBreakSize());
   }
 
   private void initializePlayButton() {
@@ -125,9 +126,13 @@ class SoundEffectEntry extends HBox {
     return soundEffectOccurrence;
   }
 
-  void updateSpinnerSizeWith(int max) {
+  void updateSpinnerSizeWith(int maximalTrackDuration) {
     SpinnerValueFactory.IntegerSpinnerValueFactory valueFactory = (SpinnerValueFactory.IntegerSpinnerValueFactory) soundEffectStartTime.getValueFactory();
-    valueFactory.setMax(max);
+    valueFactory.setMax(getLatestStartTimeWith(maximalTrackDuration));
+  }
+
+  private int getLatestStartTimeWith(int maximalTrackDuration) {
+    return maximalTrackDuration - (int)(soundEffectOccurrence.getSoundEffect().getDurationMillis() / 1000.0);
   }
 
   private void updateSelectedSoundEffect() {

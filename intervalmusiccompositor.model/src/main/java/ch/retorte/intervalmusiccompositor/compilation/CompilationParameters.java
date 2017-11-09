@@ -217,4 +217,23 @@ public class CompilationParameters {
   public boolean hasBreakPattern() {
     return breakPattern.stream().anyMatch(i -> 0 < i);
   }
+
+  public int getShortestDurationPairFromPattern() {
+    List<Integer> musicPattern = getMusicPattern();
+    List<Integer> breakPattern = getBreakPattern();
+
+    int smallestPatternPair = Integer.MAX_VALUE;
+    for (int i = 0; i < musicPattern.size(); i++) {
+      int m = musicPattern.get(i);
+      int b = 0;
+      if (!breakPattern.isEmpty()) {
+        b = breakPattern.get(i % breakPattern.size());
+      }
+
+      if (m + b < smallestPatternPair) {
+        smallestPatternPair = m + b;
+      }
+    }
+    return smallestPatternPair;
+  }
 }

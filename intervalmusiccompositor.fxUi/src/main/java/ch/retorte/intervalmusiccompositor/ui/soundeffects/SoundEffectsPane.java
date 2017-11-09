@@ -94,27 +94,12 @@ public class SoundEffectsPane extends BorderPane {
     addSoundEffects.setDisable(!active);
   }
 
-  private void adaptSpinnerRangeToMusicAndBreakSize() {
-    updateSpinnerSizeWith(getSmallestPatternPairFromCompilationParameters() - 1);
+  void adaptSpinnerRangeToMusicAndBreakSize() {
+    updateSpinnerSizeWith(getMaximalTrackDuration());
   }
 
-  private int getSmallestPatternPairFromCompilationParameters() {
-    List<Integer> musicPattern = compilationParameters.getMusicPattern();
-    List<Integer> breakPattern = compilationParameters.getBreakPattern();
-
-    int smallestPatternPair = Integer.MAX_VALUE;
-    for (int i = 0; i < musicPattern.size(); i++) {
-      int m = musicPattern.get(i);
-      int b = 0;
-      if (!breakPattern.isEmpty()) {
-        b = breakPattern.get(i % breakPattern.size());
-      }
-
-      if (m + b < smallestPatternPair) {
-        smallestPatternPair = m + b;
-      }
-    }
-    return smallestPatternPair;
+  private int getMaximalTrackDuration() {
+    return compilationParameters.getShortestDurationPairFromPattern();
   }
 
   private void initializeAddButton() {
@@ -170,8 +155,8 @@ public class SoundEffectsPane extends BorderPane {
     soundEffectsUpdateListener.changed(null, null, null);
   }
 
-  private void updateSpinnerSizeWith(int max) {
-    soundEffectEntries.forEach(e -> e.updateSpinnerSizeWith(max));
+  private void updateSpinnerSizeWith(int maximalTrackDuration) {
+    soundEffectEntries.forEach(e -> e.updateSpinnerSizeWith(maximalTrackDuration));
   }
 
   private DebugMessageEventHandler debugHandlerWith(String id) {
