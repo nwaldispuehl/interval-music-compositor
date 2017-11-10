@@ -6,6 +6,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 IMP         Added more information to system diagnosis string.
 IMP         Improved error tracking during compilation generation.
 IMP  #31, #33 Reduced memory footprint of compilation.
+IMP  #34    Added .deb package for Linux.
 
 2017-09-03  2.8.0
 --------------------------------------------------------------------------------

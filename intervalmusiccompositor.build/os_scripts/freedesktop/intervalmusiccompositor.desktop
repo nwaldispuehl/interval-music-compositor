@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name = Interval Music Compositor
+Comment = Application to create music intervals (e.g. 20 s music, 10 s break) for sports and education.
+Exec = /opt/IntervalMusicCompositor/bin/IntervalMusicCompositor
+Icon = /opt/IntervalMusicCompositor/interval_music_compositor.svg
+Terminal = false
+Type = Application
+StartupNotify = false
+Categories = AudioVideo;Audio;
+StartupWMClass=ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI

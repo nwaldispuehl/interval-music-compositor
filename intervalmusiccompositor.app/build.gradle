@@ -7,12 +7,14 @@ buildscript {
 
     mavenLocal()
     mavenCentral()
+    jcenter()
 
   }
   dependencies {
     classpath "gradle.plugin.edu.sc.seis.gradle:launch4j:2.3.0"
     classpath 'gradle.plugin.edu.sc.seis:macAppBundle:2.1.7'
     classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+    classpath 'com.netflix.nebula:gradle-ospackage-plugin:4.5.1'
   }
 }
 
@@ -23,8 +25,8 @@ plugins {
   id "edu.sc.seis.macAppBundle" version "2.1.7"
   id "edu.sc.seis.launch4j" version "2.3.0"
   id "com.github.johnrengelman.shadow" version "2.0.1"
+  id "nebula.deb" version "4.5.1"
 }
-
 
 group = 'ch.retorte.intervalmusiccompositor'
 applicationName = "IntervalMusicCompositor"
@@ -32,10 +34,13 @@ mainClassName = "ch.retorte.intervalmusiccompositor.Main"
 
 applicationDefaultJvmArgs = ["-Xmx2048m"]
 
+ext.versionDelimiter = '-'
+
 ext.macosxOutputDir = '/macosxApp'
 ext.windowsOutputDir = '/windowsApp'
 ext.linuxOutputDir = '/linuxApp'
 ext.windowsUberJarName = 'uberJar'
+ext.debPackageInstallPath = '/opt/IntervalMusicCompositor'
 
 tasks.withType(FindBugs) {
     reports {
@@ -46,7 +51,11 @@ tasks.withType(FindBugs) {
 
 jar {
     manifest {
-        attributes(provider: 'gradle', "Main-Class": mainClassName)
+        attributes(
+            provider : 'gradle',
+            'Main-Class' : mainClassName,
+            'Application-Name' : applicationName
+        )
     }
 }
 
@@ -67,9 +76,10 @@ macAppBundle {
 task distOsxApp(type: Tar, dependsOn: createApp) {
   description = "Creates an archive from the Mac OS X version." 
   compression = Compression.GZIP
-  baseName = project.applicationName + '-macosx'
+  baseName = project.applicationName
+  appendix = 'macosx'
 
-  into (project.applicationName + '-' + version) {
+  into (project.applicationName + project.ext.versionDelimiter + version) {
     from buildDir.absolutePath + project.ext.macosxOutputDir
     from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
     from project(':intervalmusiccompositor.build').files('documentation/')
@@ -78,6 +88,7 @@ task distOsxApp(type: Tar, dependsOn: createApp) {
 
 shadowJar {
   baseName = project.ext.windowsUberJarName
+  mainClassName = project.mainClassName
   classifier = null
   version = null
 }
@@ -89,9 +100,10 @@ task copyUberJar(type: Copy, dependsOn: [ shadowJar]) {
 
 task distWindowsApp(type: Zip, dependsOn: [shadowJar, copyUberJar, createExe]) {
   description = "Creates an archive from the Microsoft Windows version." 
-  baseName = applicationName + '-windows'
-  
-  into (applicationName + '-' + version) {
+  baseName = applicationName
+  appendix = 'windows'
+
+  into (applicationName + project.ext.versionDelimiter + version) {
     from buildDir.absolutePath + project.ext.windowsOutputDir + '/' + applicationName + '.exe'
     from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
     from project(':intervalmusiccompositor.build').files('documentation/')
@@ -101,10 +113,11 @@ task distWindowsApp(type: Zip, dependsOn: [shadowJar, copyUberJar, createExe]) {
 task distLinuxApp(type: Tar, dependsOn: installDist) {
   description = "Creates an archive from the Linux version."
   compression = Compression.GZIP
-  baseName = applicationName + '-linux'
+  baseName = applicationName
+  appendix = 'linux'
   extension = 'tar.gz'
   
-  into (applicationName + '-' + version) {
+  into (applicationName + project.ext.versionDelimiter + version) {
     from installDist.outputs
     from project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.svg')
     from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
@@ -112,7 +125,50 @@ task distLinuxApp(type: Tar, dependsOn: installDist) {
   }
 }
 
-task distAll(dependsOn: [distOsxApp, distWindowsApp, distLinuxApp]) {
+task distDebPackage(type: Deb, dependsOn: installDist) {
+
+  packageName 'intervalmusiccompositor'
+  summary 'Application to create music intervals (e.g. 20 s music, 10 s break) for sports and education.'
+
+  // Dependencies
+
+  requires('openjdk-8-jre').or('openjdk-9-jre')
+  requires('openjfx')
+
+  // Collect needed files
+
+  into project.ext.debPackageInstallPath
+  from (installDist.outputs)
+  from project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.svg')
+  from project(':intervalmusiccompositor.build').file('os_scripts/freedesktop/intervalmusiccompositor.desktop')
+  from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
+  from project(':intervalmusiccompositor.build').files('documentation/')
+
+
+  // Symbolic links for the application and the desktop starter
+
+  link('/usr/bin/intervalmusiccompositor', project.ext.debPackageInstallPath + '/bin/IntervalMusicCompositor')
+  link('/usr/share/applications/intervalmusiccompositor.desktop', project.ext.debPackageInstallPath + '/intervalmusiccompositor.desktop')
+}
+
+task renameDebPackage (type: Copy, dependsOn: distDebPackage) {
+  from project.tasks.distDebPackage.outputs.files
+  into distsDir
+  rename { String fileName ->
+    fileName.replace("intervalmusiccompositor", "IntervalMusicCompositor-linux")
+  }
+}
+
+
+task distJarFile(type: Copy, dependsOn: shadowJar) {
+  from project.tasks.shadowJar.outputs.files
+  into distsDir
+  rename { String fileName ->
+    fileName.replace("uberJar", applicationName + project.ext.versionDelimiter + version)
+  }
+}
+
+task distAll(dependsOn: [distOsxApp, distWindowsApp, distLinuxApp, renameDebPackage, distJarFile]) {
   description = "Creates archives for all supported operating systems."
 }
 
