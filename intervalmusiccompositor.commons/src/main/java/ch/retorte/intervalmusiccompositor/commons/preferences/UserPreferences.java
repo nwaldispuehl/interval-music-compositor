@@ -2,6 +2,7 @@ package ch.retorte.intervalmusiccompositor.commons.preferences;
 
 import ch.retorte.intervalmusiccompositor.Version;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 import java.time.LocalDateTime;
@@ -95,6 +96,14 @@ public class UserPreferences {
     return loadBoolean(SEARCH_UPDATE_AT_STARTUP_KEY, true);
   }
 
+  public void destroyAllPreferences() {
+    try {
+      preferences.clear();
+    } catch (BackingStoreException e) {
+      messageProducer.send(new ErrorMessage(e));
+    }
+    addDebugMessage("Destroyed all preferences in " + preferences.absolutePath());
+  }
 
   //---- Helper methods
 

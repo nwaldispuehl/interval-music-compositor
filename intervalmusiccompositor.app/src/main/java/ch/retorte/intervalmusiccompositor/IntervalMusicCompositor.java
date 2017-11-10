@@ -96,10 +96,12 @@ class IntervalMusicCompositor {
    * 
    * @param debugMode
    *          if set to true, debug messages are printed to stdout.
+   * @param clearPreferences
+   *          if set to true, clears all user preferences.
    */
-  void startApp(boolean debugMode) {
-
+  void startApp(boolean debugMode, boolean clearPreferences) {
     configureDebugMode(debugMode);
+    conditionallyClearPreferences(clearPreferences);
 
     setLoggingProperties();
     setLocale();
@@ -111,6 +113,12 @@ class IntervalMusicCompositor {
     control.loadAudioFiles();
 
     userInterface.launch();
+  }
+
+  private void conditionallyClearPreferences(boolean clearPreferences) {
+    if (clearPreferences) {
+      userPreferences.destroyAllPreferences();
+    }
   }
 
   private void configureDebugMode(boolean debugMode) {
