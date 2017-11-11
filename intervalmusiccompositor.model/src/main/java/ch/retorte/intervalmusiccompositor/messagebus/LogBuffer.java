@@ -17,7 +17,7 @@ public class LogBuffer extends Observable {
 
   //---- Fields
 
-  private LinkedList<String> buffer = Lists.newLinkedList();
+  private final LinkedList<String> buffer = Lists.newLinkedList();
 
 
   //---- Constructor
@@ -27,7 +27,9 @@ public class LogBuffer extends Observable {
   //---- Methods
 
   void append(LocalDateTime localDateTime, String caller, String line) {
-      buffer.add(getFormattedDateFrom(localDateTime) + " - " + getFormattedCallerFrom(caller) + " - " + line);
+      synchronized (buffer) {
+        buffer.add(getFormattedDateFrom(localDateTime) + " - " + getFormattedCallerFrom(caller) + " - " + line);
+      }
       setChanged();
       notifyObservers();
   }
@@ -52,6 +54,10 @@ public class LogBuffer extends Observable {
 
   @Override
   public String toString() {
-    return ((LinkedList<String>) buffer.clone()).stream().reduce("", (s, s2) -> s + LINE_SEPARATOR + s2);
+    LinkedList<String> clone;
+    synchronized (buffer) {
+      clone = (LinkedList<String>) buffer.clone();
+    }
+    return clone.stream().reduce("", (s, s2) -> s + LINE_SEPARATOR + s2);
   }
 }

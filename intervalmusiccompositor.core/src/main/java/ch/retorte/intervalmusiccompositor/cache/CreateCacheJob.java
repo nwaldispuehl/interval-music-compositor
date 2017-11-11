@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.spi.TaskFinishListener;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
@@ -28,7 +29,14 @@ public class CreateCacheJob implements Runnable {
   }
 
   private void notifyListeners() {
-    listeners.forEach(TaskFinishListener::onTaskFinished);
+    for (TaskFinishListener l : listeners) {
+      try {
+        l.onTaskFinished();
+      }
+      catch (Exception e) {
+        addErrorMessage(e);
+      }
+    }
   }
 
   public IAudioFile getAudioFile() {
@@ -41,7 +49,7 @@ public class CreateCacheJob implements Runnable {
       audioFile.createCache();
     }
     catch (Exception e) {
-      addDebugMessage(e.getMessage());
+      addErrorMessage(e);
     }
     finally {
       notifyListeners();
@@ -50,8 +58,9 @@ public class CreateCacheJob implements Runnable {
     this.audioFile = null;
   }
 
-  private void addDebugMessage(String message) {
-    messageProducer.send(new DebugMessage(this, message));
+  private void addErrorMessage(Throwable throwable) {
+    messageProducer.send(new ErrorMessage(throwable));
+    messageProducer.send(new DebugMessage(this, throwable.getMessage()));
   }
 
   @Override

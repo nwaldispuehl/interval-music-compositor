@@ -8,6 +8,7 @@ IMP         Improved error tracking during compilation generation.
 IMP  #31, #33 Reduced memory footprint of compilation.
 IMP  #34    Added .deb package for Linux.
 IMP  #36    Added command line switch ('-c') to clear user settings.
+FIX  #37    Mitigated ConcurrentModificationException when generating music track cache.
 
 
 2017-09-03  2.8.0
