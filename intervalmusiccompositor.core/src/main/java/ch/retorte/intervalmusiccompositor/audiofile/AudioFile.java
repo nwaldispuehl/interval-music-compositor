@@ -10,9 +10,7 @@ import static com.google.common.collect.Lists.newLinkedList;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +19,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import ch.retorte.intervalmusiccompositor.ChangeListener;
+import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 import com.google.common.collect.Lists;
 import org.tritonus.sampled.file.WaveAudioFileReader;
@@ -201,7 +200,6 @@ public class AudioFile extends File implements IAudioFile {
     // Now check if the track is long enough
     if (duration < startCutOff + endCutOff) {
       setStatus(AudioFileStatus.ERROR);
-      // FIXME (2017-07-25 nw): Formatted time has wrong format; for 2s it prints '01:00:02'.
       errorMessage = "Track too short! (Duration: " + getFormattedTime(duration) + " s)";
     }
     else {
@@ -226,7 +224,7 @@ public class AudioFile extends File implements IAudioFile {
   }
 
   private String getFormattedTime(long milliseconds) {
-    return new SimpleDateFormat("HH:mm:ss").format(new Date(milliseconds));
+    return new FormatTime().getStrictFormattedTime(milliseconds / 1000);
   }
 
   public void removeCache() {
