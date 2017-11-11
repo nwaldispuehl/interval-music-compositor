@@ -6,6 +6,7 @@ import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.OK;
 import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.QUEUED;
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Lists.newLinkedList;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import ch.retorte.intervalmusiccompositor.ChangeListener;
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
+import com.google.common.collect.Lists;
 import org.tritonus.sampled.file.WaveAudioFileReader;
 import org.tritonus.sampled.file.WaveAudioFileWriter;
 
@@ -72,7 +74,7 @@ public class AudioFile extends File implements IAudioFile {
   private AudioStandardizer audioStandardizer;
   private MessageProducer messageProducer;
 
-  private Collection<ChangeListener<IAudioFile>> changeListeners = newArrayList();
+  private final Collection<ChangeListener<IAudioFile>> changeListeners = newLinkedList();
 
   public AudioFile(String pathname, SoundHelper soundHelper, List<AudioFileDecoder> audioFileDecoders, BPMReaderWriter bpmReaderWriter,
                    BPMCalculator bpmCalculator, AudioStandardizer audioStandardizer, MessageProducer messageProducer) {
@@ -143,7 +145,7 @@ public class AudioFile extends File implements IAudioFile {
   }
 
   public void createCache() throws UnsupportedAudioFileException, IOException {
-    setStatus(AudioFileStatus.IN_PROGRESS);
+    setInProgressStatus();
 
     File temporaryFile = null;
 
@@ -409,6 +411,7 @@ public class AudioFile extends File implements IAudioFile {
   }
 
   private void setStatus(AudioFileStatus status) {
+    addDebugMessage("Setting status to " + status + " for " + getDisplayName());
     this.status = status;
     notifyChangeListeners();
   }
@@ -420,11 +423,15 @@ public class AudioFile extends File implements IAudioFile {
 
   @Override
   public void addChangeListener(ChangeListener<IAudioFile> changeListener) {
-    changeListeners.add(changeListener);
+    synchronized (changeListeners) {
+      changeListeners.add(changeListener);
+    }
   }
 
   private void notifyChangeListeners() {
-    changeListeners.forEach(changeListener -> changeListener.changed(this));
+    synchronized (changeListeners) {
+      changeListeners.forEach(changeListener -> changeListener.changed(this));
+    }
   }
 
   private void addDebugMessage(String message) {
