@@ -9,7 +9,7 @@
 <fx:root stylesheets="@/styles/AudioFileListCell.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
          type="javafx.scene.layout.HBox"  spacing="5">
         <ImageView fx:id="imageView">
-            <Image url="@/images/waiting_icon.gif"/>
+            <Image url="@/images/tracklist/queued_icon.png"/>
         </ImageView>
         <VBox>
             <HBox spacing="5" fx:id="metaDataLine">

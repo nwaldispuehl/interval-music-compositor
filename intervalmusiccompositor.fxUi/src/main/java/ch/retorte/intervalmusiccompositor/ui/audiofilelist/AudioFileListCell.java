@@ -103,10 +103,11 @@ class AudioFileListCell extends ListCell<IAudioFile> {
 
     private SimpleBooleanProperty isBpmSupported = new SimpleBooleanProperty(false);
 
-    private Image loading = new Image(getClass().getResource("/images/waiting_icon.gif").toString());
-    private Image ok = new Image(getClass().getResource("/images/music_icon.png").toString());
-    private Image error = new Image(getClass().getResource("/images/error_icon.png").toString());
-    private Image warning = new Image(getClass().getResource("/images/tooshort_icon.png").toString());
+    private Image processing = new Image(getClass().getResource("/images/tracklist/processing_icon.gif").toString());
+    private Image ok = new Image(getClass().getResource("/images/tracklist/music_icon.png").toString());
+    private Image error = new Image(getClass().getResource("/images/tracklist/error_icon.png").toString());
+    private Image warning = new Image(getClass().getResource("/images/tracklist/tooshort_icon.png").toString());
+    private Image queued = new Image(getClass().getResource("/images/tracklist/queued_icon.png").toString());
 
     @FXML
     ImageView imageView;
@@ -198,7 +199,7 @@ class AudioFileListCell extends ListCell<IAudioFile> {
     private void setStatusWith(IAudioFile audioFile) {
       switch (audioFile.getStatus()) {
         case IN_PROGRESS:
-          imageView.setImage(loading);
+          imageView.setImage(processing);
           status.setText(resourceBundle.getString("ui.form.music_list.loading_text"));
           return;
         case ERROR:
@@ -208,6 +209,10 @@ class AudioFileListCell extends ListCell<IAudioFile> {
         case OK:
           imageView.setImage(ok);
           status.setText(audioFile.getSource().getParentFile().getAbsolutePath());
+          return;
+        case QUEUED:
+          imageView.setImage(queued);
+          status.setText(resourceBundle.getString("ui.form.music_list.queuing_text"));
           return;
         default:
           imageView.setImage(warning);

@@ -5,6 +5,7 @@ import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -98,9 +99,12 @@ public class BpmWindow {
     stage.setScene(new Scene(parent));
     stage.setResizable(true);
     stage.show();
-
-    stage.setMinWidth(stage.getWidth());
-    stage.setMinHeight(stage.getHeight());
+    Platform.runLater(() -> {
+      /* We do these little tricks to adapt the window size to the stages content. */
+      stage.sizeToScene();
+      stage.setMinWidth(stage.getWidth());
+      stage.setMinHeight(stage.getHeight());
+    });
   }
 
   private void initialize() {

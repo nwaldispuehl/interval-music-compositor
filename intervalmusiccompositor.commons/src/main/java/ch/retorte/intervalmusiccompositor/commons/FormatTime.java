@@ -3,7 +3,7 @@ package ch.retorte.intervalmusiccompositor.commons;
 import java.text.DecimalFormat;
 
 /**
- * @author nw
+ * Formats time.
  */
 public class FormatTime {
 
@@ -12,7 +12,7 @@ public class FormatTime {
 
   /**
    * Takes seconds as argument and formats them to for time display ('MM:SS', or 'H:MM:SS' if there are hours).
-   * 
+   *
    * @param seconds
    *          , a positive number of seconds, if not integer it is rounded.
    * @return the formatted string

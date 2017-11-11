@@ -8,19 +8,18 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * @author nw
+ * Creates an envelope image from
  */
 class EnvelopeImage {
 
-  private static int BACKGROUND_RED = 245;
-  private static int BACKGROUND_GREEN = 245;
-  private static int BACKGROUND_BLUE = 245;
-  private int env_red = 55;
-  private int env_green = 119;
-  private int env_blue = 248;
-  private int env_mean_red = 113;
-  private int env_mean_green = 174;
-  private int env_mean_blue = 243;
+  //---- Static
+
+  private static String BACKGROUND_COLOR = "#f5f5f5";
+  private static String ENVELOPE_COLOR = "#2196F3";
+  private static String ENVELOPE_MEAN_COLOR = "#64B5F6";
+
+
+  //---- Fields
 
   private WritableImage writableImage;
 
@@ -28,6 +27,7 @@ class EnvelopeImage {
   private int height = 0;
 
 
+  //---- Constructor
 
   EnvelopeImage(Integer width, Integer height) {
     writableImage = new WritableImage(width, height);
@@ -36,8 +36,11 @@ class EnvelopeImage {
     this.height = height;
 
     // Initialize image with color
-    fill(BACKGROUND_RED, BACKGROUND_GREEN, BACKGROUND_BLUE);
+    fill(BACKGROUND_COLOR);
   }
+
+
+  //---- Methods
 
   void generateEnvelope(InputStream inputStream, long compilationDataSize, List<Integer> soundPattern, List<Integer> breakPattern, int iterations) throws IOException {
     if (compilationDataSize == 0) {
@@ -86,15 +89,15 @@ class EnvelopeImage {
       aggregatedAudioIntArrayLeftMean[i] = aggregatedAudioIntArrayLeftMean[i] / currentSamples * 4;
       aggregatedAudioIntArrayRightMean[i] = aggregatedAudioIntArrayRightMean[i] / currentSamples * 4;
 
-      drawEnvelopeAmplitude(i, (double) aggregatedAudioIntArrayLeft[i] / 32767, (double) aggregatedAudioIntArrayRight[i] / 32767, env_red, env_green, env_blue);
-      drawEnvelopeAmplitude(i, (double) aggregatedAudioIntArrayLeftMean[i] / 32767, (double) aggregatedAudioIntArrayRightMean[i] / 32767, env_mean_red, env_mean_green, env_mean_blue);
+      drawEnvelopeAmplitude(i, (double) aggregatedAudioIntArrayLeft[i] / 32767, (double) aggregatedAudioIntArrayRight[i] / 32767, ENVELOPE_COLOR);
+      drawEnvelopeAmplitude(i, (double) aggregatedAudioIntArrayLeftMean[i] / 32767, (double) aggregatedAudioIntArrayRightMean[i] / 32767, ENVELOPE_MEAN_COLOR);
 
       i++;
     }
 
   }
 
-  private void drawEnvelopeAmplitude(int x_px_position, double amp_left, double amp_right, int red, int green, int blue) {
+  private void drawEnvelopeAmplitude(int x_px_position, double amp_left, double amp_right, String webColor) {
 
     if (1 < amp_left) {
       amp_left = 1;
@@ -119,23 +122,23 @@ class EnvelopeImage {
 
     // Draw left (which is from center to top)
     for (int i = centerPixel; i > ((int) (left * (1 - amp_left))); i--) {
-      setPixel(x_px_position, i, red, green, blue);
+      setPixel(x_px_position, i, webColor);
     }
 
     // Draw right (which is from center to bottom)
     for (int i = centerPixel; i < centerPixel + ((int) (right * (amp_right))); i++) {
-      setPixel(x_px_position, i, red, green, blue);
+      setPixel(x_px_position, i, webColor);
     }
   }
 
-  private void setPixel(int x, int y, int red, int green, int blue) {
-    writableImage.getPixelWriter().setColor(x, y, Color.rgb(red, green, blue));
+  private void setPixel(int x, int y, String webColor) {
+    writableImage.getPixelWriter().setColor(x, y, Color.web(webColor));
   }
 
-  private void fill(int red, int green, int blue) {
+  private void fill(String webColor) {
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        setPixel(j, i, red, green, blue);
+        setPixel(j, i, webColor);
       }
     }
   }

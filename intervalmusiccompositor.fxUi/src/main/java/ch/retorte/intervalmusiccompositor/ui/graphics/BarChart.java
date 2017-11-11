@@ -35,21 +35,17 @@ public class BarChart {
    */
   public BarChart(Integer width, Integer height) {
     image = new WritableImage(width, height);
-    fill(245, 245, 245);
+    fill("#f5f5f5");
   }
 
   /**
    * Fills the background of the bar chart.
    * 
-   * @param red
-   *          Red value for background (0-255)
-   * @param green
-   *          Green value for background (0-255)
-   * @param blue
-   *          Blue value for background (0-255)
+   * @param webColor
+   *          the color in hex representation (e.g. '#123456')
    */
-  private void fill(int red, int green, int blue) {
-    Color color = Color.rgb(red, green, blue);
+  private void fill(String webColor) {
+    Color color = Color.web(webColor);
 
     for (int i = 0; i < image.getHeight(); i++) {
       for (int j = 0; j < image.getWidth(); j++) {
@@ -89,10 +85,10 @@ public class BarChart {
     Font breakFont = Font.font("Sans Serif", FontWeight.NORMAL, 9);
     FontMetrics breakFontMetrics = Toolkit.getToolkit().getFontLoader().getFontMetrics(breakFont);
 
-    Color darkBlue = Color.rgb(33, 150, 243);
-    Color lightBlue = Color.rgb(100, 181, 246);
-    Color evenLighterBlue = Color.rgb(187, 222, 251);
-    Color soundEffectsColor = Color.rgb(139, 195, 74);
+    Color darkBlue = Color.web("#2196F3");
+    Color lightBlue = Color.web("#03A9F4");
+    Color evenLighterBlue = Color.web("#81D4FA");
+    Color soundEffectsColor = Color.web("#8BC34A");
     Color textColor = Color.GRAY;
 
     double top = 0;
