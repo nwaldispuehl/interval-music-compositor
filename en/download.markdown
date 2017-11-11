@@ -4,7 +4,7 @@ title: Download
 link: download
 ---
 
-**The current version 2.8.0 was issued on 3rd September 2017.**<br/>
+**The current version 2.8.1 was issued on 11th November 2017.**<br/>
 ([Changelog](https://raw.githubusercontent.com/nwaldispuehl/interval-music-compositor/master/intervalmusiccompositor.app/src/main/resources/CHANGELOG.txt)).
 
 The software is provided free of charge. Please give me [feedback](feedback_support) if you encounter errors or strange behavior.
@@ -26,6 +26,7 @@ The following variants are available for download: <br/>
 [Linux](#linux) <br/>
 [Mac OS X (>= 10.7)](#osx) <br/>
 [Microsoft Windows (7, 8, 10)](#windows) <br/>
+[Jar](#jar) <br/>
 [Legacy versions (also for Java 5, 6, and 7)](#legacy) <br/>
 [Source code](#source) 
 
@@ -43,9 +44,10 @@ We now have an IntervalMusicCompositor Android app:
 ## Linux version 
 [Download Linux version on Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
-Start the program by either double clicking on the start script or calling it from the shell:
+The `.deb` package can be double-clicked after download. It will then be installed by the systems package manager. After that, the program is available in the desktop managers application list.
+Alternatively it can be started from the command line:
 
-    user@localhost $ ./bin/IntervalMusicCompositor &
+    $ intervalmusiccompositor
 
 <a name="osx"></a>
 
@@ -60,6 +62,16 @@ After the download you can unzip it by double clicking on it. You can then drag 
 [Download Windows version on Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
 This is just a simple executable in a ZIP file which can be unpacked and then placed in the folder of your choice and executed directly.
+
+<a name="jar"></a>
+
+## JAR Version
+[Download JAR version on Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
+
+The JAR ('Java ARchive') version can be started directly with Java:
+
+    $ java -jar IntervalMusicCompositor-1.2.3.jar
+
 
 <a name="legacy"></a>
 
