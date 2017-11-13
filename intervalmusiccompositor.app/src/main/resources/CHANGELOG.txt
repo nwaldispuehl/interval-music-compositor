@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2017-xx-xx  2.8.2 (not released)
+--------------------------------------------------------------------------------
+FIX  #41    System diagnosis string shows wrong hdd space.
+
+
 2017-11-11  2.8.1
 --------------------------------------------------------------------------------
 IMP         Added more information to system diagnosis string.

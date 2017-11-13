@@ -59,27 +59,42 @@ public abstract class Platform {
   }
 
   private String getCurrentHeapSize() {
-    return asMegaBytes(Runtime.getRuntime().totalMemory());
+    return beautify(Runtime.getRuntime().totalMemory());
   }
 
   private String getFreeMemory() {
-    return asMegaBytes(Runtime.getRuntime().freeMemory());
+    return beautify(Runtime.getRuntime().freeMemory());
   }
 
   private String getMaximalHeapSize() {
-    return asMegaBytes(Runtime.getRuntime().maxMemory());
+    return beautify(Runtime.getRuntime().maxMemory());
   }
 
   private String getSystemMemory() {
-    return asMegaBytes(((com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean()).getTotalPhysicalMemorySize());
+    return beautify(((com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean()).getTotalPhysicalMemorySize());
+  }
+
+  private String getFreeHddSize() {
+    return beautify(new File(".").getFreeSpace());
   }
 
   private String getTotalHddSize() {
-    return asMegaBytes(new File(".").getTotalSpace());
+    return beautify(new File(".").getTotalSpace());
   }
 
-  private String asMegaBytes(long bytes) {
-    return bytes / (1024 * 1024) + " MB";
+  private String beautify(long bytes) {
+    return humanReadableByteCount(bytes, true);
+  }
+
+  /**
+   * Helper method taken from https://stackoverflow.com/a/3758880.
+   */
+  private static String humanReadableByteCount(long bytes, boolean si) {
+    int unit = si ? 1000 : 1024;
+    if (bytes < unit) return bytes + " B";
+    int exp = (int) (Math.log(bytes) / Math.log(unit));
+    String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
+    return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
   }
 
   public String getSystemDiagnosisString() {
@@ -91,7 +106,8 @@ public abstract class Platform {
         + "max heap: " + getMaximalHeapSize() + ", " //
         + "free mem: " + getFreeMemory() + ", " //
         + "total mem: " + getSystemMemory() + ", " //
-        + "free hdd: " + getTotalHddSize();
+        + "free hdd: " + getFreeHddSize() + ", " //
+        + "total hdd: " + getTotalHddSize();
   }
 
 
