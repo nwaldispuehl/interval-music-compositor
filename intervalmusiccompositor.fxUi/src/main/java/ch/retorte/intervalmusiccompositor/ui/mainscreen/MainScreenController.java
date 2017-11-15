@@ -29,8 +29,8 @@ import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import ch.retorte.intervalmusiccompositor.ui.soundeffects.SoundEffectsPane;
 import ch.retorte.intervalmusiccompositor.ui.updatecheck.UpdateCheckDialog;
 import ch.retorte.intervalmusiccompositor.ui.utils.AudioFileEncoderConverter;
+import ch.retorte.intervalmusiccompositor.ui.utils.WidgetTools;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -195,7 +195,6 @@ public class MainScreenController implements Initializable {
 
   @FXML
   private Label outputDirectory;
-  private ObservableValue<String> outputDirectoryData = new SimpleStringProperty();
 
   // Actions
 
@@ -225,6 +224,7 @@ public class MainScreenController implements Initializable {
 
   private ChangeListener<Void> musicAndBreakPatternChangeListener;
 
+  private WidgetTools widgetTools = new WidgetTools();
 
   //---- Methods
 
@@ -346,9 +346,9 @@ public class MainScreenController implements Initializable {
     breakPattern.textProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setBreakPattern(newValue));
     iterations.valueProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setIterations(newValue));
 
-    prepareSpinnerForListening(soundPeriod);
-    prepareSpinnerForListening(breakPeriod);
-    prepareSpinnerForListening(iterations);
+    widgetTools.makeListeningForManualValueUpdates(soundPeriod);
+    widgetTools.makeListeningForManualValueUpdates(breakPeriod);
+    widgetTools.makeListeningForManualValueUpdates(iterations);
 
     periodTabPane.getSelectionModel().selectedItemProperty().addListener(debugHandlerWith(periodTabPane.getId()));
     periodTabPane.getSelectionModel().selectedItemProperty().addListener(updateUiHandler());
@@ -556,13 +556,6 @@ public class MainScreenController implements Initializable {
 
   private boolean isSimpleTab(Tab tab) {
     return tab.equals(simpleTab);
-  }
-
-  private void prepareSpinnerForListening(Spinner<Integer> spinner) {
-    SpinnerValueFactory<Integer> valueFactory = spinner.getValueFactory();
-    TextFormatter<Integer> formatter = new TextFormatter<>(valueFactory.getConverter(), valueFactory.getValue());
-    spinner.getEditor().setTextFormatter(formatter);
-    valueFactory.valueProperty().bindBidirectional(formatter.valueProperty());
   }
 
   private void updateDurationEstimation() {

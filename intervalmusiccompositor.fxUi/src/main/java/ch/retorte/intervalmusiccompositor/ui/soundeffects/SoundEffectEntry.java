@@ -7,6 +7,7 @@ import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.ui.mainscreen.DebugMessageEventHandler;
+import ch.retorte.intervalmusiccompositor.ui.utils.WidgetTools;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +36,8 @@ class SoundEffectEntry extends HBox {
   private SoundEffectsProvider soundEffectsProvider;
   private MusicListControl musicListControl;
   private MessageProducer messageProducer;
+
+  private WidgetTools widgetTools = new WidgetTools();
 
 
   //---- FX fields
@@ -116,6 +119,8 @@ class SoundEffectEntry extends HBox {
     soundEffectStartTime.valueProperty().addListener(debugHandlerWith(soundEffectStartTime.getId()));
     soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
     soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> parent.updatePreferences());
+
+    widgetTools.makeListeningForManualValueUpdates(soundEffectStartTime);
   }
 
   private void initializeRemoveButton() {
