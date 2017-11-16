@@ -4,7 +4,7 @@ title: Download
 link: download
 ---
 
-**The current version 2.8.1 was issued on 11th November 2017.**<br/>
+**The current version 2.8.2 was issued on 16th November 2017.**<br/>
 ([Changelog](https://raw.githubusercontent.com/nwaldispuehl/interval-music-compositor/master/intervalmusiccompositor.app/src/main/resources/CHANGELOG.txt)).
 
 The software is provided free of charge. Please give me [feedback](feedback_support) if you encounter errors or strange behavior.
