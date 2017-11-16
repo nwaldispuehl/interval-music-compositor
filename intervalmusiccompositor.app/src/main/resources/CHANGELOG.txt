@@ -1,12 +1,12 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
-2017-xx-xx  2.8.2 (not released)
+2017-11-16  2.8.2
 --------------------------------------------------------------------------------
+IMP  #43    Add better debug output for compilation generation.
 FIX  #41    System diagnosis string shows wrong hdd space.
 FIX  #40    Sound effect start time not properly retrieved.
 FIX  #42    NPE when leaving a field (e.g. sound period duration) empty.
-IMP  #43    Add better debug output for compilation generation.
 
 
 2017-11-11  2.8.1
