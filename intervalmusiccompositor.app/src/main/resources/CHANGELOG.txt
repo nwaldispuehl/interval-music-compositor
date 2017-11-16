@@ -5,6 +5,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 FIX  #41    System diagnosis string shows wrong hdd space.
 FIX  #40    Sound effect start time not properly retrieved.
+FIX  #42    NPE when leaving a field (e.g. sound period duration) empty.
 
 
 2017-11-11  2.8.1

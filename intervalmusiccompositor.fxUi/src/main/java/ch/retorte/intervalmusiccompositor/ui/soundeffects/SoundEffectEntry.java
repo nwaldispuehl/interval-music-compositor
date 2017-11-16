@@ -120,7 +120,7 @@ class SoundEffectEntry extends HBox {
     soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
     soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> parent.updatePreferences());
 
-    widgetTools.makeListeningForManualValueUpdates(soundEffectStartTime);
+    widgetTools.prepare(soundEffectStartTime);
   }
 
   private void initializeRemoveButton() {

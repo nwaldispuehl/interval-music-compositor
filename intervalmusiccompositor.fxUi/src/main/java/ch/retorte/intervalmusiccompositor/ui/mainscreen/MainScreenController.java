@@ -346,9 +346,9 @@ public class MainScreenController implements Initializable {
     breakPattern.textProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setBreakPattern(newValue));
     iterations.valueProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setIterations(newValue));
 
-    widgetTools.makeListeningForManualValueUpdates(soundPeriod);
-    widgetTools.makeListeningForManualValueUpdates(breakPeriod);
-    widgetTools.makeListeningForManualValueUpdates(iterations);
+    widgetTools.prepare(soundPeriod);
+    widgetTools.prepare(breakPeriod);
+    widgetTools.prepare(iterations);
 
     periodTabPane.getSelectionModel().selectedItemProperty().addListener(debugHandlerWith(periodTabPane.getId()));
     periodTabPane.getSelectionModel().selectedItemProperty().addListener(updateUiHandler());
