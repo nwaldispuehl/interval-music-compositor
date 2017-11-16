@@ -7,9 +7,19 @@ import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
  */
 public class PlaylistItemFragment {
 
+  //---- Static
+
+  private static final String SILENT_BREAK_TRACK_NAME = "Silent Break";
+
+
+  //---- Fields
+
   private final IAudioFile audioFile;
   private final long extractStartInMilliseconds;
   private final long extractEndInMilliseconds;
+
+
+  //---- Constructor
 
   PlaylistItemFragment(IAudioFile audioFile, long extractStartInMilliseconds, long extractEndInMilliseconds) {
     this.audioFile = audioFile;
@@ -20,6 +30,9 @@ public class PlaylistItemFragment {
       throw new IllegalStateException("Extract exceeds track length.");
     }
   }
+
+
+  //---- Methods
 
   public boolean isSilentBreak() {
     return audioFile == null;
@@ -55,7 +68,7 @@ public class PlaylistItemFragment {
 
   @Override
   public String toString() {
-    String fileName = "Break";
+    String fileName = SILENT_BREAK_TRACK_NAME;
     if (!isSilentBreak()) {
       fileName = getAudioFile().getDisplayName();
     }

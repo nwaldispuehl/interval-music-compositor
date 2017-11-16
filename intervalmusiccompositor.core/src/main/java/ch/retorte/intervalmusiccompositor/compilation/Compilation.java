@@ -114,6 +114,8 @@ public class Compilation {
     }
     int musicSamples = soundHelper.getSamplesFromSeconds(musicExtractDurationS);
 
+    addDebugMessage("Processing next playlist item starting at " + timeSoFarMs + " ms");
+
     // Any fade out from the previous track
 
     if (playlist.isCrossFadingMode()) {
@@ -123,6 +125,7 @@ public class Compilation {
 
     // The music part
 
+    addDebugMessage("Adding music track '" + musicFragment + "' at " + timeSoFarMs + " ms");
     byte[] musicData = getMusicBytesFrom(playlist, musicFragment);
     arrayMerge16bit(musicData, 0, playlistItemData, 0, musicData.length);
 
@@ -142,6 +145,7 @@ public class Compilation {
         arrayMerge16bit(fadeOutBytes, 0, playlistItemData, musicSamples, fadeOutBytes.length);
       }
 
+      addDebugMessage("Adding break track '" + breakFragment + "' at " + (timeSoFarMs + (int)(musicExtractDurationS * 1000)) + " ms");
       byte[] breakData = getMusicBytesFrom(playlist, breakFragment);
       arrayMerge16bit(breakData, 0, playlistItemData, musicSamples, breakData.length);
     }
@@ -154,7 +158,7 @@ public class Compilation {
     }
 
     for (SoundEffectOccurrence effect : playlistItem.getSoundEffects()) {
-      addDebugMessage("Adding sound effect " + effect.getSoundEffect().getId() + " at " + (timeSoFarMs + effect.getTimeMillis()));
+      addDebugMessage("Adding sound effect " + effect.getSoundEffect().getId() + " at " + (timeSoFarMs + effect.getTimeMillis()) + " ms");
       addSoundEffectTo(playlistItemData, effect);
     }
 
