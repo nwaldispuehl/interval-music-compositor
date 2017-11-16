@@ -10,7 +10,7 @@ public class NullTolerantIntegerStringConverter extends IntegerStringConverter {
 
   //---- Fields
 
-  private Integer defaultValue = 0;
+  private static Integer DEFAULT_VALUE = 0;
 
 
   //---- Methods
@@ -19,7 +19,7 @@ public class NullTolerantIntegerStringConverter extends IntegerStringConverter {
   public Integer fromString(String value) {
     Integer result = super.fromString(value);
     if (result == null) {
-      return defaultValue;
+      return DEFAULT_VALUE;
     }
     return result;
   }
