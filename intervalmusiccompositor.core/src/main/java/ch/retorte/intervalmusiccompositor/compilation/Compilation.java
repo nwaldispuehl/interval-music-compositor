@@ -158,7 +158,7 @@ public class Compilation {
     }
 
     for (SoundEffectOccurrence effect : playlistItem.getSoundEffects()) {
-      addDebugMessage("Adding sound effect " + effect.getSoundEffect().getId() + " at " + (timeSoFarMs + effect.getTimeMillis()) + " ms");
+      addDebugMessage("Adding sound effect " + effect.getSoundEffect() + " at " + (timeSoFarMs + effect.getTimeMillis()) + " ms");
       addSoundEffectTo(playlistItemData, effect);
     }
 

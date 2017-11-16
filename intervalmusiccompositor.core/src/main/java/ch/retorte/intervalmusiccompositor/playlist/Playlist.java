@@ -260,35 +260,21 @@ public class Playlist implements Iterable<PlaylistItem> {
     return new PlaylistItemFragment(audioFile, startInMilliseconds, endInMilliseconds);
   }
 
-  long getTotalLength(List<PlaylistItem> playlistItems) {
-    long result = 0L;
+  long getTotalLength(Playlist playlist, List<PlaylistItem> playlistItems) {
+    long resultMs = 0L;
+
+    long blendTimeMs = playlist.getBlendTimeMs();
+    boolean isCrossFadingMode = playlist.isCrossFadingMode();
+
     for (PlaylistItem playlistItem : playlistItems) {
-      PlaylistItemFragment musicFragment = playlistItem.getMusicFragment();
-
-      result += musicFragment.getExtractDurationInMilliseconds();
-
-      if (isCrossFadingMode()) {
-        // Removing 1/2 of the blend time due to overlapping between the tracks.
-        result -= (blendTime * 500);
-      }
-
-      PlaylistItemFragment breakFragment = playlistItem.getBreakFragment();
-      if (breakFragment != null) {
-        result += breakFragment.getExtractDurationInMilliseconds();
-
-        if (isCrossFadingMode()) {
-          // Removing 1/2 of the blend time due to overlapping between the tracks.
-          result -= (blendTime * 500);
-        }
-      }
-
+      resultMs += playlistItem.getStrictItemLengthMs();
     }
 
-    if (isCrossFadingMode()) {
-      result += (blendTime * 1000);
+    if (isCrossFadingMode) {
+      resultMs += blendTimeMs;
     }
 
-    return result;
+    return resultMs;
   }
 
   public boolean isCrossFadingMode() {
@@ -308,7 +294,7 @@ public class Playlist implements Iterable<PlaylistItem> {
   }
 
   private long getTotalLength() {
-    return getTotalLength(playlistItems);
+    return getTotalLength(this, playlistItems);
   }
 
   public int getTotalLengthInSeconds() {

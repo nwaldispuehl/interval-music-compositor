@@ -1,7 +1,6 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
 import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
-import com.google.common.collect.Lists;
 
 import java.util.List;
 
@@ -61,14 +60,37 @@ public class PlaylistItem {
    * Returns the length of the single segment, that is, the length without overlapping parts.
    */
   public long getStrictItemLengthMs() {
-      long musicLengthMs = getMusicFragment().getExtractDurationInMilliseconds();
-      long breakLengthMs = hasBreakFragment() ? getBreakFragment().getExtractDurationInMilliseconds() : 0;
+    return getStrictMusicLengthMs() + getStrictBreakLengthMs();
+  }
 
-      if (playlist.isCrossFadingMode()) {
-        return musicLengthMs - playlist.getBlendTimeMs() + breakLengthMs - (hasBreakFragment() ? playlist.getBlendTimeMs() : 0);
-      }
-      else {
-        return musicLengthMs + breakLengthMs;
-      }
+  public long getMusicLengthMs() {
+    return getMusicFragment().getExtractDurationInMilliseconds();
+  }
+
+  public long getStrictMusicLengthMs() {
+    if (playlist.isCrossFadingMode()) {
+      return getMusicLengthMs() - playlist.getBlendTimeMs();
+    }
+    else {
+      return getMusicLengthMs();
+    }
+  }
+
+  public long getBreakLengthMs() {
+    if (hasBreakFragment()) {
+      return getBreakFragment().getExtractDurationInMilliseconds();
+    }
+    else {
+      return 0L;
+    }
+  }
+
+  public long getStrictBreakLengthMs() {
+    if (hasBreakFragment() && playlist.isCrossFadingMode()) {
+      return getBreakLengthMs() - playlist.getBlendTimeMs();
+    }
+    else {
+      return getBreakLengthMs();
+    }
   }
 }

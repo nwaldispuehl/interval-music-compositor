@@ -105,7 +105,7 @@ public class PlaylistTest {
     // then
     Assert.assertThat(tracks.size(), CoreMatchers.is(2));
     assertTrackLength(tracks, 5, 10);
-    assertTotalLength(tracks, 15);
+    assertTotalLength(playlist, tracks, 15);
   }
 
   @Test
@@ -124,7 +124,7 @@ public class PlaylistTest {
     // then
     assertThat(tracks.size(), is(2));
     assertTrackLength(tracks, 5, 2, 10, 2);
-    assertTotalLength(tracks, 19);
+    assertTotalLength(playlist, tracks, 19);
   }
 
   @Test
@@ -143,7 +143,7 @@ public class PlaylistTest {
     // then
     assertThat(tracks.size(), is(6));
     assertTrackLength(tracks, 9, 1, 7, 2, 9, 1, 7, 2, 9, 1, 7, 2);
-    assertTotalLength(tracks, 57);
+    assertTotalLength(playlist, tracks, 57);
   }
 
   @Test
@@ -163,7 +163,7 @@ public class PlaylistTest {
 
     // then
     assertThat(tracks.size(), is(6));
-    assertTotalLength(tracks, 30);
+    assertTotalLength(playlist, tracks, 30);
     assertTrackLength(tracks, 2, 1, 4, 1, 6, 1, 2, 1, 4, 1, 6, 1);
     assertThat(tracks.get(0).getMusicFragment().getAudioFile(), is(musicTrack20s));
     assertThat(tracks.get(1).getMusicFragment().getAudioFile(), is(musicTrack40s));
@@ -187,7 +187,7 @@ public class PlaylistTest {
 
     // then
     assertThat(tracks.size(), is(3));
-    assertTotalLength(tracks, 43);
+    assertTotalLength(playlist, tracks, 33);
     assertTrackLength(tracks, 4, 5, 9, 5, 15, 5);
   }
 
@@ -219,6 +219,7 @@ public class PlaylistTest {
     // then
     assertThat(tracks.size(), is(1));
     assertTrackLength(tracks, 25);
+    assertTotalLength(playlist, tracks, 25);
     assertTrue(sec(10) <= tracks.get(0).getMusicFragment().getExtractStartInMilliseconds());
     assertTrue(tracks.get(0).getMusicFragment().getExtractEndInMilliseconds() <= musicTrack60s.getDuration() - sec(10));
   }
@@ -242,6 +243,7 @@ public class PlaylistTest {
     // then
     assertThat(tracks.size(), is(3));
     assertTrackLength(tracks, 11, 1, 11, 1, 11, 1);
+    assertTotalLength(playlist, tracks, 36);
     assertThat(tracks.get(0).getMusicFragment().getAudioFile(), is(musicTrack60s));
     assertThat(tracks.get(1).getMusicFragment().getAudioFile(), is(musicTrack40s));
     assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack60s));
@@ -266,6 +268,7 @@ public class PlaylistTest {
     // then
     assertThat(tracks.size(), is(10));
     assertTrackLength(tracks, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10);
+    assertTotalLength(playlist, tracks, 100);
     assertThat(tracks.get(0).getMusicFragment().getAudioFile(), is(musicTrack60s));
     assertThat(tracks.get(1).getMusicFragment().getAudioFile(), is(musicTrack60s));
     assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack60s));
@@ -296,6 +299,7 @@ public class PlaylistTest {
     // then
     assertThat(tracks.size(), is(9));
     assertTrackLength(tracks, 10, 10, 10, 10, 10, 10, 10, 10, 10);
+    assertTotalLength(playlist, tracks, 90);
     assertThat(tracks.get(0).getMusicFragment().getAudioFile(), is(musicTrack60s));
     assertThat(tracks.get(1).getMusicFragment().getAudioFile(), is(musicTrack60s));
     assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack60s));
@@ -378,6 +382,7 @@ public class PlaylistTest {
     // then
     assertThat(tracks.size(), is(3));
     assertTrackLength(tracks, 10, 10, 10);
+    assertTotalLength(playlist, tracks, 30);
     assertThat(tracks.get(0).getMusicFragment().getAudioFile(), is(musicTrack20s));
     assertThat(tracks.get(1).getMusicFragment().getAudioFile(), is(musicTrack20s));
     assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack20s));
@@ -402,8 +407,8 @@ public class PlaylistTest {
     }
   }
 
-  private void assertTotalLength(List<PlaylistItem> tracks, int seconds) {
-    assertThat(new Playlist(msgPrd).getTotalLength(tracks), is(sec(seconds)));
+  private void assertTotalLength(Playlist p, List<PlaylistItem> tracks, int seconds) {
+    assertThat(new Playlist(msgPrd).getTotalLength(p, tracks), is(sec(seconds)));
   }
 
   private List<Integer> pattern(Integer... patternItems) {
