@@ -5,6 +5,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 ADD  #47    Reduce / adapt volume of break track.
 FIX  #46    BPM dialog: Music should stop when dialog is closed.
+FIX  #48    'Double whistle' special effect can be placed out of range.
 
 
 2017-11-16  2.8.2

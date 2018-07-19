@@ -137,7 +137,7 @@ class SoundEffectEntry extends HBox {
   }
 
   private int getLatestStartTimeWith(int maximalTrackDuration) {
-    return maximalTrackDuration - (int)(soundEffectOccurrence.getSoundEffect().getDurationMillis() / 1000.0);
+    return maximalTrackDuration - (int) Math.ceil(soundEffectOccurrence.getSoundEffect().getDurationMillis() / 1000.0);
   }
 
   private void updateSelectedSoundEffect() {
