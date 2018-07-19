@@ -115,12 +115,13 @@
                         </RadioButton>
                     </HBox>
                     <Separator prefWidth="200.0"/>
-                    <HBox alignment="BASELINE_CENTER">
+                    <HBox alignment="BASELINE_CENTER" spacing="5">
                         <padding>
                             <Insets bottom="5.0" top="5.0"/>
                         </padding>
-                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="%ui.form.break_list.label"
-                               HBox.hgrow="ALWAYS"/>
+                        <Label alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" text="%ui.form.break_list.label" HBox.hgrow="ALWAYS"/>
+                        <Label  fx:id="breakVolumeLabel" styleClass="legend"/>
+                        <Slider fx:id="breakVolume" styleClass="volumeSlider"  value="100" maxWidth="84" maxHeight="24" snapToTicks="true" showTickMarks="false" minorTickCount="0" showTickLabels="false" min="10" max="100" majorTickUnit="10"/>
                         <Button mnemonicParsing="false" fx:id="addBreakTrackButton">
                             <graphic>
                                 <ImageView>
@@ -194,7 +195,7 @@
                                     </VBox>
                                 </AnchorPane>
                             </Tab>
-                            <Tab fx:id="complexTab" text="%ui.form.advanced_pane.title">
+                            <Tab text="%ui.form.advanced_pane.title">
                                 <AnchorPane>
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>

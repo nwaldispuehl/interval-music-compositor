@@ -19,7 +19,7 @@ public class PlaylistItemFragmentTest {
   @Test
   public void shouldConsiderItselfSilentBreakIfAudioFileIsNull() {
     // when
-    PlaylistItemFragment playlistItemFragment = new PlaylistItemFragment(null, 1, 2);
+    PlaylistItemFragment playlistItemFragment = new PlaylistItemFragment(null, 1, 1, 2);
 
     // then
     assertTrue(playlistItemFragment.isSilentBreak());
@@ -30,7 +30,7 @@ public class PlaylistItemFragmentTest {
     // given
     IAudioFile audioFile = mock(IAudioFile.class);
     when(audioFile.getDuration()).thenReturn(10000L);
-    PlaylistItemFragment playlistItemFragment = new PlaylistItemFragment(audioFile, 500L, 1500L);
+    PlaylistItemFragment playlistItemFragment = new PlaylistItemFragment(audioFile,  1,500L, 1500L);
 
     // when
     long duration = playlistItemFragment.getExtractDurationInMilliseconds();

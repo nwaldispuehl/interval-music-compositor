@@ -48,11 +48,15 @@ public class CompilationTest {
   @Before
   public void setup() throws IOException, UnsupportedAudioFileException {
     musicFiles.add(audioFileFrom(TEST_SOUND));
+    breakFiles.add(audioFileFrom(TEST_SOUND));
   }
 
   @After
   public void cleanup() throws IOException {
     for (IAudioFile f : musicFiles) {
+      f.removeCache();
+    }
+    for (IAudioFile f : breakFiles) {
       f.removeCache();
     }
   }
@@ -95,13 +99,49 @@ public class CompilationTest {
     assertThat(compilation.length, is(44100 * 2 * 12));
   }
 
+  @Test
+  public void shouldSetBreakVolume() throws IOException, UnsupportedAudioFileException {
+    // given
+    Playlist playList = playlistWith(1, l(1), l(1), 0.5);
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+    // when
+    sut.generateCompilation(playList, baos);
+
+    // then
+    // Somehow check byte array...
+    byte[] compilation = baos.toByteArray();
+    assertThat(compilation.length, is(44100 * 2 * 2 * 2));
+
+    // Sound part
+    assertThat(compilation[0], is(b(0)));
+    assertThat(compilation[1], is(b(0)));
+    assertThat(compilation[88198], is(b(-20)));
+    assertThat(compilation[88199], is(b(-63)));
+    assertThat(compilation[176398], is(b(0)));
+    assertThat(compilation[176399], is(b(0)));
+
+    // Break part
+    assertThat(compilation[176400], is(b(0)));
+    assertThat(compilation[176401], is(b(0)));
+    assertThat(compilation[264598], is(b(-10)));
+    assertThat(compilation[264599], is(b(-32)));
+    assertThat(compilation[352798], is(b(0)));
+    assertThat(compilation[352798], is(b(0)));
+
+  }
+
 
   //---- Helper methods
 
   private Playlist playlistWith(int iterations, List<Integer> musicIntervals, List<Integer> breakIntervals) {
+    return playlistWith(iterations, musicIntervals, breakIntervals, 1);
+  }
+
+  private Playlist playlistWith(int iterations, List<Integer> musicIntervals, List<Integer> breakIntervals, double breakVolume) {
     CompilationParameters parameters = new CompilationParameters();
     Playlist playlist = new Playlist(parameters, m -> {});
-    playlist.generatePlaylist(musicFiles, musicIntervals, breakFiles, breakIntervals, iterations, newArrayList());
+    playlist.generatePlaylist(musicFiles, musicIntervals, breakFiles, breakIntervals, breakVolume, iterations, newArrayList());
     return playlist;
   }
 

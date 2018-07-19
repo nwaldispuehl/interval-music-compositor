@@ -106,9 +106,17 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     return maxSample;
   }
 
-  public AudioInputStream getLeveledStream(AudioInputStream audioInputStream, float desiredRelativeAmplitude) {
+  /**
+   * Adjusts the 'volume' (i.e. the amplitude) of the provided audio stream according to the measured volume ratio and an arbitrary volume factor.
+   *
+   * @param audioInputStream the stream holding the to be processed audio data.
+   * @param desiredRelativeAmplitude the relative amplitude to match.
+   * @param volume an arbitrary control factor, with e.g. 0.5 for half the volume.
+   * @return the amplified audio stream.
+   */
+  public AudioInputStream getLeveledStream(AudioInputStream audioInputStream, float desiredRelativeAmplitude, double volume) {
     AmplitudeAudioInputStream amplitudeAudioInputStream = new AmplitudeAudioInputStream(audioInputStream);
-    amplitudeAudioInputStream.setAmplitudeLinear(desiredRelativeAmplitude);
+    amplitudeAudioInputStream.setAmplitudeLinear((float) (desiredRelativeAmplitude * volume));
     return amplitudeAudioInputStream;
   }
 

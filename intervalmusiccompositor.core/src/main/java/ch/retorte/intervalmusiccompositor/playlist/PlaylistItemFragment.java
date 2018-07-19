@@ -15,14 +15,16 @@ public class PlaylistItemFragment {
   //---- Fields
 
   private final IAudioFile audioFile;
+  private final double volume;
   private final long extractStartInMilliseconds;
   private final long extractEndInMilliseconds;
 
 
   //---- Constructor
 
-  PlaylistItemFragment(IAudioFile audioFile, long extractStartInMilliseconds, long extractEndInMilliseconds) {
+  PlaylistItemFragment(IAudioFile audioFile, double volume, long extractStartInMilliseconds, long extractEndInMilliseconds) {
     this.audioFile = audioFile;
+    this.volume = volume;
     this.extractStartInMilliseconds = extractStartInMilliseconds;
     this.extractEndInMilliseconds = extractEndInMilliseconds;
 
@@ -48,6 +50,10 @@ public class PlaylistItemFragment {
 
   public IAudioFile getAudioFile() {
     return audioFile;
+  }
+
+  public double getVolume() {
+    return volume;
   }
 
   public long getExtractStartInMilliseconds() {

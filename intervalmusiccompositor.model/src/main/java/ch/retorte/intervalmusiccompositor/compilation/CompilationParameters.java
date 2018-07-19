@@ -25,6 +25,7 @@ public class CompilationParameters {
   public static final Double DEFAULT_BLEND_DURATION = 1d;
   public static final EnumerationMode DEFAULT_ENUMERATION_MODE = SINGLE_EXTRACT;
   public static final ListSortMode DEFAULT_LIST_SORT_MODE = SORT;
+  private static final double DEFAULT_BREAK_VOLUME = 1;
 
   private static final String PATTERN_SEPARATOR = ",";
 
@@ -42,6 +43,7 @@ public class CompilationParameters {
   private String outputPath;
   private String encoderIdentifier;
   private String defaultOutputPath;
+  private double breakVolume = DEFAULT_BREAK_VOLUME;
 
 
   //---- Methods
@@ -214,7 +216,7 @@ public class CompilationParameters {
     return durationEstimationValue;
   }
 
-  public boolean hasBreakPattern() {
+  boolean hasBreakPattern() {
     return breakPattern.stream().anyMatch(i -> 0 < i);
   }
 
@@ -235,5 +237,13 @@ public class CompilationParameters {
       }
     }
     return smallestPatternPair;
+  }
+
+  public void setBreakVolume(double breakVolume) {
+    this.breakVolume = breakVolume;
+  }
+
+  public double getBreakVolume() {
+    return breakVolume;
   }
 }

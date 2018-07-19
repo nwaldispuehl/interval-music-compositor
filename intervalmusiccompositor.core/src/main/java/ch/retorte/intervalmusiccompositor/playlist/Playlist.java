@@ -76,9 +76,10 @@ public class Playlist implements Iterable<PlaylistItem> {
                                List<Integer> musicPattern,
                                List<IAudioFile> breakFiles,
                                List<Integer> breakPattern,
+                               double breakVolume,
                                Integer iterations,
                                List<SoundEffectOccurrence> soundEffectOccurrences) {
-    playlistItems = generatePlaylistFrom(musicFiles, musicPattern, breakFiles, breakPattern, iterations, soundEffectOccurrences);
+    playlistItems = generatePlaylistFrom(musicFiles, musicPattern, breakFiles, breakPattern, breakVolume, iterations, soundEffectOccurrences);
   }
 
   @VisibleForTesting
@@ -86,6 +87,7 @@ public class Playlist implements Iterable<PlaylistItem> {
                                                   List<Integer> musicPattern,
                                                   List<IAudioFile> breakFiles,
                                                   List<Integer> breakPattern,
+                                                  double breakVolume,
                                                   Integer iterations,
                                                   List<SoundEffectOccurrence> soundEffectOccurrences) {
 
@@ -99,7 +101,7 @@ public class Playlist implements Iterable<PlaylistItem> {
     }
 
     List<PlaylistItemFragment> musicTracks = createMusicPlaylist(musicFiles, musicPattern, iterations);
-    List<PlaylistItemFragment> breakTracks = createBreakPlaylist(breakFiles, breakPattern, iterations, musicPattern.size());
+    List<PlaylistItemFragment> breakTracks = createBreakPlaylist(breakFiles, breakPattern, iterations, musicPattern.size(), breakVolume);
 
     return createItemsWith(musicTracks, breakTracks, soundEffectOccurrences);
   }
@@ -133,7 +135,7 @@ public class Playlist implements Iterable<PlaylistItem> {
       IAudioFile currentAudioFile = musicFiles.get((musicTrackCounter) % musicFiles.size());
       int currentSoundPattern = musicPattern.get(musicPatternCounter % musicPattern.size());
 
-      PlaylistItemFragment newMusicTrack = createPlaylistItemFrom(currentAudioFile, currentSoundPattern * 1000);
+      PlaylistItemFragment newMusicTrack = createPlaylistItemFrom(currentAudioFile, 1, currentSoundPattern * 1000);
       if (newMusicTrack != null) {
         musicPlaylist.add(newMusicTrack);
         musicPatternCounter++;
@@ -165,7 +167,7 @@ public class Playlist implements Iterable<PlaylistItem> {
     Collections.shuffle(audioFiles, random);
   }
 
-  private List<PlaylistItemFragment> createBreakPlaylist(List<IAudioFile> breakFiles, List<Integer> breakPattern, Integer iterations, int musicPatternSize) {
+  private List<PlaylistItemFragment> createBreakPlaylist(List<IAudioFile> breakFiles, List<Integer> breakPattern, Integer iterations, int musicPatternSize, double volume) {
     List<PlaylistItemFragment> breakPlaylist = Lists.newArrayList();
 
     if (breakPattern.isEmpty() || hasSingleZero(breakPattern)) {
@@ -182,7 +184,7 @@ public class Playlist implements Iterable<PlaylistItem> {
       if (!breakFiles.isEmpty()) {
         IAudioFile currentBreakFile = breakFiles.get((breakTrackCounter % musicPatternSize) % breakFiles.size());
 
-        PlaylistItemFragment newBreakTrack = createPlaylistItemFrom(currentBreakFile, currentBreakPatternMs);
+        PlaylistItemFragment newBreakTrack = createPlaylistItemFrom(currentBreakFile, volume, currentBreakPatternMs);
         if (newBreakTrack != null) {
           breakPlaylist.add(new BreakPlaylistItemFragment(newBreakTrack));
         }
@@ -195,7 +197,7 @@ public class Playlist implements Iterable<PlaylistItem> {
         if (isCrossFadingMode()) {
           currentBreakPatternMs += (long) (blendTime * 1000);
         }
-        breakPlaylist.add(new BreakPlaylistItemFragment(createPlaylistItem(null, 0L, currentBreakPatternMs)));
+        breakPlaylist.add(new BreakPlaylistItemFragment(createPlaylistItem(null, volume, 0L, currentBreakPatternMs)));
       }
 
       breakTrackCounter++;
@@ -213,7 +215,7 @@ public class Playlist implements Iterable<PlaylistItem> {
     return breakPattern.size() == 1 && breakPattern.iterator().next() == 0;
   }
 
-  private PlaylistItemFragment createPlaylistItemFrom(IAudioFile audioFile, long extractLengthInMilliseconds) {
+  private PlaylistItemFragment createPlaylistItemFrom(IAudioFile audioFile, double volume, long extractLengthInMilliseconds) {
 
     long maximalRangeForDuration;
     long trackStart = startCutOffInMilliseconds;
@@ -249,15 +251,15 @@ public class Playlist implements Iterable<PlaylistItem> {
       currentProgress.put(audioFile, trackStart + extractLengthInMilliseconds);
     }
 
-    return createPlaylistItem(audioFile, trackStart, trackStart + extractLengthInMilliseconds);
+    return createPlaylistItem(audioFile, volume, trackStart, trackStart + extractLengthInMilliseconds);
   }
 
   boolean hasSoundEffects() {
     return playlistItems.stream().anyMatch(PlaylistItem::hasSoundEffects);
   }
 
-  private PlaylistItemFragment createPlaylistItem(IAudioFile audioFile, Long startInMilliseconds, Long endInMilliseconds) {
-    return new PlaylistItemFragment(audioFile, startInMilliseconds, endInMilliseconds);
+  private PlaylistItemFragment createPlaylistItem(IAudioFile audioFile, double volume, Long startInMilliseconds, Long endInMilliseconds) {
+    return new PlaylistItemFragment(audioFile, volume, startInMilliseconds, endInMilliseconds);
   }
 
   long getTotalLength(Playlist playlist, List<PlaylistItem> playlistItems) {

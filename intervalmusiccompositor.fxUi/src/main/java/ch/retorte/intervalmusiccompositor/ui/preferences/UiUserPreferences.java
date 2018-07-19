@@ -40,6 +40,7 @@ public class UiUserPreferences extends UserPreferences {
   private static final String BLEND_DURATION_KEY = "blendDuration";
 
   private static final String SOUND_EFFECTS_KEY = "soundEffects";
+  private static final String BREAK_VOLUME_KEY = "breakVolume";
 
   private static final String OUTPUT_FILE_FORMAT_KEY = "outputFileFormat";
   private static final String OUTPUT_DIRECTORY_KEY = "outputDirectory";
@@ -181,6 +182,14 @@ public class UiUserPreferences extends UserPreferences {
 
   public List<SoundEffectOccurrence> loadSoundEffectOccurrencesWith(SoundEffectsProvider soundEffectsProvider) {
     return deserializeSoundEffects(loadString(SOUND_EFFECTS_KEY, ""), soundEffectsProvider);
+  }
+
+  public void saveBreakVolume(int breakVolume) {
+    saveInt(BREAK_VOLUME_KEY, breakVolume);
+  }
+
+  public int loadBreakVolume(int defaultBreakVolume) {
+    return loadInt(BREAK_VOLUME_KEY, defaultBreakVolume);
   }
 
   public void saveOutputFileFormat(String outputFileFormat) {

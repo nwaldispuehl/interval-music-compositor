@@ -222,7 +222,7 @@ public class CompilationGenerator implements Runnable {
 
   private void createPlaylist() {
     playlist = new Playlist(compilationParameters, messageProducer);
-    playlist.generatePlaylist(musicPlaylistCandidates, compilationParameters.getMusicPattern(), breakPlaylistCandidates, compilationParameters.getBreakPattern(), compilationParameters.getIterations(), compilationParameters.getSoundEffectOccurrences());
+    playlist.generatePlaylist(musicPlaylistCandidates, compilationParameters.getMusicPattern(), breakPlaylistCandidates, compilationParameters.getBreakPattern(), compilationParameters.getBreakVolume(), compilationParameters.getIterations(), compilationParameters.getSoundEffectOccurrences());
   }
 
   private void createPlaylistReport() {

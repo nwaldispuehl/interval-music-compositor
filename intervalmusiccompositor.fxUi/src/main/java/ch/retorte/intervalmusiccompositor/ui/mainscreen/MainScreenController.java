@@ -127,6 +127,12 @@ public class MainScreenController implements Initializable {
   private Button addBreakTrackButton;
 
   @FXML
+  private Label breakVolumeLabel;
+
+  @FXML
+  private Slider breakVolume;
+
+  @FXML
   private DraggableAudioFileBreakListView breakTrackListView;
 
   // Visual
@@ -335,6 +341,17 @@ public class MainScreenController implements Initializable {
   private void initializeBreakTrackList() {
     breakTrackListView.initializeWith(musicListControl.getBreakList(), bundle, messageProducer, musicListControl, e -> Platform.runLater(this::updateTrackCount));
     addBreakTrackButton.setOnAction(event -> openFileChooserFor(breakTrackListView));
+
+    breakVolume.valueProperty().addListener((observable, oldValue, newValue) -> {
+      double volume = newValue.doubleValue();
+      if (((int)volume) == volume) {
+        /* The slider fires not only for the configured integer positions, but also in between (e.g. for 1.023323). We skip such data. */
+        breakVolumeLabel.setText(bundle.getString("ui.form.break_list.volume", volume));
+        compilationParameters.setBreakVolume(volume / 100.0);
+      }
+    });
+    breakVolume.valueProperty().addListener(debugHandlerWith(breakVolume.getId()));
+    breakVolumeLabel.setText(bundle.getString("ui.form.break_list.volume", breakVolume.valueProperty().intValue()));
   }
 
   private void initializeDurationControls() {
@@ -355,7 +372,6 @@ public class MainScreenController implements Initializable {
 
     soundPeriod.valueProperty().addListener(debugHandlerWith(soundPeriod.getId()));
     soundPeriod.valueProperty().addListener(updateUiHandler());
-
 
     breakPeriod.valueProperty().addListener(debugHandlerWith(breakPeriod.getId()));
     breakPeriod.valueProperty().addListener(updateUiHandler());
@@ -455,6 +471,8 @@ public class MainScreenController implements Initializable {
     soundPattern.textProperty().setValue(userPreferences.loadSoundPattern(""));
     breakPattern.textProperty().setValue(userPreferences.loadBreakPattern(""));
 
+    breakVolume.valueProperty().setValue(userPreferences.loadBreakVolume(100));
+
     Tab selectedTab = getPeriodTabFor(userPreferences.loadPeriodTab("simpleTab"));
     periodTabPane.getSelectionModel().select(selectedTab);
     updatePeriodSelectionWith(selectedTab);
@@ -479,6 +497,15 @@ public class MainScreenController implements Initializable {
     breakPeriod.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPeriod(newValue));
     soundPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSoundPattern(newValue));
     breakPattern.textProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveBreakPattern(newValue));
+
+    breakVolume.valueProperty().addListener((observable, oldValue, newValue) -> {
+      double volume = newValue.doubleValue();
+      if (((int)volume) == volume) {
+        /* The slider fires not only for the configured integer positions, but also in between (e.g. for 1.023323). We skip such data. */
+        userPreferences.saveBreakVolume((int) volume);
+      }
+    });
+
     periodTabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> userPreferences.savePeriodTab(newValue.getId()));
 
     iterations.valueProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveIterations(newValue));

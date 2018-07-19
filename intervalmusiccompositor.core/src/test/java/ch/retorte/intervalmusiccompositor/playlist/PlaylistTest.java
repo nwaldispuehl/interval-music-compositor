@@ -73,7 +73,7 @@ public class PlaylistTest {
     musicList.add(musicTrack20s);
 
     // when
-    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 3, soundEffectOccurrences);
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern,  1,3, soundEffectOccurrences);
 
     // then
     assertThat(tracks.size(), is(0));
@@ -86,7 +86,7 @@ public class PlaylistTest {
     musicPattern = pattern(1, 2, 3);
 
     // when
-    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 3, soundEffectOccurrences);
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1,  3, soundEffectOccurrences);
 
     // then
     assertThat(tracks.size(), is(0));
@@ -100,7 +100,7 @@ public class PlaylistTest {
     musicPattern = pattern(5, 10);
 
     // when
-    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, soundEffectOccurrences);
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1,  1, soundEffectOccurrences);
 
     // then
     Assert.assertThat(tracks.size(), CoreMatchers.is(2));
@@ -119,7 +119,7 @@ public class PlaylistTest {
     breakPattern = pattern(2);
 
     // when
-    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, soundEffectOccurrences);
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences);
 
     // then
     assertThat(tracks.size(), is(2));
@@ -138,7 +138,7 @@ public class PlaylistTest {
     breakPattern = pattern(1, 2, 3, 4);
 
     // when
-    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 3, soundEffectOccurrences);
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1,3, soundEffectOccurrences);
 
     // then
     assertThat(tracks.size(), is(6));
@@ -159,7 +159,7 @@ public class PlaylistTest {
     breakPattern = pattern(1);
 
     // when
-    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 2, soundEffectOccurrences);
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 2, soundEffectOccurrences);
 
     // then
     assertThat(tracks.size(), is(6));
@@ -183,7 +183,7 @@ public class PlaylistTest {
     breakPattern = pattern(3);
 
     // when
-    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, soundEffectOccurrences);
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences);
 
     // then
     assertThat(tracks.size(), is(3));
@@ -201,7 +201,7 @@ public class PlaylistTest {
     musicPattern = pattern(11);
 
     // when
-    playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, soundEffectOccurrences);
+    playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences);
   }
 
   @Test
@@ -214,7 +214,7 @@ public class PlaylistTest {
     musicPattern = pattern(25);
 
     // when
-    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, soundEffectOccurrences);
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences);
 
     // then
     assertThat(tracks.size(), is(1));
@@ -238,7 +238,7 @@ public class PlaylistTest {
     breakPattern = pattern(1);
 
     // when
-    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 3, soundEffectOccurrences);
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 3, soundEffectOccurrences);
 
     // then
     assertThat(tracks.size(), is(3));
@@ -263,7 +263,7 @@ public class PlaylistTest {
     musicPattern = pattern(10);
 
     // when
-    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 10, soundEffectOccurrences);
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 10, soundEffectOccurrences);
 
     // then
     assertThat(tracks.size(), is(10));
@@ -294,7 +294,7 @@ public class PlaylistTest {
     musicPattern = pattern(10);
 
     // when
-    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 9, soundEffectOccurrences);
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 9, soundEffectOccurrences);
 
     // then
     assertThat(tracks.size(), is(9));
@@ -321,7 +321,7 @@ public class PlaylistTest {
     soundEffectOccurrences.add(new SoundEffectOccurrence(soundEffect1, 15000));
 
     // when
-    playlist.generatePlaylist(musicList, musicPattern, breakList, breakPattern, 3, soundEffectOccurrences);
+    playlist.generatePlaylist(musicList, musicPattern, breakList, breakPattern, 1, 3, soundEffectOccurrences);
 
     // then
     assertTrue(playlist.hasSoundEffects());
@@ -339,7 +339,7 @@ public class PlaylistTest {
     soundEffectOccurrences.add(new SoundEffectOccurrence(soundEffect1, 6000));
 
     // when
-    playlist.generatePlaylist(musicList, musicPattern, breakList, breakPattern, 5, soundEffectOccurrences);
+    playlist.generatePlaylist(musicList, musicPattern, breakList, breakPattern, 1, 5, soundEffectOccurrences);
 
     // then
     assertTrue(playlist.hasSoundEffects());
@@ -356,7 +356,7 @@ public class PlaylistTest {
     soundEffectOccurrences.add(new SoundEffectOccurrence(soundEffect1, 9000));
 
     // when
-    playlist.generatePlaylist(musicList, musicPattern, breakList, breakPattern, 2, soundEffectOccurrences);
+    playlist.generatePlaylist(musicList, musicPattern, breakList, breakPattern, 1, 2, soundEffectOccurrences);
 
     // then
     assertTrue(playlist.hasSoundEffects());
@@ -377,7 +377,7 @@ public class PlaylistTest {
     musicPattern = pattern(10);
 
     // when
-    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 3, soundEffectOccurrences);
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 3, soundEffectOccurrences);
 
     // then
     assertThat(tracks.size(), is(3));

@@ -254,7 +254,7 @@ public class Compilation {
       return soundHelper.generateSilenceOfLength((playlistItemFragment.getExtractDurationInSeconds()));
     }
 
-    AudioInputStream leveledStream = soundHelper.getLeveledStream(playlistItemFragment.getAudioFile().getAudioInputStream(), getVolumeRatioOf(playlistItemFragment));
+    AudioInputStream leveledStream = soundHelper.getLeveledStream(playlistItemFragment.getAudioFile().getAudioInputStream(), getVolumeRatioOf(playlistItemFragment), playlistItemFragment.getVolume());
     return soundHelper.getStreamPart(leveledStream, playlistItemFragment.getExtractStartInMilliseconds(), playlistItemFragment.getExtractDurationInMilliseconds());
   }
 

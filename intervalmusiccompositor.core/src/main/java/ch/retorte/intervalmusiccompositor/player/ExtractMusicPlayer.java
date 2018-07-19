@@ -51,7 +51,7 @@ public class ExtractMusicPlayer extends StreamMusicPlayer implements AudioFileMu
     AudioInputStream inputStream = null;
     try {
       inputStream = soundHelper.getLeveledStream(soundHelper.getStreamExtract(audioFile.getAudioInputStream(), extractStart, extractLength),
-          audioFile.getVolumeRatio());
+          audioFile.getVolumeRatio(), 1);
     }
     catch (IOException e) {
       messageProducer.send(new ErrorMessage(e.getMessage()));
