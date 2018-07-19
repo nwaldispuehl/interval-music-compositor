@@ -105,6 +105,9 @@ public class BpmWindow {
       stage.setMinWidth(stage.getWidth());
       stage.setMinHeight(stage.getHeight());
     });
+
+    // We catch also the click on the upper right 'x' with this.
+    stage.setOnCloseRequest(event -> close());
   }
 
   private void initialize() {
@@ -130,7 +133,7 @@ public class BpmWindow {
   }
 
   private void stopPlayingMusic() {
-    musicListControl.stopMusic();
+    getMusicListControl().stopMusic();
   }
 
   private void initializeBpmIndicator() {

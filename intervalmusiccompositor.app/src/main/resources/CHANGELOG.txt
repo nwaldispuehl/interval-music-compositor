@@ -3,6 +3,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 
 2018-xx-xx  2.x.x (not yet released)
 --------------------------------------------------------------------------------
+FIX  #46    BPM dialog: Music should stop when dialog is closed.
 
 
 2017-11-16  2.8.2
