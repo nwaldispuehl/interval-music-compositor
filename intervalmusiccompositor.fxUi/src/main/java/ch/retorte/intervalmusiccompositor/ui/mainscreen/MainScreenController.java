@@ -455,11 +455,13 @@ public class MainScreenController implements Initializable {
 
   private void loadStoredPreferenceValues() {
     List<File> musicTrackInputList = userPreferences.loadMusicTrackList();
+    addDebugMessage("Retrieved music track files: " + musicTrackInputList);
     for (File f : musicTrackInputList) {
       musicTrackListView.addTrack(f);
     }
 
     List<File> breakTrackInputList = userPreferences.loadBreakTrackList();
+    addDebugMessage("Retrieved break track files: " + breakTrackInputList);
     for (File f : breakTrackInputList) {
       breakTrackListView.addTrack(f);
     }
