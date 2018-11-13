@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2018-xx-xx  2.9.1 (not yet released)
+--------------------------------------------------------------------------------
+FIX  #50    Stale output directory yields error.
+
+
 2018-07-19  2.9.0
 --------------------------------------------------------------------------------
 ADD  #47    Reduce / adapt volume of break track.
