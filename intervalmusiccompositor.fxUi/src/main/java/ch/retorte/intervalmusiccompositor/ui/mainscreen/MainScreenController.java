@@ -564,6 +564,11 @@ public class MainScreenController implements Initializable {
 
   private void openDirectoryChooser() {
     DirectoryChooser directoryChooser = new DirectoryChooser();
+
+    if (!new File(compilationParameters.getOutputPath()).exists()) {
+      resetOutputDirectory();
+    }
+
     directoryChooser.setInitialDirectory(new File(compilationParameters.getOutputPath()));
     directoryChooser.setTitle(bundle.getString("ui.form.outfile_dialog_title"));
     File file = directoryChooser.showDialog(getWindow());

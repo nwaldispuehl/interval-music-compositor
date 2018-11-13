@@ -167,10 +167,18 @@ public class CompilationGenerator implements Runnable {
     if (correctedOutputPath == null || correctedOutputPath.equals("")) {
       correctedOutputPath = bundle.getString("imc.workPath");
     }
+    createIfNonExisting(new File(correctedOutputPath));
 
     String identification_prefix = createMusicAndBreakPatternPrefixWith(compilationParameters.getMusicPattern(), compilationParameters.getBreakPattern(), compilationParameters.getIterations());
     playlist_outfile = identification_prefix + FILENAME_PART_DELIMITER + bundle.getString("imc.outfile.playlist.suffix");
     outfile_prefix = identification_prefix + FILENAME_PART_DELIMITER + bundle.getString("imc.outfile.sound.infix");
+  }
+
+  private void createIfNonExisting(File f) {
+    if (!f.exists()) {
+      boolean success = f.mkdirs();
+      addDebugMessage("Attempted to create non-existing output path: " + f + ". Success: " + success);
+    }
   }
 
   @VisibleForTesting
