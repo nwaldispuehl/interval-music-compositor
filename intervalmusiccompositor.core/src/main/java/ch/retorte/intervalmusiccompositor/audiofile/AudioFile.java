@@ -5,7 +5,6 @@ import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.IN_PR
 import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.OK;
 import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.QUEUED;
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.newLinkedList;
 
 import java.io.File;
@@ -21,7 +20,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import ch.retorte.intervalmusiccompositor.ChangeListener;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
-import com.google.common.collect.Lists;
 import org.tritonus.sampled.file.WaveAudioFileReader;
 import org.tritonus.sampled.file.WaveAudioFileWriter;
 
@@ -34,7 +32,7 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
 
 /**
- * @author nw
+ * Holds the audio resource of the software with all its relevant properties as for example volume, or beats per minute.
  */
 public class AudioFile extends File implements IAudioFile {
 
@@ -75,8 +73,7 @@ public class AudioFile extends File implements IAudioFile {
 
   private final Collection<ChangeListener<IAudioFile>> changeListeners = newLinkedList();
 
-  public AudioFile(String pathname, SoundHelper soundHelper, List<AudioFileDecoder> audioFileDecoders, BPMReaderWriter bpmReaderWriter,
-                   BPMCalculator bpmCalculator, AudioStandardizer audioStandardizer, MessageProducer messageProducer) {
+  public AudioFile(String pathname, SoundHelper soundHelper, List<AudioFileDecoder> audioFileDecoders, BPMReaderWriter bpmReaderWriter, BPMCalculator bpmCalculator, AudioStandardizer audioStandardizer, MessageProducer messageProducer) {
     super(pathname);
     this.soundHelper = soundHelper;
     this.audioFileDecoders = audioFileDecoders;
@@ -144,7 +141,7 @@ public class AudioFile extends File implements IAudioFile {
   }
 
   public void createCache() throws UnsupportedAudioFileException, IOException {
-    setInProgressStatus();
+    setStatus(IN_PROGRESS);
 
     File temporaryFile = null;
 
@@ -155,39 +152,27 @@ public class AudioFile extends File implements IAudioFile {
       addDebugMessage(e.getMessage());
     }
 
-    if (temporaryFile != null) {
-
-      cache = temporaryFile;
-      AudioInputStream ais = null;
-
-      try {
-        ais = decodeSourceFile();
-        new WaveAudioFileWriter().write(ais, AudioFileFormat.Type.WAVE, cache);
-      }
-      catch (UnsupportedAudioFileException e) {
-        setStatus(AudioFileStatus.ERROR);
-        errorMessage = "Audio format not supported!";
-        cache.delete();
-        cache = null;
-        throw e;
-      }
-      catch (IOException e) {
-        setStatus(AudioFileStatus.ERROR);
-        errorMessage = "Read / write error!";
-        cache.delete();
-        cache = null;
-        throw e;
-      }
-      finally {
-        if (ais != null) {
-          ais.close();
-        }
-      }
-
-    }
-    else {
+    if (temporaryFile == null) {
       setStatus(AudioFileStatus.ERROR);
       throw new IOException("Was not able to create temporary cache file.");
+    }
+
+    cache = temporaryFile;
+
+    try (AudioInputStream ais = decodeSourceFile()) {
+      new WaveAudioFileWriter().write(ais, AudioFileFormat.Type.WAVE, cache);
+
+    } catch (UnsupportedAudioFileException e) {
+      setStatus(AudioFileStatus.ERROR);
+      errorMessage = "Audio format not supported!";
+      removeCache();
+      throw e;
+
+    } catch (IOException e) {
+      setStatus(AudioFileStatus.ERROR);
+      errorMessage = "Read / write error!";
+      removeCache();
+      throw e;
     }
 
     calculateVolumeRatio();
@@ -207,8 +192,7 @@ public class AudioFile extends File implements IAudioFile {
     }
   }
 
-  private AudioInputStream decodeSourceFile() throws UnsupportedAudioFileException, IOException {
-
+  private AudioInputStream decodeSourceFile() throws UnsupportedAudioFileException {
     for (AudioFileDecoder decoder : audioFileDecoders) {
       try {
         AudioInputStream sourceFileStream = decoder.decode(this);
@@ -224,23 +208,20 @@ public class AudioFile extends File implements IAudioFile {
   }
 
   private String getFormattedTime(long milliseconds) {
-    return new FormatTime().getStrictFormattedTime(milliseconds / 1000);
+    return new FormatTime().getStrictFormattedTime(milliseconds / 1000.0);
   }
 
   public void removeCache() {
     if (hasCache()) {
-      addDebugMessage("Deleting cache file: " + cache);
-      cache.delete();
+      boolean deleted = cache.delete();
+      addDebugMessage("Deleting cache file: " + cache + ". Success: " + deleted);
+      cache = null;
     }
     setStatus(EMPTY);
   }
 
   public void setQueuedStatus() {
     setStatus(QUEUED);
-  }
-
-  public void setInProgressStatus() {
-    setStatus(IN_PROGRESS);
   }
 
   public int getBpm() {
@@ -386,7 +367,7 @@ public class AudioFile extends File implements IAudioFile {
   }
 
   @Override
-  public void writeBpm(int bpm) throws IOException {
+  public void writeBpm(int bpm) {
     bpmReaderWriter.writeBPMTo(bpm, this);
     isBpmReliable = true;
     isBpmStored = true;
