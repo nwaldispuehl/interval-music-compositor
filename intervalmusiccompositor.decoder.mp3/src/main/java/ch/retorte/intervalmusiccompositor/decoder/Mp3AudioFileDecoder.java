@@ -1,9 +1,6 @@
 package ch.retorte.intervalmusiccompositor.decoder;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -34,49 +31,54 @@ public class Mp3AudioFileDecoder implements AudioFileDecoder {
 
   @Override
   public AudioInputStream decode(File inputFile) throws UnsupportedAudioFileException, IOException {
-
-    MpegAudioFileReader mafr = new MpegAudioFileReader();
-    AudioInputStream mp3Ais;
-    // AudioInputStream mp3Dmais = null;
-    AudioInputStream result;
+    MpegAudioFileReader mpegAudioFileReader = new MpegAudioFileReader();
+    AudioInputStream audioInputStream;
 
     try {
-      mp3Ais = mafr.getAudioInputStream(inputFile);
+      audioInputStream = mpegAudioFileReader.getAudioInputStream(inputFile);
     } catch (Exception e) {
 
-      /*
-       * This is now a work around (aka hack) for files with stored images in them. The images have to be removed. We load the file as FileInputStream, check
-       * the length of the header and skip it.
-       */
-      FileInputStream f_in = new FileInputStream(inputFile);
-      Bitstream m = new Bitstream(f_in);
-      long start = m.header_pos();
-
-      try {
-        m.close();
-      } catch (BitstreamException be) {
-        // nop
-      }
-
-      f_in = new FileInputStream(inputFile);
-
-      // Skip the header
-      f_in.skip(start);
-
-      // Now try again with the 'truncated' sound stream
-      mp3Ais = mafr.getAudioInputStream(f_in);
+      // Try again with a 'truncated' sound stream.
+      audioInputStream = mpegAudioFileReader.getAudioInputStream(streamWithoutHeaderOf(inputFile));
     }
 
-    AudioFormat decodedFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, mp3Ais.getFormat().getSampleRate(), 16, mp3Ais.getFormat().getChannels(),
-        mp3Ais.getFormat().getChannels() * 2, mp3Ais.getFormat().getSampleRate(), false);
+    AudioFormat decodedFormat = new AudioFormat(
+        AudioFormat.Encoding.PCM_SIGNED,
+        audioInputStream.getFormat().getSampleRate(),
+        16,
+        audioInputStream.getFormat().getChannels(),
+        audioInputStream.getFormat().getChannels() * 2,
+        audioInputStream.getFormat().getSampleRate(),
+        false);
 
-    result = new DecodedMpegAudioInputStream(decodedFormat, mp3Ais);
-
-    // result = new PCMtoPCMCodec().getAudioInputStream(TARGET_ENCODING, mp3Dmais);
-    // result = new MpegFormatConversionProvider().getAudioInputStream(TARGET_ENCODING, mp3Dmais);
-    // result = AudioSystem.getAudioInputStream(TARGET_ENCODING, mp3Dmais);
+    AudioInputStream result = new DecodedMpegAudioInputStream(decodedFormat, audioInputStream);
 
     return tidyStream(result);
+  }
+
+  /**
+   * Returns an {@link InputStream} of the provided file without any meta data header.
+   *
+   *  This is now a work around (aka hack) for audio files with stored images in them.
+   *  The images have to be removed. We load the file as FileInputStream, check the length of the header and skip it.
+   */
+  private InputStream streamWithoutHeaderOf(File inputFile) throws IOException {
+    FileInputStream f_in = new FileInputStream(inputFile);
+    Bitstream m = new Bitstream(f_in);
+    long headerLength = m.header_pos();
+
+    try {
+      m.close();
+    } catch (BitstreamException be) {
+      // nop
+    }
+
+    f_in = new FileInputStream(inputFile);
+
+    // Skip the header
+    f_in.skip(headerLength);
+
+    return f_in;
   }
 
   @Override
@@ -93,6 +95,8 @@ public class Mp3AudioFileDecoder implements AudioFileDecoder {
    * Creates a new, fresh {@link AudioInputStream} from an existing one. This showed to cure some MP3-related problems.
    */
   private AudioInputStream tidyStream(AudioInputStream ais) {
+
+    // TODO: Do we really need this?
 
     AudioInputStream result = null;
 
