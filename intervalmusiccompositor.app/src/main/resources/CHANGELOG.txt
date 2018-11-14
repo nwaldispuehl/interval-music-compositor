@@ -5,6 +5,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 FIX  #50    Stale output directory yields error.
 FIX  #51    OutOfMemoryError when adding long mp3 music file.
+FIX  #53    NPE when playing extract (BPM dialog) while file is still importing.
 
 
 2018-07-19  2.9.0

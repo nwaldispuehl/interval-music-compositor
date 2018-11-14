@@ -102,6 +102,7 @@ class AudioFileListCell extends ListCell<IAudioFile> {
     //---- Fields
 
     private SimpleBooleanProperty isBpmSupported = new SimpleBooleanProperty(false);
+    private SimpleBooleanProperty isReady = new SimpleBooleanProperty(false);
 
     private Image processing = new Image(getClass().getResource("/images/tracklist/processing_icon.gif").toString());
     private Image ok = new Image(getClass().getResource("/images/tracklist/music_icon.png").toString());
@@ -221,20 +222,24 @@ class AudioFileListCell extends ListCell<IAudioFile> {
 
     private void setContextMenuWith(IAudioFile audioFile) {
       setContextMenu(createContextMenu());
-      registerBpmStateListenerWith(audioFile);
-      setBpmStateWith(audioFile);
+      registerMenuStateListenerWith(audioFile);
+      setMenuStateWith(audioFile);
     }
 
-    private void registerBpmStateListenerWith(IAudioFile audioFile) {
-      audioFile.addChangeListener(updatedAudioFile -> isBpmSupported.setValue(updatedAudioFile.isBpmSupported()));
+    private void registerMenuStateListenerWith(IAudioFile audioFile) {
+      audioFile.addChangeListener(updatedAudioFile -> {
+        isBpmSupported.setValue(updatedAudioFile.isBpmSupported());
+        isReady.setValue(updatedAudioFile.isOK());
+      });
     }
 
-    private void setBpmStateWith(IAudioFile audioFile) {
+    private void setMenuStateWith(IAudioFile audioFile) {
       isBpmSupported.set(audioFile.isBpmSupported());
+      isReady.set(audioFile.isOK());
     }
 
     private String format(long milliSeconds) {
-      return new FormatTime().getStrictFormattedTime(milliSeconds / 1000);
+      return new FormatTime().getStrictFormattedTime(milliSeconds / 1000.0);
     }
 
     private ContextMenu createContextMenu() {
@@ -255,7 +260,7 @@ class AudioFileListCell extends ListCell<IAudioFile> {
         BpmWindow bpmWindow = createBpmWindowFrom(messageFormatBundle, musicListControl, messageProducer, getItem(), getIndex());
         bpmWindow.show();
       });
-      changeBpmItem.disableProperty().bind(isBpmSupported.not());
+      changeBpmItem.disableProperty().bind(isBpmSupported.not().or(isReady.not()));
       return changeBpmItem;
     }
 
@@ -263,7 +268,7 @@ class AudioFileListCell extends ListCell<IAudioFile> {
       MenuItem writeBpmItem = new MenuItem();
       writeBpmItem.setText(resourceBundle.getString("ui.list_context.write_bpm"));
       writeBpmItem.setOnAction(event -> listView().writeBpmFor(getItem()));
-      writeBpmItem.disableProperty().bind(isBpmSupported.not());
+      writeBpmItem.disableProperty().bind(isBpmSupported.not().or(isReady.not()));
       return writeBpmItem;
     }
 
