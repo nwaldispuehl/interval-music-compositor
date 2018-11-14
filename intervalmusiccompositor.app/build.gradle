@@ -132,7 +132,7 @@ task distDebPackage(type: Deb, dependsOn: installDist) {
 
   // Dependencies
 
-  requires('openjdk-8-jre').or('openjdk-9-jre')
+  requires('openjdk-8-jre').or('openjdk-9-jre').or('openjdk-10-jre').or('openjdk-11-jre')
   requires('openjfx')
 
   // Collect needed files
