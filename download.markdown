@@ -4,7 +4,7 @@ title: Download
 link: download
 ---
 
-**Die aktuelle Version 2.9.0 wurde am 19. Juli 2018 veröffentlicht.**<br/>
+**Die aktuelle Version 2.9.1 wurde am 15. November 2018 veröffentlicht.**<br/>
 ([Changelog](https://raw.githubusercontent.com/nwaldispuehl/interval-music-compositor/master/intervalmusiccompositor.app/src/main/resources/CHANGELOG.txt)).
 
 Die Software wird kostenlos zur Verfügung gestellt. Gib mir doch eine [Rückmeldung](feedback_support) wenn du Fehler oder seltsames Verhalten beobachtest!
