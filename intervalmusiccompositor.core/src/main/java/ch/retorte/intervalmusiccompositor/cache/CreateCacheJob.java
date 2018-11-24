@@ -2,9 +2,9 @@ package ch.retorte.intervalmusiccompositor.cache;
 
 import java.util.ArrayList;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.spi.TaskFinishListener;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 

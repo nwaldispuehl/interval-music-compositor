@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
 
 import java.util.List;
 

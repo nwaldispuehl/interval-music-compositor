@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 
 /**
  * Part of a {@link PlaylistItem}. Holds the actual music information while the item is only a music/break tuple.

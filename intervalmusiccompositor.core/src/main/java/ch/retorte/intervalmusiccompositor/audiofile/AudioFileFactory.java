@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 import ch.retorte.intervalmusiccompositor.spi.bpm.BPMCalculator;
 import ch.retorte.intervalmusiccompositor.spi.bpm.BPMReaderWriter;

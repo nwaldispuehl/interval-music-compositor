@@ -2,9 +2,9 @@ package ch.retorte.intervalmusiccompositor.ui.soundeffects;
 
 
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
+import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
@@ -15,6 +15,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -105,6 +107,7 @@ public class SoundEffectsPane extends BorderPane {
   private void initializeAddButton() {
     addSoundEffects.onActionProperty().addListener(debugHandlerWith(addSoundEffects.getId()));
     addSoundEffects.setOnAction(event -> addNewEntry());
+    addSoundEffects.graphicProperty().set(new ImageView(new Image(SoundEffectsPane.class.getResourceAsStream("/images/add_icon_small.png"))));
   }
 
   public void loadStoredPreferenceValues() {

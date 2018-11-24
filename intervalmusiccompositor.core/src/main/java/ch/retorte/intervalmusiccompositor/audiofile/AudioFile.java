@@ -1,9 +1,9 @@
 package ch.retorte.intervalmusiccompositor.audiofile;
 
-import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.EMPTY;
-import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.IN_PROGRESS;
-import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.OK;
-import static ch.retorte.intervalmusiccompositor.audiofile.AudioFileStatus.QUEUED;
+import static ch.retorte.intervalmusiccompositor.model.audiofile.AudioFileStatus.EMPTY;
+import static ch.retorte.intervalmusiccompositor.model.audiofile.AudioFileStatus.IN_PROGRESS;
+import static ch.retorte.intervalmusiccompositor.model.audiofile.AudioFileStatus.OK;
+import static ch.retorte.intervalmusiccompositor.model.audiofile.AudioFileStatus.QUEUED;
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static com.google.common.collect.Lists.newLinkedList;
 
@@ -17,14 +17,16 @@ import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import ch.retorte.intervalmusiccompositor.ChangeListener;
+import ch.retorte.intervalmusiccompositor.model.util.ChangeListener;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
+import ch.retorte.intervalmusiccompositor.model.audiofile.AudioFileStatus;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import org.tritonus.sampled.file.WaveAudioFileReader;
 import org.tritonus.sampled.file.WaveAudioFileWriter;
 
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.bpm.BPMCalculator;
 import ch.retorte.intervalmusiccompositor.spi.bpm.BPMReaderWriter;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;

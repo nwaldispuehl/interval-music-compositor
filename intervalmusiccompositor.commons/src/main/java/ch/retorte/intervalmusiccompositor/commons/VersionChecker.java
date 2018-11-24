@@ -1,10 +1,10 @@
 package ch.retorte.intervalmusiccompositor.commons;
 
-import ch.retorte.intervalmusiccompositor.ChangeListener;
-import ch.retorte.intervalmusiccompositor.Version;
+import ch.retorte.intervalmusiccompositor.model.util.ChangeListener;
+import ch.retorte.intervalmusiccompositor.model.update.Version;
 import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
-import javafx.concurrent.Task;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -37,7 +37,7 @@ public class VersionChecker {
 
   //---- Inner classes
 
-  private class VersionCheckTask extends Task<String> {
+  private class VersionCheckTask implements Callable<String> {
 
     //---- Fields
 
@@ -58,7 +58,7 @@ public class VersionChecker {
     //---- Methods
 
     @Override
-    protected String call() throws Exception {
+    public String call() {
       try {
         boolean updateAvailable = updateAvailabilityChecker.isUpdateAvailable();
         if (updateAvailable) {

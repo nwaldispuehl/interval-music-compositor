@@ -13,7 +13,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import org.junit.Test;
 
 import at.ofai.music.beatroot.BeatRoot;
-import ch.retorte.intervalmusiccompositor.decoder.Mp3AudioFileDecoder;
+import ch.retorte.intervalmusiccompositor.decoder.mp3.Mp3AudioFileDecoder;
 
 public class BeatRootIntegrationTest {
 

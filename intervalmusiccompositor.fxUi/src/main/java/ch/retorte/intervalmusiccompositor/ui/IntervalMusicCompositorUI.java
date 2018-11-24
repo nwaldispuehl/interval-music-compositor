@@ -1,12 +1,12 @@
 package ch.retorte.intervalmusiccompositor.ui;
 
-import ch.retorte.intervalmusiccompositor.Version;
+import ch.retorte.intervalmusiccompositor.model.update.Version;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.VersionChecker;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
-import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
+import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.spi.*;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
@@ -27,6 +27,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -234,7 +235,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
   }
 
   @Override
-  public void setEnvelopeImage(WritableImage envelopeImage) {
+  public void setEnvelopeImage(BufferedImage envelopeImage) {
     mainScreenController.setEnvelopeImage(envelopeImage);
   }
 

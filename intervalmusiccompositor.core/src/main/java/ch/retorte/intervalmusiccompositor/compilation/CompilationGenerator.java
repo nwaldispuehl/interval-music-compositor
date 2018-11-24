@@ -2,20 +2,22 @@ package ch.retorte.intervalmusiccompositor.compilation;
 
 import static ch.retorte.intervalmusiccompositor.commons.ExceptionMessageExtractor.messageOrNameOf;
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-import static ch.retorte.intervalmusiccompositor.list.BlendMode.CROSS;
-import static ch.retorte.intervalmusiccompositor.list.BlendMode.SEPARATE;
+import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.CROSS;
+import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.SEPARATE;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.String.valueOf;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.ProgressMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.SubProcessProgressMessage;
+import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.ProgressMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.SubProcessProgressMessage;
 import ch.retorte.intervalmusiccompositor.output.OutputGenerator;
 import ch.retorte.intervalmusiccompositor.playlist.Playlist;
 import ch.retorte.intervalmusiccompositor.playlist.PlaylistReport;
@@ -29,7 +31,6 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import javafx.scene.image.WritableImage;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -70,7 +71,7 @@ public class CompilationGenerator implements Runnable {
 
   private OutputGenerator outputGenerator;
 
-  private WritableImage envelope;
+  private BufferedImage envelope;
 
   private ApplicationData applicationData;
 
@@ -119,7 +120,7 @@ public class CompilationGenerator implements Runnable {
     new Thread(this).start();
   }
 
-  public WritableImage getEnvelope() {
+  public BufferedImage getEnvelope() {
     return envelope;
   }
 

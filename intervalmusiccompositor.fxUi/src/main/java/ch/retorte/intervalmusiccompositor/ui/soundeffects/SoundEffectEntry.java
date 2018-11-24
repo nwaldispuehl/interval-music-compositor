@@ -1,8 +1,8 @@
 package ch.retorte.intervalmusiccompositor.ui.soundeffects;
 
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffect;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;

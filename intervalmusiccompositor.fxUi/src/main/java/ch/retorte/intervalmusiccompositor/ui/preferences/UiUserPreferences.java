@@ -1,11 +1,11 @@
 package ch.retorte.intervalmusiccompositor.ui.preferences;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
-import ch.retorte.intervalmusiccompositor.list.BlendMode;
-import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
+import ch.retorte.intervalmusiccompositor.model.list.BlendMode;
+import ch.retorte.intervalmusiccompositor.model.list.EnumerationMode;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffect;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import javafx.beans.property.Property;

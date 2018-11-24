@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.spi;
 
-import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 

@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.ui.mainscreen;
 
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

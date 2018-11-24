@@ -1,10 +1,11 @@
 package ch.retorte.intervalmusiccompositor.compilation;
 
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFile;
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.playlist.Playlist;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
+import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

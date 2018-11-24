@@ -13,7 +13,7 @@ import ch.retorte.intervalmusiccompositor.spi.audio.ByteArrayConverter;
 import org.tritonus.dsp.ais.AmplitudeAudioInputStream;
 import org.tritonus.sampled.convert.SampleRateConversionProvider;
 
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 

@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.spi.messagebus;
 
-import ch.retorte.intervalmusiccompositor.messagebus.Message;
+import ch.retorte.intervalmusiccompositor.model.messagebus.Message;
 
 
 /**

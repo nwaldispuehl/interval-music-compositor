@@ -1,13 +1,15 @@
 package ch.retorte.intervalmusiccompositor.ui.audiofilelist;
 
-import ch.retorte.intervalmusiccompositor.ChangeListener;
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.list.ObservableList;
+import ch.retorte.intervalmusiccompositor.model.util.ChangeListener;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import com.google.common.primitives.Ints;
-import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.event.EventTarget;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -32,13 +34,18 @@ public class DraggableAudioFileListView extends ListView<IAudioFile> {
   private MusicListControl musicListControl;
   private MessageFormatBundle messageFormatBundle;
 
-  private Collection<ChangeListener<ObservableList<IAudioFile>>> listChangeListeners = newArrayList();
+  private Collection<ChangeListener<List<IAudioFile>>> listChangeListeners = newArrayList();
 
   private ChangeListener<IAudioFile> audioFileStateChangeListener;
 
   public void initializeWith(ObservableList<IAudioFile> items, MessageFormatBundle messageFormatBundle, MessageProducer messageProducer, MusicListControl musicListControl, ChangeListener<IAudioFile> audioFileStateChangeListener) {
 
-    setItems(items);
+    // TODO:
+    // convert items to observable list
+    // fire listener
+    javafx.collections.ObservableList<IAudioFile> observableItems = FXCollections.observableArrayList(items);
+    observableItems.addListener((ListChangeListener<? super IAudioFile>) c -> items.onChange());
+    setItems(observableItems);
 
     this.messageFormatBundle = messageFormatBundle;
     this.messageProducer = messageProducer;
@@ -52,7 +59,7 @@ public class DraggableAudioFileListView extends ListView<IAudioFile> {
     initializeKeyActions();
   }
 
-  public void addListChangeListener(ChangeListener<ObservableList<IAudioFile>> changeListener) {
+  public void addListChangeListener(ChangeListener<List<IAudioFile>> changeListener) {
     listChangeListeners.add(changeListener);
   }
 
@@ -145,7 +152,7 @@ public class DraggableAudioFileListView extends ListView<IAudioFile> {
     return trackList().indexOf(audioFile);
   }
 
-  protected ObservableList<IAudioFile> trackList() {
+  protected List<IAudioFile> trackList() {
     return getMusicListControl().getMusicList();
   }
 

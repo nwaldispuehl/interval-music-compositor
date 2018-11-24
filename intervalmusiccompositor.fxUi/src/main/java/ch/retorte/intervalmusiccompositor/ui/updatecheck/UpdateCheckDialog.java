@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.ui.updatecheck;
 
-import ch.retorte.intervalmusiccompositor.Version;
+import ch.retorte.intervalmusiccompositor.model.update.Version;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.VersionChecker;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;

@@ -2,7 +2,7 @@ package ch.retorte.intervalmusiccompositor.ui.soundeffects;
 
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffect;
 import javafx.scene.control.ListCell;
 import org.apache.commons.lang3.StringUtils;
 

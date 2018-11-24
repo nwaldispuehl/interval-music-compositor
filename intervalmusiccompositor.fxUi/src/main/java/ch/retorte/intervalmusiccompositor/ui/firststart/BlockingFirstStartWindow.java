@@ -4,7 +4,7 @@ import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import com.google.common.base.Joiner;
-import com.sun.javafx.tk.Toolkit;
+//import com.sun.javafx.tk.Toolkit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 
@@ -69,6 +70,7 @@ public class BlockingFirstStartWindow {
 
     try {
       parent = fxmlLoader.load();
+      parent.getStylesheets().addAll("/styles/fonts.css", "/styles/MainScreen.css");
     } catch (IOException exception) {
       throw new RuntimeException(exception);
     }
@@ -87,7 +89,7 @@ public class BlockingFirstStartWindow {
     dismissButton.setOnAction(e -> {
       userPreferences.setDidReviseUpdateAtStartup();
       stage.close();
-      releaseStage();
+//      releaseStage();
     });
   }
 
@@ -118,6 +120,7 @@ public class BlockingFirstStartWindow {
     stage.setTitle(bundle.getString("ui.firstStartWindow.title"));
     stage.setScene(new Scene(parent));
     stage.setResizable(true);
+    stage.initModality(Modality.APPLICATION_MODAL);
 
     stage.show();
 
@@ -126,16 +129,16 @@ public class BlockingFirstStartWindow {
     stage.setMinWidth(stage.getWidth());
     stage.setMinHeight(stage.getHeight());
 
-    stage.setOnCloseRequest(event -> releaseStage());
-    blockStage();
+//    stage.setOnCloseRequest(event -> releaseStage());
+//    blockStage();
   }
 
-  private void blockStage() {
-    Toolkit.getToolkit().enterNestedEventLoop(stage);
-  }
-
-  private void releaseStage() {
-    Toolkit.getToolkit().exitNestedEventLoop(stage, null);
-  }
+//  private void blockStage() {
+//    Toolkit.getToolkit().enterNestedEventLoop(stage);
+//  }
+//
+//  private void releaseStage() {
+//    Toolkit.getToolkit().exitNestedEventLoop(stage, null);
+//  }
 
 }

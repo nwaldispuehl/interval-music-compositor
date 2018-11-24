@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import org.junit.Before;
 import org.junit.Test;
 

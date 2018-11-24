@@ -1,8 +1,7 @@
 package ch.retorte.intervalmusiccompositor.compilation;
 
-import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
-
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -21,7 +20,7 @@ class EnvelopeImage {
 
   //---- Fields
 
-  private WritableImage writableImage;
+  private BufferedImage writableImage;
 
   private int width = 0;
   private int height = 0;
@@ -30,7 +29,7 @@ class EnvelopeImage {
   //---- Constructor
 
   EnvelopeImage(Integer width, Integer height) {
-    writableImage = new WritableImage(width, height);
+    writableImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
     this.width = width;
     this.height = height;
@@ -132,7 +131,7 @@ class EnvelopeImage {
   }
 
   private void setPixel(int x, int y, String webColor) {
-    writableImage.getPixelWriter().setColor(x, y, Color.web(webColor));
+    writableImage.setRGB(x, y, Color.decode(webColor).getRGB());
   }
 
   private void fill(String webColor) {
@@ -143,7 +142,7 @@ class EnvelopeImage {
     }
   }
 
-  WritableImage getBufferedImage() {
+  BufferedImage getBufferedImage() {
     return writableImage;
   }
 

@@ -1,6 +1,9 @@
 package ch.retorte.intervalmusiccompositor.messagebus;
 
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageHandler;
+import ch.retorte.intervalmusiccompositor.model.messagebus.ConsoleMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.InfoMessage;
 
 /**
  * Message handler that writes message content to the standard out (aka the console).

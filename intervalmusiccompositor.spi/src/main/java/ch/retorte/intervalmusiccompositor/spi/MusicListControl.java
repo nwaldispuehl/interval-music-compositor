@@ -3,10 +3,10 @@ package ch.retorte.intervalmusiccompositor.spi;
 import java.io.File;
 import java.util.List;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
-import ch.retorte.intervalmusiccompositor.list.ListSortMode;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
-import javafx.collections.ObservableList;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.list.ListSortMode;
+import ch.retorte.intervalmusiccompositor.model.list.ObservableList;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffect;
 
 /**
  * Offers instruments to control the music list.

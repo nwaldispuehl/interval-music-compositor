@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 
+import ch.retorte.intervalmusiccompositor.decoder.flac.FlacFileProperties;
 import org.junit.Test;
 
 /**

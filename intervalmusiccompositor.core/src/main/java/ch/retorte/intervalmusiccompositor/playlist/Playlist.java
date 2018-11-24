@@ -1,24 +1,24 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-import static ch.retorte.intervalmusiccompositor.compilation.CompilationParameters.*;
-import static ch.retorte.intervalmusiccompositor.list.BlendMode.CROSS;
-import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.CONTINUOUS;
-import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.SINGLE_EXTRACT;
-import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SHUFFLE;
+import static ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters.*;
+import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.CROSS;
+import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.CONTINUOUS;
+import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.SINGLE_EXTRACT;
+import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SHUFFLE;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.*;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
-import ch.retorte.intervalmusiccompositor.list.BlendMode;
-import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
-import ch.retorte.intervalmusiccompositor.list.ListSortMode;
-import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
+import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.model.list.BlendMode;
+import ch.retorte.intervalmusiccompositor.model.list.EnumerationMode;
+import ch.retorte.intervalmusiccompositor.model.list.ListSortMode;
+import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 import com.google.common.annotations.VisibleForTesting;
