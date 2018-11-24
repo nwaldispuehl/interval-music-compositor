@@ -111,7 +111,7 @@ public class Peaks {
 				if (overThreshold(data, maxp, width, threshold, isRelative,av)){
 					if (debug)
 						System.out.println(" peak");
-					peaks.add(new Integer(maxp));
+					peaks.add(maxp);
 				} else if (debug)
 					System.out.println();
 			}

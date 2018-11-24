@@ -13,11 +13,6 @@
                 <tooltip>
                     <Tooltip text="%ui.form.sound_effects.add.label"/>
                 </tooltip>
-                <graphic>
-                    <ImageView>
-                        <Image url="@/images/add_icon_small.png"/>
-                    </ImageView>
-                </graphic>
             </Button>
             <Label text="%ui.form.sound_effects.add.label"/>
             <Label styleClass="legend" text="%ui.form.sound_effects.legend"/>

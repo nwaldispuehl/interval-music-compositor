@@ -8,7 +8,8 @@ import java.util.ResourceBundle;
 public class Utf8Bundle {
 
   public static MessageFormatBundle getBundle(String baseName) {
-    return new MessageFormatBundle(ResourceBundle.getBundle(baseName, new Utf8Control()));
+    // TODO removed utf8 control; how to fix?
+    return new MessageFormatBundle(ResourceBundle.getBundle(baseName));
   }
 
 }

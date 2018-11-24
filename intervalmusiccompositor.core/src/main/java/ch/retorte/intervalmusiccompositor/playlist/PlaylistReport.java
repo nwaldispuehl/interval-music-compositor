@@ -1,7 +1,7 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-import static ch.retorte.intervalmusiccompositor.list.BlendMode.CROSS;
+import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.CROSS;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Comparator.comparingLong;
 
@@ -9,10 +9,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 
 /**
@@ -222,14 +222,14 @@ public class PlaylistReport {
 
         for (SoundEffectOccurrence s : sortByStartTime(p.getSoundEffects())) {
 
-          builder.append(formatTime.getStrictFormattedTime((totalTimeMs + s.getTimeMillis()) / 1000));
+          builder.append(formatTime.getStrictFormattedTime((totalTimeMs + s.getTimeMillis()) / 1000.0));
 
           builder.append(", ");
 
           builder.append("[");
           builder.append(durationString);
           builder.append(" ");
-          double extractDurationInSeconds = s.getSoundEffect().getDisplayDurationMillis() / 1000;
+          double extractDurationInSeconds = s.getSoundEffect().getDisplayDurationMillis() / 1000.0;
           builder.append(formatTime.getStrictFormattedTime(extractDurationInSeconds));
           builder.append("]");
 

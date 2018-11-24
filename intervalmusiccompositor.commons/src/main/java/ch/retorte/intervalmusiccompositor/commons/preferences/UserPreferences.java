@@ -1,8 +1,8 @@
 package ch.retorte.intervalmusiccompositor.commons.preferences;
 
-import ch.retorte.intervalmusiccompositor.Version;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
+import ch.retorte.intervalmusiccompositor.model.update.Version;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 import java.time.LocalDateTime;

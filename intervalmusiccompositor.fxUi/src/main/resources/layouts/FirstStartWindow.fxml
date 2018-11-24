@@ -8,7 +8,7 @@
 <?import javafx.scene.control.CheckBox?>
 
 <?import javafx.scene.control.ScrollPane?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" minWidth="600" prefWidth="800" styleClass="topLevelNode" stylesheets="@/styles/fonts.css, @/styles/MainScreen.css">
+<VBox xmlns:fx="http://javafx.com/fxml/1" minWidth="600" prefWidth="800" styleClass="topLevelNode">
 <padding>
     <Insets top="10" bottom="10" right="10" left="10"/>
 </padding>

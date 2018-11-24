@@ -6,9 +6,9 @@ import java.io.IOException;
 
 import javax.sound.sampled.AudioInputStream;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioFileMusicPlayer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;

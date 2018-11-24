@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
+import ch.retorte.intervalmusiccompositor.model.messagebus.Message;
 import org.junit.Before;
 import org.junit.Test;
 

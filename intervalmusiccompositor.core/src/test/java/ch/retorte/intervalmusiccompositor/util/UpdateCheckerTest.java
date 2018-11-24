@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.util;
 
-import ch.retorte.intervalmusiccompositor.Version;
+import ch.retorte.intervalmusiccompositor.model.update.Version;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import org.junit.Before;

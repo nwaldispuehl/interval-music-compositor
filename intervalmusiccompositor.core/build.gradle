@@ -1,7 +1,19 @@
-apply plugin: 'java'
+apply plugin: 'java-library'
 
 group = 'ch.retorte.intervalmusiccompositor'
-version = '2.7.0'
+version = parent.version
+
+ext.moduleName = 'intervalmusiccompositor.core'
+
+compileJava {
+  inputs.property('moduleName', moduleName)
+  doFirst {
+    options.compilerArgs = [
+        '--module-path', classpath.asPath
+    ]
+    classpath = files()
+  }
+}
 
 dependencies {
   compile project(':intervalmusiccompositor.spi')

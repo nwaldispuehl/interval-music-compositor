@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.spi;
 
-import ch.retorte.intervalmusiccompositor.Version;
+import ch.retorte.intervalmusiccompositor.model.update.Version;
 
 import java.util.List;
 import java.util.Locale;

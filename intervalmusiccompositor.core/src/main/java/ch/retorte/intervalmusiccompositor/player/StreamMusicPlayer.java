@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.player;
 
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.audio.MusicPlayer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 

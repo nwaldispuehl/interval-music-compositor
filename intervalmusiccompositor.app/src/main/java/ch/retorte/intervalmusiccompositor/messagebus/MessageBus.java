@@ -11,6 +11,10 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageHandler;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageSubscriber;
 
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.LogBuffer;
+import ch.retorte.intervalmusiccompositor.model.messagebus.Message;
+import ch.retorte.intervalmusiccompositor.model.messagebus.StringMessage;
 import com.google.common.collect.Lists;
 
 /**
@@ -45,7 +49,7 @@ public class MessageBus implements MessageProducer, MessageSubscriber {
   }
 
   private void conditionallyStore(Message message) {
-    if (storeMessages && message instanceof StringMessage) {
+    if (storeMessages && (message instanceof StringMessage)) {
       LocalDateTime date = null;
       String caller = null;
       if (message instanceof DebugMessage) {

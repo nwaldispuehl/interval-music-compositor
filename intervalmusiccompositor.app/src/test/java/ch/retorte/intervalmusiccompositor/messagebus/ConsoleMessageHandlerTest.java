@@ -6,6 +6,8 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.InfoMessage;
 import org.junit.Test;
 
 public class ConsoleMessageHandlerTest {

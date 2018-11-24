@@ -1,0 +1,24 @@
+apply plugin: 'java-library'
+
+group = 'ch.retorte.intervalmusiccompositor'
+version = parent.version
+
+ext.moduleName = 'intervalmusiccompositor.encoder.mp3'
+
+compileJava {
+  inputs.property('moduleName', moduleName)
+  doFirst {
+    options.compilerArgs = [
+        '--module-path', classpath.asPath
+    ]
+    classpath = files()
+  }
+}
+
+dependencies {
+  compile project(':intervalmusiccompositor.spi')
+  compile project(':intervalmusiccompositor.model')
+  compile project(':intervalmusiccompositor.commons')
+
+  compile 'net.sourceforge.lame:net.sourceforge.lame:3.98.4'
+}

@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.ui.audiofilelist;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.Utf8Control;

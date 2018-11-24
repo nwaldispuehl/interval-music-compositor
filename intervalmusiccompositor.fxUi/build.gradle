@@ -1,7 +1,19 @@
-apply plugin: 'java'
+apply plugin: 'java-library'
 
 group = 'ch.retorte.intervalmusiccompositor'
-version = '2.6.0'
+version = parent.version
+
+ext.moduleName = 'intervalmusiccompositor.fxui'
+
+compileJava {
+  inputs.property('moduleName', moduleName)
+  doFirst {
+    options.compilerArgs = [
+        '--module-path', classpath.asPath,
+    ]
+    classpath = files()
+  }
+}
 
 dependencies {
   compile project(':intervalmusiccompositor.model')
@@ -9,4 +21,10 @@ dependencies {
   compile project(':intervalmusiccompositor.commons')
 
   compile 'org.apache.commons:commons-lang3:3.6'
+
+  compile 'org.openjfx:javafx-base:11.0.1:linux'
+  compile 'org.openjfx:javafx-graphics:11.0.1:linux'
+  compile 'org.openjfx:javafx-controls:11.0.1:linux'
+  compile 'org.openjfx:javafx-fxml:11.0.1:linux'
+  compile 'org.openjfx:javafx-swing:11.0.1:linux'
 }

@@ -1,8 +1,8 @@
 package ch.retorte.intervalmusiccompositor.ui.bpm;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import javafx.application.Platform;

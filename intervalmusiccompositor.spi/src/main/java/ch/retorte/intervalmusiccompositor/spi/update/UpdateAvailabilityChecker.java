@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.spi.update;
 
-import ch.retorte.intervalmusiccompositor.Version;
+import ch.retorte.intervalmusiccompositor.model.update.Version;
 
 /**
  * Interface for facilities which check for a software update.

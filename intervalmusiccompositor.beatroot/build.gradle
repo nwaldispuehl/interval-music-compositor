@@ -1,10 +1,22 @@
-apply plugin: 'java'
+apply plugin: 'java-library'
 
 group = 'at.ofai.music'
 version = '0.5.8-custom'
 
+ext.moduleName = 'intervalmusiccompositor.beatroot'
+
+compileJava {
+  inputs.property('moduleName', moduleName)
+  doFirst {
+    options.compilerArgs = [
+        '--module-path', classpath.asPath
+    ]
+    classpath = files()
+  }
+}
+
 dependencies {
   compile project(':intervalmusiccompositor.spi')
   
-  testCompile project(':intervalmusiccompositor.decoder.mp3')
+  testCompile project(':intervalmusiccompositor.decoder.mpeg')
 }

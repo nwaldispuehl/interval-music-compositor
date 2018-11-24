@@ -3,7 +3,7 @@ package ch.retorte.intervalmusiccompositor.cache;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFile;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 /**

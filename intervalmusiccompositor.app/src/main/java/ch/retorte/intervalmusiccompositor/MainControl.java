@@ -1,14 +1,14 @@
 package ch.retorte.intervalmusiccompositor;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-import static ch.retorte.intervalmusiccompositor.list.ListSortMode.MANUAL;
-import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SHUFFLE;
-import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT;
-import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT_REV;
+import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.MANUAL;
+import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SHUFFLE;
+import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SORT;
+import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SORT_REV;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.Integer.valueOf;
 import static java.util.stream.Collectors.joining;
-import static javafx.collections.FXCollections.observableArrayList;
+//import static javafx.collections.FXCollections.observableArrayList;
 
 import java.io.*;
 import java.util.Collection;
@@ -17,22 +17,26 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import ch.retorte.intervalmusiccompositor.audio.AudioStreamUtil;
-import ch.retorte.intervalmusiccompositor.audiofile.AudioFileComparator;
+import ch.retorte.intervalmusiccompositor.commons.audio.AudioStreamUtil;
+import ch.retorte.intervalmusiccompositor.model.audiofile.AudioFileComparator;
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFileFactory;
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.cache.CreateCacheJob;
 import ch.retorte.intervalmusiccompositor.cache.CreateCacheJobManager;
 import ch.retorte.intervalmusiccompositor.commons.ArrayHelper;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.platform.Platform;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
-import ch.retorte.intervalmusiccompositor.compilation.CompilationException;
 import ch.retorte.intervalmusiccompositor.compilation.CompilationGenerator;
-import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
-import ch.retorte.intervalmusiccompositor.list.ListSortMode;
+import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.model.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.messagebus.*;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
+import ch.retorte.intervalmusiccompositor.model.list.ObservableList;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.InfoMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.LogBuffer;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffect;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.MusicCompilationControl;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
@@ -42,9 +46,10 @@ import ch.retorte.intervalmusiccompositor.spi.audio.AudioFileMusicPlayer;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
+import ch.retorte.intervalmusiccompositor.model.update.Version;
 import ch.retorte.intervalmusiccompositor.util.AudioFilesLoader;
 
-import javafx.collections.ObservableList;
+//import javafx.collections.ObservableList;
 
 /**
  * Main controller of the software; collects data and reacts to ui events. Implements a lot of control interfaces.
@@ -62,8 +67,8 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
   private ListSortMode musicListSortMode = null;
   private int maxListEntries;
 
-  private ObservableList<IAudioFile> musicList =  observableArrayList();
-  private ObservableList<IAudioFile> breakList =  observableArrayList();
+  private ObservableList<IAudioFile> musicList =  new ObservableList<>();
+  private ObservableList<IAudioFile> breakList =  new ObservableList<>();
 
   private CreateCacheJobManager createCacheJobManager;
 

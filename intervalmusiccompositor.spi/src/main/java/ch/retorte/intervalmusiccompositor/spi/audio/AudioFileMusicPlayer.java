@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.spi.audio;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 
 /**
  * Can play back an {@link IAudioFile}.

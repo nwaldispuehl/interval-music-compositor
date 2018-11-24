@@ -21,16 +21,23 @@ buildscript {
 plugins {
   id 'java'
   id 'application'
+  
+  id 'org.openjfx.javafxplugin' version '0.0.5'
+  id "org.javamodularity.moduleplugin" version "1.2.1"
 
-  id "edu.sc.seis.macAppBundle" version "2.2.3"
-  id "edu.sc.seis.launch4j" version "2.3.0"
-  id "com.github.johnrengelman.shadow" version "2.0.4"
-  id "nebula.deb" version "4.5.1"
+  id "edu.sc.seis.macAppBundle" version "2.3.0"
+  id "edu.sc.seis.launch4j" version "2.4.4"
+  id "com.github.johnrengelman.shadow" version "4.0.3"
+  id "nebula.deb" version "5.1.0"
+}
+
+javafx {
+  modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 group = 'ch.retorte.intervalmusiccompositor'
 applicationName = "IntervalMusicCompositor"
-mainClassName = "ch.retorte.intervalmusiccompositor.Main"
+mainClassName = "$moduleName/ch.retorte.intervalmusiccompositor.Main"
 
 applicationDefaultJvmArgs = ["-Xmx2048m"]
 
@@ -41,6 +48,8 @@ ext.windowsOutputDir = '/windowsApp'
 ext.linuxOutputDir = '/linuxApp'
 ext.windowsUberJarName = 'uberJar'
 ext.debPackageInstallPath = '/opt/IntervalMusicCompositor'
+
+ext.moduleName = 'intervalmusiccompositor.app'
 
 tasks.withType(FindBugs) {
     reports {
@@ -70,6 +79,7 @@ macAppBundle {
   appStyle = 'Oracle'
   appName = project.applicationName
   jvmVersion = "1.8+"
+  jreHome = '...'
   arguments = ["-Xmx=2048M"]
 }
 
@@ -204,12 +214,12 @@ dependencies {
 	
 	compile project(':intervalmusiccompositor.decoder.wave')
 	compile project(':intervalmusiccompositor.decoder.flac')
-	compile project(':intervalmusiccompositor.decoder.mp3')
+	compile project(':intervalmusiccompositor.decoder.mpeg')
 	compile project(':intervalmusiccompositor.decoder.ogg')
 	compile project(':intervalmusiccompositor.decoder.aac')
 	
 	compile project(':intervalmusiccompositor.encoder.wave')
-	compile project(':intervalmusiccompositor.encoder.mp3')
+	compile project(':intervalmusiccompositor.encoder.mpeg')
   compile project(':intervalmusiccompositor.encoder.ogg')
 }
 

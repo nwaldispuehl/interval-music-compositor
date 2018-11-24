@@ -9,8 +9,8 @@ import java.util.List;
 import javax.sound.sampled.AudioInputStream;
 
 import ch.retorte.intervalmusiccompositor.spi.progress.ProgressListener;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.progress.ProgressUpdatable;

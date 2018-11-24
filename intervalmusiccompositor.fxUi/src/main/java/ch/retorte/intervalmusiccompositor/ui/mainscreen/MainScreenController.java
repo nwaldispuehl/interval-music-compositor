@@ -1,16 +1,16 @@
 package ch.retorte.intervalmusiccompositor.ui.mainscreen;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.compilation.CompilationParameters;
-import ch.retorte.intervalmusiccompositor.list.BlendMode;
-import ch.retorte.intervalmusiccompositor.list.EnumerationMode;
-import ch.retorte.intervalmusiccompositor.list.ListSortMode;
-import ch.retorte.intervalmusiccompositor.messagebus.DebugMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.ErrorMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.ProgressMessage;
-import ch.retorte.intervalmusiccompositor.messagebus.SubProcessProgressMessage;
+import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.model.list.BlendMode;
+import ch.retorte.intervalmusiccompositor.model.list.EnumerationMode;
+import ch.retorte.intervalmusiccompositor.model.list.ListSortMode;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.ProgressMessage;
+import ch.retorte.intervalmusiccompositor.model.messagebus.SubProcessProgressMessage;
 import ch.retorte.intervalmusiccompositor.spi.*;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
@@ -38,6 +38,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -46,9 +47,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
@@ -65,6 +68,9 @@ import static ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI.UI
 public class MainScreenController implements Initializable {
 
   //---- FX Widgets
+
+  @FXML
+  private VBox root;
 
   // Menu
 
@@ -122,6 +128,12 @@ public class MainScreenController implements Initializable {
 
   @FXML
   private ToggleGroup enumerationToggleGroup;
+
+  @FXML
+  private RadioButton singleExtractEnumeration;
+
+  @FXML
+  private RadioButton continuousEnumeration;
 
   // Break track
 
@@ -181,7 +193,14 @@ public class MainScreenController implements Initializable {
   private ToggleGroup blendModeToggleGroup;
 
   @FXML
+  private RadioButton separateBlendMode;
+
+  @FXML
+  private RadioButton crossBlendMode;
+
+  @FXML
   private Slider blendDuration;
+
 
   // Sound effects
 
@@ -262,6 +281,8 @@ public class MainScreenController implements Initializable {
     this.audioFileEncoders = FXCollections.observableArrayList(audioFileEncoders);
     this.userPreferences = userPreferences;
 
+    initializeStyles();
+
     initializeMenu();
     initializeMusicTrackList();
     initializeTrackEnumeration();
@@ -272,11 +293,16 @@ public class MainScreenController implements Initializable {
     initializeOutputFileFormat();
     initializeOutputDirectory();
     initializeControlButtons();
+    initializeBackgroundImage();
     initializeControlButtonsActivation();
 
     initializePreferenceStorage();
 
     addMessageSubscribers(messageSubscriber);
+  }
+
+  private void initializeStyles() {
+    root.getStylesheets().addAll("/styles/fonts.css", "/styles/MainScreen.css");
   }
 
   private void initializeMenu() {
@@ -325,6 +351,11 @@ public class MainScreenController implements Initializable {
     musicTrackListView.initializeWith(musicListControl.getMusicList(), bundle, messageProducer, musicListControl, e -> Platform.runLater(this::updateTrackCount));
     musicTrackListView.addListChangeListener(newValue -> updateUiDataWidgets());
     addMusicTrackButton.setOnAction(event -> openFileChooserFor(musicTrackListView));
+    addMusicTrackButton.graphicProperty().set(imageFrom("/images/add_icon_small.png"));
+  }
+
+  private ImageView imageFrom(String resourcePath) {
+    return new ImageView(new Image(MainScreenController.class.getResourceAsStream(resourcePath)));
   }
 
   private void initializeTrackEnumeration() {
@@ -345,11 +376,15 @@ public class MainScreenController implements Initializable {
     enumerationToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setEnumerationMode((String) newValue.getUserData()));
     enumerationToggleGroup.selectedToggleProperty().addListener(debugHandlerWith("enumerationToggleGroup"));
     enumerationToggleGroup.selectedToggleProperty().addListener(updateUiHandler());
+
+    singleExtractEnumeration.graphicProperty().set(imageFrom("/images/enumeration_mode_1.png"));
+    continuousEnumeration.graphicProperty().set(imageFrom("/images/enumeration_mode_2.png"));
   }
 
   private void initializeBreakTrackList() {
     breakTrackListView.initializeWith(musicListControl.getBreakList(), bundle, messageProducer, musicListControl, e -> Platform.runLater(this::updateTrackCount));
     addBreakTrackButton.setOnAction(event -> openFileChooserFor(breakTrackListView));
+    addBreakTrackButton.graphicProperty().set(imageFrom("/images/add_icon_small.png"));
 
     breakVolume.valueProperty().addListener((observable, oldValue, newValue) -> {
       double volume = newValue.doubleValue();
@@ -403,6 +438,9 @@ public class MainScreenController implements Initializable {
     blendDuration.valueProperty().addListener((observable, oldValue, newValue) -> compilationParameters.setBlendDuration(newValue.doubleValue()));
     blendDuration.valueProperty().addListener(debugHandlerWith(blendDuration.getId()));
     blendDuration.valueProperty().addListener(updateUiHandler());
+
+    separateBlendMode.graphicProperty().set(imageFrom("/images/blend_mode_1.png"));
+    crossBlendMode.graphicProperty().set(imageFrom("/images/blend_mode_2.png"));
   }
 
   private void initializeSoundEffects() {
@@ -425,6 +463,7 @@ public class MainScreenController implements Initializable {
     outputDirectory.textProperty().addListener(debugHandlerWith(outputDirectory.getId()));
     chooseOutputDirectory.setOnAction(event -> openDirectoryChooser());
     clearOutputDirectory.setOnAction(event -> resetOutputDirectory());
+    clearOutputDirectory.graphicProperty().set(imageFrom("/images/clear_icon_small.png"));
   }
 
   private void resetOutputDirectory() {
@@ -438,14 +477,18 @@ public class MainScreenController implements Initializable {
     process.setOnAction(event -> musicCompilationControl.startCompilation(compilationParameters));
   }
 
+  private void initializeBackgroundImage() {
+    starterBackgroundImage = new Image(MainScreenController.class.getResourceAsStream("/images/starter_background.png"));
+  }
+
   private void initializeControlButtonsActivation() {
-      UsableDataChangeListener l = new UsableDataChangeListener();
-      soundPeriod.valueProperty().addListener(l);
-      breakPeriod.valueProperty().addListener(l);
-      soundPattern.textProperty().addListener(l);
-      breakPattern.textProperty().addListener(l);
-      iterations.valueProperty().addListener(l);
-      hasUsableData.setValue(compilationParameters.hasUsableData());
+    UsableDataChangeListener l = new UsableDataChangeListener();
+    soundPeriod.valueProperty().addListener(l);
+    breakPeriod.valueProperty().addListener(l);
+    soundPattern.textProperty().addListener(l);
+    breakPattern.textProperty().addListener(l);
+    iterations.valueProperty().addListener(l);
+    hasUsableData.setValue(compilationParameters.hasUsableData());
   }
 
   private void initializePreferenceStorage() {
@@ -510,8 +553,8 @@ public class MainScreenController implements Initializable {
   }
 
   private void registerPreferenceSaveListeners() {
-    musicListControl.getMusicList().addListener((ListChangeListener<? super IAudioFile>) c -> userPreferences.saveMusicTrackList(c.getList()));
-    musicListControl.getBreakList().addListener((ListChangeListener<? super IAudioFile>) c -> userPreferences.saveBreakTrackList(c.getList()));
+    musicListControl.getMusicList().addListener(n -> userPreferences.saveMusicTrackList(musicListControl.getMusicList()));
+    musicListControl.getBreakList().addListener(n -> userPreferences.saveBreakTrackList(musicListControl.getBreakList()));
 
     enumerationToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveEnumerationMode(EnumerationMode.valueOf((String) newValue.getUserData())));
 
@@ -669,8 +712,8 @@ public class MainScreenController implements Initializable {
     }
   }
 
-  public void setEnvelopeImage(WritableImage envelopeImage) {
-    imageView.setImage(envelopeImage);
+  public void setEnvelopeImage(BufferedImage envelopeImage) {
+    imageView.setImage(SwingFXUtils.toFXImage(envelopeImage, null));
   }
 
   private void openFileChooserFor(DraggableAudioFileListView listView) {

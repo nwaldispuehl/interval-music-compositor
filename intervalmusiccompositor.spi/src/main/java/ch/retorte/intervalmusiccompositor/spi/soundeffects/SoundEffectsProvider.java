@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.spi.soundeffects;
 
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffect;
 
 import java.util.Collection;
 

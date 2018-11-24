@@ -1,8 +1,9 @@
 package ch.retorte.intervalmusiccompositor.ui.graphics;
 
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
-import com.sun.javafx.tk.FontMetrics;
-import com.sun.javafx.tk.Toolkit;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
+//import com.sun.javafx.tk.FontMetrics;
+//import com.sun.javafx.tk.Toolkit;
+import javafx.geometry.Bounds;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
@@ -10,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 
 import java.util.Collection;
@@ -80,10 +82,10 @@ public class BarChart {
     absoluteWidth *= iterations;
 
     Font soundFont = Font.font("Sans Serif", FontWeight.BOLD, 10);
-    FontMetrics soundFontMetrics = Toolkit.getToolkit().getFontLoader().getFontMetrics(soundFont);
+//    Bounds soundFontHeight = Toolkit.getToolkit().getFontLoader().getFontMetrics(soundFont);
 
     Font breakFont = Font.font("Sans Serif", FontWeight.NORMAL, 9);
-    FontMetrics breakFontMetrics = Toolkit.getToolkit().getFontLoader().getFontMetrics(breakFont);
+//    Bounds breakFontBounds = Toolkit.getToolkit().getFontLoader().getFontMetrics(breakFont);
 
     Color darkBlue = Color.web("#2196F3");
     Color lightBlue = Color.web("#03A9F4");
@@ -92,7 +94,7 @@ public class BarChart {
     Color textColor = Color.GRAY;
 
     double top = 0;
-    double bottom = Math.max(soundFontMetrics.getLineHeight(), breakFontMetrics.getLineHeight()) * 1.2;
+    double bottom = Math.max(computeBoundsOf(soundFont, "M").getHeight(), computeBoundsOf(breakFont, "M").getHeight()) * 1.2;
     double border = 0;
     double p = border;
 
@@ -113,9 +115,10 @@ public class BarChart {
         graphicsContext.strokeRect(p, top, width, image.getHeight() - top - bottom);
 
         graphicsContext.setFill(textColor);
-        float labelWidth = soundFontMetrics.computeStringWidth(soundPattern.get(j).toString());
+        double labelWidth = computeBoundsOf(soundFont, soundPattern.get(j).toString()).getWidth();
         if (labelWidth < width) {
-          graphicsContext.fillText(soundPattern.get(j).toString(), p + (width - labelWidth) / 2, image.getHeight() - soundFontMetrics.getDescent());
+//          graphicsContext.fillText(soundPattern.get(j).toString(), p + (width - labelWidth) / 2, image.getHeight() - soundFontMetrics.getDescent());
+          graphicsContext.fillText(soundPattern.get(j).toString(), p + (width - labelWidth) / 2, image.getHeight() - 2);
         }
         p = p + width;
 
@@ -137,13 +140,13 @@ public class BarChart {
 
         graphicsContext.setFill(textColor);
 
-        float breakLabelWidth = 0;
+        double breakLabelWidth = 0;
         if (has(breakPattern)) {
-          breakLabelWidth = breakFontMetrics.computeStringWidth(breakPattern.get(j % breakPattern.size()).toString());
+          breakLabelWidth = computeBoundsOf(breakFont, breakPattern.get(j % breakPattern.size()).toString()).getWidth();
         }
         if (breakLabelWidth < breakWidth) {
-          graphicsContext.fillText(breakPattern.get(j % breakPattern.size()).toString(), p + (breakWidth - breakLabelWidth) / 2, image.getHeight()
-              - breakFontMetrics.getDescent());
+//          graphicsContext.fillText(breakPattern.get(j % breakPattern.size()).toString(), p + (breakWidth - breakLabelWidth) / 2, image.getHeight() - breakFontMetrics.getDescent());
+          graphicsContext.fillText(breakPattern.get(j % breakPattern.size()).toString(), p + (breakWidth - breakLabelWidth) / 2, image.getHeight() - 2);
         }
 
 
@@ -165,8 +168,8 @@ public class BarChart {
           double width = soundPattern.get(j) * scale;
 
           for (SoundEffectOccurrence s : soundEffectOccurrences) {
-            double soundEffectPosition = s.getTimeMillis() / 1000 * scale;
-            double soundEffectWidth = s.getSoundEffect().getDisplayDurationMillis() / 1000 * scale;
+            double soundEffectPosition = s.getTimeMillis() / 1000.0 * scale;
+            double soundEffectWidth = s.getSoundEffect().getDisplayDurationMillis() / 1000.0 * scale;
 
             graphicsContext.setFill(soundEffectsColor);
             graphicsContext.fillRect(currentLeftBorder + soundEffectPosition, top, soundEffectWidth, image.getHeight() - top - bottom);
@@ -185,6 +188,15 @@ public class BarChart {
     }
 
     image = canvas.snapshot(null, null);
+  }
+
+  private Bounds computeBoundsOf(Font font, String text) {
+    Text theText = new Text(text);
+    theText.setFont(font);
+    return theText.getBoundsInLocal();
+
+
+//    return Toolkit.getToolkit().getFontLoader().getFontMetrics(font).computeStringWidth(text);
   }
 
   private boolean has(Collection<?> collection) {

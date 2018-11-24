@@ -1,12 +1,13 @@
 package ch.retorte.intervalmusiccompositor.ui.audiofilelist;
 
-import ch.retorte.intervalmusiccompositor.ChangeListener;
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.util.ChangeListener;
+import ch.retorte.intervalmusiccompositor.model.list.ObservableList;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import com.google.common.primitives.Ints;
-import javafx.collections.ObservableList;
+
 
 import java.io.File;
 import java.util.List;

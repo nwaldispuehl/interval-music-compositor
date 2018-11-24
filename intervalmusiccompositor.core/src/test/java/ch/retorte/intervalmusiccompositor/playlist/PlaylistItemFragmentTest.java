@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;

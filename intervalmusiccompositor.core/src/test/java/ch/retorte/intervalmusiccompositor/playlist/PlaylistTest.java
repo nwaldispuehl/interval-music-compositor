@@ -1,11 +1,11 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
-import static ch.retorte.intervalmusiccompositor.list.BlendMode.CROSS;
-import static ch.retorte.intervalmusiccompositor.list.BlendMode.SEPARATE;
-import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.CONTINUOUS;
-import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.SINGLE_EXTRACT;
-import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SHUFFLE;
-import static ch.retorte.intervalmusiccompositor.list.ListSortMode.SORT;
+import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.CROSS;
+import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.SEPARATE;
+import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.CONTINUOUS;
+import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.SINGLE_EXTRACT;
+import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SHUFFLE;
+import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SORT;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -15,14 +15,14 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffect;
-import ch.retorte.intervalmusiccompositor.soundeffect.SoundEffectOccurrence;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffect;
+import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.retorte.intervalmusiccompositor.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 import com.google.common.collect.Lists;

@@ -8,9 +8,10 @@
 <?import javafx.scene.text.TextFlow?>
 <?import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileBreakListView?>
 <?import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileListView?>
-<VBox stylesheets="@/styles/fonts.css, @/styles/MainScreen.css" maxHeight="Infinity" maxWidth="Infinity" minWidth="1024" minHeight="840"
+<VBox maxHeight="Infinity" maxWidth="Infinity" minWidth="1024" minHeight="840"
       xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
       styleClass="topLevelNode"
+      fx:id="root"
       fx:controller="ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController">
     <AnchorPane>
         <MenuBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -52,11 +53,6 @@
                         </HBox>
 
                         <Button mnemonicParsing="false" fx:id="addMusicTrackButton">
-                            <graphic>
-                                <ImageView>
-                                    <Image url="@/images/add_icon_small.png"/>
-                                </ImageView>
-                            </graphic>
                             <tooltip>
                                 <Tooltip text="%ui.form.music_list.add_tooltip"/>
                             </tooltip>
@@ -89,29 +85,19 @@
                             <Insets bottom="10.0" top="10.0"/>
                         </VBox.margin>
                         <Label text="%ui.form.enumeration_mode.label"/>
-                        <RadioButton contentDisplay="CENTER" mnemonicParsing="false" selected="true" userData="SINGLE_EXTRACT">
+                        <RadioButton fx:id="singleExtractEnumeration" contentDisplay="CENTER" mnemonicParsing="false" selected="true" userData="SINGLE_EXTRACT">
                             <tooltip>
                                 <Tooltip text="%ui.form.enumeration_mode.icon1.tooltip"/>
                             </tooltip>
-                            <graphic>
-                                <ImageView>
-                                    <Image url="@/images/enumeration_mode_1.png"/>
-                                </ImageView>
-                            </graphic>
                             <toggleGroup>
                                 <ToggleGroup fx:id="enumerationToggleGroup"/>
                             </toggleGroup>
                         </RadioButton>
-                        <RadioButton contentDisplay="CENTER" mnemonicParsing="false" userData="CONTINUOUS"
+                        <RadioButton fx:id="continuousEnumeration" contentDisplay="CENTER" mnemonicParsing="false" userData="CONTINUOUS"
                                      toggleGroup="$enumerationToggleGroup">
                             <tooltip>
                                 <Tooltip text="%ui.form.enumeration_mode.icon2.tooltip"/>
                             </tooltip>
-                            <graphic>
-                                <ImageView>
-                                    <Image url="@/images/enumeration_mode_2.png"/>
-                                </ImageView>
-                            </graphic>
                         </RadioButton>
                     </HBox>
                     <Separator prefWidth="200.0"/>
@@ -123,11 +109,6 @@
                         <Label  fx:id="breakVolumeLabel" styleClass="legend"/>
                         <Slider fx:id="breakVolume" styleClass="volumeSlider"  value="100" maxWidth="84" maxHeight="24" snapToTicks="true" showTickMarks="false" minorTickCount="0" showTickLabels="false" min="10" max="100" majorTickUnit="10"/>
                         <Button mnemonicParsing="false" fx:id="addBreakTrackButton">
-                            <graphic>
-                                <ImageView>
-                                    <Image url="@/images/add_icon_small.png"/>
-                                </ImageView>
-                            </graphic>
                             <tooltip>
                                 <Tooltip text="%ui.form.break_list.add_tooltip"/>
                             </tooltip>
@@ -157,7 +138,7 @@
                     </TextFlow>
                     <Pane>
                         <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true">
-                            <Image fx:id="starterBackgroundImage" url="@/images/starter_background.png"/>
+
                         </ImageView>
                     </Pane>
                     <VBox>
@@ -239,28 +220,18 @@
                         <VBox spacing="10.0" prefWidth="360">
                             <Label text="%ui.form.blend_mode.label" alignment="CENTER" maxWidth="Infinity"/>
                             <HBox spacing="10.0" alignment="CENTER">
-                                <RadioButton mnemonicParsing="false" selected="true" userData="SEPARATE">
+                                <RadioButton fx:id="separateBlendMode" mnemonicParsing="false" selected="true" userData="SEPARATE">
                                     <tooltip>
                                         <Tooltip text="%ui.form.blend_mode.icon1.tooltip"/>
                                     </tooltip>
-                                    <graphic>
-                                        <ImageView>
-                                            <Image url="@/images/blend_mode_1.png"/>
-                                        </ImageView>
-                                    </graphic>
                                     <toggleGroup>
                                         <ToggleGroup fx:id="blendModeToggleGroup"/>
                                     </toggleGroup>
                                 </RadioButton>
-                                <RadioButton mnemonicParsing="false" toggleGroup="$blendModeToggleGroup" userData="CROSS">
+                                <RadioButton fx:id="crossBlendMode" mnemonicParsing="false" toggleGroup="$blendModeToggleGroup" userData="CROSS">
                                     <tooltip>
                                         <Tooltip text="%ui.form.blend_mode.icon2.tooltip"/>
                                     </tooltip>
-                                    <graphic>
-                                        <ImageView>
-                                            <Image url="@/images/blend_mode_2.png"/>
-                                        </ImageView>
-                                    </graphic>
                                 </RadioButton>
                             </HBox>
                         </VBox>
@@ -286,11 +257,6 @@
                             <tooltip>
                                 <Tooltip text="%ui.form.outfile.clear.tooltip"/>
                             </tooltip>
-                            <graphic>
-                                <ImageView>
-                                    <Image url="@/images/clear_icon_small.png"/>
-                                </ImageView>
-                            </graphic>
                         </Button>
                         <Label fx:id="outputDirectory" text="%ui.form.outfile_label"/>
                     </HBox>
