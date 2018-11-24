@@ -1,7 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
-2019-xx-xx  2.9.3 [not yet released]
+202x-xx-xx  3.x.x (not yet released)
+--------------------------------------------------------------------------------
+
+
+2020-xx-xx  2.9.3 [not yet released]
 --------------------------------------------------------------------------------
 IMP  #59    Inactivates process button if no compilation is possible.
 
