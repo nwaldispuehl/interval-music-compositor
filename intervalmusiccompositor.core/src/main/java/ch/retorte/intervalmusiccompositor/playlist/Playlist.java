@@ -139,6 +139,7 @@ public class Playlist implements Iterable<PlaylistItem> {
       if (newMusicTrack != null) {
         musicPlaylist.add(newMusicTrack);
         musicPatternCounter++;
+        skippedTracks = 0;
       }
       else {
         skippedTracks++;
@@ -187,6 +188,7 @@ public class Playlist implements Iterable<PlaylistItem> {
         PlaylistItemFragment newBreakTrack = createPlaylistItemFrom(currentBreakFile, volume, currentBreakPatternMs);
         if (newBreakTrack != null) {
           breakPlaylist.add(new BreakPlaylistItemFragment(newBreakTrack));
+          skippedTracks = 0;
         }
         else {
           skippedTracks++;

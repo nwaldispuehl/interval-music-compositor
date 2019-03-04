@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2019-xx-xx  2.9.2 [not yet released]
+--------------------------------------------------------------------------------
+FIX  #56    Continuous enumeration crashes on playlist repeating.
+
+
 2018-11-15  2.9.1
 --------------------------------------------------------------------------------
 FIX  #50    Stale output directory yields error.
