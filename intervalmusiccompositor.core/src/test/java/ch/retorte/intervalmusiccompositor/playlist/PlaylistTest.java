@@ -50,6 +50,7 @@ public class PlaylistTest {
   private IAudioFile musicTrack40s = createAudioFileMockWithLength(sec(40), MUSIC);
   private IAudioFile musicTrack60s = createAudioFileMockWithLength(sec(60), MUSIC);
   private IAudioFile breakTrack = createAudioFileMockWithLength(sec(60), BREAK);
+  private IAudioFile breakTrack20s = createAudioFileMockWithLength(sec(20), BREAK);
 
   private SoundEffect soundEffect1 = mock(SoundEffect.class);
 
@@ -388,6 +389,22 @@ public class PlaylistTest {
     assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack20s));
   }
 
+  @Test
+  public void shouldLoopMusicWithContinuousExtract() {
+    // given
+    Playlist playlist = new Playlist(SEPARATE, 0d, CONTINUOUS, SORT, msgPrd);
+    musicList.add(musicTrack20s);
+    breakList.add(breakTrack20s);
+
+    musicPattern = pattern(10);
+    breakPattern = pattern(10);
+
+    // when
+    List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 4, soundEffectOccurrences);
+
+    // then
+    assertThat(tracks.size(), is(4));
+  }
 
   //---- Helper methods
 
