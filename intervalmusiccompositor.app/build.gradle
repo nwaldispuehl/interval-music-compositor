@@ -11,10 +11,6 @@ buildscript {
 
   }
   dependencies {
-    classpath "gradle.plugin.edu.sc.seis.gradle:launch4j:2.3.0"
-    classpath 'gradle.plugin.edu.sc.seis:macAppBundle:2.2.3'
-    classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
-    classpath 'com.netflix.nebula:gradle-ospackage-plugin:4.5.1'
   }
 }
 
@@ -22,9 +18,11 @@ plugins {
   id 'java'
   id 'application'
   
-  id 'org.openjfx.javafxplugin' version '0.0.5'
-  id "org.javamodularity.moduleplugin" version "1.2.1"
+  id 'org.openjfx.javafxplugin' version '0.0.8'
+  id "org.javamodularity.moduleplugin" version "1.5.0"
+  id 'org.beryx.jlink' version '2.15.1'
 
+  // TODO: upgrade...
   id "edu.sc.seis.macAppBundle" version "2.3.0"
   id "edu.sc.seis.launch4j" version "2.4.4"
   id "com.github.johnrengelman.shadow" version "4.0.3"
@@ -33,6 +31,22 @@ plugins {
 
 javafx {
   modules = [ 'javafx.controls', 'javafx.fxml' ]
+  configuration = 'compileOnly'
+}
+
+jlink {
+  targetPlatform("linux") {
+    jdkHome = "/opt/java/platforms/linux/jdk-12.0.2"
+    addExtraModulePath("/opt/openjfx/linux/javafx-jmods-11.0.2")
+  }
+  targetPlatform("mac") {
+    jdkHome = "/opt/java/platforms/mac/jdk-12.0.2.jdk"
+    addExtraModulePath("/opt/openjfx/mac/javafx-jmods-11.0.2")
+  }
+  targetPlatform("win") {
+    jdkHome = "/opt/java/platforms/win/jdk-12.0.2"
+    addExtraModulePath("/opt/openjfx/win/javafx-jmods-11.0.2")
+  }
 }
 
 group = 'ch.retorte.intervalmusiccompositor'
@@ -43,8 +57,8 @@ applicationDefaultJvmArgs = ["-Xmx2048m"]
 
 ext.versionDelimiter = '-'
 
-ext.macosxOutputDir = '/macosxApp'
-ext.windowsOutputDir = '/windowsApp'
+ext.macosxOutputDir = '/macApp'
+ext.windowsOutputDir = '/winApp'
 ext.linuxOutputDir = '/linuxApp'
 ext.windowsUberJarName = 'uberJar'
 ext.debPackageInstallPath = '/opt/IntervalMusicCompositor'
@@ -87,7 +101,7 @@ task distOsxApp(type: Tar, dependsOn: createApp) {
   description = "Creates an archive from the Mac OS X version." 
   compression = Compression.GZIP
   baseName = project.applicationName
-  appendix = 'macosx'
+  appendix = 'mac'
 
   into (project.applicationName + project.ext.versionDelimiter + version) {
     from buildDir.absolutePath + project.ext.macosxOutputDir
@@ -111,7 +125,7 @@ task copyUberJar(type: Copy, dependsOn: [ shadowJar]) {
 task distWindowsApp(type: Zip, dependsOn: [shadowJar, copyUberJar, createExe]) {
   description = "Creates an archive from the Microsoft Windows version." 
   baseName = applicationName
-  appendix = 'windows'
+  appendix = 'win'
 
   into (applicationName + project.ext.versionDelimiter + version) {
     from buildDir.absolutePath + project.ext.windowsOutputDir + '/' + applicationName + '.exe'
