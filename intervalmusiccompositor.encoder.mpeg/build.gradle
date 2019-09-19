@@ -3,7 +3,7 @@ apply plugin: 'java-library'
 group = 'ch.retorte.intervalmusiccompositor'
 version = parent.version
 
-ext.moduleName = 'intervalmusiccompositor.encoder.mp3'
+ext.moduleName = 'intervalmusiccompositor.encoder.mpeg'
 
 compileJava {
   inputs.property('moduleName', moduleName)
