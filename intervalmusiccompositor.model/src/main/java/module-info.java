@@ -9,5 +9,4 @@ module intervalmusiccompositor.model {
 
 
   requires java.desktop;
-  requires com.google.common;
 }

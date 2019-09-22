@@ -1,7 +1,5 @@
 package ch.retorte.intervalmusiccompositor.model.messagebus;
 
-import com.google.common.collect.Lists;
-
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.Observable;
@@ -17,7 +15,7 @@ public class LogBuffer extends Observable {
 
   //---- Fields
 
-  private final LinkedList<String> buffer = Lists.newLinkedList();
+  private final LinkedList<String> buffer = new LinkedList<>();
 
 
   //---- Constructor

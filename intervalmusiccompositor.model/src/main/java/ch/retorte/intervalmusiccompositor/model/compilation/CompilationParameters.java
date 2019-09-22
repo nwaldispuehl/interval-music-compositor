@@ -4,11 +4,12 @@ import ch.retorte.intervalmusiccompositor.model.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.model.list.EnumerationMode;
 import ch.retorte.intervalmusiccompositor.model.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Aggregates all needed compilation parameters.
@@ -74,8 +75,8 @@ public class CompilationParameters {
   }
 
   private List<Integer> parsePattern(String musicPattern) {
-    List<Integer> result = Lists.newArrayList();
-    for(String s : Splitter.on(PATTERN_SEPARATOR).trimResults().omitEmptyStrings().split(musicPattern)) {
+    List<Integer> result = new ArrayList<>();
+    for(String s : split(musicPattern)) {
       try {
         result.add(Math.abs(Integer.parseInt(s)));
       }
@@ -86,6 +87,17 @@ public class CompilationParameters {
     return result;
   }
 
+  private List<String> split(String musicPattern) {
+    return stream(musicPattern.split(PATTERN_SEPARATOR)).map(String::trim).filter(this::notEmpty).collect(toList());
+  }
+
+  private boolean notEmpty(String s) {
+    return !isEmpty(s);
+  }
+
+  private boolean isEmpty(String s) {
+    return s == null || s.equals("");
+  }
 
   public void addSoundEffectOccurrence(SoundEffectOccurrence soundEffectOccurrence) {
     soundEffectOccurrences.add(soundEffectOccurrence);

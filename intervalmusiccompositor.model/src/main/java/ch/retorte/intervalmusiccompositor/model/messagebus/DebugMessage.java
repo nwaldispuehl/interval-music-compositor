@@ -1,7 +1,5 @@
 package ch.retorte.intervalmusiccompositor.model.messagebus;
 
-import com.google.common.annotations.VisibleForTesting;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;

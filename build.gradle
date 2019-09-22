@@ -1,7 +1,19 @@
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    gradlePluginPortal()
+  }
 
+  dependencies {
+    classpath "org.javamodularity:moduleplugin:1.5.0"
+  }
+}
 
 subprojects {
     apply plugin:'java'
+    apply plugin: "org.javamodularity.moduleplugin"
 
     sourceCompatibility = 12
     targetCompatibility = 12
@@ -16,22 +28,58 @@ subprojects {
     }
 
     dependencies {
-      compile 'com.google.guava:guava:27.0.1-jre'
+      compile 'com.google.guava:guava:28.1-jre'
 
+      testCompile 'org.assertj:assertj-core:3.13.2'
       testCompile 'junit:junit:4.13-beta-1'
       testCompile 'org.mockito:mockito-core:2.23.4'
     }
 
+  afterEvaluate {
+    repositories {
+      jcenter()
+    }
+
+    // Java module updates
+    compileJava {
+      inputs.property("moduleName", moduleName)
+      doFirst {
+        options.compilerArgs = [
+            '--module-path', classpath.asPath,
+        ]
+        classpath = files()
+      }
+    }
+
+    compileTestJava {
+      inputs.property("moduleName", moduleName)
+      doFirst {
+        options.compilerArgs = [
+            '--module-path', classpath.asPath,
+            '--add-modules', 'junit',
+            '--add-reads', "$moduleName=junit",
+            '--patch-module', "$moduleName=" + files(sourceSets.test.java.srcDirs).asPath,
+        ]
+        classpath = files()
+      }
+    }
+
+    test {
+      inputs.property("moduleName", moduleName)
+      doFirst {
+        jvmArgs = [
+            '--module-path', classpath.asPath,
+            '--add-modules', 'ALL-MODULE-PATH',
+            '--add-reads', "$moduleName=junit",
+            '--patch-module', "$moduleName=" + files(sourceSets.test.java.outputDir).asPath,
+        ]
+        classpath = files()
+      }
+    }
+  }
 }
 
 
-buildscript {
-  repositories {
-    mavenCentral()
-  }
 
-  dependencies {
-  }
-}
 
 

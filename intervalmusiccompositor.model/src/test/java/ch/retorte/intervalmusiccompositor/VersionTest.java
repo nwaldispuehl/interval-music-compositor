@@ -1,7 +1,6 @@
 package ch.retorte.intervalmusiccompositor;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import ch.retorte.intervalmusiccompositor.model.update.Version;
 import org.junit.Test;
@@ -54,22 +53,22 @@ public class VersionTest {
     assertHigherThan(lessHigherVersion, inbetweenVersion);
     assertHigherThan(inbetweenVersion, lowerVersion);
 
-    assertThat(inbetweenVersion.compareTo(otherInbetweenVersion), is(0));
+    assertThat(inbetweenVersion.compareTo(otherInbetweenVersion)).isEqualTo(0);
   }
 
   @Test
   public void shouldPrettyPrint() {
-    assertThat(new Version(1, 2, 3).toString(), is("1.2.3"));
+    assertThat(new Version(1, 2, 3).toString()).isEqualTo("1.2.3");
   }
 
   private void assertVersion(Version v, int major, int minor, int revision, int build) {
-    assertThat(v.getMajor(), is(major));
-    assertThat(v.getMinor(), is(minor));
-    assertThat(v.getRevision(), is(revision));
-    assertThat(v.getBuild(), is(build));
+    assertThat(v.getMajor()).isEqualTo(major);
+    assertThat(v.getMinor()).isEqualTo(minor);
+    assertThat(v.getRevision()). isEqualTo(revision);
+    assertThat(v.getBuild()).isEqualTo(build);
   }
 
   private void assertHigherThan(Version higherVersion, Version lowerVersion) {
-    assertThat(higherVersion.compareTo(lowerVersion), is(1));
+    assertThat(higherVersion.compareTo(lowerVersion)).isEqualTo(1);
   }
 }
