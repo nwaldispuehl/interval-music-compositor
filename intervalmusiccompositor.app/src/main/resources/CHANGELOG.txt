@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2019-xx-xx  2.9.3 [not yet released]
+--------------------------------------------------------------------------------
+IMP  #59    Inactivates process button if no compilation is possible.
+
+
 2019-03-05  2.9.2
 --------------------------------------------------------------------------------
 FIX  #56    Continuous enumeration crashes on playlist repeating.

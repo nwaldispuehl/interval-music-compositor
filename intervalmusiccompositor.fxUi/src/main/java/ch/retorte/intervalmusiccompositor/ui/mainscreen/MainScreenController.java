@@ -31,6 +31,8 @@ import ch.retorte.intervalmusiccompositor.ui.updatecheck.UpdateCheckDialog;
 import ch.retorte.intervalmusiccompositor.ui.utils.AudioFileEncoderConverter;
 import ch.retorte.intervalmusiccompositor.ui.utils.WidgetTools;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -207,6 +209,12 @@ public class MainScreenController implements Initializable {
   @FXML
   private Button process;
 
+
+  // Bindings
+
+  private BooleanProperty hasUsableDataBinding = new SimpleBooleanProperty(false);
+
+
   // Fields
 
   private SoundEffectsPane soundEffectsPane;
@@ -264,6 +272,7 @@ public class MainScreenController implements Initializable {
     initializeOutputFileFormat();
     initializeOutputDirectory();
     initializeControlButtons();
+    initializeControlButtonsActivation();
 
     initializePreferenceStorage();
 
@@ -425,7 +434,18 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializeControlButtons() {
+    process.disableProperty().bind(hasUsableDataBinding.not());
     process.setOnAction(event -> musicCompilationControl.startCompilation(compilationParameters));
+  }
+
+  private void initializeControlButtonsActivation() {
+      UsableDataChangeListener l = new UsableDataChangeListener();
+      soundPeriod.valueProperty().addListener(l);
+      breakPeriod.valueProperty().addListener(l);
+      soundPattern.textProperty().addListener(l);
+      breakPattern.textProperty().addListener(l);
+      iterations.valueProperty().addListener(l);
+      hasUsableDataBinding.setValue(compilationParameters.hasUsableData());
   }
 
   private void initializePreferenceStorage() {
@@ -754,6 +774,13 @@ public class MainScreenController implements Initializable {
     @Override
     public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
       updateUiDataWidgets();
+    }
+  }
+
+  private class UsableDataChangeListener implements ChangeListener<Object> {
+    @Override
+    public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+      hasUsableDataBinding.setValue(compilationParameters.hasUsableData());
     }
   }
 
