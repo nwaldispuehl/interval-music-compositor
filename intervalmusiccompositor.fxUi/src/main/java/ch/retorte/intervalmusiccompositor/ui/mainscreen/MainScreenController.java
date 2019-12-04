@@ -212,7 +212,7 @@ public class MainScreenController implements Initializable {
 
   // Bindings
 
-  private BooleanProperty hasUsableDataBinding = new SimpleBooleanProperty(false);
+  private BooleanProperty hasUsableData = new SimpleBooleanProperty(false);
 
 
   // Fields
@@ -434,7 +434,7 @@ public class MainScreenController implements Initializable {
   }
 
   private void initializeControlButtons() {
-    process.disableProperty().bind(hasUsableDataBinding.not());
+    process.disableProperty().bind(hasUsableData.not());
     process.setOnAction(event -> musicCompilationControl.startCompilation(compilationParameters));
   }
 
@@ -445,7 +445,7 @@ public class MainScreenController implements Initializable {
       soundPattern.textProperty().addListener(l);
       breakPattern.textProperty().addListener(l);
       iterations.valueProperty().addListener(l);
-      hasUsableDataBinding.setValue(compilationParameters.hasUsableData());
+      hasUsableData.setValue(compilationParameters.hasUsableData());
   }
 
   private void initializePreferenceStorage() {
@@ -780,7 +780,7 @@ public class MainScreenController implements Initializable {
   private class UsableDataChangeListener implements ChangeListener<Object> {
     @Override
     public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
-      hasUsableDataBinding.setValue(compilationParameters.hasUsableData());
+      hasUsableData.setValue(compilationParameters.hasUsableData());
     }
   }
 
