@@ -1,8 +1,5 @@
 plugins {
   id 'application'
-  
-  id 'org.openjfx.javafxplugin' version '0.0.8'
-  id 'org.beryx.jlink' version '2.15.1'
 
   // TODO: upgrade...
   id "edu.sc.seis.macAppBundle" version "2.3.0"
@@ -11,29 +8,9 @@ plugins {
   id "nebula.deb" version "5.1.0"
 }
 
-javafx {
-  modules = [ 'javafx.controls', 'javafx.fxml' ]
-  configuration = 'compileOnly'
-}
-
-jlink {
-  targetPlatform("linux") {
-    jdkHome = "/opt/java/platforms/linux/jdk-12.0.2"
-    addExtraModulePath("/opt/openjfx/linux/javafx-jmods-11.0.2")
-  }
-  targetPlatform("mac") {
-    jdkHome = "/opt/java/platforms/mac/jdk-12.0.2.jdk"
-    addExtraModulePath("/opt/openjfx/mac/javafx-jmods-11.0.2")
-  }
-  targetPlatform("win") {
-    jdkHome = "/opt/java/platforms/win/jdk-12.0.2"
-    addExtraModulePath("/opt/openjfx/win/javafx-jmods-11.0.2")
-  }
-}
-
 group = 'ch.retorte.intervalmusiccompositor'
 applicationName = "IntervalMusicCompositor"
-mainClassName = "$moduleName/ch.retorte.intervalmusiccompositor.Main"
+mainClassName = "intervalmusiccompositor.app/ch.retorte.intervalmusiccompositor.Main"
 
 applicationDefaultJvmArgs = ["-Xmx2048m"]
 
@@ -46,13 +23,6 @@ ext.windowsUberJarName = 'uberJar'
 ext.debPackageInstallPath = '/opt/IntervalMusicCompositor'
 
 ext.moduleName = 'intervalmusiccompositor.app'
-
-tasks.withType(FindBugs) {
-    reports {
-        xml.enabled = false
-        html.enabled = true
-    }
- }
 
 jar {
     manifest {
@@ -138,8 +108,7 @@ task distDebPackage(type: Deb, dependsOn: installDist) {
 
   // Dependencies
 
-  requires('openjdk-8-jre').or('openjdk-9-jre').or('openjdk-10-jre').or('openjdk-11-jre')
-  requires('openjfx')
+  requires('openjdk-11-jre')
 
   // Collect needed files
 
@@ -202,7 +171,6 @@ dependencies {
   compile project(':intervalmusiccompositor.model')
   
 	compile project(':intervalmusiccompositor.core')
-	compile project(':intervalmusiccompositor.fxUi')
 
   compile project(':intervalmusiccompositor.soundeffects')
 

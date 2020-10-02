@@ -5,15 +5,14 @@ buildscript {
     jcenter()
     gradlePluginPortal()
   }
-
-  dependencies {
-    classpath "org.javamodularity:moduleplugin:1.5.0"
-  }
 }
 
 subprojects {
     apply plugin:'java'
-    apply plugin: "org.javamodularity.moduleplugin"
+
+    java {
+      modularity.inferModulePath = true
+    }
 
     sourceCompatibility = 11
     targetCompatibility = 11
@@ -40,44 +39,14 @@ subprojects {
       jcenter()
     }
 
-    // Java module updates
-    compileJava {
-      inputs.property("moduleName", moduleName)
-      doFirst {
-        options.compilerArgs = [
-            '--module-path', classpath.asPath,
-        ]
-        classpath = files()
-      }
-    }
-
-    compileTestJava {
-      inputs.property("moduleName", moduleName)
-      doFirst {
-        options.compilerArgs = [
-            '--module-path', classpath.asPath,
-            '--add-modules', 'junit',
-            '--add-reads', "$moduleName=junit",
-            '--patch-module', "$moduleName=" + files(sourceSets.test.java.srcDirs).asPath,
-        ]
-        classpath = files()
-      }
-    }
-
-    test {
-      inputs.property("moduleName", moduleName)
-      doFirst {
-        jvmArgs = [
-            '--module-path', classpath.asPath,
-            '--add-modules', 'ALL-MODULE-PATH',
-            '--add-reads', "$moduleName=junit",
-            '--patch-module', "$moduleName=" + files(sourceSets.test.java.outputDir).asPath,
-        ]
-        classpath = files()
-      }
-    }
   }
 }
+
+//subprojects.withType(JavaLibraryPlugin).configureEach {
+//  java {
+//    modularity.inferModulePath = true
+//  }
+//}
 
 
 
