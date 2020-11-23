@@ -5,7 +5,7 @@ import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.MANUAL;
 import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SHUFFLE;
 import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SORT;
 import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SORT_REV;
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 import static java.lang.Integer.valueOf;
 import static java.util.stream.Collectors.joining;
 //import static javafx.collections.FXCollections.observableArrayList;

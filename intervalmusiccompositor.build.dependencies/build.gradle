@@ -1,0 +1,29 @@
+apply plugin: 'java-library'
+
+group = 'ch.retorte.intervalmusiccompositor'
+version = parent.version
+
+ext.moduleName='intervalmusiccompositor.build.dependencies'
+
+tasks.jar {
+  manifest {
+    attributes('Automatic-Module-Name': 'intervalmusiccompositor.build.dependencies')
+  }
+  from {
+    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+}
+
+dependencies {
+  implementation 'com.tritonus:org.tritonus.share:0.3.6'
+  implementation 'com.tritonus:org.tritonus.remaining:0.3.6'
+  implementation 'com.tritonus:org.tritonus.dsp:0.3.6'
+  implementation 'com.tritonus:org.tritonus.jorbis:0.3.6'
+  implementation 'javazoom.spi:javazoom.spi.mp3spi:1.9.5'
+  implementation 'javazoom:javazoom.javalayer:1.0.1'
+  implementation 'net.sourceforge:net.sourceforge.jaad:0.8.4'
+  implementation 'net.sourceforge.lame:net.sourceforge.lame:3.98.4'
+  implementation 'org:jaudiotagger:2.0.3'
+  implementation 'org.kc7bfi:org.kc7bfi.jflac:1.3'
+  implementation 'vorbis.java:vorbis.java:1.0.0-beta'
+}

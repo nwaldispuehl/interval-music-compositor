@@ -2,7 +2,7 @@ package ch.retorte.intervalmusiccompositor.playlist;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.CROSS;
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 import static java.util.Comparator.comparingLong;
 
 import java.text.DateFormat;

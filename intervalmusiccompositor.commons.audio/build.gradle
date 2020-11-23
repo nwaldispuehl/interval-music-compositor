@@ -6,6 +6,5 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.commons.audio'
 
 dependencies {
-  implementation 'com.tritonus:org.tritonus.share:0.3.6'
-  implementation 'com.tritonus:org.tritonus.remaining:0.3.6'
+  implementation project(':intervalmusiccompositor.build.dependencies')
 }

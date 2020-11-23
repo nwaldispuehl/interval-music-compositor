@@ -5,7 +5,7 @@ import static ch.retorte.intervalmusiccompositor.commons.ArrayHelper.arrayToList
 import static ch.retorte.intervalmusiccompositor.commons.ArrayHelper.getAverageInterval;
 import static ch.retorte.intervalmusiccompositor.commons.ArrayHelper.isConvergent;
 import static ch.retorte.intervalmusiccompositor.commons.ArrayHelper.prepareListForRemoval;
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 

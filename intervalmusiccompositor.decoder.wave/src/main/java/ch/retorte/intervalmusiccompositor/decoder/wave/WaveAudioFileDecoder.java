@@ -13,7 +13,7 @@ import org.tritonus.sampled.file.WaveAudioFileReader;
 
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 
 /**
  * Decodes WAV files

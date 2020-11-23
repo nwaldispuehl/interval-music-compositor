@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 
 /**
  * Displays a file chooser with filter targeting only supported music files.

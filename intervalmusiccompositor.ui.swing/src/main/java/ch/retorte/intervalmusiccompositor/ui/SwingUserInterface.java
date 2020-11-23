@@ -4,7 +4,7 @@ import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.list.CompositionMode.SIMPLE;
 import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.CONTINUOUS;
 import static ch.retorte.intervalmusiccompositor.list.EnumerationMode.SINGLE_EXTRACT;
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 import static java.awt.Toolkit.getDefaultToolkit;
 
 import java.awt.BorderLayout;

@@ -1,7 +1,7 @@
 package ch.retorte.intervalmusiccompositor.util;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 import static java.util.Collections.reverse;
 import static java.util.Collections.sort;
 

@@ -167,24 +167,25 @@ launch4j {
 }
 
 dependencies {
-  compile project(':intervalmusiccompositor.spi')
-  compile project(':intervalmusiccompositor.model')
-  
-	compile project(':intervalmusiccompositor.core')
+  implementation project(':intervalmusiccompositor.spi')
+  implementation project(':intervalmusiccompositor.model')
 
-  compile project(':intervalmusiccompositor.soundeffects')
+  implementation project(':intervalmusiccompositor.core')
+  implementation project(':intervalmusiccompositor.ui.swing')
 
-	compile project(':intervalmusiccompositor.beatroot')
-	
-	compile project(':intervalmusiccompositor.decoder.wave')
-	compile project(':intervalmusiccompositor.decoder.flac')
-	compile project(':intervalmusiccompositor.decoder.mpeg')
-	compile project(':intervalmusiccompositor.decoder.ogg')
-	compile project(':intervalmusiccompositor.decoder.aac')
-	
-	compile project(':intervalmusiccompositor.encoder.wave')
-	compile project(':intervalmusiccompositor.encoder.mpeg')
-  compile project(':intervalmusiccompositor.encoder.ogg')
+  implementation project(':intervalmusiccompositor.soundeffects')
+
+  implementation project(':intervalmusiccompositor.beatroot')
+
+  implementation project(':intervalmusiccompositor.decoder.wave')
+  implementation project(':intervalmusiccompositor.decoder.flac')
+  implementation project(':intervalmusiccompositor.decoder.mpeg')
+  implementation project(':intervalmusiccompositor.decoder.ogg')
+  implementation project(':intervalmusiccompositor.decoder.aac')
+
+  implementation project(':intervalmusiccompositor.encoder.wave')
+  implementation project(':intervalmusiccompositor.encoder.mpeg')
+  implementation project(':intervalmusiccompositor.encoder.ogg')
 }
 
 

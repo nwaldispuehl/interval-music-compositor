@@ -6,5 +6,7 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.commons'
 
 dependencies {
-  compile project(':intervalmusiccompositor.spi')
+  implementation project(':intervalmusiccompositor.spi')
+
+  api 'com.google.guava:guava:28.1-jre'
 }

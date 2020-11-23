@@ -24,7 +24,7 @@ import net.sourceforge.jaad.mp4.api.Track;
 import net.sourceforge.jaad.spi.javasound.AACAudioFileReader;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 
 /**
  * Decodes AAC files.

@@ -3,7 +3,7 @@ module intervalmusiccompositor.encoder.ogg {
 
   requires intervalmusiccompositor.spi;
   requires intervalmusiccompositor.commons;
+  requires intervalmusiccompositor.build.dependencies;
 
   requires java.desktop;
-  requires vorbis.java;
 }

@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.messagebus;
 
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

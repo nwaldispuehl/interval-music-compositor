@@ -9,11 +9,7 @@ module intervalmusiccompositor.core {
   requires intervalmusiccompositor.spi;
   requires intervalmusiccompositor.commons;
   requires intervalmusiccompositor.commons.audio;
+  requires intervalmusiccompositor.build.dependencies;
 
   requires java.desktop;
-
-  requires org.tritonus.remaining;
-  requires org.tritonus.dsp;
-
-  requires com.google.common;
 }

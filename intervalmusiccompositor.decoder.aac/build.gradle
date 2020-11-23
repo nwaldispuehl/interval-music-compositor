@@ -6,8 +6,8 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.decoder.aac'
 
 dependencies {
-  compile project(':intervalmusiccompositor.spi')
-  compile project(':intervalmusiccompositor.model')
-  
-  compile 'net.sourceforge:net.sourceforge.jaad:0.8.4'
+  implementation project(':intervalmusiccompositor.spi')
+  implementation project(':intervalmusiccompositor.model')
+  implementation project(':intervalmusiccompositor.commons')
+  implementation project(':intervalmusiccompositor.build.dependencies')
 }

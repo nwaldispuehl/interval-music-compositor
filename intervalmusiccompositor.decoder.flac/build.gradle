@@ -6,11 +6,11 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.decoder.flac'
 
 dependencies {
-  compile project(':intervalmusiccompositor.spi')
-  compile project(':intervalmusiccompositor.model')
+  implementation project(':intervalmusiccompositor.spi')
+  implementation project(':intervalmusiccompositor.model')
+  implementation project(':intervalmusiccompositor.commons')
+  implementation project(':intervalmusiccompositor.build.dependencies')
 
-  compile 'com.tritonus:org.tritonus.share:0.3.6'
-  compile 'org:jaudiotagger:2.0.3'
-  compile 'org.kc7bfi:org.kc7bfi.jflac:1.3'
+  implementation 'org:jaudiotagger:2.0.3'
 
 }

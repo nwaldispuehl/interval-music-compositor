@@ -7,7 +7,7 @@ import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.CONT
 import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.SINGLE_EXTRACT;
 import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SHUFFLE;
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 
 import java.util.*;
 

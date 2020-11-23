@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.audiofile;
 
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 
 import java.io.File;
 import java.util.Collection;

@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.ui.list;
 
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 
 import java.awt.Cursor;
 import java.awt.Point;

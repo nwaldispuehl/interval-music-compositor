@@ -6,13 +6,9 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.core'
 
 dependencies {
-  compile project(':intervalmusiccompositor.spi')
-  compile project(':intervalmusiccompositor.model')
-  compile project(':intervalmusiccompositor.commons')
-  compile project(':intervalmusiccompositor.commons.audio')
-
-  compile 'com.tritonus:org.tritonus.share:0.3.6'
-  compile 'com.tritonus:org.tritonus.remaining:0.3.6'
-  compile 'com.tritonus:org.tritonus.dsp:0.3.6'
-  compile 'javazoom:javazoom.javalayer:1.0.1'
+  implementation project(':intervalmusiccompositor.spi')
+  implementation project(':intervalmusiccompositor.model')
+  implementation project(':intervalmusiccompositor.commons')
+  implementation project(':intervalmusiccompositor.commons.audio')
+  implementation project(':intervalmusiccompositor.build.dependencies')
 }

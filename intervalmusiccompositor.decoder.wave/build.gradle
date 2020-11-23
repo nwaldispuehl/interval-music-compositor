@@ -6,9 +6,8 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.decoder.wave'
 
 dependencies {
-  compile project(':intervalmusiccompositor.spi')
-  compile project(':intervalmusiccompositor.model')
-
-  compile 'com.tritonus:org.tritonus.share:0.3.6'
-  compile 'com.tritonus:org.tritonus.remaining:0.3.6'
+  implementation project(':intervalmusiccompositor.spi')
+  implementation project(':intervalmusiccompositor.model')
+  implementation project(':intervalmusiccompositor.commons')
+  implementation project(':intervalmusiccompositor.build.dependencies')
 }

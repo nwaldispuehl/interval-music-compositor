@@ -27,7 +27,7 @@ subprojects {
     }
 
     dependencies {
-      compile 'com.google.guava:guava:28.1-jre'
+//      compile 'com.google.guava:guava:28.1-jre'
 
       testCompile 'org.assertj:assertj-core:3.13.2'
       testCompile 'junit:junit:4.13-beta-1'

@@ -6,7 +6,7 @@ import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.CONT
 import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.SINGLE_EXTRACT;
 import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SHUFFLE;
 import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SORT;
-import static com.google.common.collect.Lists.newArrayList;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
