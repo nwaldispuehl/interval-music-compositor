@@ -6,9 +6,12 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.core'
 
 dependencies {
-  implementation project(':intervalmusiccompositor.spi')
-  implementation project(':intervalmusiccompositor.model')
-  implementation project(':intervalmusiccompositor.commons')
-  implementation project(':intervalmusiccompositor.commons.audio')
-  implementation project(':intervalmusiccompositor.build.dependencies')
+    implementation project(':intervalmusiccompositor.spi')
+    implementation project(':intervalmusiccompositor.model')
+    implementation project(':intervalmusiccompositor.commons')
+    implementation project(':intervalmusiccompositor.commons.audio')
+
+    implementation 'com.tritonus:org.tritonus.remaining:0.3.6'
+    implementation 'com.tritonus:org.tritonus.dsp:0.3.6'
+    implementation 'com.tritonus:org.tritonus.share:0.3.6'
 }

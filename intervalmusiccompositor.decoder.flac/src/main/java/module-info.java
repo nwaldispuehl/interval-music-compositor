@@ -1,9 +1,9 @@
 module intervalmusiccompositor.decoder.flac {
-  exports ch.retorte.intervalmusiccompositor.decoder.flac;
+    exports ch.retorte.intervalmusiccompositor.decoder.flac;
 
-  requires intervalmusiccompositor.spi;
-  requires intervalmusiccompositor.commons;
+    requires intervalmusiccompositor.spi;
+    requires intervalmusiccompositor.commons;
 
-  requires java.desktop;
-  requires intervalmusiccompositor.build.dependencies;
+    requires java.desktop;
+    requires jaudiotagger;
 }

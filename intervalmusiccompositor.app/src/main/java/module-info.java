@@ -5,7 +5,7 @@ module intervalmusiccompositor.app {
     requires intervalmusiccompositor.commons.audio;
 
     requires intervalmusiccompositor.core;
-    requires intervalmusiccompositor.ui.swing;
+    requires intervalmusiccompositor.ui.fx;
 
     requires intervalmusiccompositor.soundeffects;
 

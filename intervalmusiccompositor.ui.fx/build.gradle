@@ -1,0 +1,20 @@
+apply plugin: 'java-library'
+
+group = 'ch.retorte.intervalmusiccompositor'
+version = parent.version
+
+ext.moduleName = 'intervalmusiccompositor.ui.fx'
+
+dependencies {
+  implementation project(':intervalmusiccompositor.model')
+  implementation project(':intervalmusiccompositor.spi')
+  implementation project(':intervalmusiccompositor.commons')
+
+  implementation 'org.apache.commons:commons-lang3:3.6'
+
+  implementation 'org.openjfx:javafx-base:11.0.1:linux'
+  implementation 'org.openjfx:javafx-graphics:11.0.1:linux'
+  implementation 'org.openjfx:javafx-controls:11.0.1:linux'
+  implementation 'org.openjfx:javafx-fxml:11.0.1:linux'
+  implementation 'org.openjfx:javafx-swing:11.0.1:linux'
+}

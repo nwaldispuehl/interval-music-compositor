@@ -6,10 +6,12 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.decoder.mpeg'
 
 dependencies {
-  implementation project(':intervalmusiccompositor.spi')
-  implementation project(':intervalmusiccompositor.model')
-  implementation project(':intervalmusiccompositor.commons')
-  implementation project(':intervalmusiccompositor.build.dependencies')
+    implementation project(':intervalmusiccompositor.spi')
+    implementation project(':intervalmusiccompositor.model')
+    implementation project(':intervalmusiccompositor.commons')
 
-  implementation 'org:jaudiotagger:2.0.3'
+    implementation 'org:jaudiotagger:2.0.3'
+    implementation 'com.tritonus:org.tritonus.share:0.3.6'
+    implementation 'javazoom.spi:javazoom.spi.mp3spi:1.9.5'
+    implementation 'javazoom:javazoom.javalayer:1.0.1'
 }

@@ -6,8 +6,9 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.encoder.mpeg'
 
 dependencies {
-  implementation project(':intervalmusiccompositor.spi')
-  implementation project(':intervalmusiccompositor.model')
-  implementation project(':intervalmusiccompositor.commons')
-  implementation project(':intervalmusiccompositor.build.dependencies')
+    implementation project(':intervalmusiccompositor.spi')
+    implementation project(':intervalmusiccompositor.model')
+    implementation project(':intervalmusiccompositor.commons')
+
+    implementation 'net.sourceforge.lame:net.sourceforge.lame:3.98.4'
 }

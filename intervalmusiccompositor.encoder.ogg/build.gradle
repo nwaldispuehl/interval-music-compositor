@@ -6,8 +6,9 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.encoder.ogg'
 
 dependencies {
-  implementation project(':intervalmusiccompositor.spi')
-  implementation project(':intervalmusiccompositor.model')
-  implementation project(':intervalmusiccompositor.commons')
-  implementation project(':intervalmusiccompositor.build.dependencies')
+    implementation project(':intervalmusiccompositor.spi')
+    implementation project(':intervalmusiccompositor.model')
+    implementation project(':intervalmusiccompositor.commons')
+
+    implementation 'vorbis.java:vorbis.java:1.0.0-beta'
 }

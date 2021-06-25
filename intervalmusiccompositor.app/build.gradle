@@ -1,6 +1,9 @@
 plugins {
   id 'application'
 
+  id "org.openjfx.javafxplugin" version "0.0.10"
+  id 'org.beryx.jlink' version '2.24.0'
+
   // TODO: upgrade...
   id "edu.sc.seis.macAppBundle" version "2.3.0"
   id "edu.sc.seis.launch4j" version "2.4.4"
@@ -34,6 +37,24 @@ jar {
     }
 }
 
+javafx {
+  modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+//jlink {
+//  targetPlatform("linux") {
+//    jdkHome = "/opt/java/platforms/linux/jdk-12.0.2"
+//    addExtraModulePath("/opt/openjfx/linux/javafx-jmods-11.0.2")
+//  }
+//  targetPlatform("mac") {
+//    jdkHome = "/opt/java/platforms/mac/jdk-12.0.2.jdk"
+//    addExtraModulePath("/opt/openjfx/mac/javafx-jmods-11.0.2")
+//  }
+//  targetPlatform("win") {
+//    jdkHome = "/opt/java/platforms/win/jdk-12.0.2"
+//    addExtraModulePath("/opt/openjfx/win/javafx-jmods-11.0.2")
+//  }
+//}
 
 // We disable tasks which are not successfully performed on non-OSX hosts.
 createDmg.enabled = false
@@ -171,7 +192,7 @@ dependencies {
   implementation project(':intervalmusiccompositor.model')
 
   implementation project(':intervalmusiccompositor.core')
-  implementation project(':intervalmusiccompositor.ui.swing')
+  implementation project(':intervalmusiccompositor.ui.fx')
 
   implementation project(':intervalmusiccompositor.soundeffects')
 
