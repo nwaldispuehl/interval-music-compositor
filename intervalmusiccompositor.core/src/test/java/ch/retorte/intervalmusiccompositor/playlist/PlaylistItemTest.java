@@ -1,11 +1,7 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
-import com.google.common.collect.Lists;
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;

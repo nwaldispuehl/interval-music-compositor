@@ -1,13 +1,13 @@
 buildscript {
-  repositories {
-    mavenLocal()
-    mavenCentral()
-    gradlePluginPortal()
-  }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
+    }
 }
 
 plugins {
-  id 'org.javamodularity.moduleplugin' version '1.8.7' apply false
+    id 'org.javamodularity.moduleplugin' version '1.8.7' apply false
 }
 
 subprojects {
@@ -15,7 +15,7 @@ subprojects {
     apply plugin: 'org.javamodularity.moduleplugin'
 
     java {
-      modularity.inferModulePath = true
+        modularity.inferModulePath = true
     }
 
     sourceCompatibility = 11
@@ -31,17 +31,18 @@ subprojects {
     }
 
     dependencies {
-      testCompile 'org.assertj:assertj-core:3.13.2'
-      testCompile 'junit:junit:4.13-beta-1'
-      testCompile 'org.mockito:mockito-core:2.23.4'
+        testImplementation 'org.assertj:assertj-core:3.13.2'
+        testImplementation 'junit:junit:4.13-beta-1'
+        implementation 'org.hamcrest:hamcrest-core:1.3'
+        testImplementation 'org.mockito:mockito-core:2.23.4'
     }
 
-  afterEvaluate {
-    repositories {
-      mavenCentral()
-    }
+    afterEvaluate {
+        repositories {
+            mavenCentral()
+        }
 
-  }
+    }
 }
 
 

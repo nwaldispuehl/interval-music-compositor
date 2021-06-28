@@ -10,6 +10,7 @@ module intervalmusiccompositor.ui.fx {
   opens ch.retorte.intervalmusiccompositor.ui.soundeffects to javafx.fxml;
   opens ch.retorte.intervalmusiccompositor.ui.debuglog to javafx.fxml;
   opens ch.retorte.intervalmusiccompositor.ui.firststart to javafx.fxml;
+  opens ch.retorte.intervalmusiccompositor.ui.preferences to javafx.fxml;
 
   opens fonts;
   opens images;
@@ -20,7 +21,6 @@ module intervalmusiccompositor.ui.fx {
   requires intervalmusiccompositor.commons;
 
   requires java.desktop;
-  requires com.google.common;
   requires org.apache.commons.lang3;
 
   requires javafx.controls;

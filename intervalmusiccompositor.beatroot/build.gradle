@@ -6,6 +6,6 @@ version = '0.5.8-custom'
 ext.moduleName = 'intervalmusiccompositor.beatroot'
 
 dependencies {
-  compile project(':intervalmusiccompositor.spi')
-  testCompile project(':intervalmusiccompositor.decoder.mpeg')
+  implementation project(':intervalmusiccompositor.spi')
+  implementation project(':intervalmusiccompositor.decoder.mpeg')
 }

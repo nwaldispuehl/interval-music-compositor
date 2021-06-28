@@ -13,23 +13,23 @@ import java.util.stream.Collectors;
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFileFactory;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.util.VisibleForTesting;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.TaskFinishListener;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
-import com.google.common.annotations.VisibleForTesting;
 
 /**
  * @author nw
  */
 public class AudioFilesLoader implements Runnable {
 
-  private MessageFormatBundle bundle = getBundle("core_imc");
+  private final MessageFormatBundle bundle = getBundle("core_imc");
 
-  private MusicListControl musicListControl;
-  private AudioFileFactory audioFileFactory;
-  private MessageProducer messageProducer;
-  private ArrayList<TaskFinishListener> taskFinishListeners = new ArrayList<>();
+  private final MusicListControl musicListControl;
+  private final AudioFileFactory audioFileFactory;
+  private final MessageProducer messageProducer;
+  private final ArrayList<TaskFinishListener> taskFinishListeners = new ArrayList<>();
 
   public AudioFilesLoader(MusicListControl musicListControl, AudioFileFactory audioFileFactory, MessageProducer messageProducer) {
     this.musicListControl = musicListControl;

@@ -6,7 +6,6 @@ import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
-import com.google.common.primitives.Ints;
 
 
 import java.io.File;
@@ -52,7 +51,7 @@ public class DraggableAudioFileBreakListView extends DraggableAudioFileListView 
 
   @Override
   public void removeTracks(List<Integer> indices) {
-    getMusicListControl().removeMusicTracks(Ints.toArray(indices));
+    getMusicListControl().removeMusicTracks(indices.stream().mapToInt(i->i).toArray());
     notifyListChangeListeners();
   }
 

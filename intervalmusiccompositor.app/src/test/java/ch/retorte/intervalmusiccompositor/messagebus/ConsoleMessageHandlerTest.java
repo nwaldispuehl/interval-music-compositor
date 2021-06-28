@@ -8,8 +8,10 @@ import static org.mockito.Mockito.verify;
 
 import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.model.messagebus.InfoMessage;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class ConsoleMessageHandlerTest {
 
 

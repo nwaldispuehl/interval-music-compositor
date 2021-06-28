@@ -6,11 +6,11 @@ import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffect;
 import javafx.scene.control.ListCell;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI.UI_RESOURCE_BUNDLE_NAME;
-import static com.google.common.collect.Maps.newHashMap;
 
 /**
  * Cell for the special effects combo box. Acts as a label provider as we only use text.
@@ -19,7 +19,7 @@ public class SoundEffectListCell extends ListCell<SoundEffect> {
 
   //---- Static
 
-  private static Map<String, String> soundEffectTitleMap = newHashMap();
+  private static final Map<String, String> soundEffectTitleMap = new HashMap<>();
 
   static {
     soundEffectTitleMap.put("gong", "ui.form.sound_effects.names.gong");
@@ -29,9 +29,9 @@ public class SoundEffectListCell extends ListCell<SoundEffect> {
 
   //---- Fields
 
-  private MessageFormatBundle bundle = getBundle(UI_RESOURCE_BUNDLE_NAME);
+  private final MessageFormatBundle bundle = getBundle(UI_RESOURCE_BUNDLE_NAME);
 
-  private FormatTime formatTime = new FormatTime();
+  private final FormatTime formatTime = new FormatTime();
 
 
   //---- Methods
@@ -42,7 +42,7 @@ public class SoundEffectListCell extends ListCell<SoundEffect> {
 
     if (item != null) {
       String itemId = item.getId();
-      double itemDurationSeconds = item.getDisplayDurationMillis() / 1000;
+      double itemDurationSeconds = item.getDisplayDurationMillis() / 1000.0;
 
       setText(getNameFor(itemId) + " (" + formatTime.getStrictFormattedTime(itemDurationSeconds) + "s)");
     }

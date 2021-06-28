@@ -1,13 +1,12 @@
 package ch.retorte.intervalmusiccompositor.ui.audiofilelist;
 
-import ch.retorte.intervalmusiccompositor.model.list.ObservableList;
-import ch.retorte.intervalmusiccompositor.model.util.ChangeListener;
-import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.list.ObservableList;
 import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.util.ChangeListener;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
-import com.google.common.primitives.Ints;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventTarget;
@@ -34,7 +33,7 @@ public class DraggableAudioFileListView extends ListView<IAudioFile> {
   private MusicListControl musicListControl;
   private MessageFormatBundle messageFormatBundle;
 
-  private Collection<ChangeListener<List<IAudioFile>>> listChangeListeners = newArrayList();
+  private final Collection<ChangeListener<List<IAudioFile>>> listChangeListeners = newArrayList();
 
   private ChangeListener<IAudioFile> audioFileStateChangeListener;
 
@@ -157,7 +156,7 @@ public class DraggableAudioFileListView extends ListView<IAudioFile> {
   }
 
   public void removeTracks(List<Integer> indices) {
-    getMusicListControl().removeMusicTracks(Ints.toArray(indices));
+    getMusicListControl().removeMusicTracks(indices.stream().mapToInt(i->i).toArray());
     notifyListChangeListeners();
   }
 

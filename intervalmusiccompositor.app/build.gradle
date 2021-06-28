@@ -5,15 +5,22 @@ plugins {
   id 'org.beryx.jlink' version '2.24.0'
 
   // TODO: upgrade...
-  id "edu.sc.seis.macAppBundle" version "2.3.0"
+//  id "edu.sc.seis.macAppBundle" version "2.3.0"
   id "edu.sc.seis.launch4j" version "2.4.4"
   id "com.github.johnrengelman.shadow" version "4.0.3"
-  id "nebula.deb" version "5.1.0"
+  id "nebula.ospackage" version "8.5.6"
 }
 
 group = 'ch.retorte.intervalmusiccompositor'
 applicationName = "IntervalMusicCompositor"
 mainClassName = "intervalmusiccompositor.app/ch.retorte.intervalmusiccompositor.Main"
+
+apply plugin: 'application'
+application {
+  mainClass = "ch.retorte.intervalmusiccompositor.Main"
+  mainModule = "intervalmusiccompositor.app"
+}
+
 
 applicationDefaultJvmArgs = ["-Xmx2048m"]
 
@@ -41,6 +48,8 @@ javafx {
   modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
+
+
 //jlink {
 //  targetPlatform("linux") {
 //    jdkHome = "/opt/java/platforms/linux/jdk-12.0.2"
@@ -56,36 +65,36 @@ javafx {
 //  }
 //}
 
-// We disable tasks which are not successfully performed on non-OSX hosts.
-createDmg.enabled = false
+//// We disable tasks which are not successfully performed on non-OSX hosts.
+//createDmg.enabled = false
+//
+//macAppBundle {
+//  appOutputDir = project.ext.macosxOutputDir
+////  mainClassName = project.mainClassName
+//  icon = project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.icns')
+//  appStyle = 'Oracle'
+//  appName = project.applicationName
+//  jvmVersion = "1.8+"
+//  jreHome = '...'
+//  arguments = ["-Xmx=2048M"]
+//}
 
-macAppBundle {
-  appOutputDir = project.ext.macosxOutputDir
-  mainClassName = project.mainClassName
-  icon = project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.icns')
-  appStyle = 'Oracle'
-  appName = project.applicationName
-  jvmVersion = "1.8+"
-  jreHome = '...'
-  arguments = ["-Xmx=2048M"]
-}
-
-task distOsxApp(type: Tar, dependsOn: createApp) {
-  description = "Creates an archive from the Mac OS X version." 
-  compression = Compression.GZIP
-  baseName = project.applicationName
-  appendix = 'mac'
-
-  into (project.applicationName + project.ext.versionDelimiter + version) {
-    from buildDir.absolutePath + project.ext.macosxOutputDir
-    from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
-    from project(':intervalmusiccompositor.build').files('documentation/')
-  }
-}
+//task distOsxApp(type: Tar, dependsOn: createApp) {
+//  description = "Creates an archive from the Mac OS X version."
+//  compression = Compression.GZIP
+//  baseName = project.applicationName
+//  appendix = 'mac'
+//
+//  into (project.applicationName + project.ext.versionDelimiter + version) {
+//    from buildDir.absolutePath + project.ext.macosxOutputDir
+//    from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
+//    from project(':intervalmusiccompositor.build').files('documentation/')
+//  }
+//}
 
 shadowJar {
   baseName = project.ext.windowsUberJarName
-  mainClassName = project.mainClassName
+//  mainClassName = project.mainClassName
   classifier = null
   version = null
 }
@@ -122,6 +131,8 @@ task distLinuxApp(type: Tar, dependsOn: installDist) {
   }
 }
 
+apply plugin: 'nebula.deb'
+
 task distDebPackage(type: Deb, dependsOn: installDist) {
 
   packageName 'intervalmusiccompositor'
@@ -149,7 +160,7 @@ task distDebPackage(type: Deb, dependsOn: installDist) {
 
 task renameDebPackage (type: Copy, dependsOn: distDebPackage) {
   from project.tasks.distDebPackage.outputs.files
-  into distsDir
+//  into distsDir #TODO
   rename { String fileName ->
     fileName.replace("intervalmusiccompositor", "IntervalMusicCompositor-linux")
   }
@@ -158,19 +169,20 @@ task renameDebPackage (type: Copy, dependsOn: distDebPackage) {
 
 task distJarFile(type: Copy, dependsOn: shadowJar) {
   from project.tasks.shadowJar.outputs.files
-  into distsDir
+//  into distsDir #TODO
   rename { String fileName ->
     fileName.replace("uberJar", applicationName + project.ext.versionDelimiter + version)
   }
 }
 
-task distAll(dependsOn: [distOsxApp, distWindowsApp, distLinuxApp, renameDebPackage, distJarFile]) {
+//task distAll(dependsOn: [distOsxApp, distWindowsApp, distLinuxApp, renameDebPackage, distJarFile]) {
+task distAll(dependsOn: [distWindowsApp, distLinuxApp, renameDebPackage, distJarFile]) {
   description = "Creates archives for all supported operating systems."
 }
 
 launch4j {
     outputDir = project.ext.windowsOutputDir
-    mainClassName = project.mainClassName
+//    mainClassName = project.mainClassName
     icon = project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.ico')
 
     jreMinVersion = '1.8.0_60'
@@ -190,6 +202,9 @@ launch4j {
 dependencies {
   implementation project(':intervalmusiccompositor.spi')
   implementation project(':intervalmusiccompositor.model')
+
+  implementation project(':intervalmusiccompositor.commons')
+  implementation project(':intervalmusiccompositor.commons.audio')
 
   implementation project(':intervalmusiccompositor.core')
   implementation project(':intervalmusiccompositor.ui.fx')

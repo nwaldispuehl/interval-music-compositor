@@ -7,8 +7,10 @@ import java.time.LocalDateTime;
 
 import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class DebugMessagePrinterTest {
 
   private DebugMessagePrinter handler;

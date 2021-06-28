@@ -9,5 +9,6 @@ module intervalmusiccompositor.commons {
   requires jdk.management;
   requires java.prefs;
 
-  requires com.google.common;
+  // For testing
+  requires hamcrest.core;
 }

@@ -23,7 +23,5 @@ module intervalmusiccompositor.app {
 
     requires java.logging;
 
-    requires com.google.common;
-
     opens ch.retorte.intervalmusiccompositor;
 }

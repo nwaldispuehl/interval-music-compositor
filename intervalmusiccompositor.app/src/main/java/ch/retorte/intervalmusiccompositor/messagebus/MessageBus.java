@@ -1,21 +1,21 @@
 package ch.retorte.intervalmusiccompositor.messagebus;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageHandler;
-import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
-import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageSubscriber;
-
 import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.model.messagebus.LogBuffer;
 import ch.retorte.intervalmusiccompositor.model.messagebus.Message;
 import ch.retorte.intervalmusiccompositor.model.messagebus.StringMessage;
-import com.google.common.collect.Lists;
+import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageHandler;
+import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
+import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageSubscriber;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+
 
 /**
  * The message bus implements the {@link MessageSubscriber} as well as the {@link MessageProducer} and directs sent messages to the right recipients. It is the
@@ -29,9 +29,9 @@ public class MessageBus implements MessageProducer, MessageSubscriber {
 
   //---- Fields
 
-  private LogBuffer logBuffer = new LogBuffer();
-  private List<MessageHandler<? super Message>> messageHandlers = newArrayList();
-  private boolean storeMessages;
+  private final LogBuffer logBuffer = new LogBuffer();
+  private final List<MessageHandler<? super Message>> messageHandlers = new ArrayList<>();
+  private final boolean storeMessages;
 
   //---- Constructor
 
@@ -77,11 +77,11 @@ public class MessageBus implements MessageProducer, MessageSubscriber {
   private List<Type> getGenericTypes(MessageHandler<? super Message> handler) {
     Type[] genericInterfaces = handler.getClass().getGenericInterfaces();
     if (genericInterfaces.length == 0) {
-      return Lists.newArrayList();
+      return new ArrayList<>();
     }
 
     ParameterizedType firstGenericInterface = (ParameterizedType) genericInterfaces[0];
-    return Lists.newArrayList(firstGenericInterface.getActualTypeArguments());
+    return asList(firstGenericInterface.getActualTypeArguments());
 
   }
 

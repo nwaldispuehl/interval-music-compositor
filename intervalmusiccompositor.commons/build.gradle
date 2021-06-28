@@ -7,6 +7,4 @@ ext.moduleName = 'intervalmusiccompositor.commons'
 
 dependencies {
   implementation project(':intervalmusiccompositor.spi')
-
-  api 'com.google.guava:guava:28.1-jre'
 }

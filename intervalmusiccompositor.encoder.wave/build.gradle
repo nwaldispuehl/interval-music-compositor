@@ -6,6 +6,6 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.encoder.wave'
 
 dependencies {
-  compile project(':intervalmusiccompositor.spi')
-  compile project(':intervalmusiccompositor.model')
+  implementation project(':intervalmusiccompositor.spi')
+  implementation project(':intervalmusiccompositor.model')
 }

@@ -5,6 +5,4 @@ module intervalmusiccompositor.soundeffects {
   requires intervalmusiccompositor.spi;
   requires intervalmusiccompositor.commons;
   requires intervalmusiccompositor.commons.audio;
-
-  requires com.google.common;
 }

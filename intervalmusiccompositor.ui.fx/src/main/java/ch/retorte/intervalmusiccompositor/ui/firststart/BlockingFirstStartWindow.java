@@ -3,8 +3,6 @@ package ch.retorte.intervalmusiccompositor.ui.firststart;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
-import com.google.common.base.Joiner;
-//import com.sun.javafx.tk.Toolkit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.Arrays;
+
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.joining;
 
 /**
  * Window shown on the first start of the program; contains welcome message, recent updates and important preferences.
@@ -45,9 +46,9 @@ public class BlockingFirstStartWindow {
 
   private Parent parent;
   private Stage stage;
-  private MessageFormatBundle bundle;
-  private UserPreferences userPreferences;
-  private ApplicationData applicationData;
+  private final MessageFormatBundle bundle;
+  private final UserPreferences userPreferences;
+  private final ApplicationData applicationData;
 
 
   //---- Constructor
@@ -103,7 +104,8 @@ public class BlockingFirstStartWindow {
     String[] lines = changeLog.split(System.lineSeparator());
 
     if (3 < lines.length) {
-      return Joiner.on(System.lineSeparator()).join(Arrays.copyOfRange(lines, n, lines.length - 1));
+
+      return stream(Arrays.copyOfRange(lines, n, lines.length - 1)).collect(joining(System.lineSeparator()));
     }
     else {
       return changeLog;

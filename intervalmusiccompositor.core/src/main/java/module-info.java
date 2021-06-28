@@ -12,4 +12,7 @@ module intervalmusiccompositor.core {
 
     requires java.desktop;
     requires org.tritonus.remaining;
+
+    // For testing
+    requires hamcrest.core;
 }

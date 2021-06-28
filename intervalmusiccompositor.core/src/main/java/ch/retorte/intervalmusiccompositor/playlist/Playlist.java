@@ -1,29 +1,28 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-import static ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters.*;
-import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.CROSS;
-import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.CONTINUOUS;
-import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.SINGLE_EXTRACT;
-import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SHUFFLE;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
-
-import java.util.*;
-
-import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.model.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.model.list.EnumerationMode;
 import ch.retorte.intervalmusiccompositor.model.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
+import ch.retorte.intervalmusiccompositor.model.util.VisibleForTesting;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
+import static ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters.*;
+import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.CROSS;
+import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.CONTINUOUS;
+import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.SINGLE_EXTRACT;
+import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SHUFFLE;
+import static ch.retorte.intervalmusiccompositor.model.util.Preconditions.checkNotNull;
+
 
 /**
  * @author nw
@@ -32,21 +31,21 @@ public class Playlist implements Iterable<PlaylistItem> {
 
   //---- Fields
 
-  private MessageFormatBundle bundle = getBundle("core_imc");
+  private final MessageFormatBundle bundle = getBundle("core_imc");
   private List<PlaylistItem> playlistItems = newArrayList();
 
   private Long startCutOffInMilliseconds = Long.parseLong(bundle.getString("imc.audio.cutoff.start"));
   private Long endCutOffInMilliseconds = Long.parseLong(bundle.getString("imc.audio.cutoff.end"));
 
-  private Random random = new Random();
+  private final Random random = new Random();
 
   private BlendMode blendMode = DEFAULT_BLEND_MODE;
   private Double blendTime = DEFAULT_BLEND_DURATION;
   private EnumerationMode enumerationMode = DEFAULT_ENUMERATION_MODE;
   private ListSortMode listSortMode = DEFAULT_LIST_SORT_MODE;
 
-  private Map<IAudioFile, Long> currentProgress = Maps.newConcurrentMap();
-  private MessageProducer messageProducer;
+  private final Map<IAudioFile, Long> currentProgress = new ConcurrentHashMap<>();
+  private final MessageProducer messageProducer;
 
 
   //---- Constructor
@@ -107,7 +106,7 @@ public class Playlist implements Iterable<PlaylistItem> {
   }
 
   private List<PlaylistItem> createItemsWith(List<PlaylistItemFragment> musicTracks, List<PlaylistItemFragment> breakTracks, List<SoundEffectOccurrence> soundEffectOccurrences) {
-    List<PlaylistItem> result = Lists.newArrayList();
+    List<PlaylistItem> result = new ArrayList<>();
 
     for (int i = 0; i < musicTracks.size(); i++) {
       PlaylistItemFragment musicTrack = musicTracks.get(i);
@@ -123,7 +122,7 @@ public class Playlist implements Iterable<PlaylistItem> {
   }
 
   private List<PlaylistItemFragment> createMusicPlaylist(List<IAudioFile> musicFiles, List<Integer> musicPattern, Integer iterations) {
-    List<PlaylistItemFragment> musicPlaylist = Lists.newArrayList();
+    List<PlaylistItemFragment> musicPlaylist = new ArrayList<>();
     int desiredPlaylistSize = musicPattern.size() * iterations;
     int musicTrackCounter = 0;
     int lastShuffleHappened = 0;
@@ -135,7 +134,7 @@ public class Playlist implements Iterable<PlaylistItem> {
       IAudioFile currentAudioFile = musicFiles.get((musicTrackCounter) % musicFiles.size());
       int currentSoundPattern = musicPattern.get(musicPatternCounter % musicPattern.size());
 
-      PlaylistItemFragment newMusicTrack = createPlaylistItemFrom(currentAudioFile, 1, currentSoundPattern * 1000);
+      PlaylistItemFragment newMusicTrack = createPlaylistItemFrom(currentAudioFile, 1, currentSoundPattern * 1000L);
       if (newMusicTrack != null) {
         musicPlaylist.add(newMusicTrack);
         musicPatternCounter++;
@@ -169,7 +168,7 @@ public class Playlist implements Iterable<PlaylistItem> {
   }
 
   private List<PlaylistItemFragment> createBreakPlaylist(List<IAudioFile> breakFiles, List<Integer> breakPattern, Integer iterations, int musicPatternSize, double volume) {
-    List<PlaylistItemFragment> breakPlaylist = Lists.newArrayList();
+    List<PlaylistItemFragment> breakPlaylist = new ArrayList<>();
 
     if (breakPattern.isEmpty() || hasSingleZero(breakPattern)) {
       return breakPlaylist;

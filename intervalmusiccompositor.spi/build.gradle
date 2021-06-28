@@ -6,5 +6,5 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.spi'
 
 dependencies {
-  compile project(':intervalmusiccompositor.model')
+  api project(':intervalmusiccompositor.model')
 }

@@ -7,6 +7,7 @@ import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.SING
 import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SHUFFLE;
 import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SORT;
 import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -24,8 +25,6 @@ import org.junit.Test;
 
 import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
-
-import com.google.common.collect.Lists;
 
 /**
  * Unit test for the {@link Playlist}.
@@ -429,7 +428,7 @@ public class PlaylistTest {
   }
 
   private List<Integer> pattern(Integer... patternItems) {
-    return Lists.newArrayList(patternItems);
+    return asList(patternItems);
   }
 
   private IAudioFile createAudioFileMockWithLength(Long durationInMilliseconds, String name) {

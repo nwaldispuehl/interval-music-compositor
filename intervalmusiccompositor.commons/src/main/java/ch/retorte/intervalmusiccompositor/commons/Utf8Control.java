@@ -11,8 +11,8 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 
-import com.google.common.base.Charsets;
-import com.google.common.collect.Lists;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Collections.singletonList;
 
 /**
  * Provides a bundle control to deal with text in a UTF-8 charset.
@@ -48,7 +48,7 @@ public class Utf8Control extends Control {
     if (stream != null) {
       try {
         // Only this line is changed to make it to read properties files as UTF-8.
-        bundle = new PropertyResourceBundle(new InputStreamReader(stream, Charsets.UTF_8));
+        bundle = new PropertyResourceBundle(new InputStreamReader(stream, UTF_8));
       }
       finally {
         stream.close();
@@ -59,7 +59,7 @@ public class Utf8Control extends Control {
 
   @Override
   public List<String> getFormats(String baseName) {
-    return Lists.newArrayList("java.properties");
+    return singletonList("java.properties");
   }
 
 }

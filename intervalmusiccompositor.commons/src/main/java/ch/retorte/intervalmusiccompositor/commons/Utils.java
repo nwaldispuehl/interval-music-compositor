@@ -1,7 +1,5 @@
 package ch.retorte.intervalmusiccompositor.commons;
 
-import com.google.common.collect.Iterators;
-
 import java.util.*;
 
 /**

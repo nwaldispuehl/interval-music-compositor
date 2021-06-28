@@ -1,23 +1,12 @@
 package ch.retorte.intervalmusiccompositor.compilation;
 
-import static ch.retorte.intervalmusiccompositor.commons.ExceptionMessageExtractor.messageOrNameOf;
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.CROSS;
-import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.SEPARATE;
-import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
-import static java.lang.String.valueOf;
-
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.model.messagebus.ProgressMessage;
 import ch.retorte.intervalmusiccompositor.model.messagebus.SubProcessProgressMessage;
+import ch.retorte.intervalmusiccompositor.model.util.VisibleForTesting;
 import ch.retorte.intervalmusiccompositor.output.OutputGenerator;
 import ch.retorte.intervalmusiccompositor.playlist.Playlist;
 import ch.retorte.intervalmusiccompositor.playlist.PlaylistReport;
@@ -27,12 +16,19 @@ import ch.retorte.intervalmusiccompositor.spi.TaskFinishListener;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Charsets;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-
 import javax.sound.sampled.UnsupportedAudioFileException;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static ch.retorte.intervalmusiccompositor.commons.ExceptionMessageExtractor.messageOrNameOf;
+import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
+import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.CROSS;
+import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.SEPARATE;
+import static java.lang.String.join;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * @author nw
@@ -47,18 +43,18 @@ public class CompilationGenerator implements Runnable {
   private static final String FILENAME_PREFIX_PART_DELIMITER = "_";
   private static final String FILENAME_PREFIX_ITERATION_DELIMITER = "-";
 
-  private MessageFormatBundle bundle = getBundle("core_imc");
+  private final MessageFormatBundle bundle = getBundle("core_imc");
 
-  private ArrayList<TaskFinishListener> listeners = newArrayList();
+  private final ArrayList<TaskFinishListener> listeners = newArrayList();
 
   private MusicListControl musicListControl;
-  private Compilation compilation;
-  private MessageProducer messageProducer;
+  private final Compilation compilation;
+  private final MessageProducer messageProducer;
   private CompilationParameters compilationParameters;
 
-  private ArrayList<IAudioFile> musicPlaylistCandidates = newArrayList();
-  private ArrayList<IAudioFile> breakPlaylistCandidates = newArrayList();
-  private ArrayList<IAudioFile> badSoundFiles = newArrayList();
+  private final ArrayList<IAudioFile> musicPlaylistCandidates = newArrayList();
+  private final ArrayList<IAudioFile> breakPlaylistCandidates = newArrayList();
+  private final ArrayList<IAudioFile> badSoundFiles = newArrayList();
 
   private String playlist_outfile;
   private String correctedOutputPath;
@@ -69,7 +65,7 @@ public class CompilationGenerator implements Runnable {
   private File compilationDataFile;
   private long compilationDataSize;
 
-  private OutputGenerator outputGenerator;
+  private final OutputGenerator outputGenerator;
 
   private BufferedImage envelope;
 
@@ -184,14 +180,14 @@ public class CompilationGenerator implements Runnable {
 
   @VisibleForTesting
   String createMusicAndBreakPatternPrefixWith(List<Integer> musicPattern, List<Integer> breakPattern, int iterations) {
-    List<String> parts = Lists.newArrayList();
+    List<String> parts = new ArrayList<>();
     for (int i = 0; i < musicPattern.size(); i++) {
-      parts.add(valueOf(musicPattern.get(i)) + FILENAME_PREFIX_SOUND_MARKER);
+      parts.add(musicPattern.get(i) + FILENAME_PREFIX_SOUND_MARKER);
       if (hasAtLeastOneNonNullElement(breakPattern)) {
-        parts.add(valueOf(breakPattern.get(i % breakPattern.size())) + FILENAME_PREFIX_BREAK_MARKER);
+        parts.add(breakPattern.get(i % breakPattern.size()) + FILENAME_PREFIX_BREAK_MARKER);
       }
     }
-    return Joiner.on(FILENAME_PREFIX_PART_DELIMITER).join(parts) + FILENAME_PREFIX_ITERATION_DELIMITER + FILENAME_PREFIX_ITERATION_MARKER + valueOf(iterations);
+    return join(FILENAME_PREFIX_PART_DELIMITER, parts) + FILENAME_PREFIX_ITERATION_DELIMITER + FILENAME_PREFIX_ITERATION_MARKER + iterations;
   }
 
   private boolean hasAtLeastOneNonNullElement(List<Integer> breakPattern) {
@@ -238,7 +234,7 @@ public class CompilationGenerator implements Runnable {
     File reportFile = new File(correctedOutputPath + "/" + playlist_outfile);
     String playlistReport = new PlaylistReport(applicationData).generateReportFor(playlist, badSoundFiles);
 
-    try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(reportFile), Charsets.UTF_8)) {
+    try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(reportFile), UTF_8)) {
       outputStreamWriter.write(playlistReport);
     }
     catch (IOException e) {

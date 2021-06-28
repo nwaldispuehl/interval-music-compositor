@@ -6,8 +6,8 @@ version = parent.version
 ext.moduleName = 'intervalmusiccompositor.soundeffects'
 
 dependencies {
-  compile project(':intervalmusiccompositor.spi')
-  compile project(':intervalmusiccompositor.model')
-  compile project(':intervalmusiccompositor.commons')
-  compile project(':intervalmusiccompositor.commons.audio')
+  implementation project(':intervalmusiccompositor.spi')
+  implementation project(':intervalmusiccompositor.model')
+  implementation project(':intervalmusiccompositor.commons')
+  implementation project(':intervalmusiccompositor.commons.audio')
 }
