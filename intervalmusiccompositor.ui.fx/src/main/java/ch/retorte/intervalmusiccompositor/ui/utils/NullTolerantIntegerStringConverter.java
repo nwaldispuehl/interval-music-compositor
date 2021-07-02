@@ -10,7 +10,7 @@ public class NullTolerantIntegerStringConverter extends IntegerStringConverter {
 
   //---- Fields
 
-  private static Integer DEFAULT_VALUE = 0;
+  private static final Integer DEFAULT_VALUE = 0;
 
 
   //---- Methods

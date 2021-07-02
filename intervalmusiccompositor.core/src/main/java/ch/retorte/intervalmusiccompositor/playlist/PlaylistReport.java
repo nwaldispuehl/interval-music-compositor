@@ -1,6 +1,5 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.CROSS;
 import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 import static java.util.Comparator.comparingLong;
@@ -9,9 +8,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import ch.retorte.intervalmusiccompositor.core.bundle.CoreBundleProvider;
 import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 
@@ -20,7 +20,7 @@ import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
  */
 public class PlaylistReport {
 
-  private MessageFormatBundle bundle = getBundle("core_imc");
+  private MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
 
   private FormatTime formatTime = new FormatTime();
 

@@ -9,6 +9,7 @@ dependencies {
   implementation project(':intervalmusiccompositor.model')
   implementation project(':intervalmusiccompositor.spi')
   implementation project(':intervalmusiccompositor.commons')
+  implementation project(':intervalmusiccompositor.core')
 
   implementation 'org.apache.commons:commons-lang3:3.6'
 

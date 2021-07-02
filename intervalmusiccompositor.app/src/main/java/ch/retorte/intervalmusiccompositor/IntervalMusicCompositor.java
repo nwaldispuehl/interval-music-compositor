@@ -1,18 +1,9 @@
 package ch.retorte.intervalmusiccompositor;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
-
-import java.io.ByteArrayInputStream;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.logging.LogManager;
-
 import at.ofai.music.beatroot.BeatRoot;
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFileFactory;
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.bundle.AppBundleProvider;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.platform.Platform;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
 import ch.retorte.intervalmusiccompositor.compilation.Compilation;
@@ -29,11 +20,12 @@ import ch.retorte.intervalmusiccompositor.encoder.mp3.Mp3AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.encoder.ogg.OggAudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.encoder.wave.WaveAudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.messagebus.ConsoleMessageHandler;
-import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.messagebus.DebugMessagePrinter;
 import ch.retorte.intervalmusiccompositor.messagebus.MessageBus;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.output.OutputGenerator;
 import ch.retorte.intervalmusiccompositor.player.ExtractMusicPlayer;
+import ch.retorte.intervalmusiccompositor.soundeffects.BuiltInSoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.Ui;
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioStandardizer;
@@ -46,200 +38,205 @@ import ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI;
 import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
 import ch.retorte.intervalmusiccompositor.util.UpdateChecker;
-import ch.retorte.intervalmusiccompositor.soundeffects.BuiltInSoundEffectsProvider;
+
+import java.io.ByteArrayInputStream;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.logging.LogManager;
+
+import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * The {@link IntervalMusicCompositor} is the main program file of the software.
  */
 class IntervalMusicCompositor {
 
-  //---- Static
+    //---- Static
 
-  private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
-
-
-  //---- Fields
-
-  private List<Locale> knownLocales = createKnownLocales();
-
-  private Platform platform = new PlatformFactory().getPlatform();
-  private MessageFormatBundle bundle = getBundle("imc");
-
-  private MessageBus messageBus = createMessageBus();
-  private SoundHelper soundHelper = createSoundHelper();
-
-  private UiUserPreferences userPreferences = createUserPreferences();
+    private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
 
-  //---- Methods
+    //---- Fields
 
-  private List<Locale> createKnownLocales() {
-    return newArrayList(DEFAULT_LOCALE, Locale.GERMAN);
-  }
+    private final List<Locale> knownLocales = createKnownLocales();
 
-  private MessageBus createMessageBus() {
-    MessageBus result = new MessageBus(true);
-    result.addHandler(new ConsoleMessageHandler());
-    return result;
-  }
+    private final Platform platform = new PlatformFactory().getPlatform();
+    private final MessageFormatBundle bundle = new AppBundleProvider().getBundle();
 
-  private SoundHelper createSoundHelper() {
-    return new SoundHelper(messageBus);
-  }
+    private final MessageBus messageBus = createMessageBus();
+    private final SoundHelper soundHelper = createSoundHelper();
 
-  private UiUserPreferences createUserPreferences() {
-    return new UiUserPreferences(messageBus);
-  }
+    private final UiUserPreferences userPreferences = createUserPreferences();
 
 
-  /**
-   * Starts the software.
-   * 
-   * @param debugMode
-   *          if set to true, debug messages are printed to stdout.
-   * @param clearPreferences
-   *          if set to true, clears all user preferences.
-   */
-  void startApp(boolean debugMode, boolean clearPreferences) {
-    configureDebugMode(debugMode);
-    conditionallyClearPreferences(clearPreferences);
+    //---- Methods
 
-    setLoggingProperties();
-    setLocale();
-
-    MainControl control = createMainControl();
-    Ui userInterface = createUserInterface(control);
-
-    control.tidyOldTemporaryFiles();
-    control.loadAudioFiles();
-
-    userInterface.launch();
-  }
-
-  private void conditionallyClearPreferences(boolean clearPreferences) {
-    if (clearPreferences) {
-      userPreferences.destroyAllPreferences();
-    }
-  }
-
-  private void configureDebugMode(boolean debugMode) {
-    if (debugMode) {
-      messageBus.addHandler(new DebugMessagePrinter());
-      addDebugMessage("Debug mode");
-    }
-    addDebugMessage(bundle.getString("imc.name") + ", V " + bundle.getString("imc.version"));
-    addDebugMessage("System properties: " + platform.getSystemDiagnosisString());
-  }
-
-  private void setLoggingProperties() {
-    try {
-      /* We do this to prevent JAudioTagger from logging. */
-      LogManager.getLogManager().readConfiguration(new ByteArrayInputStream("org.jaudiotagger.level = OFF".getBytes("UTF-8")));
-    }
-    catch (Exception e) {
-      addDebugMessage("Set logging properties: " + e.getMessage());
-    }
-  }
-
-  private void setLocale() {
-    Locale currentLocale = Locale.getDefault();
-
-    if (userPreferences.hasLocale()) {
-      currentLocale = userPreferences.loadLocale();
+    private List<Locale> createKnownLocales() {
+        return newArrayList(DEFAULT_LOCALE, Locale.GERMAN);
     }
 
-    Optional<Locale> knownLocale = getKnownLocaleFor(currentLocale);
-
-    if (knownLocale.isPresent()) {
-      Locale.setDefault(knownLocale.get());
-    }
-    else {
-      Locale.setDefault(DEFAULT_LOCALE);
+    private MessageBus createMessageBus() {
+        MessageBus result = new MessageBus(true);
+        result.addHandler(new ConsoleMessageHandler());
+        return result;
     }
 
-    addDebugMessage("Selected locale: " + Locale.getDefault());
-  }
-
-  private Optional<Locale> getKnownLocaleFor(Locale currentLocale) {
-    if (currentLocale == null) {
-      return Optional.empty();
+    private SoundHelper createSoundHelper() {
+        return new SoundHelper(messageBus);
     }
 
-    return knownLocales.stream().filter(l -> l.getLanguage().equals(currentLocale.getLanguage())).findFirst();
-  }
+    private UiUserPreferences createUserPreferences() {
+        return new UiUserPreferences(messageBus);
+    }
 
-  private MainControl createMainControl() {
-    return new MainControl(createCompilationGenerator(), createAudioFileFactory(), createMusicPlayer(), createSoundEffectProvider(), messageBus, knownLocales);
-  }
 
-  private CompilationGenerator createCompilationGenerator() {
-    return new CompilationGenerator(new Compilation(soundHelper, messageBus), createOutputGenerator(), messageBus);
-  }
+    /**
+     * Starts the software.
+     *
+     * @param debugMode        if set to true, debug messages are printed to stdout.
+     * @param clearPreferences if set to true, clears all user preferences.
+     */
+    void startApp(boolean debugMode, boolean clearPreferences) {
+        configureDebugMode(debugMode);
+        conditionallyClearPreferences(clearPreferences);
 
-  private AudioFileFactory createAudioFileFactory() {
-    AudioStandardizer audioStandardizer = new SoundHelper(messageBus);
-    return new AudioFileFactory(soundHelper, getAudioFileDecoders(), getBpmReaderWriters(), createBpmCalculator(), audioStandardizer, messageBus);
-  }
+        setLoggingProperties();
+        setLocale();
 
-  private Collection<AudioFileDecoder> getAudioFileDecoders() {
-    List<AudioFileDecoder> decoders = newArrayList();
+        MainControl control = createMainControl();
+        Ui userInterface = createUserInterface(control);
 
-    decoders.add(new AacAudioFileDecoder());
-    decoders.add(new WaveAudioFileDecoder());
-    decoders.add(new FlacAudioFileDecoder());
-    decoders.add(new Mp3AudioFileDecoder());
-    decoders.add(new OggAudioFileDecoder());
+        control.tidyOldTemporaryFiles();
+        control.loadAudioFiles();
 
-    return decoders;
-  }
+        userInterface.launch();
+    }
 
-  private Collection<BPMReaderWriter> getBpmReaderWriters() {
-    List<BPMReaderWriter> bpmReaderWriters = newArrayList();
+    private void conditionallyClearPreferences(boolean clearPreferences) {
+        if (clearPreferences) {
+            userPreferences.destroyAllPreferences();
+        }
+    }
 
-    bpmReaderWriters.add(new FlacBPMReaderWriter());
-    bpmReaderWriters.add(new Mp3BPMReaderWriter());
-    bpmReaderWriters.add(new OggBPMReaderWriter());
+    private void configureDebugMode(boolean debugMode) {
+        if (debugMode) {
+            messageBus.addHandler(new DebugMessagePrinter());
+            addDebugMessage("Debug mode");
+        }
+        addDebugMessage(bundle.getString("imc.name") + ", V " + bundle.getString("imc.version"));
+        addDebugMessage("System properties: " + platform.getSystemDiagnosisString());
+    }
 
-    return bpmReaderWriters;
-  }
+    private void setLoggingProperties() {
+        try {
+            /* We do this to prevent JAudioTagger from logging. */
+            LogManager.getLogManager().readConfiguration(new ByteArrayInputStream("org.jaudiotagger.level = OFF".getBytes(UTF_8)));
+        } catch (Exception e) {
+            addDebugMessage("Set logging properties: " + e.getMessage());
+        }
+    }
 
-  private BPMCalculator createBpmCalculator() {
-    return new BeatRoot();
-  }
+    private void setLocale() {
+        Locale currentLocale = Locale.getDefault();
 
-  private OutputGenerator createOutputGenerator() {
-    return new OutputGenerator(soundHelper, getAudioFileEncoders(), messageBus);
-  }
+        if (userPreferences.hasLocale()) {
+            currentLocale = userPreferences.loadLocale();
+        }
 
-  private List<AudioFileEncoder> getAudioFileEncoders() {
-    List<AudioFileEncoder> encoders = newArrayList();
+        Optional<Locale> knownLocale = getKnownLocaleFor(currentLocale);
 
-    encoders.add(new Mp3AudioFileEncoder());
-    encoders.add(new OggAudioFileEncoder());
-    encoders.add(new WaveAudioFileEncoder());
+        if (knownLocale.isPresent()) {
+            Locale.setDefault(knownLocale.get());
+        } else {
+            Locale.setDefault(DEFAULT_LOCALE);
+        }
 
-    return encoders;
-  }
+        addDebugMessage("Selected locale: " + Locale.getDefault());
+    }
 
-  private ExtractMusicPlayer createMusicPlayer() {
-    return new ExtractMusicPlayer(messageBus);
-  }
+    private Optional<Locale> getKnownLocaleFor(Locale currentLocale) {
+        if (currentLocale == null) {
+            return Optional.empty();
+        }
 
-  private SoundEffectsProvider createSoundEffectProvider() {
-    return new BuiltInSoundEffectsProvider();
-  }
+        return knownLocales.stream().filter(l -> l.getLanguage().equals(currentLocale.getLanguage())).findFirst();
+    }
 
-  private Ui createUserInterface(MainControl control) {
-    Ui userInterface = new IntervalMusicCompositorUI(control, control, control, control, createUpdateAvailabilityChecker(control), control, userPreferences, messageBus, messageBus);
-    control.setUi(userInterface);
-    return userInterface;
-  }
+    private MainControl createMainControl() {
+        return new MainControl(createCompilationGenerator(), createAudioFileFactory(), createMusicPlayer(), createSoundEffectProvider(), messageBus, knownLocales);
+    }
 
-  private UpdateChecker createUpdateAvailabilityChecker(ApplicationData applicationData) {
-    return new UpdateChecker(applicationData, messageBus);
-  }
+    private CompilationGenerator createCompilationGenerator() {
+        return new CompilationGenerator(new Compilation(soundHelper, messageBus), createOutputGenerator(), messageBus);
+    }
 
-  private void addDebugMessage(String message) {
-    messageBus.send(new DebugMessage(this, message));
-  }
+    private AudioFileFactory createAudioFileFactory() {
+        AudioStandardizer audioStandardizer = new SoundHelper(messageBus);
+        return new AudioFileFactory(soundHelper, getAudioFileDecoders(), getBpmReaderWriters(), createBpmCalculator(), audioStandardizer, messageBus);
+    }
+
+    private Collection<AudioFileDecoder> getAudioFileDecoders() {
+        List<AudioFileDecoder> decoders = newArrayList();
+
+        decoders.add(new AacAudioFileDecoder());
+        decoders.add(new WaveAudioFileDecoder());
+        decoders.add(new FlacAudioFileDecoder());
+        decoders.add(new Mp3AudioFileDecoder());
+        decoders.add(new OggAudioFileDecoder());
+
+        return decoders;
+    }
+
+    private Collection<BPMReaderWriter> getBpmReaderWriters() {
+        List<BPMReaderWriter> bpmReaderWriters = newArrayList();
+
+        bpmReaderWriters.add(new FlacBPMReaderWriter());
+        bpmReaderWriters.add(new Mp3BPMReaderWriter());
+        bpmReaderWriters.add(new OggBPMReaderWriter());
+
+        return bpmReaderWriters;
+    }
+
+    private BPMCalculator createBpmCalculator() {
+        return new BeatRoot();
+    }
+
+    private OutputGenerator createOutputGenerator() {
+        return new OutputGenerator(soundHelper, getAudioFileEncoders(), messageBus);
+    }
+
+    private List<AudioFileEncoder> getAudioFileEncoders() {
+        List<AudioFileEncoder> encoders = newArrayList();
+
+        encoders.add(new Mp3AudioFileEncoder());
+        encoders.add(new OggAudioFileEncoder());
+        encoders.add(new WaveAudioFileEncoder());
+
+        return encoders;
+    }
+
+    private ExtractMusicPlayer createMusicPlayer() {
+        return new ExtractMusicPlayer(messageBus);
+    }
+
+    private SoundEffectsProvider createSoundEffectProvider() {
+        return new BuiltInSoundEffectsProvider();
+    }
+
+    private Ui createUserInterface(MainControl control) {
+        Ui userInterface = new IntervalMusicCompositorUI(control, control, control, control, createUpdateAvailabilityChecker(control), control, userPreferences, messageBus, messageBus);
+        control.setUi(userInterface);
+        return userInterface;
+    }
+
+    private UpdateChecker createUpdateAvailabilityChecker(ApplicationData applicationData) {
+        return new UpdateChecker(applicationData, messageBus);
+    }
+
+    private void addDebugMessage(String message) {
+        messageBus.send(new DebugMessage(this, message));
+    }
 }

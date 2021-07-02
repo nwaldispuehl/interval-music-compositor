@@ -1,15 +1,14 @@
 package ch.retorte.intervalmusiccompositor.util;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import ch.retorte.intervalmusiccompositor.core.bundle.CoreBundleProvider;
 import ch.retorte.intervalmusiccompositor.model.update.Version;
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.commons.platform.Platform;
 import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
 import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
@@ -25,7 +24,7 @@ import ch.retorte.intervalmusiccompositor.model.update.UpdateAvailabilityChecker
  */
 public class UpdateChecker implements UpdateAvailabilityChecker {
 
-  private MessageFormatBundle bundle = getBundle("core_imc");
+  private MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
 
   private Version remoteVersion;
 

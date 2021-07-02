@@ -1,7 +1,7 @@
 package ch.retorte.intervalmusiccompositor.ui.bpm;
 
 import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 

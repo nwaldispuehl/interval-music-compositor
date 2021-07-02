@@ -15,6 +15,9 @@ public class AudioFileEncoderConverter extends StringConverter<AudioFileEncoder>
 
     @Override
     public String toString(AudioFileEncoder audioFileEncoder) {
+        if (audioFileEncoder == null) {
+            return null;
+        }
         return audioFileEncoder.getIdentificator();
     }
 

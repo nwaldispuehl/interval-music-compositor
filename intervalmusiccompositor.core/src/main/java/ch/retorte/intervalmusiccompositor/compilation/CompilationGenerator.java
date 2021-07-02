@@ -1,6 +1,7 @@
 package ch.retorte.intervalmusiccompositor.compilation;
 
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.core.bundle.CoreBundleProvider;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
@@ -23,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ch.retorte.intervalmusiccompositor.commons.ExceptionMessageExtractor.messageOrNameOf;
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.CROSS;
 import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.SEPARATE;
@@ -43,7 +43,7 @@ public class CompilationGenerator implements Runnable {
   private static final String FILENAME_PREFIX_PART_DELIMITER = "_";
   private static final String FILENAME_PREFIX_ITERATION_DELIMITER = "-";
 
-  private final MessageFormatBundle bundle = getBundle("core_imc");
+  private final MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
 
   private final ArrayList<TaskFinishListener> listeners = newArrayList();
 

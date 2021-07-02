@@ -1,7 +1,8 @@
 package ch.retorte.intervalmusiccompositor.audiofile;
 
+import ch.retorte.intervalmusiccompositor.core.bundle.CoreBundleProvider;
 import ch.retorte.intervalmusiccompositor.commons.FormatTime;
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.model.audiofile.AudioFileStatus;
 import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
@@ -25,7 +26,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.model.audiofile.AudioFileStatus.*;
 
 /**
@@ -35,7 +35,7 @@ public class AudioFile extends File implements IAudioFile {
 
     private final UUID uuid = UUID.randomUUID();
 
-    private final MessageFormatBundle bundle = getBundle("core_imc");
+    private final MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
 
     private final Long startCutOffInMilliseconds = Long.parseLong(bundle.getString("imc.audio.cutoff.start"));
     private final Long endCutOffInMilliseconds = Long.parseLong(bundle.getString("imc.audio.cutoff.end"));

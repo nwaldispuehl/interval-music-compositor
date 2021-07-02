@@ -1,154 +1,155 @@
 package ch.retorte.intervalmusiccompositor.ui.soundeffects;
 
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffect;
 import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
+import ch.retorte.intervalmusiccompositor.ui.bundle.UiBundleProvider;
 import ch.retorte.intervalmusiccompositor.ui.mainscreen.DebugMessageEventHandler;
 import ch.retorte.intervalmusiccompositor.ui.utils.WidgetTools;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.util.Collection;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-import static ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI.UI_RESOURCE_BUNDLE_NAME;
-
 class SoundEffectEntry extends HBox {
 
-  //---- Static
+    //---- Static
 
-  private static final String LAYOUT_FILE = "/layouts/SoundEffectsEntry.fxml";
-
-
-  //---- Fields
-
-  private MessageFormatBundle bundle = getBundle(UI_RESOURCE_BUNDLE_NAME);
-
-  private SoundEffectsPane parent;
-  private SoundEffectOccurrence soundEffectOccurrence;
-  private SoundEffectsProvider soundEffectsProvider;
-  private MusicListControl musicListControl;
-  private MessageProducer messageProducer;
-
-  private WidgetTools widgetTools = new WidgetTools();
+    private static final String LAYOUT_FILE = "/layouts/SoundEffectsEntry.fxml";
 
 
-  //---- FX fields
+    //---- Fields
 
-  @FXML
-  private ComboBox<SoundEffect> soundEffects;
+    private final MessageFormatBundle bundle = new UiBundleProvider().getBundle();
 
-  @FXML
-  private Button playSoundEffect;
+    private final SoundEffectsPane parent;
+    private final SoundEffectOccurrence soundEffectOccurrence;
+    private final SoundEffectsProvider soundEffectsProvider;
+    private final MusicListControl musicListControl;
+    private final MessageProducer messageProducer;
 
-  @FXML
-  private Spinner<Integer> soundEffectStartTime;
-
-  @FXML
-  private Button removeSoundEffect;
+    private final WidgetTools widgetTools = new WidgetTools();
 
 
-  //---- Constructor
+    //---- FX fields
 
-  SoundEffectEntry(SoundEffectsPane parent, SoundEffectOccurrence soundEffectOccurrence, SoundEffectsProvider soundEffectsProvider, MusicListControl musicListControl, MessageProducer messageProducer) {
-    this.parent = parent;
-    this.soundEffectOccurrence = soundEffectOccurrence;
-    this.soundEffectsProvider = soundEffectsProvider;
-    this.musicListControl = musicListControl;
-    this.messageProducer = messageProducer;
+    @FXML
+    private ComboBox<SoundEffect> soundEffects;
 
-    initialize();
-    initializeFields();
-  }
+    @FXML
+    private Button playSoundEffect;
+
+    @FXML
+    private Spinner<Integer> soundEffectStartTime;
+
+    @FXML
+    private Button removeSoundEffect;
 
 
-  //---- Methods
+    //---- Constructor
 
-  private void initialize() {
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(LAYOUT_FILE), bundle.getBundle());
-    fxmlLoader.setRoot(this);
-    fxmlLoader.setController(this);
+    SoundEffectEntry(SoundEffectsPane parent, SoundEffectOccurrence soundEffectOccurrence, SoundEffectsProvider soundEffectsProvider, MusicListControl musicListControl, MessageProducer messageProducer) {
+        this.parent = parent;
+        this.soundEffectOccurrence = soundEffectOccurrence;
+        this.soundEffectsProvider = soundEffectsProvider;
+        this.musicListControl = musicListControl;
+        this.messageProducer = messageProducer;
 
-    try {
-      fxmlLoader.load();
-    } catch (IOException exception) {
-      throw new RuntimeException(exception);
+        initialize();
+        initializeFields();
     }
-  }
 
-  private void initializeFields() {
-    initializeComboBox();
-    initializePlayButton();
-    initializeSpinner();
-    initializeRemoveButton();
-  }
 
-  private void initializeComboBox() {
-    Collection<SoundEffect> soundEffects = soundEffectsProvider.getSoundEffects();
+    //---- Methods
 
-    // We provide custom cell factories for label providing.
-    this.soundEffects.setCellFactory(param -> new SoundEffectListCell());
-    this.soundEffects.setButtonCell(new SoundEffectListCell());
+    private void initialize() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(LAYOUT_FILE), bundle.getBundle());
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
 
-    this.soundEffects.valueProperty().addListener(debugHandlerWith(this.soundEffects.getId()));
-    this.soundEffects.setItems(FXCollections.observableArrayList(soundEffects));
-    this.soundEffects.setValue(soundEffectOccurrence.getSoundEffect());
-    this.soundEffects.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
-    this.soundEffects.valueProperty().addListener((observable, oldValue, newValue) -> parent.updatePreferences());
-    this.soundEffects.valueProperty().addListener((observable, oldValue, newValue) -> parent.adaptSpinnerRangeToMusicAndBreakSize());
-  }
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
 
-  private void initializePlayButton() {
-    playSoundEffect.onActionProperty().addListener(debugHandlerWith(playSoundEffect.getId()));
-    playSoundEffect.setOnAction(event -> {
-      if (soundEffectOccurrence.getSoundEffect() != null) {
-        musicListControl.playSoundEffect(soundEffectOccurrence.getSoundEffect());
-      }
-    });
-  }
+    private void initializeFields() {
+        initializeComboBox();
+        initializePlayButton();
+        initializeSpinner();
+        initializeRemoveButton();
+    }
 
-  private void initializeSpinner() {
-    soundEffectStartTime.getValueFactory().setValue((int) (soundEffectOccurrence.getTimeMillis() / 1000));
-    soundEffectStartTime.valueProperty().addListener(debugHandlerWith(soundEffectStartTime.getId()));
-    soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
-    soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> parent.updatePreferences());
+    private void initializeComboBox() {
+        Collection<SoundEffect> soundEffects = soundEffectsProvider.getSoundEffects();
 
-    widgetTools.prepare(soundEffectStartTime);
-  }
+        // We provide custom cell factories for label providing.
+        this.soundEffects.setCellFactory(param -> new SoundEffectListCell());
+        this.soundEffects.setButtonCell(new SoundEffectListCell());
 
-  private void initializeRemoveButton() {
-    removeSoundEffect.setOnAction(event -> parent.removeEntry(this));
-  }
+        this.soundEffects.valueProperty().addListener(debugHandlerWith(this.soundEffects.getId()));
+        this.soundEffects.setItems(FXCollections.observableArrayList(soundEffects));
+        this.soundEffects.setValue(soundEffectOccurrence.getSoundEffect());
+        this.soundEffects.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
+        this.soundEffects.valueProperty().addListener((observable, oldValue, newValue) -> parent.updatePreferences());
+        this.soundEffects.valueProperty().addListener((observable, oldValue, newValue) -> parent.adaptSpinnerRangeToMusicAndBreakSize());
+    }
 
-  SoundEffectOccurrence getSoundEffectOccurrence() {
-    return soundEffectOccurrence;
-  }
+    private void initializePlayButton() {
+        playSoundEffect.onActionProperty().addListener(debugHandlerWith(playSoundEffect.getId()));
+        playSoundEffect.setOnAction(event -> {
+            if (soundEffectOccurrence.getSoundEffect() != null) {
+                musicListControl.playSoundEffect(soundEffectOccurrence.getSoundEffect());
+            }
+        });
+    }
 
-  void updateSpinnerSizeWith(int maximalTrackDuration) {
-    SpinnerValueFactory.IntegerSpinnerValueFactory valueFactory = (SpinnerValueFactory.IntegerSpinnerValueFactory) soundEffectStartTime.getValueFactory();
-    valueFactory.setMax(getLatestStartTimeWith(maximalTrackDuration));
-  }
+    private void initializeSpinner() {
+        soundEffectStartTime.getValueFactory().setValue((int) (soundEffectOccurrence.getTimeMillis() / 1000));
+        soundEffectStartTime.valueProperty().addListener(debugHandlerWith(soundEffectStartTime.getId()));
+        soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
+        soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> parent.updatePreferences());
 
-  private int getLatestStartTimeWith(int maximalTrackDuration) {
-    return maximalTrackDuration - (int) Math.ceil(soundEffectOccurrence.getSoundEffect().getDurationMillis() / 1000.0);
-  }
+        widgetTools.prepare(soundEffectStartTime);
+    }
 
-  private void updateSelectedSoundEffect() {
-    soundEffectOccurrence.setSoundEffect(soundEffects.getValue());
-    soundEffectOccurrence.setTimeMillis(soundEffectStartTime.getValueFactory().getValue() * 1000);
+    private void initializeRemoveButton() {
+        removeSoundEffect.setOnAction(event -> parent.removeEntry(this));
+    }
 
-    parent.updateEntry();
-  }
+    SoundEffectOccurrence getSoundEffectOccurrence() {
+        return soundEffectOccurrence;
+    }
 
-  private DebugMessageEventHandler debugHandlerWith(String id) {
-    return new DebugMessageEventHandler(SoundEffectEntry.this, id, messageProducer);
-  }
+    void updateSpinnerSizeWith(int maximalTrackDuration) {
+        SpinnerValueFactory.IntegerSpinnerValueFactory valueFactory = (SpinnerValueFactory.IntegerSpinnerValueFactory) soundEffectStartTime.getValueFactory();
+        valueFactory.setMax(getLatestStartTimeWith(maximalTrackDuration));
+    }
+
+    private int getLatestStartTimeWith(int maximalTrackDuration) {
+        return maximalTrackDuration - (int) Math.ceil(soundEffectOccurrence.getSoundEffect().getDurationMillis() / 1000.0);
+    }
+
+    private void updateSelectedSoundEffect() {
+        soundEffectOccurrence.setSoundEffect(soundEffects.getValue());
+        soundEffectOccurrence.setTimeMillis(soundEffectStartTime.getValueFactory().getValue() * 1000);
+
+        parent.updateEntry();
+    }
+
+    private DebugMessageEventHandler debugHandlerWith(String id) {
+        return new DebugMessageEventHandler(SoundEffectEntry.this, id, messageProducer);
+    }
 
 }

@@ -3,6 +3,7 @@ package ch.retorte.intervalmusiccompositor.commons;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import org.junit.Test;
 
 /**

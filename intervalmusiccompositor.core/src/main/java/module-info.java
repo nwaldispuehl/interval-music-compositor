@@ -5,6 +5,7 @@ module intervalmusiccompositor.core {
     exports ch.retorte.intervalmusiccompositor.compilation;
     exports ch.retorte.intervalmusiccompositor.output;
     exports ch.retorte.intervalmusiccompositor.player;
+    exports ch.retorte.intervalmusiccompositor.core.bundle;
 
     requires intervalmusiccompositor.spi;
     requires intervalmusiccompositor.commons;

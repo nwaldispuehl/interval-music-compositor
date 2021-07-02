@@ -1,13 +1,12 @@
 package ch.retorte.intervalmusiccompositor.player;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-
 import java.io.IOException;
 
 import javax.sound.sampled.AudioInputStream;
 
+import ch.retorte.intervalmusiccompositor.core.bundle.CoreBundleProvider;
 import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.spi.audio.AudioFileMusicPlayer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
@@ -18,7 +17,7 @@ import ch.retorte.intervalmusiccompositor.util.SoundHelper;
  */
 public class ExtractMusicPlayer extends StreamMusicPlayer implements AudioFileMusicPlayer {
 
-  private MessageFormatBundle bundle = getBundle("core_imc");
+  private MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
 
   private MessageProducer messageProducer;
   private SoundHelper soundHelper;

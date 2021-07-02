@@ -1,6 +1,5 @@
 package ch.retorte.intervalmusiccompositor.util;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 import static java.util.Collections.reverse;
 import static java.util.Collections.sort;
@@ -11,7 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ch.retorte.intervalmusiccompositor.audiofile.AudioFileFactory;
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.core.bundle.CoreBundleProvider;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.model.util.VisibleForTesting;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
@@ -24,7 +24,7 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
  */
 public class AudioFilesLoader implements Runnable {
 
-  private final MessageFormatBundle bundle = getBundle("core_imc");
+  private final MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
 
   private final MusicListControl musicListControl;
   private final AudioFileFactory audioFileFactory;

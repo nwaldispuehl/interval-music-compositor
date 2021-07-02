@@ -45,7 +45,7 @@ jar {
 }
 
 javafx {
-  modules = [ 'javafx.controls', 'javafx.fxml' ]
+  modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls', 'javafx.fxml',  'javafx.swing' ]
 }
 
 

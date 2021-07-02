@@ -3,7 +3,7 @@ package ch.retorte.intervalmusiccompositor.ui.audiofilelist;
 import ch.retorte.intervalmusiccompositor.model.util.ChangeListener;
 import ch.retorte.intervalmusiccompositor.model.list.ObservableList;
 import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 

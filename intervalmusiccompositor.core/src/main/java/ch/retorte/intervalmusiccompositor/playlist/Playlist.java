@@ -1,6 +1,7 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.core.bundle.CoreBundleProvider;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.model.list.BlendMode;
@@ -14,7 +15,6 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
 import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 import static ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters.*;
 import static ch.retorte.intervalmusiccompositor.model.list.BlendMode.CROSS;
@@ -31,7 +31,7 @@ public class Playlist implements Iterable<PlaylistItem> {
 
   //---- Fields
 
-  private final MessageFormatBundle bundle = getBundle("core_imc");
+  private final MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
   private List<PlaylistItem> playlistItems = newArrayList();
 
   private Long startCutOffInMilliseconds = Long.parseLong(bundle.getString("imc.audio.cutoff.start"));

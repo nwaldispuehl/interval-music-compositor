@@ -1,6 +1,6 @@
 package ch.retorte.intervalmusiccompositor.ui.preferences;
 
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -1,13 +1,14 @@
 package ch.retorte.intervalmusiccompositor.ui.soundeffects;
 
 
-import ch.retorte.intervalmusiccompositor.commons.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
 import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
+import ch.retorte.intervalmusiccompositor.ui.bundle.UiBundleProvider;
 import ch.retorte.intervalmusiccompositor.ui.mainscreen.DebugMessageEventHandler;
 import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import javafx.beans.value.ChangeListener;
@@ -23,9 +24,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static ch.retorte.intervalmusiccompositor.commons.Utf8Bundle.getBundle;
-import static ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI.UI_RESOURCE_BUNDLE_NAME;
-
 public class SoundEffectsPane extends BorderPane {
 
     //---- Static
@@ -35,7 +33,7 @@ public class SoundEffectsPane extends BorderPane {
 
     //---- Fields
 
-    private final MessageFormatBundle bundle = getBundle(UI_RESOURCE_BUNDLE_NAME);
+    private final MessageFormatBundle bundle = new UiBundleProvider().getBundle();
     private final SoundEffectsProvider soundEffectsProvider;
     private final CompilationParameters compilationParameters;
     private final MusicListControl musicListControl;
