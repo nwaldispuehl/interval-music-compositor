@@ -39,11 +39,14 @@ public class DraggableAudioFileListView extends ListView<IAudioFile> {
 
   public void initializeWith(ObservableList<IAudioFile> items, MessageFormatBundle messageFormatBundle, MessageProducer messageProducer, MusicListControl musicListControl, ChangeListener<IAudioFile> audioFileStateChangeListener) {
 
-    // TODO:
-    // convert items to observable list
-    // fire listener
+    // To decouple the JavaFX part, we use an independent observable list in the other packages, and couple them here.
     javafx.collections.ObservableList<IAudioFile> observableItems = FXCollections.observableArrayList(items);
-    observableItems.addListener((ListChangeListener<? super IAudioFile>) c -> items.onChange());
+
+    items.addListener(c -> {
+      observableItems.clear();
+      observableItems.addAll(items);
+    });
+
     setItems(observableItems);
 
     this.messageFormatBundle = messageFormatBundle;
