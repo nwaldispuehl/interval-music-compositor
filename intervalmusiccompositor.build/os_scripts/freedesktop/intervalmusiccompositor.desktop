@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name = Interval Music Compositor
 Comment = Application to create music intervals (e.g. 20 s music, 10 s break) for sports and education.
-Exec = /opt/IntervalMusicCompositor/bin/IntervalMusicCompositor
+Exec = /opt/IntervalMusicCompositor/bin/intervalmusiccompositor.app
 Icon = /opt/IntervalMusicCompositor/interval_music_compositor.svg
 Terminal = false
 Type = Application

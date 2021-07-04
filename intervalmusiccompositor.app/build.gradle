@@ -4,10 +4,6 @@ plugins {
   id "org.openjfx.javafxplugin" version "0.0.10"
   id 'org.beryx.jlink' version '2.24.0'
 
-  // TODO: upgrade...
-//  id "edu.sc.seis.macAppBundle" version "2.3.0"
-  id "edu.sc.seis.launch4j" version "2.4.4"
-  id "com.github.johnrengelman.shadow" version "4.0.3"
   id "nebula.ospackage" version "8.5.6"
 }
 
@@ -21,15 +17,8 @@ application {
   mainModule = "intervalmusiccompositor.app"
 }
 
-
-applicationDefaultJvmArgs = ["-Xmx2048m"]
-
 ext.versionDelimiter = '-'
 
-ext.macosxOutputDir = '/macApp'
-ext.windowsOutputDir = '/winApp'
-ext.linuxOutputDir = '/linuxApp'
-ext.windowsUberJarName = 'uberJar'
 ext.debPackageInstallPath = '/opt/IntervalMusicCompositor'
 
 ext.moduleName = 'intervalmusiccompositor.app'
@@ -48,83 +37,62 @@ javafx {
   modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls', 'javafx.fxml',  'javafx.swing' ]
 }
 
+jlink {
+  targetPlatform("linux") {
+    jdkHome = "/opt/java/platforms/linux/jdk-16.0.1+9"
+    addExtraModulePath("/opt/openjfx/linux/javafx-jmods-16")
+  }
 
+  targetPlatform("mac") {
+    jdkHome = "/opt/java/platforms/mac/jdk-16.0.1+9"
+    addExtraModulePath("/opt/openjfx/mac/javafx-jmods-16")
+  }
 
-//jlink {
-//  targetPlatform("linux") {
-//    jdkHome = "/opt/java/platforms/linux/jdk-12.0.2"
-//    addExtraModulePath("/opt/openjfx/linux/javafx-jmods-11.0.2")
-//  }
-//  targetPlatform("mac") {
-//    jdkHome = "/opt/java/platforms/mac/jdk-12.0.2.jdk"
-//    addExtraModulePath("/opt/openjfx/mac/javafx-jmods-11.0.2")
-//  }
-//  targetPlatform("win") {
-//    jdkHome = "/opt/java/platforms/win/jdk-12.0.2"
-//    addExtraModulePath("/opt/openjfx/win/javafx-jmods-11.0.2")
-//  }
-//}
-
-//// We disable tasks which are not successfully performed on non-OSX hosts.
-//createDmg.enabled = false
-//
-//macAppBundle {
-//  appOutputDir = project.ext.macosxOutputDir
-////  mainClassName = project.mainClassName
-//  icon = project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.icns')
-//  appStyle = 'Oracle'
-//  appName = project.applicationName
-//  jvmVersion = "1.8+"
-//  jreHome = '...'
-//  arguments = ["-Xmx=2048M"]
-//}
-
-//task distOsxApp(type: Tar, dependsOn: createApp) {
-//  description = "Creates an archive from the Mac OS X version."
-//  compression = Compression.GZIP
-//  baseName = project.applicationName
-//  appendix = 'mac'
-//
-//  into (project.applicationName + project.ext.versionDelimiter + version) {
-//    from buildDir.absolutePath + project.ext.macosxOutputDir
-//    from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
-//    from project(':intervalmusiccompositor.build').files('documentation/')
-//  }
-//}
-
-shadowJar {
-  baseName = project.ext.windowsUberJarName
-//  mainClassName = project.mainClassName
-  classifier = null
-  version = null
+  targetPlatform("win") {
+    jdkHome = "/opt/java/platforms/win/jdk-16.0.1+9"
+    addExtraModulePath("/opt/openjfx/win/javafx-jmods-16")
+  }
 }
 
-task copyUberJar(type: Copy, dependsOn: [ shadowJar]) {
-  from project.tasks.shadowJar.outputs.files
-  into buildDir.absolutePath + project.ext.windowsOutputDir + '/lib'
-}
+task distOsxApp(type: Tar, dependsOn: 'jlink') {
+  description = "Creates an archive from the Mac OS X version."
 
-task distWindowsApp(type: Zip, dependsOn: [shadowJar, copyUberJar, createExe]) {
-  description = "Creates an archive from the Microsoft Windows version." 
+  compression = Compression.GZIP
+
   baseName = applicationName
-  appendix = 'win'
+  appendix = 'mac'
 
-  into (applicationName + project.ext.versionDelimiter + version) {
-    from buildDir.absolutePath + project.ext.windowsOutputDir + '/' + applicationName + '.exe'
+  into (project.applicationName + project.ext.versionDelimiter + version) {
+    from buildDir.absolutePath + '/image/intervalmusiccompositor.app-mac'
     from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
     from project(':intervalmusiccompositor.build').files('documentation/')
   }
 }
 
-task distLinuxApp(type: Tar, dependsOn: installDist) {
+task distWindowsApp(type: Zip, dependsOn: 'jlink') {
+  description = "Creates an archive from the Microsoft Windows version."
+
+  baseName = applicationName
+  appendix = 'win'
+
+  into (applicationName + project.ext.versionDelimiter + version) {
+    from buildDir.absolutePath + '/image/intervalmusiccompositor.app-win'
+    from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
+    from project(':intervalmusiccompositor.build').files('documentation/')
+  }
+}
+
+task distLinuxApp(type: Tar, dependsOn: 'jlink') {
   description = "Creates an archive from the Linux version."
+
   compression = Compression.GZIP
+
   baseName = applicationName
   appendix = 'linux'
   extension = 'tar.gz'
-  
+
   into (applicationName + project.ext.versionDelimiter + version) {
-    from installDist.outputs
+    from buildDir.absolutePath + '/image/intervalmusiccompositor.app-linux'
     from project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.svg')
     from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
     from project(':intervalmusiccompositor.build').files('documentation/')
@@ -133,70 +101,33 @@ task distLinuxApp(type: Tar, dependsOn: installDist) {
 
 apply plugin: 'nebula.deb'
 
-task distDebPackage(type: Deb, dependsOn: installDist) {
-
+task distDebPackage(type: Deb, dependsOn: 'jlink') {
   packageName 'intervalmusiccompositor'
   summary 'Application to create music intervals (e.g. 20 s music, 10 s break) for sports and education.'
 
-  // Dependencies
-
-  requires('openjdk-11-jre')
-
   // Collect needed files
-
   into project.ext.debPackageInstallPath
-  from (installDist.outputs)
+  from buildDir.absolutePath + '/image/intervalmusiccompositor.app-linux'
   from project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.svg')
   from project(':intervalmusiccompositor.build').file('os_scripts/freedesktop/intervalmusiccompositor.desktop')
   from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
   from project(':intervalmusiccompositor.build').files('documentation/')
 
-
   // Symbolic links for the application and the desktop starter
-
-  link('/usr/bin/intervalmusiccompositor', project.ext.debPackageInstallPath + '/bin/IntervalMusicCompositor')
+  link('/usr/bin/intervalmusiccompositor', project.ext.debPackageInstallPath + '/bin/intervalmusiccompositor.app')
   link('/usr/share/applications/intervalmusiccompositor.desktop', project.ext.debPackageInstallPath + '/intervalmusiccompositor.desktop')
 }
 
 task renameDebPackage (type: Copy, dependsOn: distDebPackage) {
   from project.tasks.distDebPackage.outputs.files
-//  into distsDir #TODO
+  into distsDirectory
   rename { String fileName ->
     fileName.replace("intervalmusiccompositor", "IntervalMusicCompositor-linux")
   }
 }
 
-
-task distJarFile(type: Copy, dependsOn: shadowJar) {
-  from project.tasks.shadowJar.outputs.files
-//  into distsDir #TODO
-  rename { String fileName ->
-    fileName.replace("uberJar", applicationName + project.ext.versionDelimiter + version)
-  }
-}
-
-//task distAll(dependsOn: [distOsxApp, distWindowsApp, distLinuxApp, renameDebPackage, distJarFile]) {
-task distAll(dependsOn: [distWindowsApp, distLinuxApp, renameDebPackage, distJarFile]) {
+task distAll(dependsOn: [distOsxApp, distWindowsApp, distLinuxApp, renameDebPackage]) {
   description = "Creates archives for all supported operating systems."
-}
-
-launch4j {
-    outputDir = project.ext.windowsOutputDir
-//    mainClassName = project.mainClassName
-    icon = project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.ico')
-
-    jreMinVersion = '1.8.0_60'
-    version = project.version
-
-    downloadUrl = "http://www.java.com/download/"
-    supportUrl = "https://nwaldispuehl.github.io/interval-music-compositor/en/feedback_support"
-  
-    copyConfigurable = project.tasks.shadowJar.outputs.files
-    jar = project.tasks.shadowJar.outputs.files.first()
-
-    outfile = project.applicationName + '.exe'
-    copyright = "retorte.ch"
-    maxHeapSize = 1280
 }
 
 dependencies {

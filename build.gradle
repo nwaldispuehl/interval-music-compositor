@@ -18,8 +18,8 @@ subprojects {
         modularity.inferModulePath = true
     }
 
-    sourceCompatibility = 11
-    targetCompatibility = 11
+    sourceCompatibility = 16
+    targetCompatibility = 16
 
     repositories {
         mavenCentral()

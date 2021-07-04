@@ -17,7 +17,7 @@ A small user manual can be found on the Github [project page](http://nwaldispueh
 How to build?
 -------------
 
-You certainly need a Java 8 development kit installed on your system. Then, clone the repository and use the packaged gradle binary to either run the program,
+You certainly need a Java development kit (>= 16) installed on your system. Then, clone the repository and use the packaged gradle binary to either run the program,
 
     $ ./gradlew run
   
@@ -25,7 +25,8 @@ execute its tests,
 
     $ ./gradlew check
   
-or create the distributions:
+or create the distribution for the supported operating system (either Linux, Windows, or Mac). In this case, you also need to place the respective JDK and 
+JavaFX jmods (the 'target platform') on your system according to the `jlink` task in the `intervalmusiccompositor.app/build.gradle` file. Then, build with:
 
     $ ./gradlew distAll
   

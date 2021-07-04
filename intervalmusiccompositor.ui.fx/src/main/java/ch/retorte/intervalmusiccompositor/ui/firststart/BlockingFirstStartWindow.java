@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -90,7 +91,7 @@ public class BlockingFirstStartWindow {
     dismissButton.setOnAction(e -> {
       userPreferences.setDidReviseUpdateAtStartup();
       stage.close();
-//      releaseStage();
+      releaseStage();
     });
   }
 
@@ -114,7 +115,6 @@ public class BlockingFirstStartWindow {
 
   private boolean hasUnrevisedPreferences() {
     return !userPreferences.didReviseUpdateAtStartup();
-    
   }
 
   public void show() {
@@ -131,16 +131,18 @@ public class BlockingFirstStartWindow {
     stage.setMinWidth(stage.getWidth());
     stage.setMinHeight(stage.getHeight());
 
-//    stage.setOnCloseRequest(event -> releaseStage());
-//    blockStage();
+    stage.setOnCloseRequest(event -> releaseStage());
+    blockStage();
   }
 
-//  private void blockStage() {
+  private void blockStage() {
+    // TODO: Implement
 //    Toolkit.getToolkit().enterNestedEventLoop(stage);
-//  }
-//
-//  private void releaseStage() {
+  }
+
+  private void releaseStage() {
+    // TODO: Implement
 //    Toolkit.getToolkit().exitNestedEventLoop(stage, null);
-//  }
+  }
 
 }
