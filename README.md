@@ -32,7 +32,3 @@ JavaFX jmods (the 'target platform') on your system according to the `jlink` tas
   
 The distribution archives are then to be found in the `intervalmusiccompositor.app/build/distributions/` folder.
 
-
-Current build status
---------------------
-[![Build Status](https://travis-ci.org/nwaldispuehl/interval-music-compositor.png?branch=master)](https://travis-ci.org/nwaldispuehl/interval-music-compositor)
