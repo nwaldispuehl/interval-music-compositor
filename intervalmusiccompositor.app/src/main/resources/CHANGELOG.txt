@@ -6,6 +6,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 IMP  #59    Inactivates process button if no compilation is possible.
 FIX  #61    Fixes encoding tests in some environment by explicitly states encoding.
+FIX  #58    Fixes crash with wrong Java version by bundling Java with the application.
 
 
 2019-03-05  2.9.2
