@@ -15,54 +15,54 @@ import static org.mockito.Mockito.when;
  */
 public class PlaylistItemTest {
 
-  //---- Fields
+    //---- Fields
 
-  private Playlist playlist = mock(Playlist.class);
+    private final Playlist playlist = mock(Playlist.class);
 
-  //---- Test methods
+    //---- Test methods
 
-  @Before
-  public void setup() {
+    @Before
+    public void setup() {
 
-  }
+    }
 
-  @Test
-  public void shouldGetItemLengthWithoutCrossFading() {
-    // given
-    when(playlist.isCrossFadingMode()).thenReturn(false);
-    PlaylistItem sut = itemWith(fragmentWith(8000), fragmentWith(4000));
+    @Test
+    public void shouldGetItemLengthWithoutCrossFading() {
+        // given
+        when(playlist.isCrossFadingMode()).thenReturn(false);
+        PlaylistItem sut = itemWith(fragmentWith(8000), fragmentWith(4000));
 
-    // when
-    long itemLengthMs = sut.getStrictItemLengthMs();
+        // when
+        long itemLengthMs = sut.getStrictItemLengthMs();
 
-    // then
-    assertThat(itemLengthMs, is(12000L));
-  }
+        // then
+        assertThat(itemLengthMs, is(12000L));
+    }
 
-  @Test
-  public void shouldGetItemLengthWithCrossFading() {
-    // given
-    when(playlist.getBlendTimeMs()).thenReturn(2000L);
-    when(playlist.isCrossFadingMode()).thenReturn(true);
-    PlaylistItem sut = itemWith( fragmentWith(8000), fragmentWith(4000));
+    @Test
+    public void shouldGetItemLengthWithCrossFading() {
+        // given
+        when(playlist.getBlendTimeMs()).thenReturn(2000L);
+        when(playlist.isCrossFadingMode()).thenReturn(true);
+        PlaylistItem sut = itemWith(fragmentWith(8000), fragmentWith(4000));
 
-    // when
-    long itemLengthMs = sut.getStrictItemLengthMs();
+        // when
+        long itemLengthMs = sut.getStrictItemLengthMs();
 
-    // then
-    assertThat(itemLengthMs, is(8000L));
-  }
+        // then
+        assertThat(itemLengthMs, is(8000L));
+    }
 
-  //---- Helper methods
+    //---- Helper methods
 
-  private PlaylistItem itemWith(PlaylistItemFragment musicFragment, PlaylistItemFragment breakFragment) {
-    return new PlaylistItem(playlist, musicFragment, breakFragment, newArrayList());
-  }
+    private PlaylistItem itemWith(PlaylistItemFragment musicFragment, PlaylistItemFragment breakFragment) {
+        return new PlaylistItem(playlist, musicFragment, breakFragment, newArrayList());
+    }
 
-  private PlaylistItemFragment fragmentWith(long durationMs) {
-    PlaylistItemFragment fragment = Mockito.mock(PlaylistItemFragment.class);
-    when(fragment.getExtractDurationInMilliseconds()).thenReturn(durationMs);
-    return fragment;
-  }
+    private PlaylistItemFragment fragmentWith(long durationMs) {
+        PlaylistItemFragment fragment = Mockito.mock(PlaylistItemFragment.class);
+        when(fragment.getExtractDurationInMilliseconds()).thenReturn(durationMs);
+        return fragment;
+    }
 
 }

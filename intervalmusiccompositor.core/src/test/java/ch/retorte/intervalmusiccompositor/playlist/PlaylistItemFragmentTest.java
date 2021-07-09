@@ -16,28 +16,28 @@ import static org.mockito.Mockito.when;
  */
 public class PlaylistItemFragmentTest {
 
-  @Test
-  public void shouldConsiderItselfSilentBreakIfAudioFileIsNull() {
-    // when
-    PlaylistItemFragment playlistItemFragment = new PlaylistItemFragment(null, 1, 1, 2);
+    @Test
+    public void shouldConsiderItselfSilentBreakIfAudioFileIsNull() {
+        // when
+        PlaylistItemFragment playlistItemFragment = new PlaylistItemFragment(null, 1, 1, 2);
 
-    // then
-    assertTrue(playlistItemFragment.isSilentBreak());
-  }
+        // then
+        assertTrue(playlistItemFragment.isSilentBreak());
+    }
 
-  @Test
-  public void shouldReturnCorrectExtractDuration() {
-    // given
-    IAudioFile audioFile = mock(IAudioFile.class);
-    when(audioFile.getDuration()).thenReturn(10000L);
-    PlaylistItemFragment playlistItemFragment = new PlaylistItemFragment(audioFile,  1,500L, 1500L);
+    @Test
+    public void shouldReturnCorrectExtractDuration() {
+        // given
+        IAudioFile audioFile = mock(IAudioFile.class);
+        when(audioFile.getDuration()).thenReturn(10000L);
+        PlaylistItemFragment playlistItemFragment = new PlaylistItemFragment(audioFile, 1, 500L, 1500L);
 
-    // when
-    long duration = playlistItemFragment.getExtractDurationInMilliseconds();
+        // when
+        long duration = playlistItemFragment.getExtractDurationInMilliseconds();
 
-    // then
-    assertThat(duration, is(1000L));
+        // then
+        assertThat(duration, is(1000L));
 
-  }
+    }
 
 }
