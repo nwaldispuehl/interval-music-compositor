@@ -1,8 +1,8 @@
 package ch.retorte.intervalmusiccompositor.ui.firststart;
 
 import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.commons.preferences.UserPreferences;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
+import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +15,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -27,122 +26,105 @@ import static java.util.stream.Collectors.joining;
  */
 public class BlockingFirstStartWindow {
 
-  //---- Static
+    //---- Static
 
-  private static final String LAYOUT_FILE = "/layouts/FirstStartWindow.fxml";
+    private static final String LAYOUT_FILE = "/layouts/FirstStartWindow.fxml";
 
-  //---- Fields
+    //---- Fields
 
-  @FXML
-  private CheckBox checkForUpgradesOnStartupPreference;
+    @FXML
+    private CheckBox checkForUpgradesOnStartupPreference;
 
-  @FXML
-  private Label recentChanges;
-  
-  @FXML
-  private VBox updateSettingsContainer;
-  
-  @FXML
-  private Button dismissButton;
+    @FXML
+    private Label recentChanges;
 
-  private Parent parent;
-  private Stage stage;
-  private final MessageFormatBundle bundle;
-  private final UserPreferences userPreferences;
-  private final ApplicationData applicationData;
+    @FXML
+    private VBox updateSettingsContainer;
 
+    @FXML
+    private Button dismissButton;
 
-  //---- Constructor
-
-  public BlockingFirstStartWindow(MessageFormatBundle bundle, UserPreferences userPreferences, ApplicationData applicationData) {
-    this.bundle = bundle;
-    this.userPreferences = userPreferences;
-    this.applicationData = applicationData;
-
-    loadFXML();
-    initializeControls();
-  }
+    private Parent parent;
+    private Stage stage;
+    private final MessageFormatBundle bundle;
+    private final UiUserPreferences userPreferences;
+    private final ApplicationData applicationData;
 
 
-  //---- Methods
+    //---- Constructor
 
-  private void loadFXML() {
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(LAYOUT_FILE), bundle.getBundle());
-    fxmlLoader.setController(this);
+    public BlockingFirstStartWindow(MessageFormatBundle bundle, UiUserPreferences userPreferences, ApplicationData applicationData) {
+        this.bundle = bundle;
+        this.userPreferences = userPreferences;
+        this.applicationData = applicationData;
 
-    try {
-      parent = fxmlLoader.load();
-      parent.getStylesheets().addAll("/styles/fonts.css", "/styles/MainScreen.css");
-    } catch (IOException exception) {
-      throw new RuntimeException(exception);
+        loadFXML();
+        initializeControls();
     }
-  }
 
-  private void initializeControls() {
-    recentChanges.setText(removeFirstNLinesOf(3, applicationData.getChangeLog()));
 
-    /* For the node to be completely removed from the layout if hidden, we need to adapt its managed property accordingly. */
-    updateSettingsContainer.managedProperty().bind(updateSettingsContainer.visibleProperty());
-    updateSettingsContainer.setVisible(hasUnrevisedPreferences());
+    //---- Methods
 
-    checkForUpgradesOnStartupPreference.selectedProperty().setValue(userPreferences.loadSearchUpdateAtStartup());
-    checkForUpgradesOnStartupPreference.selectedProperty().addListener((observable, oldValue, newValue) -> userPreferences.saveSearchUpdateAtStartup(newValue));
+    private void loadFXML() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(LAYOUT_FILE), bundle.getBundle());
+        fxmlLoader.setController(this);
 
-    dismissButton.setOnAction(e -> {
-      userPreferences.setDidReviseUpdateAtStartup();
-      stage.close();
-      releaseStage();
-    });
-  }
-
-  /**
-   * The first lines of the change log are taken by the title. We thus cut them away.
-   */
-  private String removeFirstNLinesOf(int n, String changeLog) {
-    if (StringUtils.isBlank(changeLog)) {
-      return "?";
+        try {
+            parent = fxmlLoader.load();
+            parent.getStylesheets().addAll("/styles/fonts.css", "/styles/MainScreen.css");
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
     }
-    String[] lines = changeLog.split(System.lineSeparator());
 
-    if (3 < lines.length) {
+    private void initializeControls() {
+        recentChanges.setText(removeFirstNLinesOf(3, applicationData.getChangeLog()));
 
-      return stream(Arrays.copyOfRange(lines, n, lines.length - 1)).collect(joining(System.lineSeparator()));
+        /* For the node to be completely removed from the layout if hidden, we need to adapt its managed property accordingly. */
+        updateSettingsContainer.managedProperty().bind(updateSettingsContainer.visibleProperty());
+        updateSettingsContainer.setVisible(hasUnrevisedPreferences());
+
+        checkForUpgradesOnStartupPreference.selectedProperty().bindBidirectional(userPreferences.searchUpdateAtStartupProperty());
+
+        dismissButton.setOnAction(e -> {
+            userPreferences.setDidReviseUpdateAtStartup();
+            stage.close();
+        });
     }
-    else {
-      return changeLog;
+
+    /**
+     * The first lines of the change log are taken by the title. We thus cut them away.
+     */
+    private String removeFirstNLinesOf(int n, String changeLog) {
+        if (StringUtils.isBlank(changeLog)) {
+            return "?";
+        }
+        String[] lines = changeLog.split(System.lineSeparator());
+
+        if (3 < lines.length) {
+
+            return stream(Arrays.copyOfRange(lines, n, lines.length - 1)).collect(joining(System.lineSeparator()));
+        } else {
+            return changeLog;
+        }
     }
-  }
 
-  private boolean hasUnrevisedPreferences() {
-    return !userPreferences.didReviseUpdateAtStartup();
-  }
+    private boolean hasUnrevisedPreferences() {
+        return !userPreferences.didReviseUpdateAtStartup();
+    }
 
-  public void show() {
-    stage = new Stage();
-    stage.setTitle(bundle.getString("ui.firstStartWindow.title"));
-    stage.setScene(new Scene(parent));
-    stage.setResizable(true);
-    stage.initModality(Modality.APPLICATION_MODAL);
+    public void show() {
+        stage = new Stage();
+        stage.setTitle(bundle.getString("ui.firstStartWindow.title"));
+        stage.setScene(new Scene(parent));
+        stage.setResizable(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
 
-    stage.show();
+        stage.showAndWait();
 
-    parent.layout();
+        parent.layout();
 
-    stage.setMinWidth(stage.getWidth());
-    stage.setMinHeight(stage.getHeight());
-
-    stage.setOnCloseRequest(event -> releaseStage());
-    blockStage();
-  }
-
-  private void blockStage() {
-    // TODO: Implement
-//    Toolkit.getToolkit().enterNestedEventLoop(stage);
-  }
-
-  private void releaseStage() {
-    // TODO: Implement
-//    Toolkit.getToolkit().exitNestedEventLoop(stage, null);
-  }
-
+        stage.setMinWidth(stage.getWidth());
+        stage.setMinHeight(stage.getHeight());
+    }
 }

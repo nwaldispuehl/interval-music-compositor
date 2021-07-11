@@ -166,6 +166,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
         primaryStage.setTitle(applicationData.getProgramName());
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        primaryStage.toFront();
         addProgramIconsTo(primaryStage);
 
         mainScreenController = fxmlLoader.getController();
