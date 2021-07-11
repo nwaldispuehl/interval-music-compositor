@@ -5,10 +5,11 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 2021-07-xx  2.10.0 [not yet released]
 --------------------------------------------------------------------------------
 IMP  #59    Inactivates process button if no compilation is possible.
-FIX  #61    Fixes encoding tests in some environment by explicitly states encoding.
-FIX  #58    Fixes crash with wrong Java version by bundling Java with the application.
-FIX  #60    Fixes that in advanced pattern too long breaks with break track were swallowed.
+FIX  #61    Failing encoding tests in some environment by explicitly states encoding.
+FIX  #58    Crash with wrong Java version by bundling Java with the application.
+FIX  #60    In advanced pattern too long breaks with break track were swallowed.
 FIX         Settings in the starting window were not reflected in preferences dialog.
+FIX         Error when non-integer numbers were entered into duration fields.
 
 
 2019-03-05  2.9.2

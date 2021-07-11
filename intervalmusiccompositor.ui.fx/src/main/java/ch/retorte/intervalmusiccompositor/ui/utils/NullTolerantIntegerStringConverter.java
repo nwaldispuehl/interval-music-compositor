@@ -8,19 +8,27 @@ import javafx.util.converter.IntegerStringConverter;
  */
 public class NullTolerantIntegerStringConverter extends IntegerStringConverter {
 
-  //---- Fields
+    //---- Fields
 
-  private static final Integer DEFAULT_VALUE = 0;
+    private static final Integer DEFAULT_VALUE = 0;
 
 
-  //---- Methods
+    //---- Methods
 
-  @Override
-  public Integer fromString(String value) {
-    Integer result = super.fromString(value);
-    if (result == null) {
-      return DEFAULT_VALUE;
+    @Override
+    public Integer fromString(String value) {
+        Integer result = null;
+
+        try {
+            result = super.fromString(value);
+        } catch (NumberFormatException e) {
+            // nop
+        }
+
+        if (result == null) {
+            return DEFAULT_VALUE;
+        }
+
+        return result;
     }
-    return result;
-  }
 }
