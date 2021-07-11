@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 
 import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
+import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.model.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.model.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.model.list.ObservableList;
 import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffect;
@@ -51,9 +53,11 @@ public interface MusicListControl {
 
   void setBreakBpm(int index, int bpm);
 
-  int getUsableTracks(List<Integer> pattern);
+  void markUsableTracksWith(CompilationParameters compilationParameters);
 
-  int getOkTracks();
+  boolean hasUsableTracksWith(CompilationParameters compilationParameters);
+
+  long getOkTracks();
 
   void moveTrack(int sourceIndex, int destinationIndex);
 

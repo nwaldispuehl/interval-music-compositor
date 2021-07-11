@@ -138,4 +138,18 @@ public interface IAudioFile extends Comparable<File> {
    */
   boolean isLongEnoughFor(int extractInSeconds);
 
+  /**
+   * Sets the long enough marker to either true ('long enough'), or false ('too short').
+   *
+   * @param longEnough true if the track is long enough.
+   */
+  void setLongEnough(boolean longEnough);
+
+  /**
+   * Whether this file was marked long enough.
+   *
+   * @return true if this file is considered long enough for the compilation.
+   */
+  boolean isLongEnough();
+
 }

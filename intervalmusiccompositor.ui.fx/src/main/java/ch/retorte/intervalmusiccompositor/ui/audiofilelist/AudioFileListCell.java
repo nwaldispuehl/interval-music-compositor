@@ -197,21 +197,26 @@ class AudioFileListCell extends ListCell<IAudioFile> {
                 case IN_PROGRESS:
                     imageView.setImage(processing);
                     status.setText(resourceBundle.getString("ui.form.music_list.loading_text"));
-                    return;
+                    break;
                 case ERROR:
                     imageView.setImage(error);
                     status.setText(audioFile.getErrorMessage());
-                    return;
+                    break;
                 case OK:
                     imageView.setImage(ok);
                     status.setText(audioFile.getSource().getParentFile().getAbsolutePath());
-                    return;
+                    break;
                 case QUEUED:
                     imageView.setImage(queued);
                     status.setText(resourceBundle.getString("ui.form.music_list.queuing_text"));
-                    return;
+                    break;
                 default:
                     imageView.setImage(warning);
+            }
+
+            if (!audioFile.isLongEnough()) {
+                imageView.setImage(warning);
+                status.setText(resourceBundle.getString("ui.form.music_list.tooshort_error"));
             }
         }
 

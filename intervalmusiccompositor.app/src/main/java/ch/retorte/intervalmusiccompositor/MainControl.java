@@ -15,6 +15,7 @@ import ch.retorte.intervalmusiccompositor.messagebus.MessageBus;
 import ch.retorte.intervalmusiccompositor.model.audiofile.AudioFileComparator;
 import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
+import ch.retorte.intervalmusiccompositor.model.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.model.list.ListSortMode;
 import ch.retorte.intervalmusiccompositor.model.list.ObservableList;
 import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
@@ -40,8 +41,6 @@ import java.util.stream.Collectors;
 import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.*;
 import static java.util.stream.Collectors.joining;
-
-//import javafx.collections.ObservableList;
 
 /**
  * Main controller of the software; collects data and reacts to ui events. Implements a lot of control interfaces.
@@ -166,8 +165,69 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
         }
     }
 
-    private boolean hasUsableTracksWith(CompilationParameters compilationParameters) {
-        return 0 < getUsableTracks(compilationParameters.getMusicPattern());
+    @Override
+    public void markUsableTracksWith(CompilationParameters compilationParameters) {
+        // Music
+        for (IAudioFile musicFile : musicList) {
+            musicFile.setLongEnough(compilationParameters.getMusicPattern().stream().allMatch(p -> musicFile.isLongEnoughFor(p + effectiveBlendDuration(compilationParameters))));
+        }
+
+        // Break
+        for (IAudioFile breakFile : breakList) {
+            breakFile.setLongEnough(hasUsableBreakTracksWith(compilationParameters.getBreakPattern(), effectiveBlendDuration(compilationParameters)));
+        }
+    }
+
+    @Override
+    public boolean hasUsableTracksWith(CompilationParameters compilationParameters) {
+        return hasUsableMusicTracksWith(compilationParameters) && hasUsableBreakTracksWith(compilationParameters);
+    }
+
+    private boolean hasUsableMusicTracksWith(CompilationParameters compilationParameters) {
+        int usableTracks = 0;
+        int i = 0;
+        for (IAudioFile audioFile : musicList) {
+            if (audioFile.isOK() && audioFile.isLongEnoughFor(getIthPatternOf(compilationParameters.getMusicPattern(), i) + effectiveBlendDuration(compilationParameters))) {
+                usableTracks++;
+            }
+            i++;
+        }
+
+        return 0 < usableTracks;
+    }
+
+    private int getIthPatternOf(List<Integer> pattern, int i) {
+        if (pattern == null || pattern.isEmpty()) {
+            return 0;
+        }
+        return pattern.get(i % pattern.size());
+    }
+
+    private boolean hasUsableBreakTracksWith(CompilationParameters compilationParameters) {
+        return hasNoBreakTrack() || hasUsableBreakTracksWith(compilationParameters.getBreakPattern(), effectiveBlendDuration(compilationParameters));
+    }
+
+    private boolean hasUsableBreakTracksWith(List<Integer> pattern, int blendDuration) {
+        for (IAudioFile audioFile : breakList) {
+            if (!audioFile.isOK()) {
+                return false;
+            }
+
+            for (int p : pattern) {
+                if (!audioFile.isLongEnoughFor(p + blendDuration)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean hasNoBreakTrack() {
+        return breakList.isEmpty();
+    }
+
+    private int effectiveBlendDuration(CompilationParameters compilationParameters) {
+        return compilationParameters.getBlendMode() == BlendMode.CROSS ? compilationParameters.getBlendDuration().intValue() : 0;
     }
 
     @Override
@@ -338,32 +398,9 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
         }
     }
 
-    /**
-     * Returns the number of tracks which are to be used for the compilation with the currently selected compilation properties.
-     */
-    public int getUsableTracks(List<Integer> pattern) {
-        int usableTracks = 0;
-        int i = 0;
-        for (IAudioFile audioFile : musicList) {
-            if (audioFile.isOK() && audioFile.isLongEnoughFor(getIthPatternOf(pattern, i))) {
-                usableTracks++;
-            }
-            i++;
-        }
-
-        return usableTracks;
-    }
-
-    private int getIthPatternOf(List<Integer> pattern, int i) {
-        if (pattern == null || pattern.isEmpty()) {
-            return 0;
-        }
-        return pattern.get(i % pattern.size());
-    }
-
     @Override
-    public int getOkTracks() {
-        return (int) musicList.stream().filter(IAudioFile::isOK).count();
+    public long getOkTracks() {
+        return musicList.stream().filter(IAudioFile::isOK).count();
     }
 
     /**

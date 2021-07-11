@@ -134,7 +134,7 @@ public class Playlist implements Iterable<PlaylistItem> {
       IAudioFile currentAudioFile = musicFiles.get((musicTrackCounter) % musicFiles.size());
       int currentSoundPattern = musicPattern.get(musicPatternCounter % musicPattern.size());
 
-      PlaylistItemFragment newMusicTrack = createPlaylistItemFrom(currentAudioFile, 1, currentSoundPattern * 1000L);
+      PlaylistItemFragment newMusicTrack = createPlaylistItemFrom(currentAudioFile, 1, currentSoundPattern * 1000L, false);
       if (newMusicTrack != null) {
         musicPlaylist.add(newMusicTrack);
         musicPatternCounter++;
@@ -155,7 +155,6 @@ public class Playlist implements Iterable<PlaylistItem> {
       }
 
       if (musicFiles.size() < skippedTracks) {
-        messageProducer.send(new ErrorMessage("Too few usable tracks."));
         throw new IllegalStateException("Too few usable tracks.");
       }
     }
@@ -176,37 +175,30 @@ public class Playlist implements Iterable<PlaylistItem> {
 
     int desiredBreakListSize = musicPatternSize * iterations;
     int breakTrackCounter = 0;
-    int skippedTracks = 0;
 
     while (breakPlaylist.size() < desiredBreakListSize) {
-      long currentBreakPatternMs = breakPattern.get((breakTrackCounter % musicPatternSize) % breakPattern.size()) * 1000;
+      int currentBreakPattern = breakPattern.get((breakTrackCounter % musicPatternSize) % breakPattern.size());
 
       if (!breakFiles.isEmpty()) {
         IAudioFile currentBreakFile = breakFiles.get((breakTrackCounter % musicPatternSize) % breakFiles.size());
 
-        PlaylistItemFragment newBreakTrack = createPlaylistItemFrom(currentBreakFile, volume, currentBreakPatternMs);
+        PlaylistItemFragment newBreakTrack = createPlaylistItemFrom(currentBreakFile, volume, currentBreakPattern * 1000L, true);
         if (newBreakTrack != null) {
           breakPlaylist.add(new BreakPlaylistItemFragment(newBreakTrack));
-          skippedTracks = 0;
         }
         else {
-          skippedTracks++;
+          throw new IllegalStateException("Break track too short for desired break pattern: " + currentBreakPattern + "s.");
         }
 
       }
       else {
         if (isCrossFadingMode()) {
-          currentBreakPatternMs += (long) (blendTime * 1000);
+          currentBreakPattern += blendTime;
         }
-        breakPlaylist.add(new BreakPlaylistItemFragment(createPlaylistItem(null, volume, 0L, currentBreakPatternMs)));
+        breakPlaylist.add(new BreakPlaylistItemFragment(createPlaylistItem(null, volume, 0L, currentBreakPattern * 1000L)));
       }
 
       breakTrackCounter++;
-
-      if (breakFiles.size() < skippedTracks) {
-        messageProducer.send(new ErrorMessage("Too few usable tracks."));
-        throw new IllegalStateException("Too few usable tracks.");
-      }
     }
 
     return breakPlaylist;
@@ -216,7 +208,7 @@ public class Playlist implements Iterable<PlaylistItem> {
     return breakPattern.size() == 1 && breakPattern.iterator().next() == 0;
   }
 
-  private PlaylistItemFragment createPlaylistItemFrom(IAudioFile audioFile, double volume, long extractLengthInMilliseconds) {
+  private PlaylistItemFragment createPlaylistItemFrom(IAudioFile audioFile, double volume, long extractLengthInMilliseconds, boolean isBreak) {
 
     long maximalRangeForDuration;
     long trackStart = startCutOffInMilliseconds;
@@ -225,7 +217,7 @@ public class Playlist implements Iterable<PlaylistItem> {
       extractLengthInMilliseconds += (long) (blendTime * 1000);
     }
 
-    if (isContinuousExtractEnumerator()) {
+    if (isContinuousExtractEnumerator() && !isBreak) {
       if (!currentProgress.containsKey(audioFile)) {
         currentProgress.put(audioFile, startCutOffInMilliseconds);
       }
@@ -242,13 +234,13 @@ public class Playlist implements Iterable<PlaylistItem> {
     }
 
     if (maximalRangeForDuration < 0) {
-      if (isContinuousExtractEnumerator()) {
+      if (isContinuousExtractEnumerator()  && !isBreak) {
         currentProgress.remove(audioFile);
       }
       return null;
     }
 
-    if (isContinuousExtractEnumerator()) {
+    if (isContinuousExtractEnumerator()  && !isBreak) {
       currentProgress.put(audioFile, trackStart + extractLengthInMilliseconds);
     }
 

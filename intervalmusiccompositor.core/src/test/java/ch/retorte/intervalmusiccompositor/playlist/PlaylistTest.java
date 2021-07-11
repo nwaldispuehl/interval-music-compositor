@@ -248,6 +248,47 @@ public class PlaylistTest {
         assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack60s));
     }
 
+    @Test
+    public void shouldSkipTooShortTracksButNeverthelessCompletelyFillPatternInAdvancedMode() {
+        // given
+        Playlist playlist = new Playlist(SEPARATE, 0d, SINGLE_EXTRACT, SORT, msgPrd);
+        playlist.setCutOff(sec(5), sec(5));
+
+        musicList.add(musicTrack60s);
+        musicList.add(musicTrack20s);
+        musicList.add(musicTrack40s);
+
+        musicPattern = pattern(10, 11);
+        breakPattern = pattern(1, 2);
+
+        // when
+        List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 2, soundEffectOccurrences);
+
+        // then
+        assertThat(tracks.size(), is(4));
+        assertTrackLength(tracks, 10, 1, 11, 2, 10, 1, 11, 2);
+        assertTotalLength(playlist, tracks, 48);
+        assertThat(tracks.get(0).getMusicFragment().getAudioFile(), is(musicTrack60s));
+        assertThat(tracks.get(1).getMusicFragment().getAudioFile(), is(musicTrack40s));
+        assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack60s));
+        assertThat(tracks.get(3).getMusicFragment().getAudioFile(), is(musicTrack40s));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void shouldNotAllowNotSufficientBreakTrack() {
+        // given
+        Playlist playlist = new Playlist(SEPARATE, 0d, SINGLE_EXTRACT, SORT, msgPrd);
+        playlist.setCutOff(sec(5), sec(5));
+
+        musicList.add(musicTrack20s);
+        breakList.add(breakTrack20s);
+
+        musicPattern = pattern(8, 8, 8);
+        breakPattern = pattern(8, 12, 8);
+
+        // when this, then throw exception
+        playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences);
+    }
 
     @Test
     public void shouldTakeTheSameTrackInContinuousMode() {

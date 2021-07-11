@@ -40,8 +40,6 @@ public class AudioFile extends File implements IAudioFile {
     private final Long startCutOffInMilliseconds = Long.parseLong(bundle.getString("imc.audio.cutoff.start"));
     private final Long endCutOffInMilliseconds = Long.parseLong(bundle.getString("imc.audio.cutoff.end"));
 
-    private static final long serialVersionUID = 6154514892883792308L;
-
     private Long duration = 0L;
 
     private Float volume;
@@ -69,6 +67,7 @@ public class AudioFile extends File implements IAudioFile {
     private final MessageProducer messageProducer;
 
     private final Collection<ChangeListener<IAudioFile>> changeListeners = new LinkedList<>();
+    private boolean longEnough = true;
 
     public AudioFile(String pathname, SoundHelper soundHelper, List<AudioFileDecoder> audioFileDecoders, BPMReaderWriter bpmReaderWriter, BPMCalculator bpmCalculator, AudioStandardizer audioStandardizer, MessageProducer messageProducer) {
         super(pathname);
@@ -406,6 +405,16 @@ public class AudioFile extends File implements IAudioFile {
 
     public boolean isLongEnoughFor(int extractInSeconds) {
         return extractInSeconds <= ((getDuration() - startCutOffInMilliseconds - endCutOffInMilliseconds) / 1000);
+    }
+
+    @Override
+    public void setLongEnough(boolean longEnough) {
+        this.longEnough = longEnough;
+    }
+
+    @Override
+    public boolean isLongEnough() {
+        return longEnough;
     }
 
     @Override

@@ -227,6 +227,7 @@ public class MainScreenController implements Initializable {
     // Bindings
 
     private final BooleanProperty hasUsableData = new SimpleBooleanProperty(false);
+    private final BooleanProperty hasUsableTracks = new SimpleBooleanProperty(false);
 
 
     // Fields
@@ -343,7 +344,7 @@ public class MainScreenController implements Initializable {
     }
 
     private void initializeMusicTrackList() {
-        musicTrackListView.initializeWith(musicListControl.getMusicList(), bundle, messageProducer, musicListControl, e -> Platform.runLater(this::updateTrackCount));
+        musicTrackListView.initializeWith(musicListControl.getMusicList(), bundle, messageProducer, musicListControl, e -> Platform.runLater(this::updateUiDataWidgets));
         musicTrackListView.addListChangeListener(newValue -> updateUiDataWidgets());
         addMusicTrackButton.setOnAction(event -> openFileChooserFor(musicTrackListView));
         addMusicTrackButton.graphicProperty().set(imageFrom("/images/add_icon_small.png"));
@@ -377,7 +378,7 @@ public class MainScreenController implements Initializable {
     }
 
     private void initializeBreakTrackList() {
-        breakTrackListView.initializeWith(musicListControl.getBreakList(), bundle, messageProducer, musicListControl, e -> Platform.runLater(this::updateTrackCount));
+        breakTrackListView.initializeWith(musicListControl.getBreakList(), bundle, messageProducer, musicListControl, e -> Platform.runLater(this::updateUiDataWidgets));
         addBreakTrackButton.setOnAction(event -> openFileChooserFor(breakTrackListView));
         addBreakTrackButton.graphicProperty().set(imageFrom("/images/add_icon_small.png"));
 
@@ -468,7 +469,7 @@ public class MainScreenController implements Initializable {
     }
 
     private void initializeControlButtons() {
-        process.disableProperty().bind(hasUsableData.not());
+        process.disableProperty().bind(hasUsableData.not().or(hasUsableTracks.not()));
         process.setOnAction(event -> musicCompilationControl.startCompilation(compilationParameters));
     }
 
@@ -483,7 +484,9 @@ public class MainScreenController implements Initializable {
         soundPattern.textProperty().addListener(l);
         breakPattern.textProperty().addListener(l);
         iterations.valueProperty().addListener(l);
-        hasUsableData.setValue(compilationParameters.hasUsableData());
+
+        updateUsableData();
+        markUsableTracks();
     }
 
     private void initializePreferenceStorage() {
@@ -647,9 +650,7 @@ public class MainScreenController implements Initializable {
         return tab.equals(simpleTab);
     }
 
-    private void updateDurationEstimation() {
-        setDurationTo(getDurationEstimation());
-    }
+
 
     private int getDurationEstimation() {
         return compilationParameters.getDurationEstimationSeconds();
@@ -674,19 +675,9 @@ public class MainScreenController implements Initializable {
         menuLoadBreakFile.setDisable(disabled);
     }
 
-    private void updateEnvelopeImage() {
-        if (compilationParameters.hasUsableData()) {
-            BarChart bar = new BarChart(720, 162);
-            bar.generate(compilationParameters.getMusicPattern(), compilationParameters.getBreakPattern(), compilationParameters.getIterations(), compilationParameters.getSoundEffectOccurrences(), false);
-            imageView.setImage(bar.getWritableImage());
-        } else {
-            imageView.setImage(starterBackgroundImage);
-        }
-    }
 
-    private void updateSortModeLabel() {
-        trackListSortOrderIndicator.setText(getLabelFor(compilationParameters.getListSortMode()));
-    }
+
+
 
     private String getLabelFor(ListSortMode listSortMode) {
         switch (listSortMode) {
@@ -783,19 +774,50 @@ public class MainScreenController implements Initializable {
         updateSortModeLabel();
         updateTrackCount();
         updateSoundEffectPane();
+        updateUsableData();
+        markUsableTracks();
+    }
+
+    private void updateDurationEstimation() {
+        setDurationTo(getDurationEstimation());
+    }
+
+    private void updateEnvelopeImage() {
+        if (compilationParameters.hasUsableData()) {
+            BarChart bar = new BarChart(720, 162);
+            bar.generate(compilationParameters.getMusicPattern(), compilationParameters.getBreakPattern(), compilationParameters.getIterations(), compilationParameters.getSoundEffectOccurrences(), false);
+            imageView.setImage(bar.getWritableImage());
+        } else {
+            imageView.setImage(starterBackgroundImage);
+        }
+    }
+
+    private void updateSortModeLabel() {
+        trackListSortOrderIndicator.setText(getLabelFor(compilationParameters.getListSortMode()));
+    }
+
+    private void updateTrackCount() {
+        long tracks = musicListControl.getOkTracks();
+        String labelText = bundle.getString("ui.form.music_list.tracks_label_pl", tracks);
+        if (tracks == 1) {
+            labelText = bundle.getString("ui.form.music_list.tracks_label_sg", tracks);
+        }
+        trackCount.setText(labelText);
     }
 
     private void updateSoundEffectPane() {
         musicAndBreakPatternChangeListener.changed(null, null, null);
     }
 
-    private void updateTrackCount() {
-        int tracks = musicListControl.getOkTracks();
-        String labelText = bundle.getString("ui.form.music_list.tracks_label_pl", tracks);
-        if (tracks == 1) {
-            labelText = bundle.getString("ui.form.music_list.tracks_label_sg", tracks);
-        }
-        trackCount.setText(labelText);
+    private void updateUsableData() {
+        hasUsableData.setValue(compilationParameters.hasUsableData());
+        hasUsableTracks.setValue(musicListControl.hasUsableTracksWith(compilationParameters));
+    }
+
+    private void markUsableTracks() {
+        musicListControl.markUsableTracksWith(compilationParameters);
+        musicTrackListView.refresh();
+        breakTrackListView.refresh();
     }
 
     private void addDebugMessage(String message) {
@@ -814,7 +836,7 @@ public class MainScreenController implements Initializable {
     private class UsableDataChangeListener implements ChangeListener<Object> {
         @Override
         public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
-            hasUsableData.setValue(compilationParameters.hasUsableData());
+            updateUsableData();
         }
     }
 
