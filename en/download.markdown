@@ -4,7 +4,7 @@ title: Download
 link: download
 ---
 
-**The current version 2.9.2 was issued on March, 5th 2019.**<br/>
+**The current version 2.10.0 was issued on July, 11th 2021.**<br/>
 ([Changelog](https://raw.githubusercontent.com/nwaldispuehl/interval-music-compositor/master/intervalmusiccompositor.app/src/main/resources/CHANGELOG.txt)).
 
 The software is provided free of charge. Please give me [feedback](feedback_support) if you encounter errors or strange behavior.
@@ -14,10 +14,9 @@ I hereby declare: The software is free of malicious and snoopy parts in any way 
 The following variants are available for download: <br/>
 [Android](#android) <br/>
 [Linux](#linux) <br/>
-[Mac OS X (>= 10.7)](#osx) <br/>
-[Microsoft Windows (7, 8, 10)](#windows) <br/>
-[Jar](#jar) <br/>
-[Legacy versions (also for Java 5, 6, and 7)](#legacy) <br/>
+[Mac OS X](#osx) <br/>
+[Microsoft Windows](#windows) <br/>
+[Legacy versions (also for Java 5, 6, 7, and 8)](#legacy) <br/>
 [Source code](#source) 
 
 
@@ -35,37 +34,33 @@ We now have an IntervalMusicCompositor Android app:
 [Download Linux version on Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
 The `.deb` package can be double-clicked after download. It will then be installed by the systems package manager. After that, the program is available in the desktop managers application list.
-Alternatively it can be started from the command line:
 
-    $ intervalmusiccompositor
+The `.tar.gz` archive can just be unpacked. Afterwards, start the starting script:
+
+    $ bin/intervalmusiccompositor.app
 
 <a name="osx"></a>
 
-## Mac OS X (>= 10.7) version
+## Mac OS X version
 [Download Mac OS X version on Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
-After the download you can unzip it by double clicking on it. You can then drag the program into a folder of your choice.
+After the download you can unzip it by double clicking on it. Start the software by double clicking the starting script `intervalmusiccompositor.app` in the `bin` directory.
 
 <a name="windows"></a>
 
 ## Microsoft Windows (7, 8, 10) version
 [Download Windows version on Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
-This is just a simple executable in a ZIP file which can be unpacked and then placed in the folder of your choice and executed directly.
-
-<a name="jar"></a>
-
-## JAR Version
-[Download JAR version on Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
-
-The JAR ('Java ARchive') version can be started directly with Java:
-
-    $ java -jar IntervalMusicCompositor-1.2.3.jar
-
+Unzip the ZIP file to your hard drive after download. Start the software by double clicking the starting script `intervalmusiccompositor.app.bat` in the `bin` directory.
 
 <a name="legacy"></a>
 
 ## Legacy versions
+
+Versions up to 2.9.2 were relying on a dedicated Java runtime installation. With newer versions of the software Java is already bundled, so it does not need to be installed anymore.
+
+### Java 8
+Previous versions are to be found on the [Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases). The software works with Java 8 up to [version 2.9.2](https://github.com/nwaldispuehl/interval-music-compositor/releases/tag/v2.9.2).
 
 ### Java 7
 Previous versions are to be found on the [Github release page](https://github.com/nwaldispuehl/interval-music-compositor/releases). The software works with Java 7 up to [version 2.5.2](https://github.com/nwaldispuehl/interval-music-compositor/releases/tag/v2.5.2).

@@ -4,19 +4,6 @@ title: Et cetera
 link: et_cetera
 ---
 
-## Donate
-Unterstütze die Weiterentwicklung dieses Projekts!
-
-<p>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input name="cmd" value="_s-xclick" type="hidden">
-<input name="hosted_button_id" value="5LNPUEDL99G62" type="hidden">
-<input src="https://www.paypalobjects.com/de_DE/CH/i/btn/btn_donateCC_LG.gif" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen – mit PayPal." border="0" type="image">
-<img alt="" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" border="0" height="1">
-</form>
-</p>
-
-
 ## Legal etc.
 Die Software wird unter der GPL veröffentlicht. <br/>
 Lizenz: [GNU Public License](http://www.gnu.org/licenses/gpl.txt) <br/>

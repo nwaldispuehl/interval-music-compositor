@@ -4,14 +4,11 @@ title: Instructions
 link: instructions
 ---
 
-The **Interval Music Compositor** comes as a single executable file. No installation is needed therefore. However, it is based on Java technology, thus a _Java Runtime Environment (JRE)_ must be present to run it.
-If you don't have one installed, you are prompted to do so on the first start of the software on the Microsoft Windows version. Users of Linux and Mac OS X operating systems are expected to have one installed already.
-Otherwise, download and install Java from [java.com](http://java.com/). If possible install the 64bit version.
+The **Interval Music Compositor** comes in an archive file. Unzip it to your harddrive and execute the starting script in the `bin` directory.
 
 ## Usage
 
-1. Start the **Interval Music Compositor** by double-clicking it
-1. (If necessary, follow the instructions for installing the Java Runtime Environment >= version 8 update 60)
+1. Start the **Interval Music Compositor** (siehe [download](download))
 1. Drag all the audio files you'd like to have processed from your desktop or a folder into the music track list. Alternatively use the menu ('File' -> 'Add ...') or the '+' button. Note that this is only possible for the supported audio file types.
 1. If you want a track being played during breaks, drag one into the break track list
 1. Wait until all tracks have been imported properly. This is indicated by a blue icon in front of each track

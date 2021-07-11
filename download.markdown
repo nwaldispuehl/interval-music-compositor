@@ -4,7 +4,7 @@ title: Download
 link: download
 ---
 
-**Die aktuelle Version 2.9.2 wurde am 5. März 2019 veröffentlicht.**<br/>
+**Die aktuelle Version 2.10.0 wurde am 11. Juli 2021 veröffentlicht.**<br/>
 ([Changelog](https://raw.githubusercontent.com/nwaldispuehl/interval-music-compositor/master/intervalmusiccompositor.app/src/main/resources/CHANGELOG.txt)).
 
 Die Software wird kostenlos zur Verfügung gestellt. Gib mir doch eine [Rückmeldung](feedback_support) wenn du Fehler oder seltsames Verhalten beobachtest!
@@ -14,10 +14,9 @@ Ich erkläre hiermit: Die Software enthält keine Mal- oder Spywarekomponenten (
 Folgende Varianten stehen zum Download bereit: <br/>
 [Android](#android) <br/>
 [Linux](#linux) <br/>
-[Mac OS X (>= 10.7)](#osx) <br/>
-[Microsoft Windows (7, 8, 10)](#windows) <br/>
-[JAR](#jar) <br/>
-[Ältere Versionen (auch für Java 5, 6 und 7)](#legacy) <br/>
+[Mac OS X](#osx) <br/>
+[Microsoft Windows](#windows) <br/>
+[Ältere Versionen (auch für Java 5, 6, 7 und 8)](#legacy) <br/>
 [Quellcode](#source) 
 
 <a name="android"></a>
@@ -33,37 +32,34 @@ Es gibt nun eine IntervalMusicCompositor Android App:
 ## Linux Version
 [Download Linux Version auf Github Releaseseite](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
-Das `.deb` Paket kann nach dem Herunterladen doppelgeklickt werden und wird vom Paketmanager installiert. Danach ist das Programm in der Programmliste des Desktop-Managers verfügbar. Alternativ kann es von der Kommandozeile gestartet werden:
+Das `.deb` Paket kann nach dem Herunterladen doppelgeklickt werden und wird vom Paketmanager installiert. Danach ist das Programm in der Programmliste des Desktop-Managers verfügbar. 
 
-    $ intervalmusiccompositor
+Das `.tar.gz` Archiv kann einfach entpackt werden. Anschliessend kann das Startscript ausgeführt werden:
+
+    $ bin/intervalmusiccompositor.app
 
 <a name="osx"></a>
 
-## Mac OS X (>= 10.7) Version
+## Mac OS X Version
 [Download Mac OS X Version auf Github Releaseseite](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
-Nach dem Download kann das Archiv mit einem Doppelklick geöffnet werden. Du kannst das Programm dann einfach in ein Verzeichnis deiner Wahl ziehen. 
+Nach dem Download kann das Archiv mit einem Doppelklick entpackt werden. Das Programm dann durch Doppelklick auf das Startscript `intervalmusiccompositor.app` im Verzeichnis `bin` ausführen.
 
 <a name="windows"></a>
 
 ## Microsoft Windows (7, 8, 10) Version
 [Download Windows Version auf Github Releaseseite](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
 
-Es handelt sich hierbei um eine ausführbare Datei in einem Zip-Archiv. Nach dem Entpacken kann man das Programm einfach in einem Verzeichnis speichern und ausführen.
-
-<a name="jar"></a>
-
-## JAR Version
-[Download JAR Version auf Github Releaseseite](https://github.com/nwaldispuehl/interval-music-compositor/releases/latest)
-
-Die JAR ('Java ARchive') Version kann direkt mit Java gestartet werden:
-
-    $ java -jar IntervalMusicCompositor-1.2.3.jar
-
+Das Zip-Archiv nach dem Download auf der Festplatte entpacken. Das Programm dann mittels Doppel-Klick auf das Startscript `intervalmusiccompositor.app.bat` im Verzeichnis `bin` ausführen.
 
 <a name="legacy"></a>
 
 ## Ältere Versionen
+
+Versionen bis 2.9.2 waren auf eine separate Installation des Java Runtime angewiesen. Bei neueren Versionen ist Java in die Software integriert, es muss also nicht mehr separat installiert werden.
+
+### Java 8
+Vorherige Versionen sind auf der [Github Releaseseite](https://github.com/nwaldispuehl/interval-music-compositor/releases) aufgeführt. Die Software läuft unter Java 8 bis [Version 2.9.2](https://github.com/nwaldispuehl/interval-music-compositor/releases/tag/v2.9.2).
 
 ### Java 7
 Vorherige Versionen sind auf der [Github Releaseseite](https://github.com/nwaldispuehl/interval-music-compositor/releases) aufgeführt. Die Software läuft unter Java 7 bis [Version 2.5.2](https://github.com/nwaldispuehl/interval-music-compositor/releases/tag/v2.5.2).

@@ -4,14 +4,11 @@ title: Instructions
 link: instructions
 ---
 
-Der retorte.ch **Interval Music Compositor** wird als einzelne, ausführbare Datei ausgeliefert. Man muss ihn also nicht installieren, sondern kann ihn einfach auf die Festplatte kopieren. Allerdings basiert er auf Java Technologie, ein _Java Runtime Environment (JRE)_ muss auf dem System also vorhanden sein damit das Programm funktioniert.
-Solltest du keines installiert haben, wirst du beim ersten Start der Software in der Microsoft Windows Version darum gebeten. Benutzer mit Linux und Mac OS X Systemen haben in den meisten Fällen bereits eine installiert.
-Ansonsten kannst du Java von [java.com](http://java.com/) herunterladen und installieren. Falls möglich installiere die 64bit Version.
+Der retorte.ch **Interval Music Compositor** wird in einer Archivdatei ausgeliefert. Man entpackt das Archiv auf der Festplatte und startet dann das Startscript im `bin`-Verzeichnis.
 
 ## Gebrauch
 
-1. Starte den **Interval Music Compositor** indem du ihn doppelklickst
-1. (Falls nötig, befolge die Anleitung um das Java Runtime Environment (>= Version 8 Update 60) zu installieren)
+1. Starte den **Interval Music Compositor** (siehe [Download](download))
 1. Ziehe alle Musikstücke, die du in der Tracklist haben möchtest, vom Desktop oder einem Ordner in die Liste. Alternativ benutze das Menu ('Datei' -> 'Hinzufügen ...') oder den '+'-Knopf. Beachte, dass nur Musikstücke der unterstützten Formate der Liste hinzugefügt werden können.
 1. Falls du eine Pausenmusik haben möchtest, ziehe ein Musikstück in das Pausenmusikfeld.
 1. Warte bis alle Tracks komplett eingelesen wurden. Du siehst das daran, dass das Lied ein blaues Icon erhält.
