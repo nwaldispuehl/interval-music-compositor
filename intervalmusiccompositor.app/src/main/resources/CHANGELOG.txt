@@ -2,7 +2,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
 
-2021-07-xx  2.10.0 [not yet released]
+2021-07-11  2.10.0
 --------------------------------------------------------------------------------
 IMP  #59    Inactivates process button if no compilation is possible.
 FIX  #61    Failing encoding tests in some environment by explicitly states encoding.
