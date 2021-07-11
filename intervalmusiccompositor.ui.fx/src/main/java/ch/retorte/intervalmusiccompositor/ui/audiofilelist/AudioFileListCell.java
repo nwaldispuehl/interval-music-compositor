@@ -174,7 +174,7 @@ class AudioFileListCell extends ListCell<IAudioFile> {
                 return;
             }
 
-            this.bpm.setText(String.valueOf(audioFile.getBpm()) + " bpm");
+            this.bpm.setText(audioFile.getBpm() + " bpm");
             Color bpmColor = Color.web(ORANGE);
 
             if (audioFile.isBpmReliable()) {
@@ -194,24 +194,26 @@ class AudioFileListCell extends ListCell<IAudioFile> {
 
         private void setStatusWith(IAudioFile audioFile) {
             switch (audioFile.getStatus()) {
-                case IN_PROGRESS:
+                case IN_PROGRESS -> {
                     imageView.setImage(processing);
                     status.setText(resourceBundle.getString("ui.form.music_list.loading_text"));
-                    break;
-                case ERROR:
+                    return;
+                }
+                case ERROR -> {
                     imageView.setImage(error);
                     status.setText(audioFile.getErrorMessage());
-                    break;
-                case OK:
+                    return;
+                }
+                case OK -> {
                     imageView.setImage(ok);
                     status.setText(audioFile.getSource().getParentFile().getAbsolutePath());
-                    break;
-                case QUEUED:
+                }
+                case QUEUED -> {
                     imageView.setImage(queued);
                     status.setText(resourceBundle.getString("ui.form.music_list.queuing_text"));
-                    break;
-                default:
-                    imageView.setImage(warning);
+                    return;
+                }
+                default -> imageView.setImage(warning);
             }
 
             if (!audioFile.isLongEnough()) {
