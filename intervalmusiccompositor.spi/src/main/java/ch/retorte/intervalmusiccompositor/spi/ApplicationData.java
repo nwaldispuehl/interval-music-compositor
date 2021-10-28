@@ -10,12 +10,12 @@ import java.util.Locale;
  */
 public interface ApplicationData {
 
-  String getProgramName();
+    String getProgramName();
 
-  Version getProgramVersion();
+    Version getProgramVersion();
 
-  String getChangeLog();
+    String getChangeLog();
 
-  List<Locale> getKnownLocales();
+    List<Locale> getKnownLocales();
 
 }

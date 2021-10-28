@@ -1,116 +1,115 @@
 package ch.retorte.intervalmusiccompositor.util;
 
+import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.commons.platform.Platform;
+import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
+import ch.retorte.intervalmusiccompositor.core.bundle.CoreBundleProvider;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import ch.retorte.intervalmusiccompositor.model.update.UpdateAvailabilityCheckerException;
+import ch.retorte.intervalmusiccompositor.model.update.Version;
+import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
+import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
+import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-import ch.retorte.intervalmusiccompositor.core.bundle.CoreBundleProvider;
-import ch.retorte.intervalmusiccompositor.model.update.Version;
-import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
-import ch.retorte.intervalmusiccompositor.commons.platform.Platform;
-import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
-import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
-import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
-import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
-import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
-import ch.retorte.intervalmusiccompositor.model.update.UpdateAvailabilityCheckerException;
-
 /**
  * Contacts home server for text file containing current version.
- * 
- * @author nw
  */
 public class UpdateChecker implements UpdateAvailabilityChecker {
 
-  private MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
+    //---- Fields
 
-  private Version remoteVersion;
+    private final MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
+    private final Platform platform = new PlatformFactory().getPlatform();
+    private final MessageProducer messageProducer;
+    private final ApplicationData applicationData;
 
-  private MessageProducer messageProducer;
+    private Version remoteVersion;
 
-  private Platform platform = new PlatformFactory().getPlatform();
 
-  private ApplicationData applicationData;
+    //---- Constructor
 
-  public UpdateChecker(ApplicationData applicationData, MessageProducer messageProducer) {
-    this.applicationData = applicationData;
-    this.messageProducer = messageProducer;
-  }
-
-  private Version getRemoteVersion(URL url) throws IOException {
-    addDebugMessage("Attempting to fetch remote version on URL: " + url);
-    addDebugMessage("Setting user agent to: " + compileUserAgentString());
-
-    String versionString = "";
-    BufferedReader in = null;
-    try {
-      URLConnection urlc = url.openConnection();
-      urlc.setRequestProperty("User-Agent", compileUserAgentString());
-
-      in = new BufferedReader(new InputStreamReader(urlc.getInputStream()));
-
-      versionString = in.readLine();
-      in.close();
-
-      addDebugMessage("Fetched remote version string: " + versionString);
+    public UpdateChecker(ApplicationData applicationData, MessageProducer messageProducer) {
+        this.applicationData = applicationData;
+        this.messageProducer = messageProducer;
     }
-    catch (IOException e) {
-      addDebugMessage(e);
-      throw new IOException("Not able to contact home server!");
-    }
-    finally {
-      if (in != null) {
+
+
+    //---- Methods
+
+    private Version getRemoteVersion(URL url) throws IOException {
+        addDebugMessage("Attempting to fetch remote version on URL: " + url);
+        addDebugMessage("Setting user agent to: " + compileUserAgentString());
+
+        String versionString;
+        BufferedReader in = null;
         try {
-          in.close();
+            URLConnection urlc = url.openConnection();
+            urlc.setRequestProperty("User-Agent", compileUserAgentString());
+
+            in = new BufferedReader(new InputStreamReader(urlc.getInputStream()));
+
+            versionString = in.readLine();
+            in.close();
+
+            addDebugMessage("Fetched remote version string: " + versionString);
+        } catch (IOException e) {
+            addDebugMessage(e);
+            throw new IOException("Not able to contact home server!");
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    // nop
+                }
+            }
         }
-        catch (IOException e) {
-          // nop
+
+        return new Version(versionString);
+    }
+
+    private String compileUserAgentString() {
+        return bundle.getString("web.userAgent.update") + " (" //
+            + "v: " + applicationData.getProgramVersion() + ", " //
+            + platform.getSystemDiagnosisString() + ", " //
+            + "locale: " + bundle.getLocale() + ")";
+    }
+
+    @Override
+    public boolean isUpdateAvailable() {
+        Version currentVersion = applicationData.getProgramVersion();
+
+        try {
+            remoteVersion = getRemoteVersion(new URL(bundle.getString("web.current_version.url")));
+        } catch (Exception e) {
+            addDebugMessage("Failed to get remote version: " + e.getMessage());
+            throw new UpdateAvailabilityCheckerException();
         }
-      }
+
+        return currentVersion.compareTo(remoteVersion) < 0;
     }
 
-    return new Version(versionString);
-  }
+    @Override
+    public Version getLatestVersion() {
+        if (remoteVersion == null) {
+            isUpdateAvailable();
+        }
 
-  private String compileUserAgentString() {
-    return bundle.getString("web.userAgent.update") + " (" //
-        + "v: " + applicationData.getProgramVersion() + ", " //
-        + platform.getSystemDiagnosisString() + ", " //
-        + "locale: " + bundle.getLocale() + ")";
-  }
-
-  @Override
-  public boolean isUpdateAvailable() {
-    Version currentVersion = applicationData.getProgramVersion();
-
-    try {
-      remoteVersion = getRemoteVersion(new URL(bundle.getString("web.current_version.url")));
-    }
-    catch (Exception e) {
-      addDebugMessage("Failed to get remote version: " + e.getMessage());
-      throw new UpdateAvailabilityCheckerException();
+        return remoteVersion;
     }
 
-    return currentVersion.compareTo(remoteVersion) < 0;
-  }
-
-  @Override
-  public Version getLatestVersion() {
-    if (remoteVersion == null) {
-      isUpdateAvailable();
+    private void addDebugMessage(String message) {
+        messageProducer.send(new DebugMessage(this, message));
     }
 
-    return remoteVersion;
-  }
-
-  private void addDebugMessage(String message) {
-    messageProducer.send(new DebugMessage(this, message));
-  }
-
-  private void addDebugMessage(Throwable throwable) {
-    messageProducer.send(new DebugMessage(this, throwable));
-  }
+    private void addDebugMessage(Throwable throwable) {
+        messageProducer.send(new DebugMessage(this, throwable));
+    }
 
 }

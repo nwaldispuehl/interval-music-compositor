@@ -11,30 +11,35 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 /**
- * @author nw
+ * Unit test for the {@link UpdateChecker}.
  */
 public class UpdateCheckerTest {
 
-  UpdateChecker updateChecker;
-  ApplicationData applicationData = mock(ApplicationData.class);
-  MessageProducer messageProducer = mock(MessageProducer.class);
+    //---- Fields
 
-  @Before
-  public void setup() {
-    updateChecker = Mockito.spy(new UpdateChecker(applicationData, messageProducer));
-  }
+    UpdateChecker updateChecker;
+    ApplicationData applicationData = mock(ApplicationData.class);
+    MessageProducer messageProducer = mock(MessageProducer.class);
 
-  @Test
-  public void shouldFindOutIsUpdateAvailable() {
-    // given
-    Version v1 = new Version(5, 4, 3, 2);
-    doReturn(v1).when(updateChecker).getLatestVersion();
 
-    // when
+    //---- Methods
 
-    // then
+    @Before
+    public void setup() {
+        updateChecker = Mockito.spy(new UpdateChecker(applicationData, messageProducer));
+    }
 
-  }
+    @Test
+    public void shouldFindOutIsUpdateAvailable() {
+        // given
+        Version v1 = new Version(5, 4, 3, 2);
+        doReturn(v1).when(updateChecker).getLatestVersion();
+
+        // when
+
+        // then
+
+    }
 
 
 }

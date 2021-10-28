@@ -3,6 +3,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 
 2021-xx-xx  2.10.1 [not yet released]
 --------------------------------------------------------------------------------
+ADD  #28    Streamlines upgrade process by adding one-click-updater.
 FIX         'Too long' indicator in list overrides all other states, even errors.
 
 

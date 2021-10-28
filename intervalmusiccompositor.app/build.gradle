@@ -54,44 +54,72 @@ jlink {
   }
 }
 
-task distOsxApp(type: Tar, dependsOn: 'jlink') {
+task buildLinuxUpdater(type: Exec, dependsOn: 'jlink') {
+  workingDir project(':intervalmusiccompositor.updater').file('native-src')
+  commandLine 'cargo', 'build', '--release', '--target', 'x86_64-unknown-linux-gnu'
+}
+
+task copyLinuxUpdater(type: Copy, dependsOn: 'buildLinuxUpdater') {
+  from project(':intervalmusiccompositor.updater').files('native-src/target/x86_64-unknown-linux-gnu/release/')
+  into(buildDir.absolutePath + '/image/intervalmusiccompositor.app-linux/bin')
+  include('intervalmusiccompositor-updater')
+}
+
+task buildMacUpdater(type: Exec, dependsOn: 'jlink') {
+  workingDir project(':intervalmusiccompositor.updater').file('native-src')
+  commandLine 'cargo', 'build', '--release', '--target', 'x86_64-apple-darwin'
+}
+
+task copyMacUpdater(type: Copy, dependsOn: 'buildMacUpdater') {
+  from project(':intervalmusiccompositor.updater').files('native-src/target/x86_64-apple-darwin/release/')
+  into(buildDir.absolutePath + '/image/intervalmusiccompositor.app-mac/bin')
+  include('intervalmusiccompositor-updater')
+}
+
+task buildWinUpdater(type: Exec, dependsOn: 'jlink') {
+  workingDir project(':intervalmusiccompositor.updater').file('native-src')
+  commandLine 'cargo', 'build', '--release', '--target', 'x86_64-pc-windows-gnu'
+}
+
+task copyWinUpdater(type: Copy, dependsOn: 'buildWinUpdater') {
+  from project(':intervalmusiccompositor.updater').files('native-src/target/x86_64-pc-windows-gnu/release/')
+  into(buildDir.absolutePath + '/image/intervalmusiccompositor.app-win/bin')
+  include('intervalmusiccompositor-updater.exe')
+}
+
+task distOsxApp(type: Zip, dependsOn: 'copyMacUpdater') {
   description = "Creates an archive from the Mac OS X version."
 
-  compression = Compression.GZIP
+  archiveBaseName = applicationName
+  archiveAppendix = 'mac'
 
-  baseName = applicationName
-  appendix = 'mac'
-
-  into (project.applicationName + project.ext.versionDelimiter + version) {
+  into (project.applicationName) {
     from buildDir.absolutePath + '/image/intervalmusiccompositor.app-mac'
     from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
     from project(':intervalmusiccompositor.build').files('documentation/')
   }
 }
 
-task distWindowsApp(type: Zip, dependsOn: 'jlink') {
+task distWindowsApp(type: Zip, dependsOn: 'copyWinUpdater') {
   description = "Creates an archive from the Microsoft Windows version."
 
-  baseName = applicationName
-  appendix = 'win'
+  archiveBaseName = applicationName
+  archiveAppendix = 'win'
 
-  into (applicationName + project.ext.versionDelimiter + version) {
+  into (applicationName) {
     from buildDir.absolutePath + '/image/intervalmusiccompositor.app-win'
     from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
     from project(':intervalmusiccompositor.build').files('documentation/')
   }
 }
 
-task distLinuxApp(type: Tar, dependsOn: 'jlink') {
+task distLinuxApp(type: Zip, dependsOn: 'copyLinuxUpdater') {
   description = "Creates an archive from the Linux version."
 
-  compression = Compression.GZIP
+  archiveBaseName = applicationName
+  archiveAppendix = 'linux'
 
-  baseName = applicationName
-  appendix = 'linux'
-  extension = 'tar.gz'
-
-  into (applicationName + project.ext.versionDelimiter + version) {
+  into (applicationName) {
     from buildDir.absolutePath + '/image/intervalmusiccompositor.app-linux'
     from project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.svg')
     from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
@@ -104,6 +132,7 @@ apply plugin: 'nebula.deb'
 task distDebPackage(type: Deb, dependsOn: 'jlink') {
   packageName 'intervalmusiccompositor'
   summary 'Application to create music intervals (e.g. 20 s music, 10 s break) for sports and education.'
+  arch 'amd64'
 
   // Collect needed files
   into project.ext.debPackageInstallPath

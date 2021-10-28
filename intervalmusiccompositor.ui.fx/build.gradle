@@ -11,13 +11,11 @@ dependencies {
   implementation project(':intervalmusiccompositor.commons')
   implementation project(':intervalmusiccompositor.core')
 
-  implementation 'org.apache.commons:commons-lang3:3.6'
+  implementation 'org.apache.commons:commons-lang3:3.12.0'
 
-
-  // other os? TODO
-  implementation 'org.openjfx:javafx-base:11.0.1:linux'
-  implementation 'org.openjfx:javafx-graphics:11.0.1:linux'
-  implementation 'org.openjfx:javafx-controls:11.0.1:linux'
-  implementation 'org.openjfx:javafx-fxml:11.0.1:linux'
-  implementation 'org.openjfx:javafx-swing:11.0.1:linux'
+  compileOnly 'org.openjfx:javafx-base:16:linux'
+  compileOnly 'org.openjfx:javafx-graphics:16:linux'
+  compileOnly 'org.openjfx:javafx-controls:16:linux'
+  compileOnly 'org.openjfx:javafx-fxml:16:linux'
+  compileOnly 'org.openjfx:javafx-swing:16:linux'
 }

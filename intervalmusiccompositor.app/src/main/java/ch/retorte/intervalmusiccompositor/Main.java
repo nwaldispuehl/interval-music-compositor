@@ -2,7 +2,7 @@ package ch.retorte.intervalmusiccompositor;
 
 /**
  * Collects any command line arguments and starts the actual software.
- *
+ * <p>
  * The following flags are supported:
  * <pre>
  *   -d   Debug mode
@@ -11,29 +11,39 @@ package ch.retorte.intervalmusiccompositor;
  *   -c   Clear
  *        Clears all user preferences.
  * </pre>
- *
  */
 public class Main {
 
-  public static void main(String[] args) {
-    new IntervalMusicCompositor().startApp(isDebugFlagSet(args), isClearFlagSet(args));
-  }
+    //---- Constants
 
-  private static boolean isDebugFlagSet(String[] args) {
-    return contains(args, "-d");
-  }
+    private static final String DEBUG_FLAG = "-d";
+    private static final String CLEAR_FLAG = "-c";
 
-  private static boolean isClearFlagSet(String[] args) {
-    return contains(args, "-c");
-  }
 
-  private static boolean contains(String[] args, String arg) {
-    for (String s : args) {
-      if (s.equals(arg)) {
-        return true;
-      }
+    //---- Main method
+
+    public static void main(String[] args) {
+        new IntervalMusicCompositor().startApp(isDebugFlagSet(args), isClearFlagSet(args));
     }
-    return false;
-  }
+
+
+    //---- Methods
+
+    private static boolean isDebugFlagSet(String[] args) {
+        return contains(args, DEBUG_FLAG);
+    }
+
+    private static boolean isClearFlagSet(String[] args) {
+        return contains(args, CLEAR_FLAG);
+    }
+
+    private static boolean contains(String[] args, String arg) {
+        for (String s : args) {
+            if (s.equals(arg)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

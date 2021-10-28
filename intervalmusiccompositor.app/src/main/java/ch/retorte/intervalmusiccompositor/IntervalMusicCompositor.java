@@ -34,8 +34,10 @@ import ch.retorte.intervalmusiccompositor.spi.bpm.BPMReaderWriter;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
+import ch.retorte.intervalmusiccompositor.spi.update.VersionUpgrader;
 import ch.retorte.intervalmusiccompositor.ui.IntervalMusicCompositorUI;
 import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
+import ch.retorte.intervalmusiccompositor.util.ModuleReplacingVersionUpgrader;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
 import ch.retorte.intervalmusiccompositor.util.UpdateChecker;
 
@@ -227,9 +229,13 @@ class IntervalMusicCompositor {
     }
 
     private Ui createUserInterface(MainControl control) {
-        Ui userInterface = new IntervalMusicCompositorUI(control, control, control, control, createUpdateAvailabilityChecker(control), control, userPreferences, messageBus, messageBus);
+        Ui userInterface = new IntervalMusicCompositorUI(control, control, control, control, createVersionUpgrader(), createUpdateAvailabilityChecker(control), control, userPreferences, messageBus, messageBus);
         control.setUi(userInterface);
         return userInterface;
+    }
+
+    private VersionUpgrader createVersionUpgrader() {
+        return new ModuleReplacingVersionUpgrader(platform, messageBus);
     }
 
     private UpdateChecker createUpdateAvailabilityChecker(ApplicationData applicationData) {

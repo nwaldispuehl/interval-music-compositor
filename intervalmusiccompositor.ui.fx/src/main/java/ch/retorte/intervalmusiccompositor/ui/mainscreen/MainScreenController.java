@@ -19,6 +19,7 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageSubscriber;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
+import ch.retorte.intervalmusiccompositor.spi.update.VersionUpgrader;
 import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileBreakListView;
 import ch.retorte.intervalmusiccompositor.ui.audiofilelist.DraggableAudioFileListView;
 import ch.retorte.intervalmusiccompositor.ui.audiofilelist.MusicFileChooser;
@@ -240,6 +241,7 @@ public class MainScreenController implements Initializable {
     private Ui ui;
     private ProgramControl programControl;
     private ApplicationData applicationData;
+    private VersionUpgrader versionUpgrader;
     private MusicListControl musicListControl;
     private MusicCompilationControl musicCompilationControl;
     private CompilationParameters compilationParameters;
@@ -262,10 +264,11 @@ public class MainScreenController implements Initializable {
         // Method is needed to satisfy interface definition. We don't need to initialize anything here, though.
     }
 
-    public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService, SoundEffectsProvider soundEffectsProvider, List<AudioFileDecoder> audioFileDecoders, List<AudioFileEncoder> audioFileEncoders, UiUserPreferences userPreferences) {
+    public void initializeFieldsWith(Ui ui, ProgramControl programControl, ApplicationData applicationData, VersionUpgrader versionUpgrader, MusicListControl musicListControl, MusicCompilationControl musicCompilationControl, CompilationParameters compilationParameters, MessageSubscriber messageSubscriber, MessageProducer messageProducer, UpdateAvailabilityChecker updateAvailabilityChecker, ScheduledExecutorService executorService, SoundEffectsProvider soundEffectsProvider, List<AudioFileDecoder> audioFileDecoders, List<AudioFileEncoder> audioFileEncoders, UiUserPreferences userPreferences) {
         this.ui = ui;
         this.programControl = programControl;
         this.applicationData = applicationData;
+        this.versionUpgrader = versionUpgrader;
         this.musicListControl = musicListControl;
         this.musicCompilationControl = musicCompilationControl;
         this.compilationParameters = compilationParameters;
@@ -331,7 +334,7 @@ public class MainScreenController implements Initializable {
     }
 
     private void openUpdateCheckDialog() {
-        new UpdateCheckDialog(updateAvailabilityChecker, ui, bundle, coreBundle, userPreferences, applicationData).startVersionCheck();
+        new UpdateCheckDialog(updateAvailabilityChecker, ui, bundle, coreBundle, userPreferences, applicationData, versionUpgrader, messageProducer).startVersionCheck();
     }
 
     private String getAboutWebsiteUrl() {
@@ -835,7 +838,7 @@ public class MainScreenController implements Initializable {
 
     private class UsableDataChangeListener implements ChangeListener<Object> {
         @Override
-        public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+        public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
             updateUsableData();
         }
     }

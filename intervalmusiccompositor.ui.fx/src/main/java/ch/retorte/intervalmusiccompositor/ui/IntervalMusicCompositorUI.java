@@ -15,6 +15,7 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageSubscriber;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
+import ch.retorte.intervalmusiccompositor.spi.update.VersionUpgrader;
 import ch.retorte.intervalmusiccompositor.ui.bundle.UiBundleProvider;
 import ch.retorte.intervalmusiccompositor.ui.firststart.BlockingFirstStartWindow;
 import ch.retorte.intervalmusiccompositor.ui.mainscreen.MainScreenController;
@@ -48,6 +49,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
     private static MusicCompilationControl musicCompilationController;
     private static ProgramControl programControl;
     private static ApplicationData applicationData;
+    private static VersionUpgrader versionUpgrader;
     private static UpdateAvailabilityChecker updateAvailabilityChecker;
     private static SoundEffectsProvider soundEffectsProvider;
     private static UiUserPreferences userPreferences;
@@ -75,6 +77,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
                                      final MusicCompilationControl musicCompilationController,
                                      final ProgramControl programControl,
                                      ApplicationData applicationData,
+                                     VersionUpgrader versionUpgrader,
                                      UpdateAvailabilityChecker updateAvailabilityChecker,
                                      SoundEffectsProvider soundEffectsProvider,
                                      UiUserPreferences userPreferences,
@@ -84,6 +87,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
         IntervalMusicCompositorUI.musicCompilationController = musicCompilationController;
         IntervalMusicCompositorUI.programControl = programControl;
         IntervalMusicCompositorUI.applicationData = applicationData;
+        IntervalMusicCompositorUI.versionUpgrader = versionUpgrader;
         IntervalMusicCompositorUI.updateAvailabilityChecker = updateAvailabilityChecker;
         IntervalMusicCompositorUI.soundEffectsProvider = soundEffectsProvider;
         IntervalMusicCompositorUI.userPreferences = userPreferences;
@@ -154,7 +158,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
     private void checkForNewProgramVersion() {
         addDebugMessage("Starting version check.");
         new VersionChecker(updateAvailabilityChecker).startVersionCheckWith(
-            newVersion -> Platform.runLater(() -> new UpdateCheckDialog(updateAvailabilityChecker, this, bundle, coreBundle, userPreferences, applicationData).foundNewVersion(newVersion)),
+            newVersion -> Platform.runLater(() -> new UpdateCheckDialog(updateAvailabilityChecker, this, bundle, coreBundle, userPreferences, applicationData, versionUpgrader, messageProducer).foundNewVersion(newVersion)),
             nothing -> {
             },
             exception -> messageProducer.send(new DebugMessage(this, "Not able to check version due to: " + exception.getMessage(), exception)));
@@ -256,7 +260,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
     }
 
     private void initialize(MainScreenController mainScreenController) {
-        mainScreenController.initializeFieldsWith(this, programControl, applicationData, musicListControl, musicCompilationController, compilationParameters, messageSubscriber, messageProducer, updateAvailabilityChecker, executorService, soundEffectsProvider, getAudioFileDecoderExtensions(), getAudioFileEncoders(), userPreferences);
+        mainScreenController.initializeFieldsWith(this, programControl, applicationData, versionUpgrader, musicListControl, musicCompilationController, compilationParameters, messageSubscriber, messageProducer, updateAvailabilityChecker, executorService, soundEffectsProvider, getAudioFileDecoderExtensions(), getAudioFileEncoders(), userPreferences);
     }
 
     private List<AudioFileEncoder> getAudioFileEncoders() {

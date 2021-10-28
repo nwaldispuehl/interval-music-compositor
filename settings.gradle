@@ -15,4 +15,5 @@ include "intervalmusiccompositor.spi",
     "intervalmusiccompositor.encoder.wave",
     "intervalmusiccompositor.encoder.mpeg",
     "intervalmusiccompositor.encoder.ogg",
-    "intervalmusiccompositor.soundeffects"
+    "intervalmusiccompositor.soundeffects",
+    "intervalmusiccompositor.updater"
