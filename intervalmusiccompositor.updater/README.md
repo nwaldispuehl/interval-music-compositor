@@ -1,8 +1,8 @@
 # IntervalMusicCompositor Updater
 
 The Updater is a standalone program to be invoked by the main application which helps to update the main applications program files.
-For Linux and macOS we use the Java version (`intervalmusiccompositor.updater.jar`) since they are able to replace files which are currently used (i.e. the Java modules). 
-For Windows -- which does not allow manipulation of files currently in use -- we have this native updater`intervalmusiccompositor-updater.exe` written in Rust.
+Since some operating systems do not allow manipulation of files currently in use, we have this native updater written in Rust.
+It is compiled to a binary `intervalmusiccompositor-updater` for the Linux and Mac OSX operating systems, and a `intervalmusiccompositor-updater.exe` for Windows, respectively.
 
 ## Native Windows updater
 

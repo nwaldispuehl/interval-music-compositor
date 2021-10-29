@@ -13,9 +13,9 @@ dependencies {
 
   implementation 'org.apache.commons:commons-lang3:3.12.0'
 
-  compileOnly 'org.openjfx:javafx-base:16:linux'
-  compileOnly 'org.openjfx:javafx-graphics:16:linux'
-  compileOnly 'org.openjfx:javafx-controls:16:linux'
-  compileOnly 'org.openjfx:javafx-fxml:16:linux'
-  compileOnly 'org.openjfx:javafx-swing:16:linux'
+  compileOnly 'org.openjfx:javafx-base:17.0.0.1:linux'
+  compileOnly 'org.openjfx:javafx-graphics:17.0.0.1:linux'
+  compileOnly 'org.openjfx:javafx-controls:17.0.0.1:linux'
+  compileOnly 'org.openjfx:javafx-fxml:17.0.0.1:linux'
+  compileOnly 'org.openjfx:javafx-swing:17.0.0.1:linux'
 }

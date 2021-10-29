@@ -2,9 +2,9 @@ plugins {
   id 'application'
 
   id "org.openjfx.javafxplugin" version "0.0.10"
-  id 'org.beryx.jlink' version '2.24.0'
+  id 'org.beryx.jlink' version '2.24.4'
 
-  id "nebula.ospackage" version "8.5.6"
+  id "nebula.ospackage" version "9.0.0"
 }
 
 group = 'ch.retorte.intervalmusiccompositor'
@@ -39,18 +39,18 @@ javafx {
 
 jlink {
   targetPlatform("linux") {
-    jdkHome = "/opt/java/platforms/linux/jdk-16.0.1+9"
-    addExtraModulePath("/opt/openjfx/linux/javafx-jmods-16")
+    jdkHome = "/opt/java/platforms/linux/x64/jdk-17.0.1+12"
+    addExtraModulePath("/opt/openjfx/linux/x64/javafx-jmods-17.0.1")
   }
 
   targetPlatform("mac") {
-    jdkHome = "/opt/java/platforms/mac/jdk-16.0.1+9"
-    addExtraModulePath("/opt/openjfx/mac/javafx-jmods-16")
+    jdkHome = "/opt/java/platforms/mac/x64/jdk-17.0.1+12"
+    addExtraModulePath("/opt/openjfx/mac/x64/javafx-jmods-17.0.1")
   }
 
   targetPlatform("win") {
-    jdkHome = "/opt/java/platforms/win/jdk-16.0.1+9"
-    addExtraModulePath("/opt/openjfx/win/javafx-jmods-16")
+    jdkHome = "/opt/java/platforms/win/x64/jdk-17.0.1+12"
+    addExtraModulePath("/opt/openjfx/win/x64/javafx-jmods-17.0.1")
   }
 }
 
@@ -129,7 +129,7 @@ task distLinuxApp(type: Zip, dependsOn: 'copyLinuxUpdater') {
 
 apply plugin: 'nebula.deb'
 
-task distDebPackage(type: Deb, dependsOn: 'jlink') {
+task distDebPackage(type: Deb, dependsOn: 'copyLinuxUpdater') {
   packageName 'intervalmusiccompositor'
   summary 'Application to create music intervals (e.g. 20 s music, 10 s break) for sports and education.'
   arch 'amd64'
