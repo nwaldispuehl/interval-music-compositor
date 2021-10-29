@@ -29,7 +29,6 @@ import ch.retorte.intervalmusiccompositor.spi.audio.AudioFileMusicPlayer;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.spi.encoder.AudioFileEncoder;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
-import ch.retorte.intervalmusiccompositor.util.AudioFilesLoader;
 
 import java.io.*;
 import java.util.Collection;
@@ -323,13 +322,6 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
                 addDebugMessage(e.getMessage());
             }
         }
-    }
-
-    void loadAudioFiles() {
-        AudioFilesLoader audioFilesLoader = new AudioFilesLoader(this, audioFileFactory, messageBus);
-        audioFilesLoader.addListener(() -> musicListSortMode = SORT);
-
-        new Thread(audioFilesLoader).start();
     }
 
     public void quit() {

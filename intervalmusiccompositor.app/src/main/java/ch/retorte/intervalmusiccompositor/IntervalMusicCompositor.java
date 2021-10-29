@@ -112,7 +112,6 @@ class IntervalMusicCompositor {
         Ui userInterface = createUserInterface(control);
 
         control.tidyOldTemporaryFiles();
-        control.loadAudioFiles();
 
         userInterface.launch();
     }
