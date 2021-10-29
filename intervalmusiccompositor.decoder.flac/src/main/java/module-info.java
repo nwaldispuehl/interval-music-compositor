@@ -6,4 +6,5 @@ module intervalmusiccompositor.decoder.flac {
 
     requires java.desktop;
     requires jaudiotagger;
+    requires org.kc7bfi.jflac;
 }

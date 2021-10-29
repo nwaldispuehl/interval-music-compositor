@@ -9,11 +9,11 @@ import org.jaudiotagger.tag.vorbiscomment.VorbisCommentTag;
 import ch.retorte.intervalmusiccompositor.spi.bpm.BPMReaderWriter;
 
 /**
- * @author nw
+ * {@link BPMReaderWriter} for the OGG audio format.
  */
 public class OggBPMReaderWriter implements BPMReaderWriter {
 
-  private OggFileProperties oggFile = new OggFileProperties();
+  private final OggFileProperties oggFile = new OggFileProperties();
 
   @Override
   public Integer readBPMFrom(File file) {

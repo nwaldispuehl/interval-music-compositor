@@ -16,20 +16,20 @@ import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrenc
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 
 /**
- * @author nw
+ * Representation of the playlist report.
  */
 public class PlaylistReport {
 
-  private MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
+  private final MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
 
-  private FormatTime formatTime = new FormatTime();
+  private final FormatTime formatTime = new FormatTime();
 
   private static final String ITEM_DELIMITER = ", ";
   private static final String RANGE_DELIMITER = "-";
   private static final String EOL_DELIMITER = "\r\n";
   private static final String HORIZONTAL_ROW = "================================================================================";
 
-  private ApplicationData applicationData;
+  private final ApplicationData applicationData;
 
   public PlaylistReport(ApplicationData applicationData) {
     this.applicationData = applicationData;

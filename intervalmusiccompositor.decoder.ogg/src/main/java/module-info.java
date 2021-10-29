@@ -6,4 +6,5 @@ module intervalmusiccompositor.decoder.ogg {
 
     requires java.desktop;
     requires jaudiotagger;
+    requires org.tritonus.jorbis;
 }

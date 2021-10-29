@@ -5,7 +5,7 @@ package ch.retorte.intervalmusiccompositor.model.messagebus;
  */
 public class SubProcessProgressMessage implements Message {
 
-  private int percentage;
+  private final int percentage;
 
   public SubProcessProgressMessage(int percentage) {
     this.percentage = percentage;

@@ -17,10 +17,10 @@ import ch.retorte.intervalmusiccompositor.util.SoundHelper;
  */
 public class ExtractMusicPlayer extends StreamMusicPlayer implements AudioFileMusicPlayer {
 
-  private MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
+  private final MessageFormatBundle bundle = new CoreBundleProvider().getBundle();
 
-  private MessageProducer messageProducer;
-  private SoundHelper soundHelper;
+  private final MessageProducer messageProducer;
+  private final SoundHelper soundHelper;
 
   public ExtractMusicPlayer(MessageProducer messageProducer) {
     super(messageProducer);
@@ -39,7 +39,7 @@ public class ExtractMusicPlayer extends StreamMusicPlayer implements AudioFileMu
     int audioFileDurationInSeconds = (int) (audioFile.getDuration() / 1000);
 
     // Load random audio input stream extract of this track
-    int extractLength = Integer.valueOf(bundle.getString("imc.audio.determine_bpm.trackLength"));
+    int extractLength = Integer.parseInt(bundle.getString("imc.audio.determine_bpm.trackLength"));
 
     if (!audioFile.isLongEnoughFor(extractLength)) {
       extractLength = audioFileDurationInSeconds;

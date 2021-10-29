@@ -22,7 +22,7 @@ public class FlacAudioFileDecoder implements AudioFileDecoder {
 
   //---- Fields
 
-  private FlacFileProperties flacFile = new FlacFileProperties();
+  private final FlacFileProperties flacFile = new FlacFileProperties();
 
 
   //---- Methods

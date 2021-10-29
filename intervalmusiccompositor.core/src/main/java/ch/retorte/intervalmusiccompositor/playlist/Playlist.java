@@ -1,13 +1,12 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
-import ch.retorte.intervalmusiccompositor.core.bundle.CoreBundleProvider;
 import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
+import ch.retorte.intervalmusiccompositor.core.bundle.CoreBundleProvider;
 import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters;
 import ch.retorte.intervalmusiccompositor.model.list.BlendMode;
 import ch.retorte.intervalmusiccompositor.model.list.EnumerationMode;
 import ch.retorte.intervalmusiccompositor.model.list.ListSortMode;
-import ch.retorte.intervalmusiccompositor.model.messagebus.ErrorMessage;
 import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.model.util.VisibleForTesting;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;

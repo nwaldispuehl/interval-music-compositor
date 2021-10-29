@@ -42,8 +42,8 @@ public class PreferencesWindow {
 
   private Parent parent;
   private final MessageFormatBundle bundle;
-  private UiUserPreferences userPreferences;
-  private ApplicationData applicationData;
+  private final UiUserPreferences userPreferences;
+  private final ApplicationData applicationData;
 
 
   //---- Constructor

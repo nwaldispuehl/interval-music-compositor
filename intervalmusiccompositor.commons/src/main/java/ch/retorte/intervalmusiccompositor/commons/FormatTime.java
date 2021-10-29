@@ -30,7 +30,7 @@ public class FormatTime {
     } else {
       int hours = (int) Math.floor(discreteSeconds / 3600.0);
       int minutes = (int) Math.floor((discreteSeconds - (hours * 3600)) / 60.0);
-      result = String.valueOf(hours) + ":" + df.format(minutes) + ":" + df.format(discreteSeconds - (minutes * 60) - (hours * 3600));
+      result = hours + ":" + df.format(minutes) + ":" + df.format(discreteSeconds - (minutes * 60) - (hours * 3600));
     }
 
     if (seconds < 0) {

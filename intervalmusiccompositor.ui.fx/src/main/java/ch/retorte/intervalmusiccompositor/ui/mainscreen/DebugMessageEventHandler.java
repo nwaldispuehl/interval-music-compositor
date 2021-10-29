@@ -7,9 +7,9 @@ import javafx.beans.value.ObservableValue;
 
 public class DebugMessageEventHandler implements ChangeListener<Object> {
 
-  private Object caller;
-  private String id;
-  private MessageProducer messageProducer;
+  private final Object caller;
+  private final String id;
+  private final MessageProducer messageProducer;
 
   public DebugMessageEventHandler(Object caller, String id, MessageProducer messageProducer) {
     this.caller = caller;

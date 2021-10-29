@@ -17,13 +17,13 @@ import ch.retorte.intervalmusiccompositor.spi.progress.ProgressUpdatable;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
 
 /**
- * @author nw
+ * Generates the encoded compilation data.
  */
 public class OutputGenerator {
 
-  private SoundHelper soundHelper;
-  private List<AudioFileEncoder> encoders;
-  private MessageProducer messageProducer;
+  private final SoundHelper soundHelper;
+  private final List<AudioFileEncoder> encoders;
+  private final MessageProducer messageProducer;
 
   public OutputGenerator(SoundHelper soundHelper, List<AudioFileEncoder> encoders, MessageProducer messageProducer) {
     this.soundHelper = soundHelper;

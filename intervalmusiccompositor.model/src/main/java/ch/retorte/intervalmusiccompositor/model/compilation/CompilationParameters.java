@@ -29,9 +29,9 @@ public class CompilationParameters {
 
   //---- Fields
 
-  private List<Integer> musicPattern = new ArrayList<>();
-  private List<Integer> breakPattern = new ArrayList<>();
-  private List<SoundEffectOccurrence> soundEffectOccurrences = new ArrayList<>();
+  private final List<Integer> musicPattern = new ArrayList<>();
+  private final List<Integer> breakPattern = new ArrayList<>();
+  private final List<SoundEffectOccurrence> soundEffectOccurrences = new ArrayList<>();
   private int iterations;
   private BlendMode blendMode = DEFAULT_BLEND_MODE;
   private double blendDuration = DEFAULT_BLEND_DURATION;

@@ -16,7 +16,7 @@ public class StreamMusicPlayer implements Runnable, MusicPlayer {
 
   private AudioInputStream audioInputStream;
   private Boolean play = false;
-  private MessageProducer messageProducer;
+  private final MessageProducer messageProducer;
 
   StreamMusicPlayer(MessageProducer messageProducer) {
     this.messageProducer = messageProducer;

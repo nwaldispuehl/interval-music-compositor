@@ -8,14 +8,12 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 /**
  * Manages pending jobs for cache creation of imported music tracks.
- * 
- * @author nw
  */
 public class CreateCacheJobManager {
 
-  private ConcurrentLinkedQueue<CreateCacheJob> pendingJobs;
-  private MessageProducer messageProducer;
-  private int threadLimit;
+  private final ConcurrentLinkedQueue<CreateCacheJob> pendingJobs;
+  private final MessageProducer messageProducer;
+  private final int threadLimit;
   private int threadCount = 0;
 
   public CreateCacheJobManager(MessageProducer messageProducer, int threadLimit) {

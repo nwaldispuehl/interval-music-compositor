@@ -10,14 +10,12 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 /**
  * Representation of a job for creating an audio files raw data cache.
- * 
- * @author nw
  */
 public class CreateCacheJob implements Runnable {
 
   private IAudioFile audioFile;
-  private ArrayList<TaskFinishListener> listeners = new ArrayList<>();
-  private MessageProducer messageProducer;
+  private final ArrayList<TaskFinishListener> listeners = new ArrayList<>();
+  private final MessageProducer messageProducer;
 
   public CreateCacheJob(IAudioFile audioFile, MessageProducer messageProducer) {
     this.audioFile = audioFile;

@@ -33,7 +33,7 @@ public class AacAudioFileDecoder implements AudioFileDecoder {
 
   //---- Fields
 
-  private AacFileProperties aacFile = new AacFileProperties();
+  private final AacFileProperties aacFile = new AacFileProperties();
 
 
   //---- Methods

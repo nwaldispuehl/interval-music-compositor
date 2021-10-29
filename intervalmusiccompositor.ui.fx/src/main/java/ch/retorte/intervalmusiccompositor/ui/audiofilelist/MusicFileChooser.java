@@ -18,9 +18,9 @@ import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
  */
 public class MusicFileChooser {
 
-  private MessageProducer messageProducer;
-  private MessageFormatBundle messageFormatBundle;
-  private List<AudioFileDecoder> audioFileDecoders;
+  private final MessageProducer messageProducer;
+  private final MessageFormatBundle messageFormatBundle;
+  private final List<AudioFileDecoder> audioFileDecoders;
 
   public MusicFileChooser(MessageProducer messageProducer, MessageFormatBundle messageFormatBundle, List<AudioFileDecoder> audioFileDecoders) {
     this.messageProducer = messageProducer;

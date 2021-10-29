@@ -22,7 +22,7 @@ public class Mp3AudioFileDecoder implements AudioFileDecoder {
 
   //---- Fields
 
-  private Mp3FileProperties mp3File = new Mp3FileProperties();
+  private final Mp3FileProperties mp3File = new Mp3FileProperties();
 
 
   //---- Methods

@@ -15,11 +15,11 @@ import static java.lang.System.currentTimeMillis;
  */
 public class Tap {
 
-  private List<Long> tapEventsTimestamps = new ArrayList<>();
-  private List<Double> bpmHistory = new ArrayList<>();
+  private final List<Long> tapEventsTimestamps = new ArrayList<>();
+  private final List<Double> bpmHistory = new ArrayList<>();
 
-  private MessageProducer messageProducer;
-  private MessageFormatBundle bundle;
+  private final MessageProducer messageProducer;
+  private final MessageFormatBundle bundle;
   private int tapWindowLength;
   private long tapBreakLength;
   private int convergenceRange;
@@ -33,10 +33,10 @@ public class Tap {
   }
 
   private void initializeConstants() {
-    tapWindowLength = Integer.valueOf(bundle.getString("imc.audio.determine_bpm.tap_window_length"));
-    tapBreakLength = Long.valueOf(bundle.getString("imc.audio.determine_bpm.tap_break_length"));
-    convergenceRange = Integer.valueOf(bundle.getString("imc.audio.bpm.convergence_range"));
-    convergenceThreshold = Double.valueOf(bundle.getString("imc.audio.bpm.convergence_threshold"));
+    tapWindowLength = Integer.parseInt(bundle.getString("imc.audio.determine_bpm.tap_window_length"));
+    tapBreakLength = Long.parseLong(bundle.getString("imc.audio.determine_bpm.tap_break_length"));
+    convergenceRange = Integer.parseInt(bundle.getString("imc.audio.bpm.convergence_range"));
+    convergenceThreshold = Double.parseDouble(bundle.getString("imc.audio.bpm.convergence_threshold"));
   }
 
   TapEvent tap() {

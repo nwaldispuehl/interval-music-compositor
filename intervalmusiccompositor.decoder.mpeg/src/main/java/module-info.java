@@ -6,4 +6,6 @@ module intervalmusiccompositor.decoder.mpeg {
 
     requires java.desktop;
     requires jaudiotagger;
+    requires javazoom.javalayer;
+    requires javazoom.spi.mp3spi;
 }

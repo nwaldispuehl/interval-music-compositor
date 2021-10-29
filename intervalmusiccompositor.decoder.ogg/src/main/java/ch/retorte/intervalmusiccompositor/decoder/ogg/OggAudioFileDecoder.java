@@ -22,7 +22,7 @@ public class OggAudioFileDecoder implements AudioFileDecoder {
 
   //---- Fields
 
-  private OggFileProperties oggFile = new OggFileProperties();
+  private final OggFileProperties oggFile = new OggFileProperties();
 
 
   //---- Methods

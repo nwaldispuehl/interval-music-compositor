@@ -4,11 +4,11 @@ import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 /**
- * @author nw
+ * Some often used routines for threads.
  */
 public class ThreadHelper {
 
-  private MessageProducer messageProducer;
+  private final MessageProducer messageProducer;
 
   public ThreadHelper(MessageProducer messageProducer) {
     this.messageProducer = messageProducer;
@@ -18,28 +18,6 @@ public class ThreadHelper {
     try {
       Thread.sleep(millis);
     } catch (InterruptedException e) {
-      addDebugMessage(e.getMessage());
-    }
-  }
-
-  public void wait(Runnable t) {
-    try {
-      synchronized (t) {
-        t.wait();
-      }
-    }
-    catch (InterruptedException e) {
-      addDebugMessage(e.getMessage());
-    }
-  }
-
-  public void notify(Runnable t) {
-    try {
-      synchronized (t) {
-        t.notify();
-      }
-    }
-    catch (IllegalMonitorStateException e) {
       addDebugMessage(e.getMessage());
     }
   }

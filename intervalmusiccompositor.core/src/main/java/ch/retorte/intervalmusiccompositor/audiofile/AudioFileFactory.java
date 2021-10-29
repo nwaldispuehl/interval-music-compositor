@@ -15,16 +15,16 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
 
 /**
- * @author nw
+ * Creates audio file.
  */
 public class AudioFileFactory {
 
   private final Collection<AudioFileDecoder> decoders;
   private final Collection<BPMReaderWriter> bpmReaderWriters;
-  private SoundHelper soundHelper;
-  private BPMCalculator bpmCalculator;
-  private AudioStandardizer audioStandardizer;
-  private MessageProducer messageProducer;
+  private final SoundHelper soundHelper;
+  private final BPMCalculator bpmCalculator;
+  private final AudioStandardizer audioStandardizer;
+  private final MessageProducer messageProducer;
 
   public AudioFileFactory(SoundHelper soundHelper, Collection<AudioFileDecoder> decoders, Collection<BPMReaderWriter> bpmReaderWriters, BPMCalculator bpmCalculator, AudioStandardizer audioStandardizer, MessageProducer messageProducer) {
     this.soundHelper = soundHelper;
@@ -47,11 +47,6 @@ public class AudioFileFactory {
     }
 
     return new AudioFile(file.getAbsolutePath(), soundHelper, audioFileDecoders, bpmReaderWriter, bpmCalculator, audioStandardizer, messageProducer);
-  }
-
-  public boolean hasDecoderFor(File file) {
-    List<AudioFileDecoder> matchingDecoders = findMatchingDecodersFor(file);
-    return !matchingDecoders.isEmpty();
   }
 
   private List<AudioFileDecoder> findMatchingDecodersFor(File file) {

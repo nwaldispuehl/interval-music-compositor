@@ -19,12 +19,10 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 
 /**
  * Some static methods for easing the handling of sound data.
- * 
- * @author nw
  */
 public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
 
-  private MessageProducer messageProducer;
+  private final MessageProducer messageProducer;
 
   public SoundHelper(MessageProducer messageProducer) {
     this.messageProducer = messageProducer;

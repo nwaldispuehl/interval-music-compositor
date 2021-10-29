@@ -51,11 +51,11 @@ class VorbisEncoder {
   private vorbis_dsp_state vorbisDspState;  // central working state for the packet->PCM decoder
   private vorbis_block vorbisBlock;  // local working space for packet->PCM decode
 
-  private int READ = 1024;
-  private byte[] readBuffer = new byte[READ * 4 + 44];
+  private final int READ = 1024;
+  private final byte[] readBuffer = new byte[READ * 4 + 44];
 
-  private AudioFormat audioFormat;
-  private ProgressListener progressListener;
+  private final AudioFormat audioFormat;
+  private final ProgressListener progressListener;
 
 
   //---- Constructor
@@ -181,8 +181,9 @@ class VorbisEncoder {
     oggPacket = new ogg_packet();
 
     while (true) {
-      if (!oggStreamState.ogg_stream_flush(oggPage))
+      if (!oggStreamState.ogg_stream_flush(oggPage)) {
         break;
+      }
 
       result.write(oggPage.header, 0, oggPage.header_len);
       result.write(oggPage.body, 0, oggPage.body_len);

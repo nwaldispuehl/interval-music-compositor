@@ -56,13 +56,13 @@ public class BpmWindow {
   private Parent parent;
   private final MessageFormatBundle messageFormatBundle;
   private final MusicListControl musicListControl;
-  private MessageProducer messageProducer;
+  private final MessageProducer messageProducer;
   private final IAudioFile audioFile;
   private final int index;
 
-  private SimpleIntegerProperty tappedBpm = new SimpleIntegerProperty(0);
-  private SimpleStringProperty tappedBpmString = new SimpleStringProperty();
-  private SimpleIntegerProperty selectedBpm = new SimpleIntegerProperty(0);
+  private final SimpleIntegerProperty tappedBpm = new SimpleIntegerProperty(0);
+  private final SimpleStringProperty tappedBpmString = new SimpleStringProperty();
+  private final SimpleIntegerProperty selectedBpm = new SimpleIntegerProperty(0);
 
   private Tap tap;
 

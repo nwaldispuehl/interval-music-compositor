@@ -8,7 +8,6 @@ import ch.retorte.intervalmusiccompositor.model.util.ChangeListener;
 import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.event.EventTarget;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;

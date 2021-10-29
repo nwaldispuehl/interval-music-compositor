@@ -14,7 +14,7 @@ import org.junit.Test;
 public class DebugMessagePrinterTest {
 
   private DebugMessagePrinter handler;
-  private LocalDateTime currentDate = LocalDateTime.now();
+  private final LocalDateTime currentDate = LocalDateTime.now();
 
   @Before
   public void setup() {

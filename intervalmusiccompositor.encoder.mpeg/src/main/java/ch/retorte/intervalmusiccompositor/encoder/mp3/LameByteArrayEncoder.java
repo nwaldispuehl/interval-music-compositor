@@ -11,15 +11,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * @author nw
+ * Encodes music with the LAME library.
  */
 class LameByteArrayEncoder {
 
   private static final boolean USE_VARIABLE_BITRATE = false;
   private static final int GOOD_QUALITY_BITRATE = 256;
 
-  private AudioFormat inputFormat;
-  private ProgressListener progressListener;
+  private final AudioFormat inputFormat;
+  private final ProgressListener progressListener;
 
   LameByteArrayEncoder(AudioFormat inputFormat, ProgressListener progressListener) {
     this.inputFormat = inputFormat;

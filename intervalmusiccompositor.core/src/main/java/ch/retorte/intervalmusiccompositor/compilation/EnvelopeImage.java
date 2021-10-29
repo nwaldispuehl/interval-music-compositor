@@ -13,14 +13,14 @@ class EnvelopeImage {
 
   //---- Static
 
-  private static String BACKGROUND_COLOR = "#f5f5f5";
-  private static String ENVELOPE_COLOR = "#2196F3";
-  private static String ENVELOPE_MEAN_COLOR = "#64B5F6";
+  private static final String BACKGROUND_COLOR = "#f5f5f5";
+  private static final String ENVELOPE_COLOR = "#2196F3";
+  private static final String ENVELOPE_MEAN_COLOR = "#64B5F6";
 
 
   //---- Fields
 
-  private BufferedImage writableImage;
+  private final BufferedImage writableImage;
 
   private int width = 0;
   private int height = 0;

@@ -10,11 +10,11 @@ import org.jaudiotagger.tag.vorbiscomment.VorbisCommentTag;
 import ch.retorte.intervalmusiccompositor.spi.bpm.BPMReaderWriter;
 
 /**
- * @author nw
+ * {@link BPMReaderWriter} for the FLAC audio format.
  */
 public class FlacBPMReaderWriter implements BPMReaderWriter {
 
-  private FlacFileProperties flacFile = new FlacFileProperties();
+  private final FlacFileProperties flacFile = new FlacFileProperties();
 
   @Override
   public Integer readBPMFrom(File file) {

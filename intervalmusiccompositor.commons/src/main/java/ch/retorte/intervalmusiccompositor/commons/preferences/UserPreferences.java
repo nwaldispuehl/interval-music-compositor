@@ -27,7 +27,7 @@ public class UserPreferences {
 
   //---- Fields
 
-  private MessageProducer messageProducer;
+  private final MessageProducer messageProducer;
 
   private final Preferences preferences;
 
@@ -120,17 +120,15 @@ public class UserPreferences {
   }
 
   protected void saveString(String key, String value) {
-
     if (value != null) {
       addSaveDebugMessageFor(key, value);
       preferences.put(key, value);
-      flush();
     }
     else {
       addClearDebugMessageFor(key);
       preferences.remove(key);
-      flush();
     }
+    flush();
   }
 
   protected String loadString(String key, String defaultValue) {

@@ -9,10 +9,10 @@ public class SoundEffect {
 
   //---- Fields
 
-  private String id;
-  private String resource;
-  private long effectiveDurationMillis;
-  private long displayDurationMillis;
+  private final String id;
+  private final String resource;
+  private final long effectiveDurationMillis;
+  private final long displayDurationMillis;
 
 
   //---- Constructor
