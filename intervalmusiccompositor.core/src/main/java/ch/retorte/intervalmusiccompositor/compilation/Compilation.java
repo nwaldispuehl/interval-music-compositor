@@ -31,7 +31,7 @@ public class Compilation {
 
     //---- Static
 
-    private static final double SOUND_EFFECT_BOUNDARY_FADE_DURATION_S = 0.2;
+    private static final double SOUND_EFFECT_BOUNDARY_FADE_DURATION_S = 0.4;
 
     //---- Fields
 

@@ -6,6 +6,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 ADD  #28    Streamlines upgrade process by adding one-click-updater.
 ADD  #49    Adds mailto button to error dialog.
 IMP         Upgrades the bundled runtime to Java 17.
+IMP  #55    Increases sound effect fade in duration to .4 seconds (from .2 s).
 FIX         'Too long' indicator in list overrides all other states, even errors.
 FIX  #62    Tracks in the current directory are not anymore added automatically.
 
