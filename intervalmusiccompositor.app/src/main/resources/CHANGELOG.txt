@@ -1,7 +1,7 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
-2021-xx-xx  2.10.1 [not yet released]
+2021-10-31  2.11.0
 --------------------------------------------------------------------------------
 ADD  #28    Streamlines upgrade process by adding one-click-updater.
 ADD  #49    Adds mailto button to error dialog.
