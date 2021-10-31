@@ -54,9 +54,12 @@ import javafx.stage.Window;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.regex.Pattern;
 
 /**
  * Controller for the main screen of the JavaFX ui.
@@ -678,10 +681,6 @@ public class MainScreenController implements Initializable {
         menuLoadBreakFile.setDisable(disabled);
     }
 
-
-
-
-
     private String getLabelFor(ListSortMode listSortMode) {
         switch (listSortMode) {
             case MANUAL:
@@ -742,13 +741,39 @@ public class MainScreenController implements Initializable {
 
     private void showErrorMessage(String message) {
         Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            ButtonType sendErrorMailButtonType = new ButtonType(bundle.getString("ui.error.sendback.button"), ButtonBar.ButtonData.LEFT);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "", sendErrorMailButtonType, ButtonType.OK);
             alert.setResizable(true);
             alert.setTitle(bundle.getString("ui.error.title"));
             alert.setContentText(message + "\n\n" + bundle.getString("ui.error.appendix"));
             alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+
+            Button sendErrorMailButton = (Button) alert.getDialogPane().lookupButton(sendErrorMailButtonType);
+            sendErrorMailButton.setOnAction(event -> {
+                openErrorFeedbackMail();
+                openDebugLog();
+                event.consume();
+            });
+
             alert.show();
         });
+    }
+
+    private void openErrorFeedbackMail() {
+        ui.openInMailProgram(getErrorFeedbackMailUrl());
+    }
+
+    private String getErrorFeedbackMailUrl() {
+        String recipient = coreBundle.getString("mail.support.address");
+        String subject = coreBundle.getString("error.feedback.mail.subject");
+        String messagePrefix = coreBundle.getString("error.feedback.mail.body.prefix");
+
+        String rawMail = coreBundle.getString("error.feedback.mail.template", recipient, encode(subject), encode(messagePrefix));
+        return Pattern.compile("\\+").matcher(rawMail).replaceAll("%20");
+    }
+
+    private String encode(String s) {
+        return URLEncoder.encode(s, StandardCharsets.UTF_8);
     }
 
     private void updateProgressBar(Integer progressInPercent, String currentActivity) {

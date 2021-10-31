@@ -29,7 +29,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -107,7 +110,7 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         Platform.setImplicitExit(true);
         try {
             if (shouldShowFirstStartWindow()) {
@@ -257,6 +260,28 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
             messageProducer.send(new DebugMessage(this, e));
         }
         return null;
+    }
+
+    @Override
+    public void openInMailProgram(String mailUrl) {
+        if (Desktop.isDesktopSupported()) {
+            URI mailUri = getUriFor(mailUrl);
+            if (mailUri != null) {
+                addDebugMessage("Sending mail URL to systems Desktop for opening in mail program: " + mailUri);
+
+                // We need to detach this due to this bug: https://bugs.openjdk.java.net/browse/JDK-8267572
+                // On Linux it would freeze the application without.
+                SwingUtilities.invokeLater(() -> {
+                    try {
+                        Desktop.getDesktop().mail(mailUri);
+                    }
+                    catch (IOException e) {
+                        messageProducer.send(new ErrorMessage("Not able to send mail due to: " + e.getMessage()));
+                        messageProducer.send(new DebugMessage(this, e));
+                    }
+                });
+            }
+        }
     }
 
     private void initialize(MainScreenController mainScreenController) {

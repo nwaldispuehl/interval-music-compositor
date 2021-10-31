@@ -3,7 +3,7 @@ package ch.retorte.intervalmusiccompositor.spi;
 import java.awt.image.BufferedImage;
 
 /**
- * @author nw
+ * Interface for top level UI operations.
  */
 public interface Ui {
 
@@ -18,4 +18,7 @@ public interface Ui {
   void setEnvelopeImage(BufferedImage envelopeImage);
 
   void openInDesktopBrowser(String url);
+
+  void openInMailProgram(String mailUrl);
+
 }
