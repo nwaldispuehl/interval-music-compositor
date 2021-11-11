@@ -38,6 +38,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
+import static ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameters.DEFAULT_LIST_SORT_MODE;
 import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.*;
 import static java.util.stream.Collectors.joining;
 
@@ -54,7 +55,7 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
 
     //---- Fields
 
-    private ListSortMode musicListSortMode = null;
+    private ListSortMode musicListSortMode = DEFAULT_LIST_SORT_MODE;
     private int maxListEntries;
 
     private final ObservableList<IAudioFile> musicList = new ObservableList<>();
@@ -113,7 +114,9 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
 
     private String loadChangeLog() {
         try (InputStream changeLogInputStream = getClass().getResourceAsStream(CHANGE_LOG_FILE)) {
-            return new BufferedReader(new InputStreamReader(changeLogInputStream)).lines().collect(joining(System.lineSeparator()));
+            if (changeLogInputStream != null) {
+                return new BufferedReader(new InputStreamReader(changeLogInputStream)).lines().collect(joining(System.lineSeparator()));
+            }
         } catch (Exception e) {
             addDebugMessage(e);
         }
