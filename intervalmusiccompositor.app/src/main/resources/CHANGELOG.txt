@@ -1,7 +1,7 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
-2021-xx-xx  2.11.1 [not yet released]
+2021-11-12  2.11.1
 --------------------------------------------------------------------------------
 FIX  #63    Crash when changing compilation parameters with empty track list.
 
