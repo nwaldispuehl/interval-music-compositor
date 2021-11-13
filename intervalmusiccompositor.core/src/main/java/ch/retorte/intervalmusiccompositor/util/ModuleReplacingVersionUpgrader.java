@@ -181,7 +181,8 @@ public class ModuleReplacingVersionUpgrader implements VersionUpgrader {
         return coreBundle.getString(MESSAGE_KEY_DOWNLOAD_URL_PATTERN, version, platform.getOsDownloadDescriptor());
     }
 
-    private File downloadToUpgradeDir(File upgradeDirectory, String downloadUrl, ProgressListener progressListener) {
+    /* Visible for testing. */
+    File downloadToUpgradeDir(File upgradeDirectory, String downloadUrl, ProgressListener progressListener) {
         try {
             File upgradeArchive = new File(upgradeDirectory.getAbsolutePath() + File.separator + TEMPORARY_UPGRADE_ARCHIVE);
             debug("Download file: " + upgradeArchive.getAbsolutePath());
