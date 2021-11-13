@@ -1,7 +1,7 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
-2021-xx-xx  2.11.2 [not yet released]
+2021-11-13  2.11.2
 --------------------------------------------------------------------------------
 FIX  #64    Self-Upgrade: Downloading new version fails with 'handshake failure'.
 
