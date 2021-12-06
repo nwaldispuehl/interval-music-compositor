@@ -173,21 +173,27 @@ public abstract class Platform {
      * </pre>
      */
     public String getDistributionRootPath() {
-        String binaryPath = getProgramDistributionRawBinPath();
+        return getDistributionRootPathWith(getProgramDistributionRawBinPath());
+    }
 
-        // We weed out multiple paths
+    /* Visible for testing. */
+    String getDistributionRootPathWith(String binaryPath) {
+        // If multiple paths are present, we use the first.
         if (binaryPath.contains(File.pathSeparator)) {
             binaryPath = binaryPath.split(File.pathSeparator)[0];
         }
 
-        // We eliminate any direct file references
-        File rawBinaryPath = new File(binaryPath);
+        // Normalize
+        String normalizedBinaryPath = Path.of(binaryPath).normalize().toString();
+
+        // Eliminate any direct file references
+        File rawBinaryPath = new File(normalizedBinaryPath);
         if (rawBinaryPath.isFile()) {
             rawBinaryPath = rawBinaryPath.getParentFile();
         }
 
         File rawRootPath = rawBinaryPath.getParentFile();
-        return rawRootPath.toPath().normalize().toFile().getAbsolutePath();
+        return rawRootPath.getAbsolutePath();
     }
 
     /**
