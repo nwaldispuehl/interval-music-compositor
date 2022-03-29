@@ -189,8 +189,27 @@ public class IntervalMusicCompositorUI extends Application implements Ui {
     }
 
     private void initializeCompilationParameters() {
-        compilationParameters.setDefaultOutputPath(platform.getDesktopPath());
-        compilationParameters.resetOutputPath();
+        try {
+            compilationParameters.setDefaultOutputPath(platform.getDesktopPath());
+            compilationParameters.resetOutputPath();
+        }
+        catch (Error e) {
+            // If this error is due to (legacy?) accessibility settings on this computer, just swallow it...
+            if (isMissingAssistiveTechnologyError(e)) {
+                messageProducer.send(new ErrorMessage("Swallowed an error due to accessibility technology declared in " +
+                    "the `$USER_HOME/.accessibility.properties` file. Do you still need it? If not better delete the properties file."));
+            }
+            else {
+                // ... otherwise continue with error handling.
+                throw e;
+            }
+        }
+    }
+
+    private boolean isMissingAssistiveTechnologyError(Error e) {
+        return e instanceof AWTError
+            && e.getCause() != null && e.getCause() instanceof ClassNotFoundException
+            && e.getMessage() != null && e.getMessage().startsWith("Assistive Technology not found:");
     }
 
     @Override
