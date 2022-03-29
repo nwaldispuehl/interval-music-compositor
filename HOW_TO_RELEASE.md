@@ -15,7 +15,7 @@ First, prepare the source code for the upcoming release.
 - Commit the change to the `master` branch and tag the version with `v` prefix:
 
       $ git add .
-      $ git commit -m 'Upgraded to version 1.2.3.'
+      $ git commit -m 'Upgrades to version 1.2.3.'
       $ git tag v1.2.3
       $ git push 
       $ git push --tags

@@ -1,7 +1,7 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
-202x-xx-xx  2.11.3 [not yet released]
+2022-03-29  2.11.3
 --------------------------------------------------------------------------------
 FIX  #65    Self-Upgrade: Wrong root directory chosen in Linux.
 FIX  #66    Crash when user has old assistive technology config file in system.
