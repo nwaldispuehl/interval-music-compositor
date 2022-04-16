@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2022-xx-xx  2.11.4 [not yet released]
+--------------------------------------------------------------------------------
+FIX         Branding background image not displayed on clean startup.
+
+
 2022-03-29  2.11.3
 --------------------------------------------------------------------------------
 FIX  #65    Self-Upgrade: Wrong root directory chosen in Linux.

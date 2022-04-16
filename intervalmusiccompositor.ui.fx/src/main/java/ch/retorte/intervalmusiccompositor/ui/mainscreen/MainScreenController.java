@@ -53,6 +53,7 @@ import javafx.stage.Window;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -480,7 +481,11 @@ public class MainScreenController implements Initializable {
     }
 
     private void initializeBackgroundImage() {
-        starterBackgroundImage = new Image(MainScreenController.class.getResourceAsStream("/images/starter_background.png"));
+        InputStream starterBackgroundInputStream = MainScreenController.class.getResourceAsStream("/images/starter_background.png");
+        if (starterBackgroundInputStream != null) {
+            starterBackgroundImage = new Image(starterBackgroundInputStream);
+            imageView.setImage(starterBackgroundImage);
+        }
     }
 
     private void initializeControlButtonsActivation() {
