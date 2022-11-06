@@ -58,9 +58,18 @@ public abstract class Platform {
     }
 
     /**
+     * Provides a download descriptor to identify the platform/architecture.
+     *
+     * @return download descriptor consisting of the OS identifier and the architecture, e.g. 'linux-amd64'.
+     */
+    public String getOsDownloadDescriptor() {
+        return getOsIdentifier() + "-" + getOsArchitecture();
+    }
+
+    /**
      * Name as used to specify the OS in the download files.
      */
-    public abstract String getOsDownloadDescriptor();
+    public abstract String getOsIdentifier();
 
 
     //---- Methods: Platform properties
@@ -110,7 +119,7 @@ public abstract class Platform {
     }
 
     /**
-     * Helper method taken from https://stackoverflow.com/a/3758880.
+     * Helper method taken from <a href="https://stackoverflow.com/a/3758880">stackoverflow.com</a>.
      */
     private static String humanReadableByteCount(long bytes, boolean si) {
         int unit = si ? 1000 : 1024;

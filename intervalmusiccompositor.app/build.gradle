@@ -38,18 +38,23 @@ javafx {
 }
 
 jlink {
-  targetPlatform("linux") {
-    jdkHome = "/opt/java/platforms/linux/x64/jdk-17.0.1+12"
+  targetPlatform("linux-amd64") {
+    jdkHome = "/opt/java/platforms/linux/x64/jdk-17.0.5+8"
     addExtraModulePath("/opt/openjfx/linux/x64/javafx-jmods-17.0.1")
   }
 
-  targetPlatform("mac") {
-    jdkHome = "/opt/java/platforms/mac/x64/jdk-17.0.1+12"
+  targetPlatform("mac-x86_64") {
+    jdkHome = "/opt/java/platforms/mac/x64/jdk-17.0.5+8"
     addExtraModulePath("/opt/openjfx/mac/x64/javafx-jmods-17.0.1")
   }
 
-  targetPlatform("win") {
-    jdkHome = "/opt/java/platforms/win/x64/jdk-17.0.1+12"
+  targetPlatform("mac-aarch64") {
+    jdkHome = "/opt/java/platforms/mac/aarch64/jdk-17.0.5+8"
+    addExtraModulePath("/opt/openjfx/mac/aarch64/javafx-jmods-17.0.1")
+  }
+
+  targetPlatform("win-amd64") {
+    jdkHome = "/opt/java/platforms/win/x64/jdk-17.0.5+8"
     addExtraModulePath("/opt/openjfx/win/x64/javafx-jmods-17.0.1")
   }
 }
@@ -61,7 +66,7 @@ task buildLinuxUpdater(type: Exec, dependsOn: 'jlink') {
 
 task copyLinuxUpdater(type: Copy, dependsOn: 'buildLinuxUpdater') {
   from project(':intervalmusiccompositor.updater').files('native-src/target/x86_64-unknown-linux-gnu/release/')
-  into(buildDir.absolutePath + '/image/intervalmusiccompositor.app-linux/bin')
+  into(buildDir.absolutePath + '/image/intervalmusiccompositor.app-linux-amd64/bin')
   include('intervalmusiccompositor-updater')
 }
 
@@ -72,7 +77,18 @@ task buildMacUpdater(type: Exec, dependsOn: 'jlink') {
 
 task copyMacUpdater(type: Copy, dependsOn: 'buildMacUpdater') {
   from project(':intervalmusiccompositor.updater').files('native-src/target/x86_64-apple-darwin/release/')
-  into(buildDir.absolutePath + '/image/intervalmusiccompositor.app-mac/bin')
+  into(buildDir.absolutePath + '/image/intervalmusiccompositor.app-mac-x86_64/bin')
+  include('intervalmusiccompositor-updater')
+}
+
+task buildMacAarch64Updater(type: Exec, dependsOn: 'jlink') {
+  workingDir project(':intervalmusiccompositor.updater').file('native-src')
+  commandLine 'cargo', 'build', '--release', '--target', 'aarch64-apple-darwin'
+}
+
+task copyMacAarch64Updater(type: Copy, dependsOn: 'buildMacAarch64Updater') {
+  from project(':intervalmusiccompositor.updater').files('native-src/target/aarch64-apple-darwin/release/')
+  into(buildDir.absolutePath + '/image/intervalmusiccompositor.app-mac-aarch64/bin')
   include('intervalmusiccompositor-updater')
 }
 
@@ -83,7 +99,7 @@ task buildWinUpdater(type: Exec, dependsOn: 'jlink') {
 
 task copyWinUpdater(type: Copy, dependsOn: 'buildWinUpdater') {
   from project(':intervalmusiccompositor.updater').files('native-src/target/x86_64-pc-windows-gnu/release/')
-  into(buildDir.absolutePath + '/image/intervalmusiccompositor.app-win/bin')
+  into(buildDir.absolutePath + '/image/intervalmusiccompositor.app-win-amd64/bin')
   include('intervalmusiccompositor-updater.exe')
 }
 
@@ -91,10 +107,23 @@ task distOsxApp(type: Zip, dependsOn: 'copyMacUpdater') {
   description = "Creates an archive from the Mac OS X version."
 
   archiveBaseName = applicationName
-  archiveAppendix = 'mac'
+  archiveAppendix = 'mac-x86_64'
 
   into (project.applicationName) {
-    from buildDir.absolutePath + '/image/intervalmusiccompositor.app-mac'
+    from buildDir.absolutePath + '/image/intervalmusiccompositor.app-mac-x86_64'
+    from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
+    from project(':intervalmusiccompositor.build').files('documentation/')
+  }
+}
+
+task distOsxAarch64App(type: Zip, dependsOn: 'copyMacAarch64Updater') {
+  description = "Creates an archive from the Mac OS X version."
+
+  archiveBaseName = applicationName
+  archiveAppendix = 'mac-aarch64'
+
+  into (project.applicationName) {
+    from buildDir.absolutePath + '/image/intervalmusiccompositor.app-mac-aarch64'
     from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
     from project(':intervalmusiccompositor.build').files('documentation/')
   }
@@ -104,10 +133,10 @@ task distWindowsApp(type: Zip, dependsOn: 'copyWinUpdater') {
   description = "Creates an archive from the Microsoft Windows version."
 
   archiveBaseName = applicationName
-  archiveAppendix = 'win'
+  archiveAppendix = 'win-amd64'
 
   into (applicationName) {
-    from buildDir.absolutePath + '/image/intervalmusiccompositor.app-win'
+    from buildDir.absolutePath + '/image/intervalmusiccompositor.app-win-amd64'
     from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
     from project(':intervalmusiccompositor.build').files('documentation/')
   }
@@ -117,10 +146,10 @@ task distLinuxApp(type: Zip, dependsOn: 'copyLinuxUpdater') {
   description = "Creates an archive from the Linux version."
 
   archiveBaseName = applicationName
-  archiveAppendix = 'linux'
+  archiveAppendix = 'linux-amd64'
 
   into (applicationName) {
-    from buildDir.absolutePath + '/image/intervalmusiccompositor.app-linux'
+    from buildDir.absolutePath + '/image/intervalmusiccompositor.app-linux-amd64'
     from project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.svg')
     from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
     from project(':intervalmusiccompositor.build').files('documentation/')
@@ -136,7 +165,7 @@ task distDebPackage(type: Deb, dependsOn: 'copyLinuxUpdater') {
 
   // Collect needed files
   into project.ext.debPackageInstallPath
-  from buildDir.absolutePath + '/image/intervalmusiccompositor.app-linux'
+  from buildDir.absolutePath + '/image/intervalmusiccompositor.app-linux-amd64'
   from project(':intervalmusiccompositor.build').file('icons/interval_music_compositor.svg')
   from project(':intervalmusiccompositor.build').file('os_scripts/freedesktop/intervalmusiccompositor.desktop')
   from project(':intervalmusiccompositor.app').files('src/main/resources/CHANGELOG.txt')
@@ -155,7 +184,7 @@ task renameDebPackage (type: Copy, dependsOn: distDebPackage) {
   }
 }
 
-task distAll(dependsOn: [distOsxApp, distWindowsApp, distLinuxApp, renameDebPackage]) {
+task distAll(dependsOn: [distOsxApp, distOsxAarch64App, distWindowsApp, distLinuxApp, renameDebPackage]) {
   description = "Creates archives for all supported operating systems."
 }
 

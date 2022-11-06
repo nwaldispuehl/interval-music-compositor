@@ -27,7 +27,7 @@ public class LinuxPlatform extends Platform {
     //---- Methods
 
     @Override
-    public String getOsDownloadDescriptor() {
+    public String getOsIdentifier() {
         return "linux";
     }
 

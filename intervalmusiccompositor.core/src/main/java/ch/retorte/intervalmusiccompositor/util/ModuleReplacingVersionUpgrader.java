@@ -122,8 +122,7 @@ public class ModuleReplacingVersionUpgrader implements VersionUpgrader {
 
     /**
      * Unzips new version archive into destination.
-     *
-     * Code taken from https://www.baeldung.com/java-compress-and-uncompress.
+     * Code taken from <a href="https://www.baeldung.com/java-compress-and-uncompress">baeldung.com</a>.
      */
     private void unzipFiles(File newVersionZipArchive, File destination, ProgressListener progressListener) {
         try {

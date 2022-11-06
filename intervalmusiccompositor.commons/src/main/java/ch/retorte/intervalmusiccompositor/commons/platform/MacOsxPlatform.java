@@ -12,7 +12,7 @@ public class MacOsxPlatform extends Platform {
     }
 
     @Override
-    public String getOsDownloadDescriptor() {
+    public String getOsIdentifier() {
         return "mac";
     }
 

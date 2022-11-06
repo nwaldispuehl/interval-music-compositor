@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+202x-xx-xx  2.11.5 [not yet released]
+--------------------------------------------------------------------------------
+IMP  #68    Adds version for Apple AArch64 (aka Arm64, i.e. M1 etc.) architecture.
+
+
 2022-10-15  2.11.4
 --------------------------------------------------------------------------------
 FIX         Branding background image not displayed on clean startup.
