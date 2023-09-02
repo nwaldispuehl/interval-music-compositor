@@ -23,9 +23,11 @@ public class CreateCacheJobManager {
   }
 
   private synchronized void dispatchOldestJob() {
-    CreateCacheJob job = pendingJobs.poll();
-    job.addListener(this::notifyJobTermination);
-    dispatch(job);
+    if (!pendingJobs.isEmpty()) {
+      CreateCacheJob job = pendingJobs.poll();
+      job.addListener(this::notifyJobTermination);
+      dispatch(job);
+    }
   }
 
   private void dispatch(CreateCacheJob j) {
@@ -64,7 +66,7 @@ public class CreateCacheJobManager {
   }
 
   private boolean isJobAvailable() {
-    return 0 < pendingJobs.size();
+    return !pendingJobs.isEmpty();
   }
 
   private boolean isBelowConcurrentJobsLimit() {
@@ -73,7 +75,7 @@ public class CreateCacheJobManager {
 
   private void addDebugMessagesWith(String text) {
     messageProducer.send(new DebugMessage(this, text));
-    messageProducer.send(new DebugMessage(this, "Current jobs: " + threadCount + " (maximum: " + threadLimit + ")"));
+    messageProducer.send(new DebugMessage(this, "Running jobs: " + threadCount + " (maximum: " + threadLimit + ")"));
   }
 
 }

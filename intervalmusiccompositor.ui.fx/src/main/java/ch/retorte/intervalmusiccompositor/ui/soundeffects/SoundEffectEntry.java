@@ -107,7 +107,6 @@ class SoundEffectEntry extends HBox {
     }
 
     private void initializePlayButton() {
-        playSoundEffect.onActionProperty().addListener(debugHandlerWith(playSoundEffect.getId()));
         playSoundEffect.setOnAction(event -> {
             if (soundEffectOccurrence.getSoundEffect() != null) {
                 musicListControl.playSoundEffect(soundEffectOccurrence.getSoundEffect());
