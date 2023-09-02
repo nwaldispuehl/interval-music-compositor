@@ -75,4 +75,10 @@ public class LinuxPlatform extends Platform {
     public String getUpgradeExecutableName() {
         return "intervalmusiccompositor-updater";
     }
+
+    @Override
+    public int getMaximumPathLength() {
+        /* Note: This is actually the maximum filename length. */
+        return 255;
+    }
 }

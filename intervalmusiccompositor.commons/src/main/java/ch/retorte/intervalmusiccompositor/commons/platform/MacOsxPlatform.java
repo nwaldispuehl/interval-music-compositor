@@ -40,4 +40,9 @@ public class MacOsxPlatform extends Platform {
     public String getUpgradeExecutableName() {
         return "intervalmusiccompositor-updater";
     }
+
+    @Override
+    public int getMaximumPathLength() {
+        return 255;
+    }
 }
