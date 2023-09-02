@@ -9,7 +9,6 @@ import ch.retorte.intervalmusiccompositor.spi.MusicListControl;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.soundeffects.SoundEffectsProvider;
 import ch.retorte.intervalmusiccompositor.ui.bundle.UiBundleProvider;
-import ch.retorte.intervalmusiccompositor.ui.mainscreen.DebugMessageEventHandler;
 import ch.retorte.intervalmusiccompositor.ui.preferences.UiUserPreferences;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -101,7 +100,6 @@ public class SoundEffectsPane extends BorderPane {
     }
 
     private void initializeAddButton() {
-        addSoundEffects.onActionProperty().addListener(debugHandlerWith(addSoundEffects.getId()));
         addSoundEffects.setOnAction(event -> addNewEntry());
         addSoundEffects.graphicProperty().set(new ImageView(new Image(SoundEffectsPane.class.getResourceAsStream("/images/add_icon_small.png"))));
     }
@@ -157,10 +155,5 @@ public class SoundEffectsPane extends BorderPane {
     private void updateSpinnerSizeWith(int maximalTrackDuration) {
         soundEffectEntries.forEach(e -> e.updateSpinnerSizeWith(maximalTrackDuration));
     }
-
-    private DebugMessageEventHandler debugHandlerWith(String id) {
-        return new DebugMessageEventHandler(SoundEffectsPane.this, id, messageProducer);
-    }
-
 
 }

@@ -1,5 +1,7 @@
 package ch.retorte.intervalmusiccompositor.spi.encoder;
 
+import ch.retorte.intervalmusiccompositor.spi.HumanReadableName;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -9,7 +11,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 /**
  * @author nw
  */
-public interface AudioFileEncoder {
+public interface AudioFileEncoder extends HumanReadableName {
 
   /**
    * Encodes the input file into some target format and saves it in the output file. Assumes the input stream of default encoding of the software.
@@ -45,4 +47,9 @@ public interface AudioFileEncoder {
    * Provides a unique identification string for this encoder.
    */
   String getIdentificator();
+
+  @Override
+  default String getName() {
+    return getIdentificator();
+  }
 }

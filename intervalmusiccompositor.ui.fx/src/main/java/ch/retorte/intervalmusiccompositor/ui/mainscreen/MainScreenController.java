@@ -414,7 +414,6 @@ public class MainScreenController implements Initializable {
         widgetTools.prepare(breakPeriod);
         widgetTools.prepare(iterations);
 
-        periodTabPane.getSelectionModel().selectedItemProperty().addListener(debugHandlerWith(periodTabPane.getId()));
         periodTabPane.getSelectionModel().selectedItemProperty().addListener(updateUiHandler());
 
         soundPeriod.valueProperty().addListener(debugHandlerWith(soundPeriod.getId()));
@@ -687,18 +686,12 @@ public class MainScreenController implements Initializable {
     }
 
     private String getLabelFor(ListSortMode listSortMode) {
-        switch (listSortMode) {
-            case MANUAL:
-                return bundle.getString("ui.form.music_list.list_mode.manual");
-            case SHUFFLE:
-                return bundle.getString("ui.form.music_list.list_mode.shuffle");
-            case SORT:
-                return bundle.getString("ui.form.music_list.list_mode.sort");
-            case SORT_REV:
-                return bundle.getString("ui.form.music_list.list_mode.sort_rev");
-            default:
-                return "";
-        }
+        return switch (listSortMode) {
+            case MANUAL -> bundle.getString("ui.form.music_list.list_mode.manual");
+            case SHUFFLE -> bundle.getString("ui.form.music_list.list_mode.shuffle");
+            case SORT -> bundle.getString("ui.form.music_list.list_mode.sort");
+            case SORT_REV -> bundle.getString("ui.form.music_list.list_mode.sort_rev");
+        };
     }
 
     public void setEnvelopeImage(BufferedImage envelopeImage) {
