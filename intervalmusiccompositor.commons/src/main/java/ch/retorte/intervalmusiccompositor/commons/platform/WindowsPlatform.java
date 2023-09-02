@@ -52,4 +52,9 @@ public class WindowsPlatform extends Platform {
     public String getUpgradeExecutableName() {
         return "intervalmusiccompositor-updater.exe";
     }
+
+    @Override
+    public int getMaximumPathLength() {
+        return 260;
+    }
 }

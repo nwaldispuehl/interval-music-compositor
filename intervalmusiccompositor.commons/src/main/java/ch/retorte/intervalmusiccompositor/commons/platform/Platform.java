@@ -304,4 +304,9 @@ public abstract class Platform {
         return new File(getBinaryPathFrom(distributionRoot).getAbsolutePath() + File.separator + getProgramExecutableName());
     }
 
+    /**
+     * Returns the maximum length of an absolute path.
+     */
+    public abstract int getMaximumPathLength();
+
 }
