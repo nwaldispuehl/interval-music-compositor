@@ -1,10 +1,10 @@
 plugins {
   id 'application'
 
-  id "org.openjfx.javafxplugin" version "0.0.10"
-  id 'org.beryx.jlink' version '2.24.4'
+  id "org.openjfx.javafxplugin" version "0.1.0"
+  id 'org.beryx.jlink' version '3.0.1'
 
-  id "nebula.ospackage" version "9.0.0"
+  id "com.netflix.nebula.ospackage" version "11.5.0"
 }
 
 group = 'ch.retorte.intervalmusiccompositor'
@@ -39,23 +39,23 @@ javafx {
 
 jlink {
   targetPlatform("linux-amd64") {
-    jdkHome = "/opt/java/platforms/linux/x64/jdk-17.0.5+8"
-    addExtraModulePath("/opt/openjfx/linux/x64/javafx-jmods-17.0.1")
+    jdkHome = "/opt/java/platforms/linux/x64/jdk-21.0.1+12"
+    addExtraModulePath("/opt/openjfx/linux/x64/javafx-jmods-21.0.1")
   }
 
   targetPlatform("mac-x86_64") {
-    jdkHome = "/opt/java/platforms/mac/x64/jdk-17.0.5+8"
-    addExtraModulePath("/opt/openjfx/mac/x64/javafx-jmods-17.0.1")
+    jdkHome = "/opt/java/platforms/mac/x64/jdk-21.0.1+12"
+    addExtraModulePath("/opt/openjfx/mac/x64/javafx-jmods-21.0.1")
   }
 
   targetPlatform("mac-aarch64") {
-    jdkHome = "/opt/java/platforms/mac/aarch64/jdk-17.0.5+8"
-    addExtraModulePath("/opt/openjfx/mac/aarch64/javafx-jmods-17.0.1")
+    jdkHome = "/opt/java/platforms/mac/aarch64/jdk-21.0.1+12"
+    addExtraModulePath("/opt/openjfx/mac/aarch64/javafx-jmods-21.0.1")
   }
 
   targetPlatform("win-amd64") {
-    jdkHome = "/opt/java/platforms/win/x64/jdk-17.0.5+8"
-    addExtraModulePath("/opt/openjfx/win/x64/javafx-jmods-17.0.1")
+    jdkHome = "/opt/java/platforms/win/x64/jdk-21.0.1+12"
+    addExtraModulePath("/opt/openjfx/win/x64/javafx-jmods-21.0.1")
   }
 }
 
@@ -156,7 +156,7 @@ task distLinuxApp(type: Zip, dependsOn: 'copyLinuxUpdater') {
   }
 }
 
-apply plugin: 'nebula.deb'
+apply plugin: 'com.netflix.nebula.deb'
 
 task distDebPackage(type: Deb, dependsOn: 'copyLinuxUpdater') {
   packageName 'intervalmusiccompositor'

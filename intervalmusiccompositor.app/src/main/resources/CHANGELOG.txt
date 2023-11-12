@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2023-xx-xx  2.11.6 [not yet released]
+--------------------------------------------------------------------------------
+IMP         Upgrades the bundled runtime to Java 21.
+
+
 2023-09-03  2.11.5
 --------------------------------------------------------------------------------
 IMP  #68    Adds version for Apple AArch64 (aka Arm64, i.e. M1 etc.) architecture.
