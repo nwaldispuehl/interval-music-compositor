@@ -12,7 +12,7 @@ First, prepare the source code for the upcoming release.
   - For the build: `intervalmusiccompositor.app/gradle.properties`
   - For inside the application: `intervalmusiccompositor.app/src/main/resources/imc.properties`
   - For the documentation: `intervalmusiccompositor.app/src/main/resources/CHANGELOG.txt`
-- Commit the change to the `master` branch and tag the version with `v` prefix:
+- Commit the change to the `main` branch and tag the version with `v` prefix:
 
       $ git add .
       $ git commit -m 'Upgrades to version 1.2.3.'
