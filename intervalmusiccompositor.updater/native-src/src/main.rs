@@ -1,25 +1,28 @@
 // On Windows platform, don't show a console when opening the app.
 #![windows_subsystem = "windows"]
 
-use std::{thread, time};
+use std::thread;
 use std::env;
+use std::io::prelude::*;
 use std::fs;
+use std::fs::OpenOptions;
 use std::ops::Not;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::str;
+use std::sync::mpsc::{channel, Receiver, Sender};
 use std::time::Duration;
-use std::sync::mpsc::{channel, Sender, Receiver};
 
-use sysinfo::{Pid, ProcessExt, System, SystemExt};
+use chrono::Utc;
+use dircpy::*;
+use druid::{AppDelegate, AppLauncher, Data, DelegateCtx, Handled, Lens, Selector, Target, UnitPoint, WidgetExt, WindowDesc};
+use druid::widget::{Flex, Label};
+use druid::widget::prelude::*;
+use sysinfo::{Pid, PidExt, ProcessExt, System, SystemExt};
 
-const HALF_A_SECOND: Duration = time::Duration::from_millis(500);
+const HALF_A_SECOND: Duration = Duration::from_millis(500);
 
 const MESSAGE_ID: Selector<String> = Selector::new("message");
-
-use druid::widget::prelude::*;
-use druid::widget::{Flex, Label};
-use druid::{AppDelegate, AppLauncher, Data, DelegateCtx, Handled, Lens, Selector, Target, UnitPoint, WidgetExt, WindowDesc};
 
 /// Stand-alone updater for the IntervalMusicCompositor.
 ///
@@ -85,6 +88,16 @@ fn open_program_window_with(main_program_pid: String, software_root_dir: String)
 
     thread::spawn( move || {
         while let Ok(msg) = receiver.recv() {
+
+            // Copy the content to the log file.
+            let mut file = OpenOptions::new()
+                .create(true)
+                .append(true)
+                .open(Path::new(&software_root_dir).join("upgrade.log")).unwrap();
+            if let Err(e) = writeln!(file, "[{}] {}", Utc::now().format("%Y-%m-%d %H:%M:%S"), msg.clone().message) {
+                eprintln!("Unable to write into log file: {}", e);
+            }
+
             sink.submit_command(MESSAGE_ID, msg.message, Target::Auto)
                 .expect("Unable to send display message.");
 
@@ -168,8 +181,7 @@ fn wait_for_process(main_program_pid: &String, sender: Sender<Message>) {
     print(sender.clone(), &format!("Waiting for process with pid '{}'", main_program_pid));
 
     let mut sys = System::new_all();
-    let pid = Pid::from(parse(main_program_pid));
-    let hundred_millis = time::Duration::from_millis(100);
+    let pid = Pid::from_u32(parse(main_program_pid));
 
     if sys.process(pid).is_some() {
         loop {
@@ -180,7 +192,7 @@ fn wait_for_process(main_program_pid: &String, sender: Sender<Message>) {
                 },
                 Some(process) => {
                     print(sender.clone(), &format!("Process '{}' running (status: '{}'), waiting...", process.name(), process.status()));
-                    thread::sleep(hundred_millis);
+                    thread::sleep(HALF_A_SECOND);
                 }
             }
         }
@@ -189,27 +201,69 @@ fn wait_for_process(main_program_pid: &String, sender: Sender<Message>) {
     print(sender.clone(), "Process terminated or not existing.");
 }
 
+fn parse(main_program_id: &String) -> u32 {
+    main_program_id.parse::<>().unwrap()
+}
+
 fn upgrade(software_root_dir: &String, sender: Sender<Message>) {
     print(sender.clone(), &format!("Upgrade in {}", software_root_dir));
 
     let upgrade_dir = Path::new(software_root_dir).join("upgrade").join("IntervalMusicCompositor");
-    let root_dir = Path::new(software_root_dir);
+    let root_dir = Path::new(software_root_dir).to_path_buf();
 
-    let result = copy(upgrade_dir.join("lib").join("modules").as_path(),root_dir.join("lib").join("modules").as_path(), sender.clone());
+    copy_dir(&upgrade_dir, &root_dir, "bin", sender.clone());
+    copy_dir(&upgrade_dir, &root_dir, "conf", sender.clone());
+    copy_dir(&upgrade_dir, &root_dir, "include", sender.clone());
+    copy_dir(&upgrade_dir, &root_dir, "legal", sender.clone());
+    copy_dir(&upgrade_dir, &root_dir, "lib", sender.clone());
+    copy_dir(&upgrade_dir, &root_dir, "man", sender.clone());
+
+    copy_file(&upgrade_dir, &root_dir, "CHANGELOG.txt", sender.clone());
+    copy_file(&upgrade_dir, &root_dir, "CREDITS.txt", sender.clone());
+    copy_file(&upgrade_dir, &root_dir, "interval_music_compositor.svg", sender.clone());
+    copy_file(&upgrade_dir, &root_dir, "release", sender.clone());
+}
+
+fn copy_dir(upgrade_dir: &PathBuf, root_dir: &PathBuf, item: &str, sender: Sender<Message>) {
+
+    let from = upgrade_dir.join(item);
+    let to = root_dir.join(item);
+
+    print(sender.clone(), &format!("Copying directory '{}' to '{}'", from.to_str().unwrap(), to.to_str().unwrap()));
+
+    let result = CopyBuilder::new(from, to)
+        .overwrite(true)
+        // Never copy the updater binary
+        .with_exclude_filter("intervalmusiccompositor-updater")
+        .run();
 
     match result {
-        Err(e) => {
-            quit_with_error_and_message(sender.clone(), &format!("Unable to copy due to: {}.", e));
-        },
         Ok(_) => {
-            print(sender.clone(), "Copy process was successful.");
+            print(sender.clone(), "  Success.");
+        },
+        Err(e) => {
+            print(sender.clone(), &format!("Unable to copy due to: {}.", e));
         }
     }
 }
 
-fn copy(from: &Path, to: &Path, sender: Sender<Message>) -> std::io::Result<u64> {
-    print(sender, &format!("Copying '{}' to '{}'", from.to_str().unwrap(), to.to_str().unwrap()));
-    fs::copy(from, to)
+fn copy_file(upgrade_dir: &PathBuf, root_dir: &PathBuf, item: &str, sender: Sender<Message>) {
+
+    let from = upgrade_dir.join(item);
+    let to = root_dir.join(item);
+
+    print(sender.clone(), &format!("Copying file '{}' to '{}'", from.to_str().unwrap(), to.to_str().unwrap()));
+
+    let result = fs::copy(from, to);
+
+    match result {
+        Ok(_) => {
+            print(sender.clone(), "  Success.");
+        },
+        Err(e) => {
+            print(sender.clone(), &format!("Unable to copy due to: {}.", e));
+        }
+    }
 }
 
 fn restart_software_in(software_root_dir: &String, sender: Sender<Message>) {
@@ -243,30 +297,6 @@ fn quit_with_error(text: &str) {
 
 
 //---- OS dependent functions
-
-///
-/// The return type is system dependent:
-///
-/// Linux: i32
-/// Mac: i32
-/// Windows: usize
-///
-#[cfg(target_os = "windows")]
-fn parse(main_program_id: &String) -> usize {
-    main_program_id.parse::<>().unwrap()
-}
-
-///
-/// The return type is system dependent:
-///
-/// Linux: i32
-/// Mac: i32
-/// Windows: usize
-///
-#[cfg(not(target_os = "windows"))]
-fn parse(main_program_id: &String) -> i32 {
-    main_program_id.parse::<>().unwrap()
-}
 
 #[cfg(target_os = "windows")]
 fn main_program_name() -> &'static str {
