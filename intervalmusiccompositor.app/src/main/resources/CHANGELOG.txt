@@ -4,6 +4,7 @@ retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 2023-xx-xx  2.11.6 [not yet released]
 --------------------------------------------------------------------------------
 IMP         Upgrades the bundled runtime to Java 21.
+FIX  #73    Fixes self-upgrade by letting it copying all files instead of only the main library.
 
 
 2023-09-03  2.11.5
