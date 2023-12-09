@@ -10,13 +10,18 @@ import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.progress.ProgressListener;
 import ch.retorte.intervalmusiccompositor.spi.update.VersionUpgrader;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -34,10 +39,13 @@ public class ModuleReplacingVersionUpgrader implements VersionUpgrader {
     private static final String MESSAGE_KEY_DOWNLOAD_URL_PATTERN = "upgrade.downloadUrl.pattern";
 
     private static final String MESSAGE_KEY_ERROR_DOWNLOAD_NOT_POSSIBLE = "upgrade.error.download_not_possible";
+    private static final String MESSAGE_KEY_ERROR_EXTRACT_NOT_POSSIBLE = "upgrade.error.extract_not_possible";
 
     private static final String MESSAGE_KEY_PROGRESS_DOWNLOAD = "upgrade.progress.download";
     private static final String MESSAGE_KEY_PROGRESS_EXTRACT = "upgrade.progress.extract";
     private static final String MESSAGE_KEY_PROGRESS_REPLACE_RESTART = "upgrade.progress.replace_and_restart";
+
+    private static final Set<String> MAKE_EXECUTABLE_PATTERN = Set.of("bin", "jexec", "jspawnhelper");
 
 
     //---- Fields
@@ -82,7 +90,7 @@ public class ModuleReplacingVersionUpgrader implements VersionUpgrader {
 
         // Extract new version
         progressListener.onProgressUpdate(coreBundle.getString(MESSAGE_KEY_PROGRESS_EXTRACT));
-        unzipFiles(newVersionZipArchive, platform.getUpgradePath(), progressListener);
+        unzipFiles(newVersionZipArchive, platform.getUpgradePath(), MAKE_EXECUTABLE_PATTERN, progressListener);
 
         // Installing new standalone updater
         progressListener.onProgressUpdate(coreBundle.getString(MESSAGE_KEY_PROGRESS_REPLACE_RESTART));
@@ -124,7 +132,7 @@ public class ModuleReplacingVersionUpgrader implements VersionUpgrader {
      * Unzips new version archive into destination.
      * Code taken from <a href="https://www.baeldung.com/java-compress-and-uncompress">baeldung.com</a>.
      */
-    private void unzipFiles(File newVersionZipArchive, File destination, ProgressListener progressListener) {
+    void unzipFiles(File newVersionZipArchive, File destination, Set<String> makeExecutablePattern, ProgressListener progressListener) {
         try {
             byte[] buffer = new byte[1024];
             ZipInputStream zis = new ZipInputStream(new FileInputStream(newVersionZipArchive));
@@ -151,6 +159,15 @@ public class ModuleReplacingVersionUpgrader implements VersionUpgrader {
                         fos.write(buffer, 0, len);
                     }
                     fos.close();
+
+                    // Since we can't seem to reliably determine the executable flag of the unzipped files (even with the Apache Commons implementation)
+                    // we fall back to just manually making them executable based on some file name pattern.
+                    if (doesPathMatchPattern(destination, newFile, makeExecutablePattern)) {
+                        boolean updatedExecutableFlag = newFile.setExecutable(true);
+                        if (!updatedExecutableFlag) {
+                            throw new RuntimeException(coreBundle.getString(MESSAGE_KEY_ERROR_EXTRACT_NOT_POSSIBLE));
+                        }
+                    }
                 }
                 zipEntry = zis.getNextEntry();
             }
@@ -161,6 +178,11 @@ public class ModuleReplacingVersionUpgrader implements VersionUpgrader {
             progressListener.onProgressUpdate(e.getMessage());
             throw new RuntimeException(coreBundle.getString(MESSAGE_KEY_ERROR_DOWNLOAD_NOT_POSSIBLE), e);
         }
+    }
+
+    private boolean doesPathMatchPattern(File destination, File newFile, Set<String> makeExecutablePattern) {
+        final String pathFromDestination = newFile.getAbsolutePath().substring(destination.getAbsolutePath().length());
+        return makeExecutablePattern.stream().anyMatch(pathFromDestination::contains);
     }
 
     public static File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
@@ -198,10 +220,13 @@ public class ModuleReplacingVersionUpgrader implements VersionUpgrader {
             }
 
             debug("Starting download.");
-            URL documentUrl = new URL(downloadUrl);
+            URL documentUrl = URI.create(downloadUrl).toURL();
             ReadableByteChannel rbc = Channels.newChannel(documentUrl.openStream());
-            FileOutputStream fos = new FileOutputStream(upgradeArchive);
-            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+
+            try (FileOutputStream fos = new FileOutputStream(upgradeArchive)) {
+                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            }
+
             return upgradeArchive;
         }
         catch (IOException e) {
