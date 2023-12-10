@@ -5,7 +5,7 @@ use std::thread;
 use std::env;
 use std::io::prelude::*;
 use std::fs;
-use std::fs::OpenOptions;
+use std::fs::{DirEntry, OpenOptions};
 use std::ops::Not;
 use std::path::{Path, PathBuf};
 use std::process::Command;
@@ -212,6 +212,7 @@ fn upgrade(software_root_dir: &String, sender: Sender<Message>) {
     let root_dir = Path::new(software_root_dir).to_path_buf();
 
     copy_dir(&upgrade_dir, &root_dir, "bin", sender.clone());
+    make_dir_executable(&root_dir.join("bin"), sender.clone());
     copy_dir(&upgrade_dir, &root_dir, "conf", sender.clone());
     copy_dir(&upgrade_dir, &root_dir, "include", sender.clone());
     copy_dir(&upgrade_dir, &root_dir, "legal", sender.clone());
@@ -245,6 +246,16 @@ fn copy_dir(upgrade_dir: &PathBuf, root_dir: &PathBuf, item: &str, sender: Sende
             print(sender.clone(), &format!("Unable to copy due to: {}.", e));
         }
     }
+}
+
+fn make_dir_executable(directory: &PathBuf, sender: Sender<Message>) {
+    let files = fs::read_dir(directory).unwrap();
+    for file in files {
+        let entry = file.unwrap();
+        print(sender.clone(), &format!("Marking executable: '{}'", entry.path().to_str().unwrap()));
+        let _ = make_executable(&entry);
+    }
+
 }
 
 fn copy_file(upgrade_dir: &PathBuf, root_dir: &PathBuf, item: &str, sender: Sender<Message>) {
@@ -297,6 +308,29 @@ fn quit_with_error(text: &str) {
 
 
 //---- OS dependent functions
+
+#[cfg(target_os = "linux")]
+fn make_executable(entry: &DirEntry) -> std::io::Result<()> {
+    use std::fs::File;
+    use std::os::unix::fs::PermissionsExt;
+    let file = File::open(entry.path())?;
+    let mut perms = file.metadata()?.permissions();
+    perms.set_mode(0o744);
+    file.set_permissions(perms)?;
+    Ok(())
+}
+
+#[cfg(target_os = "macos")]
+fn make_executable(_entry: &DirEntry) -> std::io::Result<()> {
+    Ok(())
+}
+
+#[cfg(target_os = "windows")]
+fn make_executable(_entry: &DirEntry) -> std::io::Result<()> {
+    Ok(())
+}
+
+
 
 #[cfg(target_os = "windows")]
 fn main_program_name() -> &'static str {
