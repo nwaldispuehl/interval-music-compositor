@@ -4,7 +4,7 @@ title: Download
 link: download
 ---
 
-**The current version 2.11.5 was issued on September, 3rd 2023.**<br/>
+**The current version 2.11.6 was issued on December, 11th 2023.**<br/>
 ([Changelog](https://raw.githubusercontent.com/nwaldispuehl/interval-music-compositor/master/intervalmusiccompositor.app/src/main/resources/CHANGELOG.txt)).
 
 The software is provided free of charge. Please give me [feedback](feedback_support) if you encounter errors or strange behavior.
