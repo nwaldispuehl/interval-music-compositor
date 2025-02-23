@@ -1,6 +1,11 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
+2025-xx-xx  2.11.7
+--------------------------------------------------------------------------------
+FIX  #81    Fixes occasional crash when opening output directory chooser.
+
+
 2023-12-11  2.11.6
 --------------------------------------------------------------------------------
 IMP         Upgrades the bundled runtime to Java 21.
