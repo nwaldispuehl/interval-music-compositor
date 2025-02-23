@@ -125,6 +125,7 @@ public class ArrayHelper {
             double difference = Math.abs(list.get(i - 1) - list.get(i));
             if (eps < difference) {
                 result = false;
+                break;
             }
         }
 

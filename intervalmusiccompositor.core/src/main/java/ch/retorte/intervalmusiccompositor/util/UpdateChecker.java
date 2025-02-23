@@ -14,6 +14,7 @@ import ch.retorte.intervalmusiccompositor.spi.update.UpdateAvailabilityChecker;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -86,7 +87,7 @@ public class UpdateChecker implements UpdateAvailabilityChecker {
         Version currentVersion = applicationData.getProgramVersion();
 
         try {
-            remoteVersion = getRemoteVersion(new URL(bundle.getString("web.current_version.url")));
+            remoteVersion = getRemoteVersion(new URI(bundle.getString("web.current_version.url")).toURL());
         } catch (Exception e) {
             addDebugMessage("Failed to get remote version: " + e.getMessage());
             throw new UpdateAvailabilityCheckerException();

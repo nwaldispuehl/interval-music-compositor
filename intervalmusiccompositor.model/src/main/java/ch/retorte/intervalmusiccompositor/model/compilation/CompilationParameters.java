@@ -96,7 +96,7 @@ public class CompilationParameters {
   }
 
   private boolean isEmpty(String s) {
-    return s == null || s.equals("");
+    return s == null || s.isEmpty();
   }
 
   public void addSoundEffectOccurrence(SoundEffectOccurrence soundEffectOccurrence) {
@@ -209,7 +209,7 @@ public class CompilationParameters {
       singleIterationDuration += musicPattern.get(i);
 
       // Add current break item (or restart if there are not enough of them)
-      if (0 < breakPattern.size()) {
+      if (!breakPattern.isEmpty()) {
         singleIterationDuration += breakPattern.get(i % breakPattern.size());
       }
     }
@@ -219,7 +219,7 @@ public class CompilationParameters {
     // If cross fading is activated, add fade interval once (= a half at start
     // and one at the end)
     if (blendMode == BlendMode.CROSS && 0 < singleIterationDuration && 0 < iterations) {
-      durationEstimationValue += blendDuration;
+      durationEstimationValue += (int) blendDuration;
     }
     return durationEstimationValue;
   }

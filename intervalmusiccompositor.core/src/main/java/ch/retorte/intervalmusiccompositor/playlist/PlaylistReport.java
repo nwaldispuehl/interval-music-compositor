@@ -52,7 +52,7 @@ public class PlaylistReport {
         currentPositionsSeconds += playlist.getHalfBlendTimeS();
       }
       appendMusicLine(result, playlist, i, currentPositionsSeconds, musicFragment);
-      totalPositionSeconds += musicFragment.getExtractDurationInSeconds();
+      totalPositionSeconds += (int) musicFragment.getExtractDurationInSeconds();
 
       if (playlist.isCrossFadingMode()) {
         totalPositionSeconds -= playlist.getBlendTimeS();
@@ -67,7 +67,7 @@ public class PlaylistReport {
         }
 
         appendMusicLine(result, playlist, i, currentPositionsSeconds, breakFragment);
-        totalPositionSeconds += breakFragment.getExtractDurationInSeconds();
+        totalPositionSeconds += (int) breakFragment.getExtractDurationInSeconds();
 
         if (playlist.isCrossFadingMode()) {
           totalPositionSeconds -= playlist.getBlendTimeS();

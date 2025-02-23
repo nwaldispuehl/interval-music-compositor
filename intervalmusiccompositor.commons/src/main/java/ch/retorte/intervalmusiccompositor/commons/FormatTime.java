@@ -21,16 +21,16 @@ public class FormatTime {
 
     int discreteSeconds = (int) Math.abs(seconds);
 
-    String result = "";
+    String result;
     DecimalFormat df = new DecimalFormat(NUMBER_FORMAT);
 
     if (discreteSeconds < 3600) {
       int minutes = (int) Math.floor(discreteSeconds / 60.0);
-      result = df.format(minutes) + ":" + df.format(discreteSeconds - (minutes * 60));
+      result = df.format(minutes) + ":" + df.format(discreteSeconds - (minutes * 60L));
     } else {
       int hours = (int) Math.floor(discreteSeconds / 3600.0);
       int minutes = (int) Math.floor((discreteSeconds - (hours * 3600)) / 60.0);
-      result = hours + ":" + df.format(minutes) + ":" + df.format(discreteSeconds - (minutes * 60) - (hours * 3600));
+      result = hours + ":" + df.format(minutes) + ":" + df.format(discreteSeconds - (minutes * 60L) - (hours * 3600L));
     }
 
     if (seconds < 0) {

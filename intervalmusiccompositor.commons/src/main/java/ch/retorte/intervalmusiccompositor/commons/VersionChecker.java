@@ -29,9 +29,10 @@ public class VersionChecker {
 
     public void startVersionCheckWith(ChangeListener<Version> newVersionListener, ChangeListener<Void> noNewVersionListener, ChangeListener<Exception> errorListener) {
         // We are creating a thread executor, but shutting it down right away, so it gets collected once the task finishes.
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.submit(new VersionCheckTask(newVersionListener, noNewVersionListener, errorListener));
-        executorService.shutdown();
+        try (ExecutorService executorService = Executors.newSingleThreadExecutor()) {
+            executorService.submit(new VersionCheckTask(newVersionListener, noNewVersionListener, errorListener));
+            executorService.shutdown();
+        }
     }
 
 

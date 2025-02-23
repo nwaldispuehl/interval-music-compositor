@@ -23,7 +23,7 @@ public class OggBPMReaderWriter implements BPMReaderWriter {
       VorbisCommentTag ovtag = (VorbisCommentTag) f.getTag();
       String bpmTag = ovtag.getFirst(VorbisCommentFieldKey.BPM);
 
-      if (!bpmTag.equals("")) {
+      if (!bpmTag.isEmpty()) {
         return Integer.valueOf(bpmTag);
       }
     } catch (Exception e) {

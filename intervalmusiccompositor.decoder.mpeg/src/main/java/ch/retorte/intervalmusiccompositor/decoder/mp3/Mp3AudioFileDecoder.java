@@ -53,10 +53,9 @@ public class Mp3AudioFileDecoder implements AudioFileDecoder {
   }
 
   /**
-   * Returns an {@link InputStream} of the provided file without any meta data header.
-   *
-   *  This is now a work around (aka hack) for audio files with stored images in them.
-   *  The images have to be removed. We load the file as FileInputStream, check the length of the header and skip it.
+   * Returns an {@link InputStream} of the provided file without any metadata header.
+   * This is now a workaround (aka hack) for audio files with stored images in them.
+   * The images have to be removed. We load the file as FileInputStream, check the length of the header and skip it.
    */
   private InputStream streamWithoutHeaderOf(File inputFile) throws IOException {
     FileInputStream f_in = new FileInputStream(inputFile);

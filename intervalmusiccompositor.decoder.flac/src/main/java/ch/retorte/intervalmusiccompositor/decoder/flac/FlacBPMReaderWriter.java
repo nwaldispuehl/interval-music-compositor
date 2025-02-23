@@ -26,7 +26,7 @@ public class FlacBPMReaderWriter implements BPMReaderWriter {
 
       String bpmTag = ovtag.getFirst(VorbisCommentFieldKey.BPM);
 
-      if (!bpmTag.equals("")) {
+      if (!bpmTag.isEmpty()) {
         return Integer.valueOf(bpmTag);
       }
     } catch (Exception e) {

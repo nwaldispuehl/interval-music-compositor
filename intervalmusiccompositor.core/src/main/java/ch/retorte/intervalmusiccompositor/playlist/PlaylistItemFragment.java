@@ -45,7 +45,7 @@ public class PlaylistItemFragment {
   }
 
   public double getExtractDurationInSeconds() {
-    return getExtractDurationInMilliseconds() / 1000;
+    return (double) getExtractDurationInMilliseconds() / 1000;
   }
 
   public IAudioFile getAudioFile() {
@@ -61,7 +61,7 @@ public class PlaylistItemFragment {
   }
 
   public double getExtractStartInSeconds() {
-    return getExtractStartInMilliseconds() / 1000;
+    return (double) getExtractStartInMilliseconds() / 1000;
   }
 
   long getExtractEndInMilliseconds() {
@@ -69,7 +69,7 @@ public class PlaylistItemFragment {
   }
 
   double getExtractEndInSeconds() {
-    return getExtractEndInMilliseconds() / 1000;
+    return (double) getExtractEndInMilliseconds() / 1000;
   }
 
   @Override

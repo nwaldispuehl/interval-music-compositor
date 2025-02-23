@@ -120,7 +120,7 @@ public class AacAudioFileDecoder implements AudioFileDecoder {
         throw new UnsupportedAudioFileException("Movie does not contain any AAC track");
       }
 
-      final AudioTrack track = (AudioTrack) tracks.get(0);
+      final AudioTrack track = (AudioTrack) tracks.getFirst();
       final Decoder dec = new Decoder(track.getDecoderSpecificInfo());
 
       Frame frame;
