@@ -204,7 +204,7 @@ public class Playlist implements Iterable<PlaylistItem> {
   }
 
   private boolean hasSingleZero(List<Integer> breakPattern) {
-    return breakPattern.size() == 1 && breakPattern.iterator().next() == 0;
+    return breakPattern.size() == 1 && breakPattern.getFirst() == 0;
   }
 
   private PlaylistItemFragment createPlaylistItemFrom(IAudioFile audioFile, double volume, long extractLengthInMilliseconds, boolean isBreak) {
@@ -349,10 +349,10 @@ public class Playlist implements Iterable<PlaylistItem> {
   }
 
   public Optional<PlaylistItem> getFirst() {
-    return playlistItems.isEmpty() ? Optional.empty() : Optional.of(playlistItems.get(0));
+    return playlistItems.isEmpty() ? Optional.empty() : Optional.of(playlistItems.getFirst());
   }
 
   public Optional<PlaylistItem> getLast() {
-    return playlistItems.isEmpty() ? Optional.empty() : Optional.of(playlistItems.get(playlistItems.size() - 1));
+    return playlistItems.isEmpty() ? Optional.empty() : Optional.of(playlistItems.getLast());
   }
 }

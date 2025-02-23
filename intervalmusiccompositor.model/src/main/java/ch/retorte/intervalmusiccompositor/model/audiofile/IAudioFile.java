@@ -117,7 +117,7 @@ public interface IAudioFile extends Comparable<File> {
    * Returns the ratio between this tracks amplitude and some preset maximum* amplitude. This ratio is 1 if the volume of this track matches the preset volume.
    * The ratio is smaller if the volume of this track is bigger. This ratio thus can be used directly to control the output volume of each track, achieving a
    * normalization of all tracks.
-   * 
+   * <br/>
    * *) For arbitrary definitions of 'maximum'.
    * 
    * @return The ratio of the 'volume' of this track in respect to the preset maximum volume.

@@ -256,7 +256,7 @@ class MainControl implements MusicListControl, MusicCompilationControl, ProgramC
     }
 
     public IAudioFile addBreakTrack(int i, File file) {
-        if (breakList.size() < 1) {
+        if (breakList.isEmpty()) {
             return addTrack(breakList, i, file);
         }
         return null;

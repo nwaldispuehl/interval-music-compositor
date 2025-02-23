@@ -40,7 +40,7 @@ public class AudioFileFactory {
     BPMReaderWriter bpmReaderWriter = findMatchingBPMReaderWriterFor(file);
 
     if (!audioFileDecoders.isEmpty()) {
-      addDebugMessage("Selected " + audioFileDecoders.get(0).getClass().getSimpleName() + " for decoding " + file);
+      addDebugMessage("Selected " + audioFileDecoders.getFirst().getClass().getSimpleName() + " for decoding " + file);
     }
     else {
       addDebugMessage("No AudioFileDecoder found for decoding " + file);

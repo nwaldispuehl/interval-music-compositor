@@ -5,8 +5,6 @@ package ch.retorte.intervalmusiccompositor.compilation;
  */
 public class CompilationException extends IllegalStateException {
 
-  private static final long serialVersionUID = 1L;
-
   CompilationException(String message, Throwable cause) {
     super(message, cause);
   }

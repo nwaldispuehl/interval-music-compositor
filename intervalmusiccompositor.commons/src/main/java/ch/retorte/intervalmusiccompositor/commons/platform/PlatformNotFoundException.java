@@ -9,6 +9,4 @@ public class PlatformNotFoundException extends RuntimeException {
 		super(message);
 	}
 
-	private static final long serialVersionUID = 1L;
-
 }

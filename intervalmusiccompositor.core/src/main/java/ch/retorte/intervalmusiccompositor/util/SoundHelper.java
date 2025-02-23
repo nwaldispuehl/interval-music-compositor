@@ -125,13 +125,13 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
   public byte[] getStreamPart(AudioInputStream inputStream, Long startTimeMS, Long durationMS) throws IOException {
 
     // First skip to the desired position
-    long bytesToSkip = Math.round((startTimeMS / 1000) * inputStream.getFormat().getSampleRate() * inputStream.getFormat().getFrameSize());
+    long bytesToSkip = Math.round((startTimeMS / 1000.0) * inputStream.getFormat().getSampleRate() * inputStream.getFormat().getFrameSize());
     long skippedBytes = inputStream.skip(bytesToSkip);
     if (bytesToSkip != skippedBytes) {
       addDebugMessage("Tried to skip " + bytesToSkip + " bytes but only skipped " + skippedBytes + " bytes.");
     }
 
-    byte[] result = new byte[Math.round((durationMS / 1000) * inputStream.getFormat().getSampleRate() * inputStream.getFormat().getFrameSize())];
+    byte[] result = new byte[Math.round(((float) durationMS / 1000) * inputStream.getFormat().getSampleRate() * inputStream.getFormat().getFrameSize())];
 
     // Choose a buffer of 100 KB
     byte[] audioBytes = new byte[102400];
@@ -224,8 +224,8 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
 
   public AudioInputStream getStreamExtract(AudioInputStream ais, int start, int length) {
 
-    long startMs = start * 1000;
-    long durationMs = length * 1000;
+    long startMs = start * 1000L;
+    long durationMs = length * 1000L;
 
     AudioInputStream result = null;
 
@@ -245,7 +245,7 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
 
       byte[] streamExtract = getStreamPart(ais, startMs, durationMs);
 
-      int extractFrameLength = (int) (TARGET_AUDIO_FORMAT.getSampleRate() * TARGET_AUDIO_FORMAT.getFrameSize() * (durationMs / 1000));
+      int extractFrameLength = (int) (TARGET_AUDIO_FORMAT.getSampleRate() * TARGET_AUDIO_FORMAT.getFrameSize() * (durationMs / 1000.0));
       result = new AudioInputStream(new ByteArrayInputStream(streamExtract), TARGET_AUDIO_FORMAT, extractFrameLength);
     }
     catch (IOException e) {

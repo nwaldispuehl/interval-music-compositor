@@ -31,7 +31,7 @@ public class Mp3BPMReaderWriter implements BPMReaderWriter {
 
         bpmTag = tag.getFirst(ID3v24FieldKey.BPM);
 
-        if (!bpmTag.equals("")) {
+        if (!bpmTag.isEmpty()) {
           return Integer.valueOf(bpmTag);
         }
       }
@@ -48,7 +48,7 @@ public class Mp3BPMReaderWriter implements BPMReaderWriter {
     try {
 
       MP3File f = (MP3File) AudioFileIO.read(file);
-      AbstractID3v2Tag tag = null;
+      AbstractID3v2Tag tag;
 
       if (f.hasID3v2Tag()) {
 
