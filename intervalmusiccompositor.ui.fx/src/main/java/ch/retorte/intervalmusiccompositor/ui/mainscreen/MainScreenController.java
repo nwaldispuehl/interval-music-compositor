@@ -634,7 +634,7 @@ public class MainScreenController implements Initializable {
     private void openDirectoryChooser() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
 
-        if (!new File(compilationParameters.getOutputPath()).exists()) {
+        if (compilationParameters.getOutputPath() == null || !new File(compilationParameters.getOutputPath()).exists()) {
             resetOutputDirectory();
         }
 
