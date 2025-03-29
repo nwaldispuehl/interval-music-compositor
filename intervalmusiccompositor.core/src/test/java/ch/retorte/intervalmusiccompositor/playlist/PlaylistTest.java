@@ -62,7 +62,7 @@ public class PlaylistTest {
         breakPattern = newArrayList();
         soundEffectOccurrences = newArrayList();
 
-        when(soundEffect1.getDurationMillis()).thenReturn(2000L);
+        when(soundEffect1.getDurationMs()).thenReturn(2000.0);
     }
 
     @Test
@@ -366,7 +366,7 @@ public class PlaylistTest {
         // then
         assertTrue(playlist.hasSoundEffects());
         List<SoundEffectOccurrence> soundEffects = playlist.iterator().next().getSoundEffects();
-        assertThat(soundEffects.get(0).getTimeMillis(), is(15000L));
+        assertThat(soundEffects.get(0).getStartTimeMs(), is(15000L));
     }
 
     @Test
@@ -384,7 +384,7 @@ public class PlaylistTest {
         // then
         assertTrue(playlist.hasSoundEffects());
         List<SoundEffectOccurrence> soundEffects = playlist.iterator().next().getSoundEffects();
-        assertThat(soundEffects.get(0).getTimeMillis(), is(6000L));
+        assertThat(soundEffects.get(0).getStartTimeMs(), is(6000L));
     }
 
     @Test
@@ -402,7 +402,7 @@ public class PlaylistTest {
         assertTrue(playlist.hasSoundEffects());
         List<SoundEffectOccurrence> soundEffects = playlist.iterator().next().getSoundEffects();
         assertThat(soundEffects.size(), is(1));
-        assertThat(soundEffects.get(0).getTimeMillis(), is(9000L));
+        assertThat(soundEffects.get(0).getStartTimeMs(), is(9000L));
     }
 
 

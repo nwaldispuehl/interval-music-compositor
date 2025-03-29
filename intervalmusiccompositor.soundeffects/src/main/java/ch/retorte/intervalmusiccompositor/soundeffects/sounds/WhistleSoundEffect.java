@@ -18,6 +18,6 @@ public class WhistleSoundEffect extends SoundEffect {
   //---- Constructor
 
   public WhistleSoundEffect() {
-    super(ID, RESOURCE, new AudioStreamUtil().lengthInMillisOf(WhistleSoundEffect.class.getResourceAsStream(RESOURCE)), DISPLAY_DURATION);
+    super(ID, RESOURCE, new AudioStreamUtil().lengthInMillisecondsOf(WhistleSoundEffect.class.getResourceAsStream(RESOURCE)), DISPLAY_DURATION);
   }
 }

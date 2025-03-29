@@ -232,7 +232,7 @@ public class UiUserPreferences extends UserPreferences {
     }
 
     private String serializeSoundEffectOccurrence(SoundEffectOccurrence soundEffectOccurrence) {
-        return soundEffectOccurrence.getSoundEffect().getId() + ":" + soundEffectOccurrence.getTimeMillis();
+        return soundEffectOccurrence.getSoundEffect().getId() + ":" + soundEffectOccurrence.getStartTimeMs();
     }
 
     private SoundEffectOccurrence deserializeSoundEffectOccurrence(String soundEffectOccurrenceString, SoundEffectsProvider soundEffectsProvider) {

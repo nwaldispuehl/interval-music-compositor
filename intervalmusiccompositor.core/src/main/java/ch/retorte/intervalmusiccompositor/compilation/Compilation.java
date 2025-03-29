@@ -31,7 +31,8 @@ public class Compilation {
 
     //---- Static
 
-    private static final double SOUND_EFFECT_BOUNDARY_FADE_DURATION_S = 0.4;
+    private static final double SOUND_EFFECT_BOUNDARY_FADE_DURATION_MS = 400;
+
 
     //---- Fields
 
@@ -40,12 +41,14 @@ public class Compilation {
     private final SoundHelper soundHelper;
     private final MessageProducer messageProducer;
 
+
     //---- Constructor
 
     public Compilation(SoundHelper soundhelper, MessageProducer messageProducer) {
         this.soundHelper = soundhelper;
         this.messageProducer = messageProducer;
     }
+
 
     //---- Methods
 
@@ -101,15 +104,15 @@ public class Compilation {
     }
 
     private byte[] getPlaylistItemDataFrom(Playlist playlist, PlaylistItem playlistItem, long timeSoFarMs) throws IOException, UnsupportedAudioFileException {
-        byte[] playlistItemData = new byte[soundHelper.getSamplesFromSeconds(playlistItem.getStrictItemLengthMs() / 1000.0)];
+        byte[] playlistItemData = new byte[soundHelper.getSamplesFromMilliseconds(playlistItem.getStrictItemLengthMs())];
 
         PlaylistItemFragment musicFragment = playlistItem.getMusicFragment();
 
-        double musicExtractDurationS = musicFragment.getExtractDurationInSeconds();
+        double musicExtractDurationMs = musicFragment.getExtractDurationInMilliseconds();
         if (playlist.isCrossFadingMode()) {
-            musicExtractDurationS -= playlist.getBlendTimeS();
+            musicExtractDurationMs -= playlist.getBlendTimeMs();
         }
-        int musicSamples = soundHelper.getSamplesFromSeconds(musicExtractDurationS);
+        int musicSamples = soundHelper.getSamplesFromMilliseconds(musicExtractDurationMs);
 
         addDebugMessage("Processing next playlist item starting at " + timeSoFarMs + " ms");
 
@@ -131,7 +134,7 @@ public class Compilation {
         if (playlistItem.hasBreakFragment()) {
             PlaylistItemFragment breakFragment = playlistItem.getBreakFragment();
 
-            // Cross fading overlap
+            // Cross-fading overlap
 
             if (playlist.isCrossFadingMode()) {
                 // We're adding the parts lying in the previous/next track.
@@ -142,7 +145,7 @@ public class Compilation {
                 arrayMerge16bit(fadeOutBytes, 0, playlistItemData, musicSamples, fadeOutBytes.length);
             }
 
-            addDebugMessage("Adding break track '" + breakFragment + "' at " + (timeSoFarMs + (int) (musicExtractDurationS * 1000)) + " ms");
+            addDebugMessage("Adding break track '" + breakFragment + "' at " + (timeSoFarMs + musicExtractDurationMs) + " ms");
             byte[] breakData = getMusicBytesFrom(playlist, breakFragment);
             arrayMerge16bit(breakData, 0, playlistItemData, musicSamples, breakData.length);
         }
@@ -155,7 +158,7 @@ public class Compilation {
         }
 
         for (SoundEffectOccurrence effect : playlistItem.getSoundEffects()) {
-            addDebugMessage("Adding sound effect " + effect.getSoundEffect() + " at " + (timeSoFarMs + effect.getTimeMillis()) + " ms");
+            addDebugMessage("Adding sound effect " + effect.getSoundEffect() + " at " + (timeSoFarMs + effect.getStartTimeMs()) + " ms");
             addSoundEffectTo(playlistItemData, effect);
         }
 
@@ -206,18 +209,18 @@ public class Compilation {
             // Cut at front and end
             // blend 0.5 to 1 and vice versa.
             byte[] extract = soundHelper.getExtract(musicData, playlist.getHalfBlendTimeMs(), fragment.getExtractDurationInMilliseconds() - playlist.getBlendTimeMs());
-            return soundHelper.doubleSidedLinearBlend(extract, playlist.getHalfBlendTimeS(), 0.5, 1);
+            return soundHelper.doubleSidedLinearBlend(extract, playlist.getHalfBlendTimeMs(), 0.5, 1);
         } else {
-            return soundHelper.doubleSidedLinearBlend(musicData, playlist.getBlendTimeS(), 0, 1);
+            return soundHelper.doubleSidedLinearBlend(musicData, playlist.getBlendTimeMs(), 0, 1);
         }
     }
 
     private void addSoundEffectTo(byte[] playlistItemData, SoundEffectOccurrence soundEffectOccurrence) throws IOException, UnsupportedAudioFileException {
-        int boundarySamples = soundHelper.getSamplesFromSeconds(SOUND_EFFECT_BOUNDARY_FADE_DURATION_S);
+        int boundarySamples = soundHelper.getSamplesFromMilliseconds(SOUND_EFFECT_BOUNDARY_FADE_DURATION_MS);
 
         byte[] soundEffect = audioFrom(soundEffectOccurrence.getSoundEffect());
-        int soundEffectStartSamples = soundHelper.getSamplesFromSeconds(soundEffectOccurrence.getTimeMillis() / 1000.0);
-        int soundEffectLengthSamples = soundHelper.getSamplesFromSeconds(soundEffectOccurrence.getSoundEffect().getDurationMillis() / 1000.0);
+        int soundEffectStartSamples = soundHelper.getSamplesFromMilliseconds(soundEffectOccurrence.getStartTimeMs());
+        int soundEffectLengthSamples = soundHelper.getSamplesFromMilliseconds(soundEffectOccurrence.getSoundEffect().getDurationMs());
         int soundEffectEndSamples = soundEffectStartSamples + soundEffectLengthSamples;
 
         // Fade in (We only fade in if there is data before)
@@ -245,7 +248,7 @@ public class Compilation {
 
     private byte[] getByteArrayFrom(PlaylistItemFragment playlistItemFragment) throws IOException {
         if (playlistItemFragment.isSilentBreak()) {
-            return soundHelper.generateSilenceOfLength((playlistItemFragment.getExtractDurationInSeconds()));
+            return soundHelper.generateSilenceOfLength((playlistItemFragment.getExtractDurationInMilliseconds()));
         }
 
         AudioInputStream leveledStream = soundHelper.getLeveledStream(playlistItemFragment.getAudioFile().getAudioInputStream(), getVolumeRatioOf(playlistItemFragment), playlistItemFragment.getVolume());

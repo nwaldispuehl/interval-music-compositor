@@ -222,14 +222,14 @@ public class PlaylistReport {
 
         for (SoundEffectOccurrence s : sortByStartTime(p.getSoundEffects())) {
 
-          builder.append(formatTime.getStrictFormattedTime((totalTimeMs + s.getTimeMillis()) / 1000.0));
+          builder.append(formatTime.getStrictFormattedTime((totalTimeMs + s.getStartTimeMs()) / 1000.0));
 
           builder.append(", ");
 
           builder.append("[");
           builder.append(durationString);
           builder.append(" ");
-          double extractDurationInSeconds = s.getSoundEffect().getDisplayDurationMillis() / 1000.0;
+          double extractDurationInSeconds = s.getSoundEffect().getDisplayDurationMs() / 1000.0;
           builder.append(formatTime.getStrictFormattedTime(extractDurationInSeconds));
           builder.append("]");
 
@@ -249,7 +249,7 @@ public class PlaylistReport {
 
   private List<SoundEffectOccurrence> sortByStartTime(List<SoundEffectOccurrence> soundEffectOccurrences) {
     List<SoundEffectOccurrence> result = newArrayList(soundEffectOccurrences);
-    result.sort(comparingLong(SoundEffectOccurrence::getTimeMillis));
+    result.sort(comparingLong(SoundEffectOccurrence::getStartTimeMs));
     return result;
   }
 

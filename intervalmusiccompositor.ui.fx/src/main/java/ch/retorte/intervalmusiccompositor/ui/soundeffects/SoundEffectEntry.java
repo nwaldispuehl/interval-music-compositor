@@ -115,7 +115,7 @@ class SoundEffectEntry extends HBox {
     }
 
     private void initializeSpinner() {
-        soundEffectStartTime.getValueFactory().setValue((int) (soundEffectOccurrence.getTimeMillis() / 1000));
+        soundEffectStartTime.getValueFactory().setValue((int) (soundEffectOccurrence.getStartTimeMs() / 1000));
         soundEffectStartTime.valueProperty().addListener(debugHandlerWith(soundEffectStartTime.getId()));
         soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> updateSelectedSoundEffect());
         soundEffectStartTime.valueProperty().addListener((observable, oldValue, newValue) -> parent.updatePreferences());
@@ -137,12 +137,12 @@ class SoundEffectEntry extends HBox {
     }
 
     private int getLatestStartTimeWith(int maximalTrackDuration) {
-        return maximalTrackDuration - (int) Math.ceil(soundEffectOccurrence.getSoundEffect().getDurationMillis() / 1000.0);
+        return maximalTrackDuration - (int) Math.ceil(soundEffectOccurrence.getSoundEffect().getDurationMs() / 1000.0);
     }
 
     private void updateSelectedSoundEffect() {
         soundEffectOccurrence.setSoundEffect(soundEffects.getValue());
-        soundEffectOccurrence.setTimeMillis(soundEffectStartTime.getValueFactory().getValue() * 1000);
+        soundEffectOccurrence.setStartTimeMs(soundEffectStartTime.getValueFactory().getValue() * 1000);
 
         parent.updateEntry();
     }

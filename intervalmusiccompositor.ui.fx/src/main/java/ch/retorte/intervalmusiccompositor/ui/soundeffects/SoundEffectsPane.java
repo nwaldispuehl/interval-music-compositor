@@ -129,7 +129,7 @@ public class SoundEffectsPane extends BorderPane {
 
         adaptSpinnerRangeToMusicAndBreakSize();
 
-        messageProducer.send(new DebugMessage(this, "Added sound effect '" + soundEffectOccurrence.getSoundEffect().getId() + "' at '" + soundEffectOccurrence.getTimeMillis() + "'."));
+        messageProducer.send(new DebugMessage(this, "Added sound effect '" + soundEffectOccurrence.getSoundEffect().getId() + "' at '" + soundEffectOccurrence.getStartTimeMs() + "'."));
         fireEffectChangeListener();
     }
 
@@ -143,7 +143,7 @@ public class SoundEffectsPane extends BorderPane {
         soundEffectEntries.remove(soundEffectEntry);
         soundEffectsContainer.getChildren().remove(soundEffectEntry);
 
-        messageProducer.send(new DebugMessage(this, "Removed sound effect '" + soundEffectOccurrence.getSoundEffect().getId() + "' at '" + soundEffectOccurrence.getTimeMillis() + "'."));
+        messageProducer.send(new DebugMessage(this, "Removed sound effect '" + soundEffectOccurrence.getSoundEffect().getId() + "' at '" + soundEffectOccurrence.getStartTimeMs() + "'."));
         fireEffectChangeListener();
         updatePreferences();
     }

@@ -12,24 +12,19 @@ import java.io.InputStream;
  */
 public class AudioStreamUtil {
 
+  // ---- Methods
 
-
-  public AudioInputStream audioInputStreamFrom(InputStream inputStream) throws IOException, UnsupportedAudioFileException {
-    return new WaveAudioFileReader().getAudioInputStream(inputStream);
+  /**
+   * Determines the length of a {@link InputStream} in milliseconds. For better precision we represent them as double.
+   */
+  public double lengthInMillisecondsOf(InputStream inputStream) {
+    AudioInputStream audioInputStream = audioInputStreamFromWaveInputStream(inputStream);
+    return getStreamLengthInMillisecondsOf(audioInputStream);
   }
 
   /**
-   * Determines the length of a {@link AudioInputStream}.
+   * Converts the provided {@link InputStream} to a {@link AudioInputStream} but converts any checked exception to a {@link RuntimeException}.
    */
-  private long getStreamLengthInMilliSecondsOf(AudioInputStream audioInputStream) {
-    return (long) ((audioInputStream.getFrameLength() / audioInputStream.getFormat().getFrameRate()) * 1000);
-  }
-
-  public long lengthInMillisOf(InputStream inputStream) {
-    AudioInputStream audioInputStream = audioInputStreamFromWaveInputStream(inputStream);
-    return getStreamLengthInMilliSecondsOf(audioInputStream);
-  }
-
   private AudioInputStream audioInputStreamFromWaveInputStream(InputStream inputStream) {
     try {
       return audioInputStreamFrom(inputStream);
@@ -39,4 +34,17 @@ public class AudioStreamUtil {
     }
   }
 
+  /**
+   * Converts the provided {@link InputStream} to a {@link AudioInputStream}.
+   */
+  public AudioInputStream audioInputStreamFrom(InputStream inputStream) throws IOException, UnsupportedAudioFileException {
+    return new WaveAudioFileReader().getAudioInputStream(inputStream);
+  }
+
+  /**
+   * Determines the length of a {@link AudioInputStream} in milliseconds. For better precision we represent them as double.
+   */
+  private double getStreamLengthInMillisecondsOf(AudioInputStream audioInputStream) {
+    return audioInputStream.getFrameLength() * 1000 / audioInputStream.getFormat().getFrameRate();
+  }
 }

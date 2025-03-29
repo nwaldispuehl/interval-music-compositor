@@ -11,8 +11,8 @@ public class SoundEffect {
 
   private final String id;
   private final String resource;
-  private final long effectiveDurationMillis;
-  private final long displayDurationMillis;
+  private final double effectiveDurationMs;
+  private final long displayDurationMs;
 
 
   //---- Constructor
@@ -22,14 +22,14 @@ public class SoundEffect {
    *
    * @param id human-readable identification string
    * @param resource reference to the 44100khz stereo WAV file holding the actual sound effect
-   * @param effectiveDurationMillis the length of the sound effect
-   * @param displayDurationMillis a 'nice' length value to be used for display purposes. If the actual length is 1920 ms, this could be set to 2000.
+   * @param effectiveDurationMs the length of the sound effect in ms, but as double value for increased precision.
+   * @param displayDurationMs a 'nice' length value to be used for display purposes. If the actual length is 1920 ms, this could be set to 2000.
    */
-  public SoundEffect(String id, String resource, long effectiveDurationMillis, long displayDurationMillis) {
+  public SoundEffect(String id, String resource, double effectiveDurationMs, long displayDurationMs) {
     this.id = id;
     this.resource = resource;
-    this.effectiveDurationMillis = effectiveDurationMillis;
-    this.displayDurationMillis = displayDurationMillis;
+    this.effectiveDurationMs = effectiveDurationMs;
+    this.displayDurationMs = displayDurationMs;
   }
 
 
@@ -43,16 +43,16 @@ public class SoundEffect {
     return this.getClass().getResourceAsStream(resource);
   }
 
-  public long getDurationMillis() {
-    return effectiveDurationMillis;
+  public double getDurationMs() {
+    return effectiveDurationMs;
   }
 
-  public long getDisplayDurationMillis() {
-    return displayDurationMillis;
+  public long getDisplayDurationMs() {
+    return displayDurationMs;
   }
 
   @Override
   public String toString() {
-    return id + " (" + displayDurationMillis + ")";
+    return id + " (" + displayDurationMs + ")";
   }
 }

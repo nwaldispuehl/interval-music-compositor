@@ -168,8 +168,8 @@ public class BarChart {
           double width = soundPattern.get(j) * scale;
 
           for (SoundEffectOccurrence s : soundEffectOccurrences) {
-            double soundEffectPosition = s.getTimeMillis() / 1000.0 * scale;
-            double soundEffectWidth = s.getSoundEffect().getDisplayDurationMillis() / 1000.0 * scale;
+            double soundEffectPosition = s.getStartTimeMs() / 1000.0 * scale;
+            double soundEffectWidth = s.getSoundEffect().getDisplayDurationMs() / 1000.0 * scale;
 
             graphicsContext.setFill(soundEffectsColor);
             graphicsContext.fillRect(currentLeftBorder + soundEffectPosition, top, soundEffectWidth, image.getHeight() - top - bottom);
