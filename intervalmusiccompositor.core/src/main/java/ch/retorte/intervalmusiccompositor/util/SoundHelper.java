@@ -219,7 +219,7 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
   }
 
   public int getSamplesFromMilliseconds(double milliseconds) {
-    return (int) (milliseconds * SAMPLE_RATE * TARGET_AUDIO_FORMAT.getFrameSize()) / 1000;
+    return (int) (milliseconds * SAMPLE_RATE * TARGET_AUDIO_FORMAT.getFrameSize() / 1000.0);
   }
 
   public AudioInputStream getStreamExtract(AudioInputStream ais, int start, int length) {
