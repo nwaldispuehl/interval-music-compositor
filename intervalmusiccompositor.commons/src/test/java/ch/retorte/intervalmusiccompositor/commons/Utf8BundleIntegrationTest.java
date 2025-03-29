@@ -1,10 +1,9 @@
 package ch.retorte.intervalmusiccompositor.commons;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 import ch.retorte.intervalmusiccompositor.commons.bundle.MessageFormatBundle;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author nw
@@ -21,7 +20,7 @@ public class Utf8BundleIntegrationTest {
     String retrievedString = testBundle.getString("myUmlautsAndAccents");
 
     // then
-    assertThat(retrievedString, is(umlautsAndAccents));
+    assertEquals(umlautsAndAccents, retrievedString);
 
   }
 }

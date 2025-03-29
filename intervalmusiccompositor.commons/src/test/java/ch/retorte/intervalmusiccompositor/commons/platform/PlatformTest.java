@@ -1,12 +1,8 @@
 package ch.retorte.intervalmusiccompositor.commons.platform;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author nw
@@ -40,7 +36,7 @@ public class PlatformTest {
     Platform platform = new PlatformFactory("Linux").getPlatform();
 
     // then
-    assertThat(platform, instanceOf(LinuxPlatform.class));
+    assertInstanceOf(LinuxPlatform.class, platform);
   }
 
   @Test
@@ -49,7 +45,7 @@ public class PlatformTest {
     Platform platform = new PlatformFactory("Windows").getPlatform();
 
     // then
-    assertThat(platform, instanceOf(WindowsPlatform.class));
+    assertInstanceOf(WindowsPlatform.class, platform);
   }
 
   @Test
@@ -58,12 +54,12 @@ public class PlatformTest {
     Platform platform = new PlatformFactory("Mac OSX").getPlatform();
 
     // then
-    assertThat(platform, instanceOf(MacOsxPlatform.class));
+    assertInstanceOf(MacOsxPlatform.class, platform);
   }
 
-  @Test (expected = PlatformNotFoundException.class)
+  @Test
   public void shouldFailOnUnknownPlatform() {
-    new PlatformFactory("Unknown platform").getPlatform();
+    assertThrows(PlatformNotFoundException.class, () -> new PlatformFactory("Unknown platform").getPlatform());
   }
 
   @Test
@@ -80,10 +76,8 @@ public class PlatformTest {
     String distributionRootPath3 = platform.getDistributionRootPathWith(binaryPath3);
 
     // then
-    assertThat(distributionRootPath1, is("/home/user/intervalmusiccompositor"));
-    assertThat(distributionRootPath2, is("/home/user/intervalmusiccompositor"));
-    assertThat(distributionRootPath3, is("/home/user/intervalmusiccompositor"));
-
+    assertEquals("/home/user/intervalmusiccompositor", distributionRootPath1);
+    assertEquals("/home/user/intervalmusiccompositor", distributionRootPath2);
+    assertEquals("/home/user/intervalmusiccompositor", distributionRootPath3);
   }
-
 }

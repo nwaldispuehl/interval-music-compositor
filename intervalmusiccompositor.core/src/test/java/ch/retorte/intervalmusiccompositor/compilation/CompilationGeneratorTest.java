@@ -2,13 +2,12 @@ package ch.retorte.intervalmusiccompositor.compilation;
 
 import ch.retorte.intervalmusiccompositor.output.OutputGenerator;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -32,7 +31,7 @@ public class CompilationGeneratorTest {
         String outputPrefix = sut.createMusicAndBreakPatternPrefixWith(musicPattern, breakPattern, iterations);
 
         // then
-        assertThat(outputPrefix, is("10s-x12"));
+        assertEquals("10s-x12", outputPrefix);
     }
 
     @Test
@@ -46,7 +45,7 @@ public class CompilationGeneratorTest {
         String outputPrefix = sut.createMusicAndBreakPatternPrefixWith(musicPattern, breakPattern, iterations);
 
         // then
-        assertThat(outputPrefix, is("40s_20b-x24"));
+        assertEquals("40s_20b-x24", outputPrefix);
     }
 
     @Test
@@ -60,7 +59,7 @@ public class CompilationGeneratorTest {
         String outputPrefix = sut.createMusicAndBreakPatternPrefixWith(musicPattern, breakPattern, iterations);
 
         // then
-        assertThat(outputPrefix, is("10s_5b_20s_0b_30s_8b-x18"));
+        assertEquals("10s_5b_20s_0b_30s_8b-x18", outputPrefix);
     }
 
     @Test
@@ -74,7 +73,7 @@ public class CompilationGeneratorTest {
         String outputPrefix = sut.createMusicAndBreakPatternPrefixWith(musicPattern, breakPattern, iterations);
 
         // then
-        assertThat(outputPrefix, is("10s_2b_20s_4b_30s_6b-x5"));
+        assertEquals("10s_2b_20s_4b_30s_6b-x5", outputPrefix);
     }
 
     private List<Integer> l(Integer... s) {

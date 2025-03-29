@@ -1,9 +1,8 @@
 package ch.retorte.intervalmusiccompositor.commons;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author nw
@@ -26,7 +25,7 @@ public class FormatTimeTest {
   }
 
   private void testTimeFormat(int seconds, String howShouldItLookLike) {
-    assertThat(formatSeconds(seconds), is(howShouldItLookLike));
+    assertEquals(howShouldItLookLike, formatSeconds(seconds));
   }
 
   private String formatSeconds(int seconds) {

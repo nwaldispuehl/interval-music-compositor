@@ -4,10 +4,8 @@ import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
 import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffect;
 import ch.retorte.intervalmusiccompositor.model.soundeffect.SoundEffectOccurrence;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -19,9 +17,7 @@ import static ch.retorte.intervalmusiccompositor.model.list.EnumerationMode.SING
 import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SHUFFLE;
 import static ch.retorte.intervalmusiccompositor.model.list.ListSortMode.SORT;
 import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -54,7 +50,7 @@ public class PlaylistTest {
 
     //---- Methods
 
-    @Before
+    @BeforeEach
     public void setup() {
         musicList = newArrayList();
         musicPattern = newArrayList();
@@ -75,7 +71,7 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 3, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(0));
+        assertEquals(0, tracks.size());
     }
 
     @Test
@@ -88,7 +84,7 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 3, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(0));
+        assertEquals(0, tracks.size());
     }
 
     @Test
@@ -102,7 +98,7 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences);
 
         // then
-        Assert.assertThat(tracks.size(), CoreMatchers.is(2));
+        assertEquals(2, tracks.size());
         assertTrackLength(tracks, 5, 10);
         assertTotalLength(playlist, tracks, 15);
     }
@@ -121,7 +117,7 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(2));
+        assertEquals(2, tracks.size());
         assertTrackLength(tracks, 5, 2, 10, 2);
         assertTotalLength(playlist, tracks, 19);
     }
@@ -140,7 +136,7 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 3, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(6));
+        assertEquals(6, tracks.size());
         assertTrackLength(tracks, 9, 1, 7, 2, 9, 1, 7, 2, 9, 1, 7, 2);
         assertTotalLength(playlist, tracks, 57);
     }
@@ -161,15 +157,15 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 2, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(6));
+        assertEquals(6, tracks.size());
         assertTotalLength(playlist, tracks, 30);
         assertTrackLength(tracks, 2, 1, 4, 1, 6, 1, 2, 1, 4, 1, 6, 1);
-        assertThat(tracks.get(0).getMusicFragment().getAudioFile(), is(musicTrack20s));
-        assertThat(tracks.get(1).getMusicFragment().getAudioFile(), is(musicTrack40s));
-        assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(3).getMusicFragment().getAudioFile(), is(musicTrack20s));
-        assertThat(tracks.get(4).getMusicFragment().getAudioFile(), is(musicTrack40s));
-        assertThat(tracks.get(5).getMusicFragment().getAudioFile(), is(musicTrack60s));
+        assertEquals(musicTrack20s, tracks.get(0).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack40s, tracks.get(1).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(2).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack20s, tracks.get(3).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack40s, tracks.get(4).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(5).getMusicFragment().getAudioFile());
     }
 
     @Test
@@ -185,12 +181,12 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(3));
+        assertEquals(3, tracks.size());
         assertTotalLength(playlist, tracks, 33);
         assertTrackLength(tracks, 4, 5, 9, 5, 15, 5);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void shouldRejectTooShortTracks() {
         // given
         Playlist playlist = new Playlist(SEPARATE, 0d, SINGLE_EXTRACT, SORT, msgPrd);
@@ -200,7 +196,9 @@ public class PlaylistTest {
         musicPattern = pattern(11);
 
         // when
-        playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences);
+        assertThrows(IllegalStateException.class, () -> 
+            playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences)
+        );
     }
 
     @Test
@@ -216,11 +214,11 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(1));
+        assertEquals(1, tracks.size());
         assertTrackLength(tracks, 25);
         assertTotalLength(playlist, tracks, 25);
-        assertTrue(sec(10) <= tracks.get(0).getMusicFragment().getExtractStartInMilliseconds());
-        assertTrue(tracks.get(0).getMusicFragment().getExtractEndInMilliseconds() <= musicTrack60s.getDuration() - sec(10));
+        assertTrue(sec(10) <= tracks.getFirst().getMusicFragment().getExtractStartInMilliseconds());
+        assertTrue(tracks.getFirst().getMusicFragment().getExtractEndInMilliseconds() <= musicTrack60s.getDuration() - sec(10));
     }
 
     @Test
@@ -240,12 +238,12 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 3, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(3));
+        assertEquals(3, tracks.size());
         assertTrackLength(tracks, 11, 1, 11, 1, 11, 1);
         assertTotalLength(playlist, tracks, 36);
-        assertThat(tracks.get(0).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(1).getMusicFragment().getAudioFile(), is(musicTrack40s));
-        assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack60s));
+        assertEquals(musicTrack60s, tracks.get(0).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack40s, tracks.get(1).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(2).getMusicFragment().getAudioFile());
     }
 
     @Test
@@ -265,16 +263,16 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 2, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(4));
+        assertEquals(4, tracks.size());
         assertTrackLength(tracks, 10, 1, 11, 2, 10, 1, 11, 2);
         assertTotalLength(playlist, tracks, 48);
-        assertThat(tracks.get(0).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(1).getMusicFragment().getAudioFile(), is(musicTrack40s));
-        assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(3).getMusicFragment().getAudioFile(), is(musicTrack40s));
+        assertEquals(musicTrack60s, tracks.get(0).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack40s, tracks.get(1).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(2).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack40s, tracks.get(3).getMusicFragment().getAudioFile());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void shouldNotAllowNotSufficientBreakTrack() {
         // given
         Playlist playlist = new Playlist(SEPARATE, 0d, SINGLE_EXTRACT, SORT, msgPrd);
@@ -287,7 +285,9 @@ public class PlaylistTest {
         breakPattern = pattern(8, 12, 8);
 
         // when this, then throw exception
-        playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences);
+        assertThrows(IllegalStateException.class, () ->
+            playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 1, soundEffectOccurrences)
+        );
     }
 
     @Test
@@ -306,19 +306,19 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 10, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(10));
+        assertEquals(10, tracks.size());
         assertTrackLength(tracks, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10);
         assertTotalLength(playlist, tracks, 100);
-        assertThat(tracks.get(0).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(1).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(3).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(4).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(5).getMusicFragment().getAudioFile(), is(musicTrack40s));
-        assertThat(tracks.get(6).getMusicFragment().getAudioFile(), is(musicTrack40s));
-        assertThat(tracks.get(7).getMusicFragment().getAudioFile(), is(musicTrack40s));
-        assertThat(tracks.get(8).getMusicFragment().getAudioFile(), is(musicTrack20s));
-        assertThat(tracks.get(9).getMusicFragment().getAudioFile(), is(musicTrack60s));
+        assertEquals(musicTrack60s, tracks.get(0).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(1).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(2).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(3).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(4).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack40s, tracks.get(5).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack40s, tracks.get(6).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack40s, tracks.get(7).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack20s, tracks.get(8).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(9).getMusicFragment().getAudioFile());
     }
 
     @Test
@@ -337,18 +337,18 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 9, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(9));
+        assertEquals(9, tracks.size());
         assertTrackLength(tracks, 10, 10, 10, 10, 10, 10, 10, 10, 10);
         assertTotalLength(playlist, tracks, 90);
-        assertThat(tracks.get(0).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(1).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(3).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(4).getMusicFragment().getAudioFile(), is(musicTrack60s));
-        assertThat(tracks.get(5).getMusicFragment().getAudioFile(), is(musicTrack40s));
-        assertThat(tracks.get(6).getMusicFragment().getAudioFile(), is(musicTrack40s));
-        assertThat(tracks.get(7).getMusicFragment().getAudioFile(), is(musicTrack40s));
-        assertThat(tracks.get(8).getMusicFragment().getAudioFile(), is(musicTrack20s));
+        assertEquals(musicTrack60s, tracks.get(0).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(1).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(2).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(3).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack60s, tracks.get(4).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack40s, tracks.get(5).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack40s, tracks.get(6).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack40s, tracks.get(7).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack20s, tracks.get(8).getMusicFragment().getAudioFile());
     }
 
     @Test
@@ -366,7 +366,7 @@ public class PlaylistTest {
         // then
         assertTrue(playlist.hasSoundEffects());
         List<SoundEffectOccurrence> soundEffects = playlist.iterator().next().getSoundEffects();
-        assertThat(soundEffects.get(0).getStartTimeMs(), is(15000L));
+        assertEquals(15000L, soundEffects.getFirst().getStartTimeMs());
     }
 
     @Test
@@ -384,7 +384,7 @@ public class PlaylistTest {
         // then
         assertTrue(playlist.hasSoundEffects());
         List<SoundEffectOccurrence> soundEffects = playlist.iterator().next().getSoundEffects();
-        assertThat(soundEffects.get(0).getStartTimeMs(), is(6000L));
+        assertEquals(6000L, soundEffects.getFirst().getStartTimeMs());
     }
 
     @Test
@@ -401,8 +401,8 @@ public class PlaylistTest {
         // then
         assertTrue(playlist.hasSoundEffects());
         List<SoundEffectOccurrence> soundEffects = playlist.iterator().next().getSoundEffects();
-        assertThat(soundEffects.size(), is(1));
-        assertThat(soundEffects.get(0).getStartTimeMs(), is(9000L));
+        assertEquals(1, soundEffects.size());
+        assertEquals(9000L, soundEffects.getFirst().getStartTimeMs());
     }
 
 
@@ -420,12 +420,12 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 3, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(3));
+        assertEquals(3, tracks.size());
         assertTrackLength(tracks, 10, 10, 10);
         assertTotalLength(playlist, tracks, 30);
-        assertThat(tracks.get(0).getMusicFragment().getAudioFile(), is(musicTrack20s));
-        assertThat(tracks.get(1).getMusicFragment().getAudioFile(), is(musicTrack20s));
-        assertThat(tracks.get(2).getMusicFragment().getAudioFile(), is(musicTrack20s));
+        assertEquals(musicTrack20s, tracks.get(0).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack20s, tracks.get(1).getMusicFragment().getAudioFile());
+        assertEquals(musicTrack20s, tracks.get(2).getMusicFragment().getAudioFile());
     }
 
     @Test
@@ -442,7 +442,7 @@ public class PlaylistTest {
         List<PlaylistItem> tracks = playlist.generatePlaylistFrom(musicList, musicPattern, breakList, breakPattern, 1, 4, soundEffectOccurrences);
 
         // then
-        assertThat(tracks.size(), is(4));
+        assertEquals(4, tracks.size());
     }
 
     //---- Helper methods
@@ -454,17 +454,17 @@ public class PlaylistTest {
     private void assertTrackLength(List<PlaylistItem> tracks, int... seconds) {
         int counter = 0;
         for (PlaylistItem item : tracks) {
-            assertThat(item.getMusicFragment().getExtractDurationInMilliseconds(), is(sec(seconds[counter])));
+            assertEquals(sec(seconds[counter]), item.getMusicFragment().getExtractDurationInMilliseconds());
             counter++;
             if (item.hasBreakFragment()) {
-                assertThat(item.getBreakFragment().getExtractDurationInMilliseconds(), is(sec(seconds[counter])));
+                assertEquals(sec(seconds[counter]), item.getBreakFragment().getExtractDurationInMilliseconds());
                 counter++;
             }
         }
     }
 
     private void assertTotalLength(Playlist p, List<PlaylistItem> tracks, int seconds) {
-        assertThat(new Playlist(msgPrd).getTotalLength(p, tracks), is(sec(seconds)));
+        assertEquals(sec(seconds), new Playlist(msgPrd).getTotalLength(p, tracks));
     }
 
     private List<Integer> pattern(Integer... patternItems) {

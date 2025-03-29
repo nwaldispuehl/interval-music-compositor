@@ -1,22 +1,21 @@
 package ch.retorte.intervalmusiccompositor.messagebus;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import ch.retorte.intervalmusiccompositor.model.messagebus.DebugMessage;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.mockito.Mockito.*;
 
-@Ignore
+@Disabled
 public class DebugMessagePrinterTest {
 
   private DebugMessagePrinter handler;
   private final LocalDateTime currentDate = LocalDateTime.now();
 
-  @Before
+  @BeforeEach
   public void setup() {
     handler = spy(new DebugMessagePrinter());
   }

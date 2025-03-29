@@ -1,14 +1,14 @@
 package ch.retorte.intervalmusiccompositor.decoder;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import ch.retorte.intervalmusiccompositor.decoder.mp3.Mp3FileProperties;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import ch.retorte.intervalmusiccompositor.decoder.mp3.Mp3FileProperties;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Test cases for the {@link Mp3FileProperties}.

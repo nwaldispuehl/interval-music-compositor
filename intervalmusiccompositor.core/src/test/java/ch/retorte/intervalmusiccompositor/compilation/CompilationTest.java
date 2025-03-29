@@ -6,9 +6,9 @@ import ch.retorte.intervalmusiccompositor.model.compilation.CompilationParameter
 import ch.retorte.intervalmusiccompositor.playlist.Playlist;
 import ch.retorte.intervalmusiccompositor.spi.decoder.AudioFileDecoder;
 import ch.retorte.intervalmusiccompositor.util.SoundHelper;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.tritonus.sampled.file.WaveAudioFileReader;
 
 import javax.sound.sampled.AudioInputStream;
@@ -21,8 +21,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit test for the actual compilation generator.
@@ -47,13 +46,13 @@ public class CompilationTest {
 
     //---- Setup methods
 
-    @Before
+    @BeforeEach
     public void setup() throws IOException, UnsupportedAudioFileException {
         musicFiles.add(audioFileFrom(TEST_SOUND));
         breakFiles.add(audioFileFrom(TEST_SOUND));
     }
 
-    @After
+    @AfterEach
     public void cleanup() throws IOException {
         for (IAudioFile f : musicFiles) {
             f.removeCache();
@@ -77,13 +76,13 @@ public class CompilationTest {
         // then
         // Somehow check byte array...
         byte[] compilation = baos.toByteArray();
-        assertThat(compilation.length, is(44100 * 2 * 2));
-        assertThat(compilation[0], is(b(0)));
-        assertThat(compilation[1], is(b(0)));
-        assertThat(compilation[88198], is(b(-20)));
-        assertThat(compilation[88199], is(b(-63)));
-        assertThat(compilation[176398], is(b(0)));
-        assertThat(compilation[176399], is(b(0)));
+        assertEquals(44100 * 2 * 2, compilation.length);
+        assertEquals(b(0), compilation[0]);
+        assertEquals(b(0), compilation[1]);
+        assertEquals(b(-20), compilation[88198]);
+        assertEquals(b(-63), compilation[88199]);
+        assertEquals(b(0), compilation[176398]);
+        assertEquals(b(0), compilation[176399]);
     }
 
     @Test
@@ -98,7 +97,7 @@ public class CompilationTest {
         // then
         // Somehow check byte array...
         byte[] compilation = baos.toByteArray();
-        assertThat(compilation.length, is(44100 * 2 * 12));
+        assertEquals(44100 * 2 * 12, compilation.length);
     }
 
     @Test
@@ -113,23 +112,23 @@ public class CompilationTest {
         // then
         // Somehow check byte array...
         byte[] compilation = baos.toByteArray();
-        assertThat(compilation.length, is(44100 * 2 * 2 * 2));
+        assertEquals(44100 * 2 * 2 * 2, compilation.length);
 
         // Sound part
-        assertThat(compilation[0], is(b(0)));
-        assertThat(compilation[1], is(b(0)));
-        assertThat(compilation[88198], is(b(-20)));
-        assertThat(compilation[88199], is(b(-63)));
-        assertThat(compilation[176398], is(b(0)));
-        assertThat(compilation[176399], is(b(0)));
+        assertEquals(b(0), compilation[0]);
+        assertEquals(b(0), compilation[1]);
+        assertEquals(b(-20), compilation[88198]);
+        assertEquals(b(-63), compilation[88199]);
+        assertEquals(b(0), compilation[176398]);
+        assertEquals(b(0), compilation[176399]);
 
         // Break part
-        assertThat(compilation[176400], is(b(0)));
-        assertThat(compilation[176401], is(b(0)));
-        assertThat(compilation[264598], is(b(-10)));
-        assertThat(compilation[264599], is(b(-32)));
-        assertThat(compilation[352798], is(b(0)));
-        assertThat(compilation[352798], is(b(0)));
+        assertEquals(b(0), compilation[176400]);
+        assertEquals(b(0), compilation[176401]);
+        assertEquals(b(-10), compilation[264598]);
+        assertEquals(b(-32), compilation[264599]);
+        assertEquals(b(0), compilation[352798]);
+        assertEquals(b(0), compilation[352798]);
 
     }
 

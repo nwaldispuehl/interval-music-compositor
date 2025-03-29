@@ -1,11 +1,10 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
 import ch.retorte.intervalmusiccompositor.model.audiofile.IAudioFile;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,7 +35,7 @@ public class PlaylistItemFragmentTest {
         long duration = playlistItemFragment.getExtractDurationInMilliseconds();
 
         // then
-        assertThat(duration, is(1000L));
+        assertEquals(1000L, duration);
 
     }
 

@@ -5,17 +5,16 @@ import ch.retorte.intervalmusiccompositor.commons.platform.PlatformFactory;
 import ch.retorte.intervalmusiccompositor.model.messagebus.StringMessage;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
 import ch.retorte.intervalmusiccompositor.spi.progress.ProgressListener;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.FilterInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Set;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit tests for the {@link ModuleReplacingVersionUpgrader}.
@@ -32,7 +31,7 @@ public class ModuleReplacingVersionUpgraderTest {
 
     //---- Test methods
 
-    @Before
+    @BeforeEach
     public void setup() {
         upgrader = new ModuleReplacingVersionUpgrader(platform, messageProducer);
     }

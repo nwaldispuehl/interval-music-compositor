@@ -3,8 +3,8 @@ package ch.retorte.intervalmusiccompositor.util;
 import ch.retorte.intervalmusiccompositor.model.update.Version;
 import ch.retorte.intervalmusiccompositor.spi.ApplicationData;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.mockito.Mockito.doReturn;
@@ -24,7 +24,7 @@ public class UpdateCheckerTest {
 
     //---- Methods
 
-    @Before
+    @BeforeEach
     public void setup() {
         updateChecker = Mockito.spy(new UpdateChecker(applicationData, messageProducer));
     }

@@ -2,11 +2,11 @@ package ch.retorte.intervalmusiccompositor.messagebus;
 
 import ch.retorte.intervalmusiccompositor.model.messagebus.Message;
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageHandler;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -20,7 +20,7 @@ public class MessageBusTest {
     private MatchingMessageHandler matchingHandler;
     private NonMatchingMessageHandler nonMatchingHandler;
 
-    @Before
+    @BeforeEach
     public void setup() {
         messageBus = new MessageBus(false);
         matchingHandler = new MatchingMessageHandler();
