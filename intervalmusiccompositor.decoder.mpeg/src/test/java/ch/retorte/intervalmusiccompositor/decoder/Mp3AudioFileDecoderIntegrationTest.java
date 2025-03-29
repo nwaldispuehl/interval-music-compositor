@@ -1,18 +1,16 @@
 package ch.retorte.intervalmusiccompositor.decoder;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
+import ch.retorte.intervalmusiccompositor.decoder.mp3.Mp3AudioFileDecoder;
+import org.junit.jupiter.api.Test;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
-import ch.retorte.intervalmusiccompositor.decoder.mp3.Mp3AudioFileDecoder;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Integration test for the {@link Mp3AudioFileDecoder}.
@@ -31,12 +29,12 @@ public class Mp3AudioFileDecoderIntegrationTest {
     AudioInputStream decodedStream = new Mp3AudioFileDecoder().decode(mp3File);
 
     // then
-    assertThat(decodedStream.getFormat().getEncoding(), is(AudioFormat.Encoding.PCM_SIGNED));
-    assertThat(decodedStream.getFormat().getChannels(), is(1));
-    assertThat(decodedStream.getFormat().getFrameRate(), is(44100f));
-    assertThat(decodedStream.getFormat().getFrameSize(), is(2));
-    assertThat(decodedStream.getFormat().getSampleRate(), is(44100f));
-    assertThat(decodedStream.getFormat().getSampleSizeInBits(), is(16));
+    assertEquals(AudioFormat.Encoding.PCM_SIGNED, decodedStream.getFormat().getEncoding());
+    assertEquals(1, decodedStream.getFormat().getChannels());
+    assertEquals(44100f, decodedStream.getFormat().getFrameRate());
+    assertEquals(2, decodedStream.getFormat().getFrameSize());
+    assertEquals(44100f, decodedStream.getFormat().getSampleRate());
+    assertEquals(16, decodedStream.getFormat().getSampleSizeInBits());
   }
 
 }

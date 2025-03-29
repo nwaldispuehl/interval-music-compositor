@@ -1,12 +1,11 @@
 package ch.retorte.intervalmusiccompositor.playlist;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,7 +20,7 @@ public class PlaylistItemTest {
 
     //---- Test methods
 
-    @Before
+    @BeforeEach
     public void setup() {
 
     }
@@ -36,7 +35,7 @@ public class PlaylistItemTest {
         long itemLengthMs = sut.getStrictItemLengthMs();
 
         // then
-        assertThat(itemLengthMs, is(12000L));
+        assertEquals(12000L, itemLengthMs);
     }
 
     @Test
@@ -50,7 +49,7 @@ public class PlaylistItemTest {
         long itemLengthMs = sut.getStrictItemLengthMs();
 
         // then
-        assertThat(itemLengthMs, is(8000L));
+        assertEquals(8000L, itemLengthMs);
     }
 
     //---- Helper methods

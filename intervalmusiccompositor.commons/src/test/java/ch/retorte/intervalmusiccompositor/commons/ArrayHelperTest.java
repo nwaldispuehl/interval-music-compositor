@@ -1,14 +1,14 @@
 package ch.retorte.intervalmusiccompositor.commons;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static ch.retorte.intervalmusiccompositor.commons.ArrayHelper.*;
 import static ch.retorte.intervalmusiccompositor.commons.Utils.newArrayList;
 import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author nw
@@ -24,7 +24,7 @@ public class ArrayHelperTest {
         List<Integer> intList = arrayToList(intArray);
 
         // then
-        assertThat(arr(intList), is(arr(1, 2, 3)));
+        assertEquals(arr(1, 2, 3), arr(intList));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class ArrayHelperTest {
         List<Integer> preparedList = prepareListForRemoval(intArray);
 
         // then
-        assertThat(arr(preparedList), is(arr(4, 3, 2, 1)));
+        assertEquals(arr(4, 3, 2, 1), arr(preparedList));
     }
 
     @Test
@@ -49,17 +49,17 @@ public class ArrayHelperTest {
         arrayMerge16bit(source, 0, target, 0, 6);
 
         // then
-        assertThat(target, is(hexStringToByteArray("01 03  f0 06  0f 03")));
+        assertEquals(hexStringToByteArray("01 03  f0 06  0f 03"), target);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void shouldFailOnTooLargeValues() {
         // given
         byte[] source = hexStringToByteArray("00 03  00 03");
         byte[] target = hexStringToByteArray("00 00  00 03  00 00  00 00");
 
         // when
-        arrayMerge16bit(source, 2, target, 0, 8);
+        assertThrows(IllegalStateException.class, () -> arrayMerge16bit(source, 2, target, 0, 8));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class ArrayHelperTest {
         long averageInterval = getAverageInterval(newArrayList(new Long[0]), 5);
 
         // then
-        assertThat(averageInterval, is(0L));
+        assertEquals(0L, averageInterval);
     }
 
     @Test
@@ -86,10 +86,10 @@ public class ArrayHelperTest {
         long averageInterval4 = getAverageInterval(tapEvents4, 10);
 
         // then
-        assertThat(averageInterval1, is(1L));
-        assertThat(averageInterval2, is(6L));
-        assertThat(averageInterval3, is(12L));
-        assertThat(averageInterval4, is(1L));
+        assertEquals(1L, averageInterval1);
+        assertEquals(6L, averageInterval2);
+        assertEquals(12L, averageInterval3);
+        assertEquals(1L, averageInterval4);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class ArrayHelperTest {
 
     @Test
     public void shouldNotConvergeIfListTooShort() {
-        assertFalse(isConvergent(asList(0.1), 2, 1));
+        assertFalse(isConvergent(List.of(0.1), 2, 1));
 
     }
 
@@ -126,19 +126,19 @@ public class ArrayHelperTest {
         String prettyPrintedList = ArrayHelper.prettyPrintList(list);
 
         // then
-        assertThat(prettyPrintedList, is("1-2-3"));
+        assertEquals("1-2-3", prettyPrintedList);
     }
 
     @Test
     public void shouldPrettyPrintSingleNumber() {
         // given
-        List<Integer> list = asList(9);
+        List<Integer> list = List.of(9);
 
         // when
         String prettyPrintedList = ArrayHelper.prettyPrintList(list);
 
         // then
-        assertThat(prettyPrintedList, is("9"));
+        assertEquals("9", prettyPrintedList);
     }
 
     private Integer[] arr(Integer... integers) {
@@ -146,11 +146,11 @@ public class ArrayHelperTest {
     }
 
     private Integer[] arr(List<Integer> integerList) {
-        return integerList.toArray(new Integer[integerList.size()]);
+        return integerList.toArray(new Integer[0]);
     }
 
     /**
-     * Taken from http://stackoverflow.com/questions/11208479/how-do-i-initialize-a-byte-array-in-java/11208685#11208685
+     * Taken from <a href="http://stackoverflow.com/questions/11208479/how-do-i-initialize-a-byte-array-in-java/11208685#11208685">Stack Overflow</a>
      */
     private byte[] hexStringToByteArray(String s) {
         s = s.replaceAll(" ", "");

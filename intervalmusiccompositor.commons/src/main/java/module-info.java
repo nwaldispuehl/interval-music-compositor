@@ -10,7 +10,4 @@ module intervalmusiccompositor.commons {
     requires java.desktop;
     requires jdk.management;
     requires java.prefs;
-
-    // For testing
-    requires hamcrest.core;
 }

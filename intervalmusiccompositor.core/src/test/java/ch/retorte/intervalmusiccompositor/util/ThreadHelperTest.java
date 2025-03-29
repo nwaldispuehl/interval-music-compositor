@@ -1,10 +1,10 @@
 package ch.retorte.intervalmusiccompositor.util;
 
 import ch.retorte.intervalmusiccompositor.spi.messagebus.MessageProducer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static java.lang.System.currentTimeMillis;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 /**

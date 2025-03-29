@@ -4,7 +4,4 @@ module intervalmusiccompositor.beatroot {
   requires intervalmusiccompositor.spi;
   requires intervalmusiccompositor.decoder.mpeg;
   requires java.desktop;
-
-  // For testing
-  requires hamcrest.core;
 }
