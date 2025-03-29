@@ -40,7 +40,7 @@ public class SoundEffectListCell extends ListCell<SoundEffect> {
 
         if (item != null) {
             String itemId = item.getId();
-            double itemDurationSeconds = item.getDisplayDurationMillis() / 1000.0;
+            double itemDurationSeconds = item.getDisplayDurationMs() / 1000.0;
 
             setText(getNameFor(itemId) + " (" + formatTime.getStrictFormattedTime(itemDurationSeconds) + "s)");
         }

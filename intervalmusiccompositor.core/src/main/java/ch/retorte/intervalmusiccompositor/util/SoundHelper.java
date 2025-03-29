@@ -38,8 +38,8 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
   }
 
   /**
-   * Determines the largest average frame value of a audio stream. Uses a 16
-   * bytes window as smallest unit. May be expanded through the windows
+   * Determines the largest average frame value of an audio stream. Uses a 16
+   * bytes window as smallest unit. May be expanded through the sampleWindow
    * argument.
    * 
    * @param inputBuffer
@@ -69,7 +69,7 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
 
       if (numberOfBytesRead == numberOfBytes) {
 
-        // Here we do a roll out to speed up the whole thing
+        // Here we do a roll-out to speed up the whole thing
         sample = Math.abs((audioBytes[0] & 0xFF) | (audioBytes[1] << 8));
         sample += Math.abs((audioBytes[2] & 0xFF) | (audioBytes[3] << 8));
         sample += Math.abs((audioBytes[4] & 0xFF) | (audioBytes[5] << 8));
@@ -159,8 +159,8 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
   }
 
   public byte[] getExtract(byte[] data, long startMs, long durationMs) {
-    long startBytes = getSamplesFromSeconds(startMs / 1000.0);
-    long durationBytes = getSamplesFromSeconds(durationMs / 1000.0);
+    long startBytes = getSamplesFromMilliseconds(startMs);
+    long durationBytes = getSamplesFromMilliseconds(durationMs);
     byte[] result = new byte[(int) durationBytes];
 
     System.arraycopy(data, (int) startBytes, result, 0, result.length);
@@ -206,8 +206,8 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     return byteLength;
   }
 
-  public byte[] generateSilenceOfLength(double lengthInSeconds) {
-    int samples = getSamplesFromSeconds(lengthInSeconds);
+  public byte[] generateSilenceOfLength(double lengthInMs) {
+    int samples = getSamplesFromMilliseconds(lengthInMs);
 
     byte[] silenceBuffer = new byte[samples];
     for (int i = 0; i < silenceBuffer.length; i = i + 2) {
@@ -218,8 +218,8 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
     return silenceBuffer;
   }
 
-  public int getSamplesFromSeconds(double seconds) {
-    return (int) (seconds * SAMPLE_RATE * TARGET_AUDIO_FORMAT.getFrameSize());
+  public int getSamplesFromMilliseconds(double milliseconds) {
+    return (int) (milliseconds * SAMPLE_RATE * TARGET_AUDIO_FORMAT.getFrameSize()) / 1000;
   }
 
   public AudioInputStream getStreamExtract(AudioInputStream ais, int start, int length) {
@@ -257,12 +257,12 @@ public class SoundHelper implements AudioStandardizer, ByteArrayConverter {
 
   /**
    * Fades the provided sample array in at the start and out at the end. The respective fading part length is determined
-   * by the blendTime argument. Additionally a blend factor can be specified which denots how the blending should be scaled.
+   * by the blendTime argument. Additionally, a blend factor can be specified which denotes how the blending should be scaled.
    */
-  public byte[] doubleSidedLinearBlend(byte[] sampleByteArray, double blendTime, double startFactor, double endFactor) {
+  public byte[] doubleSidedLinearBlend(byte[] sampleByteArray, double blendTimeMs, double startFactor, double endFactor) {
 
     int sampleLength = sampleByteArray.length;
-    int blendSamples = getSamplesFromSeconds(blendTime);
+    int blendSamples = getSamplesFromMilliseconds(blendTimeMs);
     double factorPerSample = (endFactor - startFactor) / blendSamples;
 
     if (((double) sampleByteArray.length / 2) < blendSamples) {

@@ -8,19 +8,24 @@ public class SoundEffectOccurrence {
   //---- Fields
 
   private SoundEffect soundEffect;
-  private long timeMillis;
+  private long startTimeMs;
 
 
   //---- Constructor
 
-  public SoundEffectOccurrence(SoundEffect soundEffect, long timeMillis) {
+  /**
+   * Creates a new sound effect occurrence.
+   *
+   * @param soundEffect the {@link SoundEffect} to be played.
+   * @param startTimeMs the time in milliseconds it should start playing.
+   */
+  public SoundEffectOccurrence(SoundEffect soundEffect, long startTimeMs) {
     this.soundEffect = soundEffect;
-    this.timeMillis = timeMillis;
+    this.startTimeMs = startTimeMs;
   }
 
 
   //---- Methods
-
 
   public SoundEffect getSoundEffect() {
     return soundEffect;
@@ -30,11 +35,11 @@ public class SoundEffectOccurrence {
     this.soundEffect = soundEffect;
   }
 
-  public long getTimeMillis() {
-    return timeMillis;
+  public long getStartTimeMs() {
+    return startTimeMs;
   }
 
-  public void setTimeMillis(long timeMillis) {
-    this.timeMillis = timeMillis;
+  public void setStartTimeMs(long startTimeMs) {
+    this.startTimeMs = startTimeMs;
   }
 }

@@ -18,6 +18,6 @@ public class GongSoundEffect extends SoundEffect {
   //---- Constructor
 
   public GongSoundEffect() {
-    super(ID, RESOURCE, new AudioStreamUtil().lengthInMillisOf(GongSoundEffect.class.getResourceAsStream(RESOURCE)), DISPLAY_DURATION);
+    super(ID, RESOURCE, new AudioStreamUtil().lengthInMillisecondsOf(GongSoundEffect.class.getResourceAsStream(RESOURCE)), DISPLAY_DURATION);
   }
 }
