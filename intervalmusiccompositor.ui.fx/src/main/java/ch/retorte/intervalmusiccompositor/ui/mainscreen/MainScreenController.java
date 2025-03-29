@@ -775,14 +775,18 @@ public class MainScreenController implements Initializable {
     }
 
     private void updateProgressBar(Integer progressInPercent, String currentActivity) {
-        progressBar.progressProperty().setValue((double) progressInPercent / 100);
-        progressBar.setTooltip(new Tooltip(currentActivity));
-        secondaryProgressBar.setVisible(false);
+        Platform.runLater(() -> {
+            progressBar.progressProperty().setValue((double) progressInPercent / 100);
+            progressBar.setTooltip(new Tooltip(currentActivity));
+            secondaryProgressBar.setVisible(false);
+        });
     }
 
     private void updateSubProgressBar(int percentage) {
-        secondaryProgressBar.setVisible(true);
-        secondaryProgressBar.progressProperty().setValue((double) percentage / 100);
+        Platform.runLater(() -> {
+            secondaryProgressBar.setVisible(true);
+            secondaryProgressBar.progressProperty().setValue((double) percentage / 100);
+        });
     }
 
     private DebugMessageEventHandler debugHandlerWith(String id) {
