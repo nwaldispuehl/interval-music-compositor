@@ -1,7 +1,7 @@
 retorte laboratories (retorte.ch) IntervalMusicCompositor change log
 --------------------------------------------------------------------------------
 
-2025-xx-xx  2.11.7
+2025-03-30  2.11.7
 --------------------------------------------------------------------------------
 FIX  #81    Fixes occasional crash when opening output directory chooser.
 FIX  #82    Fixes short white noise after every 'double whistle' sound effect.
